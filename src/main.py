@@ -14,7 +14,7 @@
 
 from flask import Flask
 from config import DevConfig
-from module.auth import auth
+import register
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -28,7 +28,7 @@ def page_not_found(error):
 def home():
     return '<h1>Hello zruibin!</h1>'
 
-app.register_blueprint(auth,url_prefix='/auth')    #注册asset蓝图，并指定前缀。
+register.register(app)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
