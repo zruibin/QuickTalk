@@ -1,0 +1,6 @@
+
+###可行Server端
+
+####架构方案
+
+**Python 2.7 + flask + uwsgi + nginx + MySQL 5.6**

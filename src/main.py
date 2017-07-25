@@ -17,7 +17,7 @@ from config import DevConfig
 import register
 
 app = Flask(__name__)
-app.config.from_object(DevConfig)
+# app.config.from_object(DevConfig)
 
 
 @app.errorhandler(404) 
