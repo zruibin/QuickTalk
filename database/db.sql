@@ -17,6 +17,10 @@ CREATE TABLE `t_user`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 10000 DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_user` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_user` ADD INDEX t_user_nickname ( `nickname` );
+ALTER TABLE `t_user` ADD INDEX t_user_phone ( `phone` );
+
 DROP TABLE IF EXISTS
     `t_user_auth`;
 CREATE TABLE `t_user_auth`(
@@ -29,6 +33,8 @@ CREATE TABLE `t_user_auth`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_user_auth` ADD INDEX t_user_auth_uuid (`user_uuid`);
+
 DROP TABLE IF EXISTS
     `t_user_user`;
 CREATE TABLE `t_user_user`(
@@ -38,6 +44,8 @@ CREATE TABLE `t_user_user`(
     `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_user_user` ADD INDEX t_user_auth_uuid (`user_uuid`);
 
 DROP TABLE IF EXISTS
     `t_user_setting`;
@@ -49,6 +57,8 @@ CREATE TABLE `t_user_setting`(
     `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_user_setting` ADD INDEX t_user_setting_uuid (`user_uuid`);
 
 DROP TABLE IF EXISTS
     `t_user_eduction`;
@@ -63,6 +73,7 @@ CREATE TABLE `t_user_eduction`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_user_eduction` ADD INDEX t_user_eduction_uuid (`user_uuid`);
 
 DROP TABLE IF EXISTS
     `t_project`;
@@ -79,6 +90,10 @@ CREATE TABLE `t_project`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_project` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_project` ADD INDEX t_project_title ( `title` );
+ALTER TABLE `t_project` ADD INDEX t_project_author_uuid ( `author_uuid` );
+
 DROP TABLE IF EXISTS
     `t_project_user`;
 CREATE TABLE `t_project_user`(
@@ -88,6 +103,8 @@ CREATE TABLE `t_project_user`(
     `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_project_user` ADD INDEX t_project_user_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
     `t_project_media`;
@@ -101,6 +118,8 @@ CREATE TABLE `t_project_media`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_project_media` ADD INDEX t_project_media_project_uuid ( `project_uuid` );
+
 DROP TABLE IF EXISTS
     `t_project_plan`;
 CREATE TABLE `t_project_plan`(
@@ -111,6 +130,8 @@ CREATE TABLE `t_project_plan`(
     `excution_time` TIMESTAMP NOT NULL COMMENT '执行时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_project_plan` ADD INDEX t_project_plan_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
     `t_comment`;
@@ -127,6 +148,9 @@ CREATE TABLE `t_comment`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_comment` ADD INDEX t_comment_project_uuid ( `project_uuid` );
+ALTER TABLE `t_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
+
 DROP TABLE IF EXISTS
     `t_project_journal`;
 CREATE TABLE `t_project_journal`(
@@ -140,6 +164,9 @@ CREATE TABLE `t_project_journal`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_project_journal` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_project_journal` ADD INDEX t_project_journal_project_uuid ( `project_uuid` );
+
 DROP TABLE IF EXISTS
     `t_project_journal_media`;
 CREATE TABLE `t_project_journal_media`(
@@ -151,6 +178,8 @@ CREATE TABLE `t_project_journal_media`(
     `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_project_journal_media` ADD INDEX t_project_journal_media_journal_uuid ( `journal_uuid` );
 
 
 DROP TABLE IF EXISTS
@@ -167,6 +196,8 @@ CREATE TABLE `t_message_like`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_message_like` ADD INDEX t_message_like_user_uuid ( `user_uuid` );
+
 DROP TABLE IF EXISTS
     `t_message_project`;
 CREATE TABLE `t_message_project`(
@@ -180,6 +211,8 @@ CREATE TABLE `t_message_project`(
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_message_project` ADD INDEX t_message_project_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_member`;
@@ -195,6 +228,8 @@ CREATE TABLE `t_message_member`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_message_member` ADD INDEX t_message_member_user_uuid ( `user_uuid` );
+
 DROP TABLE IF EXISTS
     `t_message_start`;
 CREATE TABLE `t_message_start`(
@@ -209,6 +244,8 @@ CREATE TABLE `t_message_start`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_message_start` ADD INDEX t_message_start_user_uuid ( `user_uuid` );
+
 
 DROP TABLE IF EXISTS
     `t_tag_user`;
@@ -221,6 +258,8 @@ CREATE TABLE `t_tag_user`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_tag_user` ADD INDEX t_tag_user_user_uuid ( `user_uuid` );
+
 DROP TABLE IF EXISTS
     `t_tag_project`;
 CREATE TABLE `t_tag_project`(
@@ -231,6 +270,8 @@ CREATE TABLE `t_tag_project`(
     `content` VARCHAR(200) DEFAULT NULL COMMENT '内容',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_tag_project` ADD INDEX t_tag_project_project_uuid ( `project_uuid` );
 
 
 DROP TABLE IF EXISTS
@@ -252,7 +293,7 @@ CREATE TABLE `t_backoffice_user`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-
+ALTER TABLE `t_backoffice_user` ADD INDEX t_backoffice_user_nickname ( `nickname` );
 
 
 
