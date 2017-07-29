@@ -77,7 +77,7 @@
 | title | |
 | detail | |
 | result | |
-| author | |
+| author_uuid | |
 | time | |
 | like | |
 | status | |
@@ -101,7 +101,7 @@
 | project_uuid | |
 | order | |
 | type | |
-| path | |
+| media_name | |
 | time | |
 
 
@@ -128,6 +128,7 @@
 | like | |
 | is_reply | |
 | reply_user_uuid  | |
+| reply_comment_id | |
 
 
 **t_project_journal**

@@ -16,3 +16,243 @@ CREATE TABLE `t_user`(
     `time` TIMESTAMP NOT NULL COMMENT '注册时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 10000 DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_user_auth`;
+CREATE TABLE `t_user_auth`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐',
+    `qq` VARCHAR(50) NOT NULL COMMENT '用户QQ授权',
+    `wechat` VARCHAR(50) NOT NULL COMMENT '微信授权',
+    `weibo` VARCHAR(50) NOT NULL COMMENT '微博授权',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_user_user`;
+CREATE TABLE `t_user_user`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型(关注者与粉丝)',
+    `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_user_setting`;
+CREATE TABLE `t_user_setting`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `status` TINYINT NOT NULL COMMENT '状态(开与关)',
+    `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_user_eduction`;
+CREATE TABLE `t_user_eduction`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `school` VARCHAR(100) NOT NULL COMMENT '学校',
+    `begin_time` TIMESTAMP NOT NULL COMMENT '开始时间戳',
+    `end_time` TIMESTAMP NOT NULL COMMENT '结束时间戳',
+    `major` VARCHAR(100) NOT NULL COMMENT '专业',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+DROP TABLE IF EXISTS
+    `t_project`;
+CREATE TABLE `t_project`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `title` TINYINT NOT NULL COMMENT '标题',
+    `detail` TEXT NOT NULL COMMENT '详细介绍',
+    `result` TEXT NOT NULL COMMENT '结果',
+    `author_uuid` VARCHAR(100) NOT NULL COMMENT '创建者uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '创建时间戳',
+    `like` INT(11) NOT NULL COMMENT '点赞数量',
+    `status` TINYINT NOT NULL COMMENT '状态',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_project_user`;
+CREATE TABLE `t_project_user`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `author_uuid` VARCHAR(100) NOT NULL COMMENT '成员uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_project_media`;
+CREATE TABLE `t_project_media`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
+    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_project_plan`;
+CREATE TABLE `t_project_plan`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `content` TEXT NOT NULL COMMENT '内容',
+    `excution_time` TIMESTAMP NOT NULL COMMENT '执行时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_comment`;
+CREATE TABLE `t_comment`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `content` TEXT NOT NULL COMMENT '内容',
+    `time` TIMESTAMP NOT NULL COMMENT '评论时间戳',
+    `like` INT(11) NOT NULL COMMENT '点赞数量',
+    `is_reply` INT(11) NOT NULL COMMENT '是否回复',
+    `reply_user_uuid` VARCHAR(100) NOT NULL COMMENT '回复者uuid',
+    `reply_comment_id` INT DEFAULT NULL COMMENT '回复的评论的id',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_project_journal`;
+CREATE TABLE `t_project_journal`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT '日志uuid',
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `content` TEXT NOT NULL COMMENT '内容',
+    `time` TIMESTAMP NOT NULL COMMENT '记录时间戳',
+    `like` INT(11) NOT NULL COMMENT '点赞数量',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_project_journal_media`;
+CREATE TABLE `t_project_journal_media`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `journal_uuid` VARCHAR(100) NOT NULL COMMENT '日志uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
+    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+DROP TABLE IF EXISTS
+    `t_message_like`;
+CREATE TABLE `t_message_like`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
+    `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_message_project`;
+CREATE TABLE `t_message_project`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
+    `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_message_member`;
+CREATE TABLE `t_message_member`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
+    `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_message_start`;
+CREATE TABLE `t_message_start`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
+    `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+DROP TABLE IF EXISTS
+    `t_tag_user`;
+CREATE TABLE `t_tag_user`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS
+    `t_tag_project`;
+CREATE TABLE `t_tag_project`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `order` TINYINT NOT NULL COMMENT '顺序',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+DROP TABLE IF EXISTS
+    `t_backoffice_user`;
+CREATE TABLE `t_backoffice_user`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `nickname` VARCHAR(100) NOT NULL COMMENT '昵称',
+    `detail` VARCHAR(200) NOT NULL COMMENT '简介',
+    `phone` VARCHAR(20) NOT NULL COMMENT '手机',
+    `email` VARCHAR(20) NOT NULL COMMENT '电子邮箱',
+    `qq` VARCHAR(20) NOT NULL COMMENT '用户QQ',
+    `wechat` VARCHAR(40) NOT NULL COMMENT '微信',
+    `gender` TINYINT NOT NULL COMMENT '性别',
+    `area` VARCHAR(40) NOT NULL COMMENT '地区',
+    `avator` VARCHAR(200) NOT NULL COMMENT '头像',
+    `career` VARCHAR(50) NOT NULL COMMENT '职业',
+    `time` TIMESTAMP NOT NULL COMMENT '注册时间戳',
+    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+
+
+
