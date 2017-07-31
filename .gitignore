@@ -46,6 +46,7 @@ DerivedData
 *.hmap
 __pycache__/
 env/*
+env/
 .vscode
 
 #svn文件夹忽略

@@ -12,10 +12,13 @@
 """
 
 from module.auth import auth
+from module.database import DBPool
+
 from service.api import api
 from service.admin import admin
 
 def register(app):
+    
     app.register_blueprint(auth,url_prefix='/auth')    #注册asset蓝图，并指定前缀。
     app.register_blueprint(api, url_prefix='/service/api')
     app.register_blueprint(admin, url_prefix='/admin')

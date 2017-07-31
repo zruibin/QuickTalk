@@ -10,8 +10,7 @@
 """
 
 """
-
-
+ 
 from flask import Flask
 from config import DevConfig
 import register
