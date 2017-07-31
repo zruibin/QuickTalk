@@ -13,7 +13,7 @@ CREATE TABLE `t_user`(
     `area` VARCHAR(40) NOT NULL COMMENT '地区',
     `avator` VARCHAR(200) NOT NULL COMMENT '头像',
     `career` VARCHAR(50) NOT NULL COMMENT '职业',
-    `time` TIMESTAMP NOT NULL COMMENT '注册时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '注册时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 10000 DEFAULT CHARSET = utf8;
 
@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS
 CREATE TABLE `t_user_auth`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐',
+    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐(md5)',
     `qq` VARCHAR(50) NOT NULL COMMENT '用户QQ授权',
     `wechat` VARCHAR(50) NOT NULL COMMENT '微信授权',
     `weibo` VARCHAR(50) NOT NULL COMMENT '微博授权',
@@ -67,8 +67,8 @@ CREATE TABLE `t_user_eduction`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `order` TINYINT NOT NULL COMMENT '顺序',
     `school` VARCHAR(100) NOT NULL COMMENT '学校',
-    `begin_time` TIMESTAMP NOT NULL COMMENT '开始时间戳',
-    `end_time` TIMESTAMP NOT NULL COMMENT '结束时间戳',
+    `begin_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '开始时间戳',
+    `end_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '结束时间戳',
     `major` VARCHAR(100) NOT NULL COMMENT '专业',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -84,7 +84,7 @@ CREATE TABLE `t_project`(
     `detail` TEXT NOT NULL COMMENT '详细介绍',
     `result` TEXT NOT NULL COMMENT '结果',
     `author_uuid` VARCHAR(100) NOT NULL COMMENT '创建者uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '创建时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `status` TINYINT NOT NULL COMMENT '状态',
     PRIMARY KEY(`id`)
@@ -100,7 +100,7 @@ CREATE TABLE `t_project_user`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `author_uuid` VARCHAR(100) NOT NULL COMMENT '成员uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -114,7 +114,7 @@ CREATE TABLE `t_project_media`(
     `order` TINYINT NOT NULL COMMENT '顺序',
     `type` TINYINT NOT NULL COMMENT '类型',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -127,7 +127,7 @@ CREATE TABLE `t_project_plan`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `order` TINYINT NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
-    `excution_time` TIMESTAMP NOT NULL COMMENT '执行时间戳',
+    `excution_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '执行时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -140,7 +140,7 @@ CREATE TABLE `t_comment`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL COMMENT '评论时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '评论时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `is_reply` INT(11) NOT NULL COMMENT '是否回复',
     `reply_user_uuid` VARCHAR(100) NOT NULL COMMENT '回复者uuid',
@@ -159,7 +159,7 @@ CREATE TABLE `t_project_journal`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL COMMENT '记录时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -175,7 +175,7 @@ CREATE TABLE `t_project_journal_media`(
     `type` TINYINT NOT NULL COMMENT '类型',
     `order` TINYINT NOT NULL COMMENT '顺序',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -189,7 +189,7 @@ CREATE TABLE `t_message_like`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -205,7 +205,7 @@ CREATE TABLE `t_message_project`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -221,7 +221,7 @@ CREATE TABLE `t_message_member`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -237,7 +237,7 @@ CREATE TABLE `t_message_start`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -288,12 +288,17 @@ CREATE TABLE `t_backoffice_user`(
     `area` VARCHAR(40) NOT NULL COMMENT '地区',
     `avator` VARCHAR(200) NOT NULL COMMENT '头像',
     `career` VARCHAR(50) NOT NULL COMMENT '职业',
-    `time` TIMESTAMP NOT NULL COMMENT '注册时间戳',
-    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '注册时间戳',
+    `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐(md5)',
+    `level` TINYINT NOT NULL COMMENT '级别',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_backoffice_user` ADD INDEX t_backoffice_user_nickname ( `nickname` );
+
+INSERT INTO `t_backoffice_user`(`id`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avator`, `career`, `time`, `password`,`level`)
+    VALUES(1, 'zruibin', 'administration', '+8613113324024', 'ruibin.chow@qq.com', '328437740', 'z_ruibin', 1, '深圳', ' ', '程序员', '2017-07-31 06:17:40',
+            'f8f235136f525e39e94f401424954c3a', 0);
 
 
 
