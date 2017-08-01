@@ -137,6 +137,7 @@ DROP TABLE IF EXISTS
     `t_comment`;
 CREATE TABLE `t_comment`(
     `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content` TEXT NOT NULL COMMENT '内容',
@@ -148,6 +149,7 @@ CREATE TABLE `t_comment`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_comment` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_comment` ADD INDEX t_comment_project_uuid ( `project_uuid` );
 ALTER TABLE `t_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
 
