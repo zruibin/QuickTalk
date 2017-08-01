@@ -40,8 +40,9 @@ DROP TABLE IF EXISTS
 CREATE TABLE `t_user_user`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `type` TINYINT NOT NULL COMMENT '类型(关注者与粉丝)',
+    `type` TINYINT NOT NULL COMMENT '类型(关注者与粉丝与已交换联系方式的人)',
     `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '关联时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
