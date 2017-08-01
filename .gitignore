@@ -48,6 +48,7 @@ __pycache__/
 env/*
 env/
 .vscode
+log.txt
 
 #svn文件夹忽略
 .svn/

@@ -12,7 +12,7 @@
 """
  
 from flask import Flask
-from config import DevConfig
+from config import Config
 import register
 
 app = Flask(__name__)

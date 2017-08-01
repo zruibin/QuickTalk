@@ -13,13 +13,18 @@
 
 
 class Config(object):
-    pass
 
-class ProdConfig(Config):
-    pass
-
-class DevConfig(Config):
     DEBUG = True
+
+    DBHOST = "localhost"
+    DBPORT = 3306
+    DBUSER = "root"
+    DBPWD = "0928"
+    DBNAME = "creation"
+    DBCHAR = "utf8"
+    DBPOOLSIZE = 10
+    pass
+
 
 
 

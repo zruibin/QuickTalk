@@ -8,8 +8,13 @@
 # 
 
 from service.api import api
+from module.database import DBPool
+from module.log import Log
+
 
 @api.route('/')
 def index():                         
         #  print'__name__',__name__
-         return '<h1>Hello zruibin, From Service API!</h1>'
+        DBPool.test()
+        # Log.test()
+        return '<h1>Hello zruibin, From Service API!</h1>'
