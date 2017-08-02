@@ -218,8 +218,8 @@ CREATE TABLE `t_message_project`(
 ALTER TABLE `t_message_project` ADD INDEX t_message_project_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
-    `t_message_member`;
-CREATE TABLE `t_message_member`(
+    `t_message_comment`;
+CREATE TABLE `t_message_comment`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
@@ -231,7 +231,7 @@ CREATE TABLE `t_message_member`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_message_member` ADD INDEX t_message_member_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_comment` ADD INDEX t_message_comment_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_start`;
@@ -248,6 +248,22 @@ CREATE TABLE `t_message_start`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_start` ADD INDEX t_message_start_user_uuid ( `user_uuid` );
+
+DROP TABLE IF EXISTS
+    `t_message_contact`;
+CREATE TABLE `t_message_contact`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
+    `status` TINYINT NOT NULL COMMENT '状态(是否已读)',
+    `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_message_contact` ADD INDEX t_message_contact_user_uuid ( `user_uuid` );
 
 
 DROP TABLE IF EXISTS
