@@ -16,8 +16,8 @@
 
 /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT
 /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
-service mysql start
+#service mysql start
+systemctl start mariadb
 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-ps -ef | grep supervisord | grep -v grep | cut -c 9-15 | xargs kill -s 9
-#source /home/creaction/env/bin/activate
-supervisord -c /home/creaction/supervisor.conf
+#ps -ef | grep supervisord | grep -v grep | cut -c 9-15 | xargs kill -s 9 
+/home/creaction/env/bin/supervisord -c /home/creaction/supervisor.conf

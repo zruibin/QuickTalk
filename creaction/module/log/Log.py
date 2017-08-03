@@ -25,7 +25,7 @@ class Loger(object):
                     format='%(asctime)s [%(levelname)s] [%(threadName)s] %(message)s',  
                     datefmt='%Y-%m-%d %H:%M:%S') 
     else:
-        logging.basicConfig(filename = os.path.join(os.getcwd(), 'log.txt'), level=logging.WARNING,  
+        logging.basicConfig(filename = os.path.join(os.getcwd(), './logs/log.txt'), level=logging.WARNING,  
                     format='%(asctime)s [%(levelname)s] [%(threadName)s] %(message)s',  
                     datefmt='%Y-%m-%d %H:%M:%S')  
 

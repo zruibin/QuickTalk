@@ -57,14 +57,14 @@ def help():
     string = """Available commands:
     -h or help                   Display general or command-specific helps   
     -rootDir=dirName       Source directory
-    -distDir=dirName        Distribute  directory
+    clean  dirName            clean dirName all .pyc file                         
 """
     print string
     pass
 
 
 def copyRequireFile():
-    dirList = ["./requirements.txt", "./conf/start.sh", "./conf/creaction.conf", "./conf/supervisor.conf"]
+    dirList = ["./requirements.txt", "./conf/start.sh", "./conf/creaction.conf", "./conf/supervisor.conf", "./conf/nginx.conf"]
     for directory in dirList:
         newDir = RELEASE + "/" + os.path.basename(directory)
         shutil.copyfile(directory, newDir)
@@ -76,7 +76,6 @@ def Main(argsList):
     
         if "-h" in argsList or "help" in argsList:
             help()
-            copyRequireFile()
             return
         if "clean" in argsList:
             print argsList
@@ -84,8 +83,6 @@ def Main(argsList):
                 cleanPYC(argsList[2])
                 shutil.rmtree(RELEASE)
             return
-
-        print "11111"
 
         rootdir = ""
         distDir = RELEASE

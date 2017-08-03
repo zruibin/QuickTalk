@@ -3,4 +3,6 @@
 
 ####架构方案
 
-**Python 2.7 + flask + uwsgi + nginx + MySQL 5.6**
+**Python 2.7 + flask + gunicorn + nginx + supervisor + MySQL 5.6**
+
+note: 项目部署于/home/creaction下
