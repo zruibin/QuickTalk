@@ -20,7 +20,7 @@ class Config(object):
     DBPORT = 3306
     DBUSER = "root"
     DBPWD = "0928"
-    DBNAME = "creation"
+    DBNAME = "creaction"
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
     pass

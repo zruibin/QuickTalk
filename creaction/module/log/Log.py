@@ -16,7 +16,7 @@ import logging
 import inspect, os
 
 
-class Log(object):
+class Loger(object):
     """docstring for Log"""
 
 # format='%(asctime)s [%(levelname)s] [%(filename)s] [%(threadName)s] [line:%(lineno)d] [%(funcName)s] %(message)s',
@@ -30,30 +30,31 @@ class Log(object):
                     datefmt='%Y-%m-%d %H:%M:%S')  
 
     def __init__(self):
-        super(Log, self).__init__()
+        super(Loger, self).__init__()
         pass
 
     @classmethod
-    def debug(cls, string):
+    def debug(cls, string, filename=__file__):
         string = "[%s] %s" % (inspect.stack()[1][3], string)
         logging.debug(string)
         pass
 
     @classmethod
-    def info(cls, string):
+    def info(cls, string, filename=__file__):
         string = "[%s] %s" % (inspect.stack()[1][3], string)
         logging.info(string)
         pass
 
     @classmethod
-    def warning(cls, string):
+    def warning(cls, string, filename=__file__):
         string = "[%s] %s" % (inspect.stack()[1][3], string)
         logging.warning(string)
         pass
 
-    @classmethod
-    def error(cls, string):
-        string = "[%s] %s" % (inspect.stack()[1][3], string)
+    @staticmethod
+    def error(string, filename=__file__):
+        filename = os.path.basename(filename)
+        string = "[%s] [%s] %s" % (filename, inspect.stack()[1][3], string)
         logging.error(string)
         pass
 

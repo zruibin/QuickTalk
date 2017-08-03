@@ -10,6 +10,7 @@
 import py_compile, compileall
 import sys, os, os.path, shutil
 
+RELEASE="build"
 
 def getAllFileInDir(DIR):
     """返回指定目录下所有文件的集合"""
@@ -31,13 +32,23 @@ def getAllFileInDirBeyoundTheDir(DIR, beyoundDir):
             # print os.path.basename(name)
     return array
 
-def clear(DIR):
+def clean(DIR):
     """列出指定目录下所有文件"""
     array = getAllFileInDir(DIR)
     for path in array:
         # print path
         fileExtension = os.path.splitext(path)[1]
         if fileExtension == ".py":
+            os.remove(path)
+    pass
+
+def cleanPYC(DIR):
+    array = getAllFileInDir(DIR)
+    print array
+    for path in array:
+        # print path
+        fileExtension = os.path.splitext(path)[1]
+        if fileExtension == ".pyc":
             os.remove(path)
     pass
 
@@ -52,20 +63,35 @@ def help():
     pass
 
 
+def copyRequireFile():
+    dirList = ["./requirements.txt", "./conf/start.sh", "./conf/creaction.conf", "./conf/supervisor.conf"]
+    for directory in dirList:
+        newDir = RELEASE + "/" + os.path.basename(directory)
+        shutil.copyfile(directory, newDir)
+    pass
+
 def Main(argsList):
     if len(argsList) != 1:
         # print argsList
     
         if "-h" in argsList or "help" in argsList:
             help()
+            copyRequireFile()
+            return
+        if "clean" in argsList:
+            print argsList
+            if os.path.exists(argsList[2]):
+                cleanPYC(argsList[2])
+                shutil.rmtree(RELEASE)
+            return
+
+        print "11111"
 
         rootdir = ""
-        distDir = ""
+        distDir = RELEASE
         for arg in argsList:
             if arg.startswith('-rootDir='):
                 rootdir = arg.split("=")[1]
-            if arg.startswith('-distDir='):
-                distDir = arg.split("=")[1]
                 if os.path.exists(distDir):
                     shutil.rmtree(distDir)
 
@@ -74,7 +100,8 @@ def Main(argsList):
         if len(rootdir) > 0 and len(distDir) > 0:
             shutil.copytree(rootdir, distDir)
             compileall.compile_dir(distDir)
-            clear(distDir)
+            copyRequireFile()
+            clean(distDir)
 
     # py_compile.compile(r'H:\game\test.py')
     pass

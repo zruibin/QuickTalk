@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# main.py
+# app.py
 #
-# Created by zruibin on 2017/07/24.
-# Copyright (c) 2017年 zruibin All rights reserved.
+# Created by ruibin.chow on 2017/07/24.
+# Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
@@ -30,4 +30,4 @@ def home():
 register.register(app)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)

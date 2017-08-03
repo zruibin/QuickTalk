@@ -8,9 +8,10 @@
 # 
 
 import mysql.connector.pooling
-from module.log import Log
+# from module.log import Log
+from module.log.Log import Loger
 from config import Config
-import sys
+
 
 class DBPool(object):  
     ''' mysql 数据库连接池 '''
@@ -31,7 +32,7 @@ class DBPool(object):
             self.__cnxpool = mysql.connector.pooling.MySQLConnectionPool(pool_size=Config.DBPOOLSIZE, 
                         pool_reset_session=True, **dbconfig)  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass
           
     def executeSingleDml(self, strsql):
@@ -44,7 +45,7 @@ class DBPool(object):
             cursor.close()  
             cnx.commit()  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             results = False
         finally:  
             if cnx:  
@@ -61,7 +62,7 @@ class DBPool(object):
             results = cursor.fetchall()  
             cursor.close()  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass 
         finally:  
             if cnx:  
@@ -72,7 +73,7 @@ class DBPool(object):
         try:  
             self.__cnx = self.__cnxpool.get_connection()  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass
       
     def __endTransaction(self):
@@ -80,7 +81,7 @@ class DBPool(object):
             if self.__cnx:  
                 self.__cnx.close()  
         except Exception, e:
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass
         
       
@@ -88,14 +89,14 @@ class DBPool(object):
         try:  
             self.__cnx.commit()  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass
       
     def __rollbackTransaction(self):  
         try:  
             self.__cnx.rollback()  
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             pass
       
     def executeTransactionQuery(self, strsql):
@@ -109,7 +110,7 @@ class DBPool(object):
             cursor.close()
             self.__commitTransaction() 
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             self.__rollbackTransaction()
         finally:
             self.__endTransaction() 
@@ -126,7 +127,7 @@ class DBPool(object):
             cursor.close()
             self.__commitTransaction()
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             results = False
             self.__rollbackTransaction()
         finally:
@@ -144,7 +145,7 @@ class DBPool(object):
             cursor.close()
             self.__commitTransaction()
         except Exception as e:  
-            Log.Log().error(e)
+            Loger.error(e, __file__)
             results = False
             self.__rollbackTransaction()
         finally:
@@ -162,7 +163,7 @@ def test():
     for row in results:  
         print "id:%d, name:%s"%(row[0],row[1])
     
-    Log.Log().debug("dsdf")
+    Loger.debug("dsdf")
 
     sql1 = """INSERT INTO `t_backoffice_user`(`id`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avator`, `career`, `time`, `password`,`level`)
     VALUES(4, 'zruibin1234', 'administration', '+8613113324024', 'ruibin.chow@qq.com', '328437740', 'z_ruibin', 1, '深圳', ' ', '程序员', '2017-07-31 06:17:40',
