@@ -9,6 +9,7 @@
 
 from service.api import api
 from module.database import DB
+from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 
 
@@ -18,6 +19,8 @@ def index():
         try:
             DB.test()
             Loger.error("test Log!", __file__)
+            CacheManager.shareInstanced().setCache("name", "Ruibin.Chow")
+            print CacheManager.shareInstanced().getCache("name")
         except Exception, e:
             Loger.error(e, __file__)
 

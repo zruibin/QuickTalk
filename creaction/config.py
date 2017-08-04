@@ -23,6 +23,11 @@ class Config(object):
     DBNAME = "creaction"
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
+
+    CACHE_HOST = DBHOST
+    CACHE_PORT = 6379
+    CACHE_EXPIRE = 3600 #一个小时
+
     pass
 
 
