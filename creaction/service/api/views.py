@@ -8,7 +8,7 @@
 # 
 
 from service.api import api
-from module.database import DBPool
+from module.database import DB
 from module.log.Log import Loger
 
 
@@ -16,7 +16,7 @@ from module.log.Log import Loger
 def index():                         
         #  print'__name__',__name__
         try:
-            DBPool.test()
+            DB.test()
             Loger.error("test Log!", __file__)
         except Exception, e:
             Loger.error(e, __file__)

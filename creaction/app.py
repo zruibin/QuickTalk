@@ -11,7 +11,7 @@
 
 """
  
-from flask import Flask
+from flask import Flask, Response, Request
 from config import Config
 import register
 
@@ -21,13 +21,27 @@ app = Flask(__name__)
 
 @app.errorhandler(404) 
 def page_not_found(error): 
-    return '<h1>404 not found!</h1>'
+    return app.send_static_file('404.html')
 
 @app.route('/')
 def home():
-    return '<h1>Hello zruibin!</h1>'
+    return app.send_static_file('index.html')
+
+# @app.route("/media/u/<user_uuid>/<imageid>")
+# def index(imageid):
+#     image = file("media/user/{}/{}".format(user_uuid, imageid))
+#     resp = Response(image, mimetype="image/jpeg")
+#     return resp
+
+
 
 register.register(app)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
+
+
+
+
+
+

@@ -13,7 +13,7 @@ from module.log.Log import Loger
 from config import Config
 
 
-class DBPool(object):  
+class DBManager(object):  
     ''' mysql 数据库连接池 '''
     __slots__ = ("__cnxpool", "__cnx")
      
@@ -157,7 +157,7 @@ class DBPool(object):
 def test():  
     ''''' 事务使用样例 '''  
       
-    cnxpool = DBPool()  
+    cnxpool = DBManager()  
       
     results = cnxpool.executeTransactionQuery("SELECT * FROM `t_backoffice_user`")
     for row in results:  
