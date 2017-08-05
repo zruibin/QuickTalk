@@ -14,6 +14,8 @@
 from config import Config
 import logging
 import inspect, os
+from functools import wraps
+
 
 
 class Loger(object):
@@ -57,6 +59,19 @@ class Loger(object):
         string = "[%s] [%s] %s" % (filename, inspect.stack()[1][3], string)
         logging.error(string)
         pass
+
+
+def LogHandle(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except  Exception as e:
+            print "**" * 40
+            Loger.error(e, __file__)
+            print "**" * 40
+            raise
+    return wrapper
 
 
 if __name__ == '__main__':

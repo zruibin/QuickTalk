@@ -10,18 +10,21 @@
 """
 
 """
- 
-from flask import Flask, Response, Request
-from config import Config
+
+from flask import Flask, make_response
+from config import otherHandle
 import register
+from module.log.Log import LogHandle
+from common.jsonUtil import jsonTool
 
 app = Flask(__name__)
 # app.config.from_object(DevConfig)
 
-
-@app.errorhandler(404) 
-def page_not_found(error): 
-    return app.send_static_file('404.html')
+@app.errorhandler(404)
+@otherHandle
+def page_not_found(error):
+    # return app.send_static_file('404.html')
+    return make_response(jsonTool({"code":1, 'error': 'Not found'}), 404)
 
 @app.route('/')
 def home():
