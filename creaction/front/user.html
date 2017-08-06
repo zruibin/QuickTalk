@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>lock page</title>
+<meta name="author" content="www.zruibin.cc" />
+<script type="text/javascript">
+
+function getQueryString() 
+{ 
+    var url = location.search; //获取url中"?"符后的字串 
+    console.log('url: ' + url);
+    // var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+    // var r = window.location.search.substr(1).match(reg); 
+    // if (r != null) return unescape(r[2]); return null;  
+    thisDLoc = document.location; 
+    path = thisDLoc.pathname
+    strs = path.split("/");
+    console.log(strs);
+} 
+getQueryString()
+
+</script>
+<style>
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<h1>User</h1>
+    
+
+
+<!-- <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8" homePageUrl="http://zruibin.cc" homePageName="回到我的主页"></script> -->
+
+
+</body>
+</html>
