@@ -17,7 +17,7 @@ import multiprocessing
 
 gevent.monkey.patch_all()
 
-DEBUG = False 
+DEBUG = True 
 
 if DEBUG:
     reload = True
