@@ -16,12 +16,13 @@ from config import otherHandle
 import register
 from module.log.Log import LogHandle
 from common.jsonUtil import jsonTool
+from common.auth import certifyTokenHandle
 
 app = Flask(__name__)
 # app.config.from_object(DevConfig)
 
 @app.errorhandler(404)
-@otherHandle
+@certifyTokenHandle
 def page_not_found(error):
     # return app.send_static_file('404.html')
     return make_response(jsonTool({"code":1, 'error': 'Not found'}), 404)

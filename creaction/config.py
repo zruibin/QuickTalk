@@ -51,6 +51,7 @@ class Config(object):
     CACHE_PORT = 6379
     CACHE_EXPIRE = 3600 #一个小时
 
+    TOKEN_EXPIRE = 3600
     pass
 
 

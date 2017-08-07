@@ -11,7 +11,7 @@
 json 响应包装工具
 """
 
-from flask import jsonify ,current_app
+from flask import current_app
 import json
 
 
@@ -19,7 +19,7 @@ def jsonTool(obj):
     indent = None
     separators = (',', ':')
     jsonStr = json.dumps(obj, indent=indent, separators=separators)
-    response = current_app.response_class((jsonStr, '\n'), mimetype=current_app.config['JSONIFY_MIMETYPE'])
+    response = current_app.response_class((jsonStr, "\n"), mimetype=current_app.config["JSONIFY_MIMETYPE"])
     return response
 
 
