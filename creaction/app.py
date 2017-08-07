@@ -11,15 +11,19 @@
 
 """
 
-from flask import Flask, make_response
-from config import otherHandle
+from flask import Flask, make_response, request
+from config import *
 import register
 from module.log.Log import LogHandle
 from common.jsonUtil import jsonTool
 from common.auth import certifyTokenHandle
+from common.file import uploadFile
 
 app = Flask(__name__)
-# app.config.from_object(DevConfig)
+app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
+app.config['ALLOWED_EXTENSIONS'] = Config.ALLOWED_EXTENSIONS
+app.config['DEBUG'] = Config.DEBUG
+
 
 @app.errorhandler(404)
 @certifyTokenHandle
@@ -37,6 +41,10 @@ def home():
 #     resp = Response(image, mimetype="image/jpeg")
 #     return resp
 
+@app.route('/upload', methods=['POST'])
+def upload():
+    return uploadFile("user", "zruibin")
+    pass
 
 
 register.register(app)
