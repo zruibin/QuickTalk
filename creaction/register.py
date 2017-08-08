@@ -14,10 +14,14 @@
 from service.api import api
 from service.admin import admin
 
-def register(app):
+from service.account import account
+
+def registerBlueprint(app):
     """ 注册蓝图，并指定前缀""" 
     app.register_blueprint(api, url_prefix='/service/api')
     app.register_blueprint(admin, url_prefix='/admin')
+
+    app.register_blueprint(account, url_prefix='/service/account') # 帐号
 
 if __name__ == '__main__':
     pass

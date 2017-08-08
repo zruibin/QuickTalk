@@ -15,7 +15,7 @@ from flask import Flask, make_response, request
 from config import *
 import register
 from module.log.Log import LogHandle
-from common.jsonUtil import jsonTool
+from common.tools import jsonTool
 from common.auth import certifyTokenHandle
 
 from common.code import *
@@ -29,7 +29,7 @@ app.config['DEBUG'] = Config.DEBUG
 
 
 @app.errorhandler(404)
-@certifyTokenHandle
+# @certifyTokenHandle
 def page_not_found(error):
     # return app.send_static_file('404.html')
     return make_response(jsonTool({"code":1, 'error': 'Not found'}), 404)
@@ -56,7 +56,7 @@ def sendcode():
     return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS])
     pass
 
-register.register(app)
+register.registerBlueprint(app)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

@@ -11,15 +11,18 @@ CREATE TABLE `t_user`(
     `email` VARCHAR(20) NOT NULL COMMENT '电子邮箱',
     `gender` TINYINT NOT NULL COMMENT '性别',
     `area` VARCHAR(40) NOT NULL COMMENT '地区',
-    `avator` VARCHAR(200) NOT NULL COMMENT '头像',
+    `avatar` VARCHAR(200) NOT NULL COMMENT '头像',
     `career` VARCHAR(50) NOT NULL COMMENT '职业',
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '注册时间戳',
     PRIMARY KEY(`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 10000 DEFAULT CHARSET = utf8;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_user` AUTO_INCREMENT=10000;
 
 ALTER TABLE `t_user` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_user` ADD INDEX t_user_nickname ( `nickname` );
 ALTER TABLE `t_user` ADD INDEX t_user_phone ( `phone` );
+ALTER TABLE `t_user` ADD INDEX t_user_email ( `email` );
 
 DROP TABLE IF EXISTS
     `t_user_auth`;

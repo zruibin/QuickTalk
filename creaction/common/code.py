@@ -10,10 +10,11 @@
 """
 请求返回code与相对应的message
 基本错误从10001开始
-图片错误从11000开始
+Token错误从11000开始
+图片错误从12000开始
 """
 
-from common.jsonUtil import jsonTool
+from common.tools import jsonTool
 
 CODE_SUCCESS = 10000 # 请求成功
 
@@ -45,16 +46,21 @@ CODE_ERROR_WRONG_VERIFIER = 10024 # Verifier错误
 CODE_ERROR_AUTH_FAILD = 10025 # 认证失败
 CODE_ERROR_PHONE_OR_PASSWORD_ERROR = 10026 # 手机或密码错误
 CODE_ERROR_EMAIL_OR_PASSWORD_ERROR = 10027 # 邮箱或密码错误
-CODE_ERROR_TOKEN_USED = 10028 # Token已经被使用
-CODE_ERROR_TOKEN_EXPIRED = 10029 # Token已经过期
-CODE_ERROR_TOKEN_REVOKED = 10030 # Token不合法
-CODE_ERROR_CONTAINS_FORBID_WORLD = 10031 # 含有敏感词
-CODE_ERROR_VERSION_REJECTED = 10032 # 版本号错误
+CODE_ERROR_CONTAINS_FORBID_WORLD = 10028 # 含有敏感词
+CODE_ERROR_VERSION_REJECTED = 10029 # 版本号错误
+CODE_ERROR_VERIFY_CODE_OUTDATE = 10030 # 验证码过期
+CODE_ERROR_THE_EMAIL_HAS_BE_USED = 10031 # 该邮箱已经被使用
 
-CODE_ERROR_IMAGE_SERVICE_ERROR = 11000 # 上传图片服务错误
-CODE_ERROR_IMAGE_UNSUPPORTED_TYPE = 11001 #不支持的图片类型，仅仅支持JPG、GIF、PNG
-CODE_ERROR_IMAGE_TOO_LARGE = 11002 # 图片太大
-CODE_ERROR_IMAGE_DOSE_NOT_MULTIPART = 11003 # 请确保使用multpart上传图片
+CODE_ERROR_TOKEN_USED = 11000 # Token已经被使用
+CODE_ERROR_TOKEN_EXPIRED = 11001 # Token已经过期
+CODE_ERROR_TOKEN_REVOKED = 11002 # Token不合法
+CODE_ERROR_TOKEN_NOT_FOUND = 11003 # Token与用户uuid未找到
+CODE_ERROR_TOKEN_CACHE_FAIL = 11004 # Token缓存失败
+
+CODE_ERROR_IMAGE_SERVICE_ERROR = 12000 # 上传图片服务错误
+CODE_ERROR_IMAGE_UNSUPPORTED_TYPE = 12001 #不支持的图片类型，仅仅支持JPG、GIF、PNG
+CODE_ERROR_IMAGE_TOO_LARGE = 12002 # 图片太大
+CODE_ERROR_IMAGE_DOSE_NOT_MULTIPART = 12003 # 请确保使用multpart上传图片
 
 
 MESSAGE = {
@@ -88,11 +94,16 @@ MESSAGE = {
     CODE_ERROR_AUTH_FAILD : "认证失败",
     CODE_ERROR_PHONE_OR_PASSWORD_ERROR : "手机或密码错误",
     CODE_ERROR_EMAIL_OR_PASSWORD_ERROR : "邮箱或密码错误",
+    CODE_ERROR_CONTAINS_FORBID_WORLD : "含有敏感词",
+    CODE_ERROR_VERSION_REJECTED : "版本号错误",
+    CODE_ERROR_VERIFY_CODE_OUTDATE : "验证码过期",
+    CODE_ERROR_THE_EMAIL_HAS_BE_USED : "该邮箱已经被使用",
+
     CODE_ERROR_TOKEN_USED : "Token已经被使用",
     CODE_ERROR_TOKEN_EXPIRED : "Token已经过期",
     CODE_ERROR_TOKEN_REVOKED : "Token不合法",
-    CODE_ERROR_CONTAINS_FORBID_WORLD : "含有敏感词",
-    CODE_ERROR_VERSION_REJECTED : "版本号错误",
+    CODE_ERROR_TOKEN_NOT_FOUND : "Token与用户uuid未找到",
+    CODE_ERROR_TOKEN_CACHE_FAIL : "Token缓存失败",
 
     CODE_ERROR_IMAGE_SERVICE_ERROR : "上传图片服务错误",
     CODE_ERROR_IMAGE_UNSUPPORTED_TYPE : "不支持的图片类型，仅仅支持JPG、GIF、PNG",
@@ -100,8 +111,8 @@ MESSAGE = {
     CODE_ERROR_IMAGE_DOSE_NOT_MULTIPART : "请确保使用multpart上传图片",
 }
 
-def PACKAGE_CODE(code, message):
-    return  jsonTool({"code": code, 'message': message, "data":None})
+def PACKAGE_CODE(code, message, data=None):
+    return  jsonTool({"code": code, 'message': message, "data":data})
 
 
 if __name__ == '__main__':

@@ -11,29 +11,7 @@
 
 """
 import os
-from functools import wraps
-from flask import  request, Response,make_response
-from common.jsonUtil import jsonTool
 
-def otherHandle(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        print request.args
-        print request.args.get("test")
-        print request.form
-        result = {"user": "Ruibin.Chow"}
-        temp = True
-
-        if temp:
-            response = make_response(func(*args, **kwargs))
-            # response.headers["Access-Control-Allow-Origin"] = "*"
-            response.headers["Access-Control-Allow-Methods"] = "GET,POST"
-            response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
-            response.headers["WWW-Authenticate"] = "Authentication Required"
-            return response
-        else:
-            return jsonTool(result)
-    return wrapper
 
 class Config(object):
 
@@ -63,6 +41,12 @@ class Config(object):
     MAIL_USER = "creaction"    #用户名
     MAIL_PASSWORD = "creaction362436"   #口令 
     MAIL_POSTFIX = "126.com"  #发件箱的后缀
+
+    TYPE_FOR_EMAIL = "1"
+    TYPE_FOR_PHONE = "2"
+    TYPE_FOR_WECHAT = "3"
+    TYPE_FOR_QQ = "4"
+    TYPE_FOR_WEIBO = "5"
     pass
 
 

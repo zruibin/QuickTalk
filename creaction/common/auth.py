@@ -22,7 +22,8 @@ import hmac, hashlib, base64, time
 from functools import wraps
 from config import Config
 from flask import  request, Response,make_response
-from common.jsonUtil import jsonTool
+from common.tools import jsonTool
+from common.code import *
 
 ENCODE_UTF8 = "utf-8"
 ENCODE_BASE64 = "base64"
@@ -38,7 +39,7 @@ def generateToken(key, expire=Config.TOKEN_EXPIRE):
     '''
     tsStr = str(time.time() + expire)
     tsByte = tsStr.encode(ENCODE_UTF8)
-    sha1TshexStr = hmac.new(key.encode(ENCODE_UTF8), tsByte, 
+    sha1TshexStr = hmac.new(str(key).encode(ENCODE_UTF8), tsByte, 
                                     hashlib.sha1).digest().encode(ENCODE_BASE64)
     token = tsStr + ":" + sha1TshexStr
     b64Token = base64.b64encode(token)
@@ -63,7 +64,7 @@ def certifyToken(key, token):
         return False
     knownSha1Tsstr = tokenList[1]
     tsByte = tsStr.encode(ENCODE_UTF8) 
-    sha1TshexStr = hmac.new(key.encode(ENCODE_UTF8), tsByte, 
+    sha1TshexStr = hmac.new(str(key).encode(ENCODE_UTF8), tsByte, 
                                     hashlib.sha1).digest().encode(ENCODE_BASE64)
     if sha1TshexStr != knownSha1Tsstr:
         # token certification failed
@@ -73,7 +74,8 @@ def certifyToken(key, token):
 
 
 def tokenErrorResponse():
-    jsonString = {"code": -1, "error": "Token or UserUUID Not found"}
+    
+    jsonString = PACKAGE_CODE(CODE_ERROR_TOKEN_NOT_FOUND, MESSAGE[CODE_ERROR_TOKEN_NOT_FOUND])
     response = make_response(jsonTool(jsonString))
     response.headers["Access-Control-Allow-Methods"] = "GET,POST"
     response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
@@ -97,6 +99,7 @@ def certifyTokenHandle(func):
         else:
             return func(*args, **kwargs)
     return wrapper
+
 
 
 if __name__ == '__main__':
