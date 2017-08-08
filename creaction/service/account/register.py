@@ -84,10 +84,26 @@ def  operationDataStorage(userUUID, password, time, phone="", email=""):
                 INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
                 VALUES('%s', '%s', '', '', '');
         """ % (userUUID, password)
+        """ t_user_setting
+            `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT NOT NULL COMMENT '类型',
+    `status` TINYINT NOT NULL COMMENT '状态(开与关)',
+        """
+        userSettingSQL = """
+                INSERT INTO t_user_setting (user_uuid, type, status) 
+                VALUES ('%s', %d, %d), ('%s', %d, %d), 
+                        ('%s', %d, %d), ('%s', %d, %d), ('%s', %d, %d), 
+                        ('%s', %d, %d);
+        """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.NOTIFICATION_STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.NOTIFICATION_STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.NOTIFICATION_STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.NOTIFICATION_STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.NOTIFICATION_STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.NOTIFICATION_STATUS_ON)
         
         dbManager = DB.DBManager()
         try: 
-                results = dbManager.executeTransactionMutltiDml([userSQL, userAuthSQL])  
+                results = dbManager.executeTransactionMutltiDml([userSQL, userAuthSQL, userSettingSQL])  
         except Exception as e:
                 Loger.error(e, __file__)
 

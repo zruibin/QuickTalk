@@ -58,7 +58,6 @@ CREATE TABLE `t_user_setting`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT NOT NULL COMMENT '类型',
     `status` TINYINT NOT NULL COMMENT '状态(开与关)',
-    `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

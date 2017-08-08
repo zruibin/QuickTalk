@@ -47,6 +47,23 @@ class Config(object):
     TYPE_FOR_WECHAT = "3"
     TYPE_FOR_QQ = "4"
     TYPE_FOR_WEIBO = "5"
+
+    NOTIFICATION_STATUS_ON = 1
+    NOTIFICATION_STATUS_OFF = 0
+
+    # 赞(第一次赞就有通知)
+    NOTIFICATION_FOR_LIKE = 1 
+    # 评论
+    NOTIFICATION_FOR_COMMENT = 2
+    # 日志更新
+    NOTIFICATION_FOR_JOURNAL = 3
+    # 关注的可行(1、日志更新；2、可行项目更改；3、邀请加入；4、申请加入；5、踢人；6、主动退出)
+    NOTIFICATION_FOR_START_PROJECT = 4
+    # 关注的人(被关注是否有消息通知)
+    NOTIFICATION_FOR_START_PEOPLE = 5
+    # 联系人消息
+    NOTIFICATION_FOR_CONTACT = 6
+    
     pass
 
 
