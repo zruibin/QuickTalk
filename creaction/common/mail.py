@@ -8,44 +8,100 @@
 # 
 
 """
-
+邮箱验证码发送
 """
 
-from email.MIMEText import MIMEText
 import smtplib
+from email.MIMEText import MIMEText
+import threading, random
+from module.log.Log import Loger
+from config import Config
+from module.cache.RuntimeCache import CacheManager
 
-# mail_host="smtp.126.com"  #设置服务器
-# mail_user="creaction"    #用户名
-# mail_pass="...362436..."   #口令 
-# mail_postfix="126.com"  #发件箱的后缀
-mail_host="smtp.qq.com"  #设置服务器
-mail_user="328437740"    #用户名
-mail_pass="7811327rbsd."   #口令 
-mail_postfix="qq.com"  #发件箱的后缀
+
+def generateVerificationCode():
+    ''' 随机生成6位的验证码 '''
+    code_list = []
+    for i in range(10): # 0-9数字
+        code_list.append(str(i))
+    for i in range(65, 91): # A-Z
+        code_list.append(chr(i))
+    for i in range(97, 123): # a-z
+        code_list.append(chr(i))
+    
+    myslice = random.sample(code_list, 6)  # 从list中随机获取6个元素，作为一个片断返回
+    verification_code = ''.join(myslice) # list to string
+    # print code_list
+    # print type(myslice)
+    return verification_code
+
+def generateVerificationCode2():
+    ''' 随机生成6位的验证码 '''
+    code_list = []
+    for i in range(2):
+        random_num = random.randint(0, 9) # 随机生成0-9的数字
+        # 利用random.randint()函数生成一个随机整数a，使得65<=a<=90
+        # 对应从“A”到“Z”的ASCII码
+        a = random.randint(65, 90)
+        b = random.randint(97, 122)
+        random_uppercase_letter = chr(a)
+        random_lowercase_letter = chr(b)
+        code_list.append(str(random_num))
+        code_list.append(random_uppercase_letter)
+        code_list.append(random_lowercase_letter)
+    verification_code = ''.join(code_list)
+    return verification_code
+
   
-def sendEmail(to_list, sub, content):  #to_list：收件人；sub：主题；content：邮件内容
-    me="验证码"+"<"+mail_user+"@"+mail_postfix+">"   #这里的hello可以任意设置，收到信后，将按照设置显示
-    msg = MIMEText(content,_subtype='html',_charset='utf-8')    #创建一个实例，这里设置为html格式邮件
-    msg['Subject'] = sub    #设置主题
-    msg['From'] = me  
-    msg['To'] = ";".join(to_list)  
+def sendEmail(to, sub, content):  
+    me = "<" + Config.MAIL_USER + "@" + Config.MAIL_POSTFIX + ">"
+    msg = MIMEText(content, _subtype='html', _charset='utf-8')  
+    
+    msg['Subject'] = sub
+    msg['From'] = "思集科技" + me
+    msg['To'] = to
+    smtp = smtplib.SMTP()
     try:  
-        s = smtplib.SMTP()  
-        s.connect(mail_host)  #连接smtp服务器
-        s.login(mail_user,mail_pass)  #登陆服务器
-        s.sendmail(me, to_list, msg.as_string())  #发送邮件
-        s.close()  
-        return True  
-    except Exception, e:  
-        print str(e)  
-        return False
+        smtp.connect(Config.MAIL_HOST)  #连接smtp服务器
+        smtp.login(Config.MAIL_USER, Config.MAIL_PASSWORD)  #登陆服务器
+        smtp.sendmail(me, to, msg.as_string())  #发送邮件
+    except Exception, e:
+        Loger.error(e, __file__)
+        print str(e)
+    finally:
+        smtp.close()
+    pass
+
+
+def sendEmailForVerifyCode(email, code):
+    '''
+        @Args:
+            email: str (用户电子邮箱)
+            code: str(6位数字验证码)
+        @Return: 无
+    '''
+    content = "此次可用验证码："+ code + " (仅30分钟内有效)"
+    t = threading.Thread(target=sendEmail, args=(email, "验证码", content))
+    t.start()
+    pass
+
+
+def sendEmailForVerifyCodeByCache(email):
+    try:
+        code = CacheManager.shareInstanced().getCache(email)
+        if code == None:
+            code = generateVerificationCode2()
+            CacheManager.shareInstanced().setCache(email, code, 1800)
+        sendEmailForVerifyCode(email, code)
+    except expression as identifier:
+        Loger.error(e, __file__)
+    pass
+
 
 if __name__ == '__main__':
     
-    mailto_list=["creaction@126.com"] 
-
-    if sendEmail(mailto_list,"hello","<a href='http://www.zruibin.cci'>Ruibin.Chow</a>"):  
-        print "发送成功"  
-    else:  
-        print "发送失败"  
+    to = "ruibin.chow@qq.com" #"ruibin.chow@qq.com"
+    sendEmailForVerifyCode(to, str(121212))
+    print "ok"
+    pass
 

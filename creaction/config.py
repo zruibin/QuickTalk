@@ -58,6 +58,11 @@ class Config(object):
     UPLOAD_FOLDER = "medias/"
     FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
     ALLOWED_EXTENSIONS = set(["txt", "pdf", "png", "jpg", "jpeg", "gif"])
+
+    MAIL_HOST = "smtp.126.com"  #设置服务器
+    MAIL_USER = "creaction"    #用户名
+    MAIL_PASSWORD = "creaction362436"   #口令 
+    MAIL_POSTFIX = "126.com"  #发件箱的后缀
     pass
 
 

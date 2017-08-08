@@ -37,7 +37,7 @@ class CacheManager(object):
             cls.__instance = CacheManager()
         return cls.__instance
 
-    def setCache(self, key, value, expire=20):#Config.CACHE_EXPIRE):
+    def setCache(self, key, value, expire=Config.CACHE_EXPIRE):
         try:
             self.__redisClient.setex(key, value, time=expire)
         except Exception, e:

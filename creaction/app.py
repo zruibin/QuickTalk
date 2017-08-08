@@ -17,7 +17,10 @@ import register
 from module.log.Log import LogHandle
 from common.jsonUtil import jsonTool
 from common.auth import certifyTokenHandle
+
+from common.code import *
 from common.file import uploadFile
+from common.mail import sendEmailForVerifyCodeByCache
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
@@ -46,6 +49,12 @@ def upload():
     return uploadFile("user", "zruibin")
     pass
 
+@app.route('/sendcode', methods=['GET'])
+def sendcode():
+    email = request.args.get("email")
+    sendEmailForVerifyCodeByCache(email)
+    return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS])
+    pass
 
 register.register(app)
 

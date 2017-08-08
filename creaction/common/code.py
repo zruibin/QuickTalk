@@ -101,7 +101,7 @@ MESSAGE = {
 }
 
 def PACKAGE_CODE(code, message):
-    return  jsonTool({"code": code, 'error': message, "data":None})
+    return  jsonTool({"code": code, 'message': message, "data":None})
 
 
 if __name__ == '__main__':
