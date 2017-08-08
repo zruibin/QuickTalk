@@ -52,13 +52,22 @@ def generateVerificationCode2():
     verification_code = ''.join(code_list)
     return verification_code
 
+
+def generateVerificationCode3():
+    numList = []
+    for i in range(6):
+        num = random.randint(0, 9)
+        numList.append(str(num))
+    code = "".join(numList)
+    return code
   
+
 def sendEmail(to, sub, content):  
     me = "<" + Config.MAIL_USER + "@" + Config.MAIL_POSTFIX + ">"
     msg = MIMEText(content, _subtype='html', _charset='utf-8')  
     
     msg['Subject'] = sub
-    msg['From'] = "思集科技" + me
+    msg['From'] = "可行APP" + me
     msg['To'] = to
     smtp = smtplib.SMTP()
     try:  
@@ -67,7 +76,6 @@ def sendEmail(to, sub, content):
         smtp.sendmail(me, to, msg.as_string())  #发送邮件
     except Exception, e:
         Loger.error(e, __file__)
-        print str(e)
     finally:
         smtp.close()
     pass
@@ -90,10 +98,10 @@ def sendEmailForVerifyCodeByCache(email):
     try:
         code = CacheManager.shareInstanced().getCache(email)
         if code == None:
-            code = generateVerificationCode2()
+            code = generateVerificationCode3()
             CacheManager.shareInstanced().setCache(email, code, 1800)
         sendEmailForVerifyCode(email, code)
-    except expression as identifier:
+    except Exception as e:
         Loger.error(e, __file__)
     pass
 
