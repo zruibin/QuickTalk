@@ -15,7 +15,8 @@ from config import Config
 
 class DBManager(object):  
     ''' mysql 数据库连接池 '''
-    __slots__ = ("__cnxpool", "__cnx")
+    __slots__ = ("__cnxpool", "__cnx", "__instance")
+    __instance = None
      
     def __init__(self):  
         ''''' Constructor '''
@@ -34,6 +35,13 @@ class DBManager(object):
         except Exception as e:  
             Loger.error(e, __file__)
             pass
+    
+    @classmethod
+    def shareInstanced(cls):
+        """单例模式"""
+        if(cls.__instance == None):
+            cls.__instance = DBManager()
+        return cls.__instance
           
     def executeSingleDml(self, strsql):
         """ insert update delete 单条sql语句"""
@@ -157,7 +165,7 @@ class DBManager(object):
 def test():  
     ''''' 事务使用样例 '''  
       
-    cnxpool = DBManager()  
+    cnxpool = DBManager.shareInstanced()
       
     results = cnxpool.executeTransactionQuery("SELECT * FROM `t_backoffice_user`")
     for row in results:  

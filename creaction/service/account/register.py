@@ -84,11 +84,6 @@ def  operationDataStorage(userUUID, password, time, phone="", email=""):
                 INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
                 VALUES('%s', '%s', '', '', '');
         """ % (userUUID, password)
-        """ t_user_setting
-            `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `type` TINYINT NOT NULL COMMENT '类型',
-    `status` TINYINT NOT NULL COMMENT '状态(开与关)',
-        """
         userSettingSQL = """
                 INSERT INTO t_user_setting (user_uuid, type, status) 
                 VALUES ('%s', %d, %d), ('%s', %d, %d), 
@@ -101,7 +96,7 @@ def  operationDataStorage(userUUID, password, time, phone="", email=""):
                 userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.NOTIFICATION_STATUS_ON,
                 userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.NOTIFICATION_STATUS_ON)
         
-        dbManager = DB.DBManager()
+        dbManager = DB.DBManager.shareInstanced()
         try: 
                 results = dbManager.executeTransactionMutltiDml([userSQL, userAuthSQL, userSettingSQL])  
         except Exception as e:
@@ -118,7 +113,7 @@ def generateResponseData(userUUID, token):
                 AND t_user_auth.user_uuid='%s'
         """ % (userUUID, userUUID)
 
-        dbManager = DB.DBManager()
+        dbManager = DB.DBManager.shareInstanced()
         results = None
         try: 
                 results = dbManager.executeTransactionQuery(querySQL)

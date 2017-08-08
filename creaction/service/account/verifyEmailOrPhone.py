@@ -47,7 +47,7 @@ def verifyEmailIsExists(email):
     result  = False
     querySQL = """
             SELECT email FROM t_user WHERE email='%s'; """ % email
-    dbManager = DB.DBManager()
+    dbManager = DB.DBManager.shareInstanced()
     try: 
             results = dbManager.executeSingleQuery(querySQL)
             if len(results) > 0: result = True
@@ -61,7 +61,7 @@ def verifyPhoneIsExists(phone):
     result  = False
     querySQL = """
             SELECT phone FROM t_user WHERE phone='%s'; """ % phone
-    dbManager = DB.DBManager()
+    dbManager = DB.DBManager.shareInstanced()
     try: 
             results = dbManager.executeSingleQuery(querySQL)
             if len(results) > 0: result = True
