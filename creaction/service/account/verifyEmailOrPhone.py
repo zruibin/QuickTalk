@@ -18,7 +18,7 @@ from config import *
 from common.tools import jsonTool
 from common.code import *
 
-@account.route('/verifyphoneandemail')
+@account.route('/verify_phone_and_email')
 def verifyEmailOrPhone():
         accountStr = request.args.get("account")
         typeStr = request.args.get("type")

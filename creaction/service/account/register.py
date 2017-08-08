@@ -68,8 +68,10 @@ def register():
         if token == None or cacheToken(userUUID, token) == False: 
                 return PACKAGE_CODE(CODE_ERROR_TOKEN_CACHE_FAIL, MESSAGE[CODE_ERROR_TOKEN_CACHE_FAIL])
         dataSDict = generateResponseData(userUUID, token)
-                
-        return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS], data=dataSDict)
+
+        response = PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS], data=dataSDict)
+        response.set_cookie('token', token) 
+        return response
 
 
 def  operationDataStorage(userUUID, password, time, phone="", email=""):
