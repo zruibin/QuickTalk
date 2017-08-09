@@ -24,9 +24,14 @@ if DEBUG:
     debug = True 
     loglevel = 'debug'
 else:
-    bind = '127.0.0.1:5000'
-    pidfile = 'logs/gunicorn.pid'
-    logfile = 'logs/debug.log'
+    reload = False
+    debug = False 
+    loglevel = 'error'
+    
+
+bind = '127.0.0.1:5000'
+pidfile = 'logs/gunicorn.pid'
+logfile = 'logs/debug.log'
 
 
 #启动的进程数与线程

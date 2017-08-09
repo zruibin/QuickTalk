@@ -114,6 +114,10 @@ MESSAGE = {
 def PACKAGE_CODE(code, message, data=None):
     return  jsonTool({"code": code, 'message': message, "data":data})
 
+def RESPONSE_JSON(code, data=None):
+    return PACKAGE_CODE(code, MESSAGE[code], data)
+    
+
 
 if __name__ == '__main__':
     print MESSAGE

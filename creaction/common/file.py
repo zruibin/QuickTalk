@@ -51,13 +51,13 @@ def uploadFile(type, uuid):
     except RequestEntityTooLarge as e:
         Loger.error(e, __file__)
         removeAllUploadFile(type, uuid)
-        return PACKAGE_CODE(CODE_ERROR_IMAGE_TOO_LARGE, MESSAGE[CODE_ERROR_IMAGE_TOO_LARGE])
+        return RESPONSE_JSON(CODE_ERROR_IMAGE_TOO_LARGE)
     except Exception as e:
         Loger.error(e, __file__)
         removeAllUploadFile(type, uuid)
-        return PACKAGE_CODE(CODE_ERROR_IMAGE_SERVICE_ERROR, MESSAGE[CODE_ERROR_IMAGE_SERVICE_ERROR])
+        return RESPONSE_JSON(CODE_ERROR_IMAGE_SERVICE_ERROR)
     else:
-        return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS])
+        return RESPONSE_JSON(CODE_SUCCESS)
 
 
 def removeAllUploadFile(type, uuid):

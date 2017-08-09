@@ -53,7 +53,7 @@ def upload():
 def sendcode():
     email = request.args.get("email")
     sendEmailForVerifyCodeByCache(email)
-    return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS])
+    return RESPONSE_JSON(CODE_SUCCESS)
     pass
 
 register.registerBlueprint(app)

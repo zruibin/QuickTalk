@@ -70,6 +70,28 @@ def copyRequireFile():
         shutil.copyfile(directory, newDir)
     pass
 
+def convert_character(string, origin_string, replace_string):
+    """用指定的字符替换文本中指定的字符"""
+    string = string.replace(origin_string, replace_string)
+    return string
+
+def changeDebugStatus(DIR):
+    oldText = "DEBUG = True"
+    newText = "DEBUG = False"
+    fileList = ["config.py", "gun.py"]
+    for fileName in fileList:
+        filePath = DIR + "/" + fileName
+        content = ""
+        print filePath
+        with open(filePath, "r") as f:
+            allText = f.read()
+            content = allText.replace(oldText, newText)
+        with open(filePath, "w") as f:
+            f.write(content)
+    pass
+
+
+
 def Main(argsList):
     if len(argsList) != 1:
         # print argsList
@@ -96,6 +118,7 @@ def Main(argsList):
         # print distDir
         if len(rootdir) > 0 and len(distDir) > 0:
             shutil.copytree(rootdir, distDir)
+            changeDebugStatus(distDir)
             compileall.compile_dir(distDir)
             copyRequireFile()
             clean(distDir)

@@ -12,6 +12,7 @@
 """
 
 from service.account import account
+from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -25,7 +26,7 @@ def verifyEmailOrPhone():
 
         # 参数没有直接报错返回
         if accountStr == None or  typeStr == None:
-                return PACKAGE_CODE(CODE_ERROR_MISS_PARAM, MESSAGE[CODE_ERROR_MISS_PARAM])
+                return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
         phone = ""
         email = ""
@@ -33,13 +34,13 @@ def verifyEmailOrPhone():
         if typeStr == Config.TYPE_FOR_EMAIL: 
                 email = accountStr
                 result = verifyEmailIsExists(email)
-                if result :  return PACKAGE_CODE(CODE_ERROR_THE_EMAIL_HAS_BE_USED, MESSAGE[CODE_ERROR_THE_EMAIL_HAS_BE_USED])
+                if result :  return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
 
         if typeStr == Config.TYPE_FOR_PHONE: 
                 phone = accountStr
                 result = verifyPhoneIsExists(phone)
-                if result :  return PACKAGE_CODE(CODE_ERROR_THE_PHONE_HAS_BE_USED, MESSAGE[CODE_ERROR_THE_PHONE_HAS_BE_USED])
-        return PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS], data="0")
+                if result :  return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
+        return RESPONSE_JSON(CODE_SUCCESS, data="0")
 
 
 

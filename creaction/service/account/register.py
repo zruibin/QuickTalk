@@ -31,17 +31,17 @@ def register():
 
         # 参数没有直接报错返回
         if accountStr == None or password == None or typeStr == None:
-                return PACKAGE_CODE(CODE_ERROR_MISS_PARAM, MESSAGE[CODE_ERROR_MISS_PARAM])
+                return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
         # 邮箱注册则看验证码是否过期或存在
         if typeStr == Config.TYPE_FOR_EMAIL:
                 code = request.args.get("code")
                 if code == None:
-                        return PACKAGE_CODE(CODE_ERROR_TEST_AND_VERIFY, MESSAGE[CODE_ERROR_TEST_AND_VERIFY])
+                        return RESPONSE_JSON(CODE_ERROR_TEST_AND_VERIFY)
                 else:
                         code = CacheManager.shareInstanced().getCache(accountStr)
                         if code == None:
-                                return PACKAGE_CODE(CODE_ERROR_VERIFY_CODE_OUTDATE, MESSAGE[CODE_ERROR_VERIFY_CODE_OUTDATE])
+                                return RESPONSE_JSON(CODE_ERROR_VERIFY_CODE_OUTDATE)
 
 
         phone = ""
@@ -50,26 +50,25 @@ def register():
         if typeStr == Config.TYPE_FOR_EMAIL: 
                 email = accountStr
                 result = verifyEmailIsExists(email)
-                if result :  return PACKAGE_CODE(CODE_ERROR_THE_EMAIL_HAS_BE_USED, MESSAGE[CODE_ERROR_THE_EMAIL_HAS_BE_USED])
+                if result :  return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
 
         if typeStr == Config.TYPE_FOR_PHONE: 
                 phone = accountStr
                 result = verifyPhoneIsExists(phone)
-                if result :  return PACKAGE_CODE(CODE_ERROR_THE_PHONE_HAS_BE_USED, MESSAGE[CODE_ERROR_THE_PHONE_HAS_BE_USED])
+                if result :  return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
 
 
         userUUID = generateUUID()
         time = generateCurrentTime()
         
         if operationDataStorage(userUUID, password, time, phone, email) == False:
-                return PACKAGE_CODE(CODE_ERROR_SERVICE, MESSAGE[CODE_ERROR_SERVICE])
-        token = generateToken(userUUID)
+                return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
         if token == None or cacheToken(userUUID, token) == False: 
-                return PACKAGE_CODE(CODE_ERROR_TOKEN_CACHE_FAIL, MESSAGE[CODE_ERROR_TOKEN_CACHE_FAIL])
+                return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
         dataSDict = generateResponseData(userUUID, token)
 
-        response = PACKAGE_CODE(CODE_SUCCESS, MESSAGE[CODE_SUCCESS], data=dataSDict)
+        response = RESPONSE_JSON(CODE_SUCCESS, data=dataSDict)
         response.set_cookie('token', token) 
         return response
 

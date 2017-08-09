@@ -75,7 +75,7 @@ def certifyToken(key, token):
 
 def tokenErrorResponse():
     
-    jsonString = PACKAGE_CODE(CODE_ERROR_TOKEN_NOT_FOUND, MESSAGE[CODE_ERROR_TOKEN_NOT_FOUND])
+    jsonString = RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)
     response = make_response(jsonTool(jsonString))
     response.headers["Access-Control-Allow-Methods"] = "GET,POST"
     response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
