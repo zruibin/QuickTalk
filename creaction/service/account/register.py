@@ -65,7 +65,7 @@ def register():
         # authOpenId = request.args.get("authOpenId")
         # if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
         #         return RESPONSE_JSON(CODE_ERROR_SERVICE)
-        用户数据入库
+        # 用户数据入库
         if operationDataStorage(userUUID, password, time, phone, email) == False:
                 return RESPONSE_JSON(CODE_ERROR_SERVICE)
 

@@ -26,6 +26,7 @@
 *.exe
 *.out
 *.app
+*.rdb
 
 # Xcode
 .DS_Store
