@@ -47,6 +47,9 @@ class Config(object):
     TYPE_FOR_WECHAT = "3"
     TYPE_FOR_QQ = "4"
     TYPE_FOR_WEIBO = "5"
+    TYPE_FOR_CONTACT_PHONE = "6"
+    TYPE_FOR_CONTACT_EMAIL = "7"
+    
 
     NOTIFICATION_STATUS_ON = 1
     NOTIFICATION_STATUS_OFF = 0

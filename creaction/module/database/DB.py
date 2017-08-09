@@ -59,7 +59,7 @@ class DBManager(object):
         finally:  
             if cnx:  
                 cnx.close()
-        return False
+        return results
       
     def executeSingleQuery(self, strsql): 
         """ 查询 单条sql语句"""

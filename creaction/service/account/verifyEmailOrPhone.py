@@ -18,7 +18,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 
-@account.route('/verify_phone_and_email')
+@account.route("/verify_phone_and_email", methods=["POST", "GET"])
 def verifyEmailOrPhone():
         accountStr = request.args.get("account")
         typeStr = request.args.get("type")

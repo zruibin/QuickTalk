@@ -19,7 +19,7 @@ from common.code import *
 from common.auth import generateToken, cacheToken
 
 
-@account.route('/token')
+@account.route("/token", methods=["POST", "GET"])
 def token():
     userUUID = request.args.get("user_uuid")
     password = request.args.get("password")

@@ -18,6 +18,7 @@ account = Blueprint("account", __name__)
 from service.account import register
 from service.account import verifyEmailOrPhone
 from service.account import token
-
-
+from service.account import setting
+from service.account import changeTag
+from service.account import changeContact
 

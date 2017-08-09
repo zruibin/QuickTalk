@@ -22,7 +22,7 @@ from common.auth import generateToken, cacheToken
 from service.account.verifyEmailOrPhone import *
 
 
-@account.route('/register')
+@account.route("/register", methods=["POST"])
 def register():                         
 
         accountStr = request.args.get("account")
@@ -79,8 +79,8 @@ def register():
 def  operationDataStorage(userUUID, password, time, phone="", email=""):
         results = False
         userSQL = """ 
-                INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`)
-                VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s');
+                INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`, `contact_phone`, `contact_email`, `weibo`)
+                VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s', '', '', '');
         """ % (userUUID, phone, email, time)
         userAuthSQL = """
                 INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
@@ -110,7 +110,8 @@ def  operationDataStorage(userUUID, password, time, phone="", email=""):
 def generateResponseData(userUUID, token):
         querySQL = """
                 SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, 
-                t_user_auth.password, t_user_auth.qq, t_user_auth.wechat, t_user_auth.weibo 
+                t_user_auth.password, t_user_auth.qq, t_user_auth.wechat, t_user_auth.weibo,
+                t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat
                 FROM t_user, t_user_auth WHERE t_user.uuid='%s' 
                 AND t_user_auth.user_uuid='%s'
         """ % (userUUID, userUUID)
@@ -128,9 +129,14 @@ def generateResponseData(userUUID, token):
                 phone = tupleData[4]
                 email = tupleData[5]
                 password = tupleData[6]
-                qq = tupleData[7]
-                wechat = tupleData[8]
-                weibo = tupleData[9]
+                authQQ = tupleData[7]
+                authWechat = tupleData[8]
+                authWeibo = tupleData[9]
+                contactPhone = tupleData[11]
+                contactEmail = tupleData[11]
+                contactQQ = tupleData[12]
+                contactWeibo = tupleData[13]
+                contactWechat = tupleData[14]
                 dataDict = {
                         "token" : token,
                         "user_uuid" : user_uuid,
@@ -140,9 +146,14 @@ def generateResponseData(userUUID, token):
                         "phone" : phone,
                         "email" : email,
                         "password" : password,
-                        "authQQ" : qq,
-                        "authWechat" : wechat,
-                        "authWeibo" : weibo
+                        "authQQ" : authQQ,
+                        "authWechat" : authWechat,
+                        "authWeibo" : authWeibo,
+                        "contactPhone" : contactPhone,
+                        "contactEmail" : contactEmail,
+                        "contactQQ" : contactQQ,
+                        "contactWeibo" : contactWeibo,
+                        "contactWechat" : contactWechat
                 }
                 results  = dataDict
         except Exception as e:

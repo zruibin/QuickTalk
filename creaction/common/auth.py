@@ -22,7 +22,6 @@ import hmac, hashlib, base64, time
 from functools import wraps
 from config import Config
 from flask import  request, Response,make_response
-from common.tools import jsonTool
 from common.code import *
 from module.log.Log import Loger
 from module.cache.RuntimeCache import CacheManager
@@ -86,9 +85,7 @@ def cacheToken(userUUID, token):
 
 
 def tokenErrorResponse():
-    
-    jsonString = RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)
-    response = make_response(jsonTool(jsonString))
+    response = RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)
     response.headers["Access-Control-Allow-Methods"] = "GET,POST"
     response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
     response.headers["WWW-Authenticate"] = "Authentication Required"
@@ -98,14 +95,12 @@ def tokenErrorResponse():
 def certifyTokenHandle(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        # print generateToken("ruibin.chow_zruibin")
-        # print "$" * 80
-        #MTUwMjA5NDEzMS43NDpPems0QzJvSUZJZkM0ZGo3RHFiT2puOVg1UXM9Cg==
-        token = request.cookies.get("token")
-        userUUID = request.form.get("user_uuid")
-        if userUUID == None:
-            userUUID = request.args.get("user_uuid")
-        if userUUID == None or token == None or certifyToken(userUUID, token) == False:
+        userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
+        token = request.cookies.get("token") if request.cookies.get("token") else request.args.get("token")
+
+        if userUUID == None or token == None:
+            return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+        if certifyToken(userUUID, token) == False:
             response = tokenErrorResponse()
             return response
         else:
