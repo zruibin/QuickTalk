@@ -17,12 +17,13 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import generateToken, cacheToken
+from common.tools import md5hex
 
 
 @account.route("/token", methods=["POST", "GET"])
 def token():
     userUUID = request.args.get("user_uuid")
-    password = request.args.get("password")
+    password = md5hex(request.args.get("password")) # md5后(32位)
 
     # 参数没有直接报错返回
     if userUUID == None or  password == None:

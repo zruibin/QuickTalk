@@ -16,7 +16,7 @@ from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 from config import *
-from common.tools import generateUUID, generateCurrentTime
+from common.tools import generateUUID, generateCurrentTime, md5hex
 from common.code import *
 from common.auth import generateToken, cacheToken
 from service.account.verifyEmailOrPhone import *
@@ -25,7 +25,7 @@ from service.account.verifyEmailOrPhone import *
 @account.route("/register", methods=["POST"])
 def register():                         
         accountStr = request.args.get("account")
-        password = request.args.get("password") # md5后(32位)
+        password = md5hex(request.args.get("password")) # md5后(32位)
         typeStr = request.args.get("type")
 
         # 参数没有直接报错返回

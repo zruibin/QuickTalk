@@ -12,7 +12,7 @@ json 响应包装工具
 """
 
 from flask import current_app
-import json, uuid, time
+import json, uuid, time, hashlib
 
 
 def jsonTool(obj):
@@ -34,7 +34,17 @@ def generateCurrentTime():
     timeStr = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     return timeStr
     
-
+def md5hex(word):  
+    """ MD5加密算法，返回32位小写16进制符号 """  
+    if len(word) == 0:
+        return word
+    if isinstance(word, unicode):  
+        word = word.encode("utf-8")  
+    elif not isinstance(word, str):  
+        word = str(word)  
+    m = hashlib.md5()  
+    m.update(word)  
+    return m.hexdigest() 
 
 if __name__ == '__main__':
     pass
