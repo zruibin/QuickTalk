@@ -28,6 +28,7 @@ class CacheManager(object):
             self.__redisClient = redis.Redis(connection_pool=pool)
         except Exception, e:
             Loger.error(e, __file__)
+            raise e
             pass
 
     @classmethod
@@ -42,6 +43,7 @@ class CacheManager(object):
             self.__redisClient.setex(key, value, time=expire)
         except Exception, e:
             Loger.error(e, __file__)
+            raise e
             pass
         
     def getCache(self, key):

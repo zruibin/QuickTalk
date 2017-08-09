@@ -24,6 +24,8 @@ from config import Config
 from flask import  request, Response,make_response
 from common.tools import jsonTool
 from common.code import *
+from module.log.Log import Loger
+from module.cache.RuntimeCache import CacheManager
 
 ENCODE_UTF8 = "utf-8"
 ENCODE_BASE64 = "base64"
@@ -71,6 +73,16 @@ def certifyToken(key, token):
         return False 
     # token certification success
     return True
+
+
+def cacheToken(userUUID, token):
+        results = True
+        try:
+                CacheManager.shareInstanced().setCache(userUUID, token)
+        except Exception as e:
+                Loger.error(e, __file__)
+                results = False
+        return results
 
 
 def tokenErrorResponse():

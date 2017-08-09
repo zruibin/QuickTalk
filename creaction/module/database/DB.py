@@ -34,6 +34,7 @@ class DBManager(object):
                         pool_reset_session=True, **dbconfig)  
         except Exception as e:  
             Loger.error(e, __file__)
+            raise e
             pass
     
     @classmethod

@@ -16,9 +16,9 @@ from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 from config import *
-from common.tools import jsonTool, generateUUID, generateCurrentTime
+from common.tools import generateUUID, generateCurrentTime
 from common.code import *
-from common.auth import generateToken
+from common.auth import generateToken, cacheToken
 from service.account.verifyEmailOrPhone import *
 
 
@@ -57,19 +57,22 @@ def register():
                 result = verifyPhoneIsExists(phone)
                 if result :  return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
 
-
+        # 生成用户的uuid
         userUUID = generateUUID()
         time = generateCurrentTime()
         
+        # 用户数据入库
         if operationDataStorage(userUUID, password, time, phone, email) == False:
                 return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
+        # 生成token并缓存
+        token = generateToken(userUUID)
         if token == None or cacheToken(userUUID, token) == False: 
                 return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
         dataSDict = generateResponseData(userUUID, token)
 
         response = RESPONSE_JSON(CODE_SUCCESS, data=dataSDict)
-        response.set_cookie('token', token) 
+        response.set_cookie('token', token)
         return response
 
 
@@ -145,14 +148,4 @@ def generateResponseData(userUUID, token):
         except Exception as e:
                 Loger.error(e, __file__)
 
-        return results
-
-
-def cacheToken(userUUID, token):
-        results = True
-        try:
-                CacheManager.shareInstanced().setCache(userUUID, token)
-        except Exception as e:
-                Loger.error(e, __file__)
-                results = False
         return results

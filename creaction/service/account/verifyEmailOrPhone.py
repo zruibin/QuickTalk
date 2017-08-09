@@ -16,7 +16,6 @@ from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *
-from common.tools import jsonTool
 from common.code import *
 
 @account.route('/verify_phone_and_email')
@@ -50,8 +49,8 @@ def verifyEmailIsExists(email):
             SELECT email FROM t_user WHERE email='%s'; """ % email
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            results = dbManager.executeSingleQuery(querySQL)
-            if len(results) > 0: result = True
+            resultData = dbManager.executeSingleQuery(querySQL)
+            if len(resultData) > 0: result = True
     except Exception as e:
             Loger.error(e, __file__)
 
@@ -64,8 +63,8 @@ def verifyPhoneIsExists(phone):
             SELECT phone FROM t_user WHERE phone='%s'; """ % phone
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            results = dbManager.executeSingleQuery(querySQL)
-            if len(results) > 0: result = True
+            resultData = dbManager.executeSingleQuery(querySQL)
+            if len(resultData) > 0: result = True
     except Exception as e:
             Loger.error(e, __file__)
 

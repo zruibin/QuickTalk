@@ -15,7 +15,9 @@ from flask import Blueprint
   
 account = Blueprint("account", __name__)
   
-from service.account import register, verifyEmailOrPhone
+from service.account import register
+from service.account import verifyEmailOrPhone
+from service.account import token
 
 
 
