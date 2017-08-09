@@ -17,10 +17,10 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.auth import certifyTokenHandle
+from common.auth import vertifyTokenHandle
 
 @account.route('/change_tag', methods=["POST"])
-@certifyTokenHandle
+@vertifyTokenHandle
 def changeTag():
     userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
     taglistStr = request.args.get("taglist") if request.args.get("taglist") else request.form.get("taglist")

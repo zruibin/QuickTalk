@@ -24,11 +24,11 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.auth import certifyTokenHandle
+from common.auth import vertifyTokenHandle
 
 
 @account.route('/setting', methods=["POST"])
-@certifyTokenHandle
+@vertifyTokenHandle
 def setting():
     userUUID = request.args.get("user_uuid")
     typeStr = request.args.get("type")

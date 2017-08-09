@@ -47,7 +47,7 @@ def generateToken(key, expire=Config.TOKEN_EXPIRE):
     return b64Token
 
 
-def certifyToken(key, token):
+def vertifyToken(key, token):
     '''
         @Args:
             key: str
@@ -92,7 +92,7 @@ def tokenErrorResponse():
     return response
 
 
-def certifyTokenHandle(func):
+def vertifyTokenHandle(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
@@ -100,7 +100,7 @@ def certifyTokenHandle(func):
 
         if userUUID == None or token == None:
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-        if certifyToken(userUUID, token) == False:
+        if vertifyToken(userUUID, token) == False:
             response = tokenErrorResponse()
             return response
         else:

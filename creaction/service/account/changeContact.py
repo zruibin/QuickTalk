@@ -16,10 +16,10 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.auth import certifyTokenHandle
+from common.auth import vertifyTokenHandle
 
 @account.route('/change_contact', methods=["POST"])
-@certifyTokenHandle
+@vertifyTokenHandle
 def changeContact():
     userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
     typeStr = request.args.get("type") if request.args.get("type") else request.form.get("type")

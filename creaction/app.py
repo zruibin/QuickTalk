@@ -16,7 +16,7 @@ from config import *
 import register
 from module.log.Log import LogHandle
 from common.tools import jsonTool
-from common.auth import certifyTokenHandle
+from common.auth import vertifyTokenHandle
 
 from common.code import *
 from common.file import uploadFile
@@ -29,7 +29,7 @@ app.config['DEBUG'] = Config.DEBUG
 
 
 @app.errorhandler(404)
-# @certifyTokenHandle
+# @vertifyTokenHandle
 def page_not_found(error):
     # return app.send_static_file('404.html')
     return make_response(jsonTool({"code":1, 'error': 'Not found'}), 404)
