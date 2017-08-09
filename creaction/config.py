@@ -42,14 +42,19 @@ class Config(object):
     MAIL_PASSWORD = "creaction362436"   #口令 
     MAIL_POSTFIX = "126.com"  #发件箱的后缀
 
-    TYPE_FOR_EMAIL = "1"
-    TYPE_FOR_PHONE = "2"
-    TYPE_FOR_WECHAT = "3"
-    TYPE_FOR_QQ = "4"
-    TYPE_FOR_WEIBO = "5"
-    TYPE_FOR_CONTACT_PHONE = "6"
-    TYPE_FOR_CONTACT_EMAIL = "7"
-    
+    # 数据类型
+    TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
+    TYPE_FOR_PHONE = "2" # 只用于登录，区别于联系的
+    TYPE_FOR_WECHAT = "3" # 用于信息显示，方便联系
+    TYPE_FOR_QQ = "4" #  用于信息显示，方便联系
+    TYPE_FOR_WEIBO = "5" #  用于信息显示，方便联系
+    TYPE_FOR_CONTACT_PHONE = "6" #  用于信息显示，方便联系
+    TYPE_FOR_CONTACT_EMAIL = "7" #  用于信息显示，方便联系
+
+    # 第三方授权的类型 
+    TYPE_FOR_AUTH_WECHAT = "8"
+    TYPE_FOR_AUTH_QQ = "9"
+    TYPE_FOR_AUTH_WEIBO = "10"
 
     NOTIFICATION_STATUS_ON = 1
     NOTIFICATION_STATUS_OFF = 0

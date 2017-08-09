@@ -35,7 +35,6 @@ class DBManager(object):
         except Exception as e:  
             Loger.error(e, __file__)
             raise e
-            pass
     
     @classmethod
     def shareInstanced(cls):
@@ -56,6 +55,7 @@ class DBManager(object):
         except Exception as e:  
             Loger.error(e, __file__)
             results = False
+            raise e
         finally:  
             if cnx:  
                 cnx.close()
@@ -72,7 +72,7 @@ class DBManager(object):
             cursor.close()  
         except Exception as e:  
             Loger.error(e, __file__)
-            pass 
+            raise e
         finally:  
             if cnx:  
                 cnx.close()  
@@ -83,7 +83,7 @@ class DBManager(object):
             self.__cnx = self.__cnxpool.get_connection()  
         except Exception as e:  
             Loger.error(e, __file__)
-            pass
+            raise e
       
     def __endTransaction(self):
         try:
@@ -91,7 +91,7 @@ class DBManager(object):
                 self.__cnx.close()  
         except Exception, e:
             Loger.error(e, __file__)
-            pass
+            raise e
         
       
     def __commitTransaction(self):  
@@ -99,14 +99,14 @@ class DBManager(object):
             self.__cnx.commit()  
         except Exception as e:  
             Loger.error(e, __file__)
-            pass
+            raise e
       
     def __rollbackTransaction(self):  
         try:  
             self.__cnx.rollback()  
         except Exception as e:  
             Loger.error(e, __file__)
-            pass
+            raise e
       
     def executeTransactionQuery(self, strsql):
         """ 事务下查询sql语句"""
@@ -121,6 +121,7 @@ class DBManager(object):
         except Exception as e:  
             Loger.error(e, __file__)
             self.__rollbackTransaction()
+            raise e
         finally:
             self.__endTransaction() 
 
@@ -139,6 +140,7 @@ class DBManager(object):
             Loger.error(e, __file__)
             results = False
             self.__rollbackTransaction()
+            raise e
         finally:
             self.__endTransaction()
         return results
@@ -157,6 +159,7 @@ class DBManager(object):
             Loger.error(e, __file__)
             results = False
             self.__rollbackTransaction()
+            raise e
         finally:
             self.__endTransaction()
         return results

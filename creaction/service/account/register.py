@@ -24,7 +24,6 @@ from service.account.verifyEmailOrPhone import *
 
 @account.route("/register", methods=["POST"])
 def register():                         
-
         accountStr = request.args.get("account")
         password = request.args.get("password") # md5后(32位)
         typeStr = request.args.get("type")
@@ -61,7 +60,12 @@ def register():
         userUUID = generateUUID()
         time = generateCurrentTime()
         
-        # 用户数据入库
+        # 用于测试在无用户的情况下第三方登录，则生成一个新的账号并与第三方的进行绑定
+        # authType = request.args.get("authType")
+        # authOpenId = request.args.get("authOpenId")
+        # if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
+        #         return RESPONSE_JSON(CODE_ERROR_SERVICE)
+        用户数据入库
         if operationDataStorage(userUUID, password, time, phone, email) == False:
                 return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
@@ -76,16 +80,21 @@ def register():
         return response
 
 
-def  operationDataStorage(userUUID, password, time, phone="", email=""):
+def  operationDataStorage(userUUID, password, time, phone="", email="", authType="", authOpenId=""):
         results = False
+        sqlList = []
         userSQL = """ 
                 INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`, `contact_phone`, `contact_email`, `weibo`)
                 VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s', '', '', '');
         """ % (userUUID, phone, email, time)
+        sqlList.append(userSQL)
+
         userAuthSQL = """
                 INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
                 VALUES('%s', '%s', '', '', '');
-        """ % (userUUID, password)
+                """ % (userUUID, password)
+        sqlList.append(userAuthSQL)
+        
         userSettingSQL = """
                 INSERT INTO t_user_setting (user_uuid, type, status) 
                 VALUES ('%s', %d, %d), ('%s', %d, %d), 
@@ -97,10 +106,21 @@ def  operationDataStorage(userUUID, password, time, phone="", email=""):
                 userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.NOTIFICATION_STATUS_ON,
                 userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.NOTIFICATION_STATUS_ON,
                 userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.NOTIFICATION_STATUS_ON)
-        
+        sqlList.append(userSettingSQL)
+
+        if len(authType) > 0:
+                typeDict = {
+                        Config.TYPE_FOR_AUTH_WECHAT : "wechat",
+                        Config.TYPE_FOR_AUTH_QQ : "qq",
+                        Config.TYPE_FOR_AUTH_WEIBO : "weibo"
+                }
+                typeContent = typeDict[authType]
+                updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeContent, authOpenId, userUUID)
+                sqlList.append(updateSQL)
+
         dbManager = DB.DBManager.shareInstanced()
         try: 
-                results = dbManager.executeTransactionMutltiDml([userSQL, userAuthSQL, userSettingSQL])  
+                results = dbManager.executeTransactionMutltiDml(sqlList)  
         except Exception as e:
                 Loger.error(e, __file__)
 
