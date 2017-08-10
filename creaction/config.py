@@ -56,8 +56,8 @@ class Config(object):
     TYPE_FOR_AUTH_QQ = "9"
     TYPE_FOR_AUTH_WEIBO = "10"
 
-    NOTIFICATION_STATUS_ON = 1
-    NOTIFICATION_STATUS_OFF = 0
+    STATUS_ON = 1
+    STATUS_OFF = 0
 
     # 赞(第一次赞就有通知)
     NOTIFICATION_FOR_LIKE = 1 

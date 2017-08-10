@@ -100,12 +100,12 @@ def  operationDataStorage(userUUID, password, time, phone="", email="", authType
                 VALUES ('%s', %d, %d), ('%s', %d, %d), 
                         ('%s', %d, %d), ('%s', %d, %d), ('%s', %d, %d), 
                         ('%s', %d, %d);
-        """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.NOTIFICATION_STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.NOTIFICATION_STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.NOTIFICATION_STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.NOTIFICATION_STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.NOTIFICATION_STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.NOTIFICATION_STATUS_ON)
+        """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.STATUS_ON,
+                userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.STATUS_ON)
         sqlList.append(userSettingSQL)
 
         if len(authType) > 0:

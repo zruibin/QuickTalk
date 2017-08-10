@@ -19,7 +19,6 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 
 @account.route('/info', methods=["GET"])
-@vertifyTokenHandle
 def info():
     userUUID = request.args.get("user_uuid")
     dataDict = getUserBaseInfo(userUUID)

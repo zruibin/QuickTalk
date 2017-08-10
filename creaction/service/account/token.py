@@ -18,6 +18,7 @@ from config import *
 from common.code import *
 from common.auth import generateToken, cacheToken
 from common.tools import md5hex
+from service.account.universal import verifyUserIsExists, verifyUserPassword
 
 
 @account.route("/token", methods=["POST", "GET"])
@@ -45,36 +46,6 @@ def token():
     response = RESPONSE_JSON(CODE_SUCCESS, data={"token": token})
     response.set_cookie('token', token)
     return response
-
-
-def verifyUserIsExists(userUUID):
-    result  = False
-    querySQL = """
-        SELECT uuid FROM t_user WHERE uuid='%s'; """ % userUUID
-    dbManager = DB.DBManager.shareInstanced()
-    try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
-    except Exception as e:
-            Loger.error(e, __file__)
-
-    return result
-
-
-def verifyUserPassword(userUUID, password):
-    result  = False
-    querySQL = """
-        SELECT password FROM t_user_auth WHERE user_uuid='%s'; """ % userUUID
-    dbManager = DB.DBManager.shareInstanced()
-    try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            dataPassword = ""
-            if len(resultData) > 0 : dataPassword = resultData[0][0]
-            if dataPassword == password: result = True
-    except Exception as e:
-            Loger.error(e, __file__)
-
-    return result
 
 
 

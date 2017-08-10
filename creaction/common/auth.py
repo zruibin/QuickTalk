@@ -85,7 +85,7 @@ def cacheToken(userUUID, token):
 
 
 def tokenErrorResponse():
-    response = RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)
+    response = RESPONSE_JSON(CODE_ERROR_TOKEN_EXPIRED)
     response.headers["Access-Control-Allow-Methods"] = "GET,POST"
     response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
     response.headers["WWW-Authenticate"] = "Authentication Required"
@@ -99,7 +99,7 @@ def vertifyTokenHandle(func):
         token = request.cookies.get("token") if request.cookies.get("token") else request.args.get("token")
 
         if userUUID == None or token == None:
-            return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+            return RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)
         if vertifyToken(userUUID, token) == False:
             response = tokenErrorResponse()
             return response

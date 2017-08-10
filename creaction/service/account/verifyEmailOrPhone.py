@@ -17,6 +17,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
+from service.account.universal import verifyEmailIsExists, verifyPhoneIsExists
 
 @account.route("/verify_phone_and_email", methods=["POST", "GET"])
 def verifyEmailOrPhone():
@@ -43,32 +44,7 @@ def verifyEmailOrPhone():
 
 
 
-def verifyEmailIsExists(email):
-    result  = False
-    querySQL = """
-            SELECT email FROM t_user WHERE email='%s'; """ % email
-    dbManager = DB.DBManager.shareInstanced()
-    try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
-    except Exception as e:
-            Loger.error(e, __file__)
 
-    return result
-
-
-def verifyPhoneIsExists(phone):
-    result  = False
-    querySQL = """
-            SELECT phone FROM t_user WHERE phone='%s'; """ % phone
-    dbManager = DB.DBManager.shareInstanced()
-    try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
-    except Exception as e:
-            Loger.error(e, __file__)
-
-    return result
 
 if __name__ == '__main__':
     pass
