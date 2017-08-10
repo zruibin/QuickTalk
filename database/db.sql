@@ -53,6 +53,7 @@ CREATE TABLE `t_user_user`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_user_user` ADD INDEX t_user_auth_uuid (`user_uuid`);
+ALTER TABLE `t_user_user` ADD INDEX t_user_type (`type`);
 
 DROP TABLE IF EXISTS
     `t_user_setting`;
@@ -105,12 +106,15 @@ DROP TABLE IF EXISTS
 CREATE TABLE `t_project_user`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
-    `author_uuid` VARCHAR(100) NOT NULL COMMENT '成员uuid',
+    `type` TINYINT NOT NULL COMMENT '类型(成员与关注者)',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_project_user` ADD INDEX t_project_user_project_uuid ( `project_uuid` );
+ALTER TABLE `t_project_user` ADD INDEX t_project_user_type ( `type` );
+ALTER TABLE `t_project_user` ADD INDEX t_project_user_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_project_media`;

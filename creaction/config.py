@@ -8,7 +8,7 @@
 # 
 
 """
-
+个人详细信息与兴趣标签
 """
 import os
 
@@ -71,6 +71,13 @@ class Config(object):
     NOTIFICATION_FOR_START_PEOPLE = 5
     # 联系人消息
     NOTIFICATION_FOR_CONTACT = 6
+
+    TYPE_FOR_USER_FOLLOWING = "0" # 关注的人
+    TYPE_FOR_USER_FOLLOWED = "1" # 粉丝
+    TYPE_FOR_USER_CONTACT = "2" # 已交换联系方式的人
+
+    TYPE_FOR_PROJECT_MEMBER = "0" # 项目成员
+    TYPE_FOR_PROJECT_FOLLOWER = "1" # 项目的关注者，项目成员加入时默认关注该项目
     
     pass
 

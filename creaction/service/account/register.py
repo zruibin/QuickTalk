@@ -73,9 +73,9 @@ def register():
         token = generateToken(userUUID)
         if token == None or cacheToken(userUUID, token) == False: 
                 return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
-        dataSDict = generateResponseData(userUUID, token)
+        dataDict = generateResponseData(userUUID, token)
 
-        response = RESPONSE_JSON(CODE_SUCCESS, data=dataSDict)
+        response = RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
         response.set_cookie('token', token)
         return response
 
@@ -129,12 +129,12 @@ def  operationDataStorage(userUUID, password, time, phone="", email="", authType
 
 def generateResponseData(userUUID, token):
         querySQL = """
-                SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, 
-                t_user_auth.password, t_user_auth.qq, t_user_auth.wechat, t_user_auth.weibo,
-                t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat
-                FROM t_user, t_user_auth WHERE t_user.uuid='%s' 
-                AND t_user_auth.user_uuid='%s'
-        """ % (userUUID, userUUID)
+                SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email,
+                t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat,
+                t_user_auth.password, t_user_auth.qq as authQQ, t_user_auth.wechat as authWechat, t_user_auth.weibo as authWeibo
+                FROM t_user, t_user_auth WHERE t_user.uuid='{user_uuid}' 
+                AND t_user_auth.user_uuid='{user_uuid}'
+        """.format(user_uuid=userUUID)
 
         dbManager = DB.DBManager.shareInstanced()
         results = None
@@ -142,21 +142,21 @@ def generateResponseData(userUUID, token):
                 results = dbManager.executeTransactionQuery(querySQL)
                 tupleData  = results[0]
 
-                user_uuid = tupleData[0]
-                user_id = str(tupleData[1])
-                userName = tupleData[2]
-                avatar = tupleData[3]
-                phone = tupleData[4]
-                email = tupleData[5]
-                password = tupleData[6]
-                authQQ = tupleData[7]
-                authWechat = tupleData[8]
-                authWeibo = tupleData[9]
-                contactPhone = tupleData[11]
-                contactEmail = tupleData[11]
-                contactQQ = tupleData[12]
-                contactWeibo = tupleData[13]
-                contactWechat = tupleData[14]
+                user_uuid = tupleData["uuid"]
+                user_id = str(tupleData["id"])
+                userName = tupleData["nickname"]
+                avatar = tupleData["avatar"]
+                phone = tupleData["phone"]
+                email = tupleData["email"]
+                contactPhone = tupleData["contact_phone"]
+                contactEmail = tupleData["contact_email"]
+                contactQQ = tupleData["qq"]
+                contactWeibo = tupleData["weibo"]
+                contactWechat = tupleData["wechat"]
+                password = tupleData["password"]
+                authQQ = tupleData["authQQ"]
+                authWechat = tupleData["authWechat"]
+                authWeibo = tupleData["authWeibo"]
                 dataDict = {
                         "token" : token,
                         "user_uuid" : user_uuid,

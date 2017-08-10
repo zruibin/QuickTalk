@@ -61,12 +61,12 @@ class DBManager(object):
                 cnx.close()
         return results
       
-    def executeSingleQuery(self, strsql): 
+    def executeSingleQuery(self, strsql, dictionary=True): 
         """ 查询 单条sql语句"""
         results = None  
         try:  
             cnx = self.__cnxpool.get_connection()  
-            cursor = cnx.cursor()  
+            cursor = cnx.cursor(dictionary=dictionary)  
             cursor.execute(strsql)  
             results = cursor.fetchall()  
             cursor.close()  
@@ -108,12 +108,12 @@ class DBManager(object):
             Loger.error(e, __file__)
             raise e
       
-    def executeTransactionQuery(self, strsql):
+    def executeTransactionQuery(self, strsql, dictionary=True):
         """ 事务下查询sql语句"""
         results = None
         self.__startTransaction()
         try:  
-            cursor = self.__cnx.cursor()  
+            cursor = self.__cnx.cursor(dictionary=dictionary)  
             cursor.execute(strsql)  
             results = cursor.fetchall()  
             cursor.close()
@@ -146,7 +146,7 @@ class DBManager(object):
         return results
 
     def executeTransactionMutltiDml(self, sqlList):
-        """事务下 insert update delete 单条sql语句"""
+        """事务下 insert update delete 多条sql语句"""
         results = True
         self.__startTransaction()
         try:  

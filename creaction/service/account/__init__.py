@@ -21,4 +21,5 @@ from service.account import token
 from service.account import setting
 from service.account import changeTag
 from service.account import changeContact
+from service.account import info
 
