@@ -56,6 +56,9 @@ class Config(object):
     TYPE_FOR_AUTH_QQ = "9"
     TYPE_FOR_AUTH_WEIBO = "10"
 
+    TYPE_FOR_AUTH_ACTION_ON = "1" # 绑定
+    TYPE_FOR_AUTH_ACTION_OFF = "2" #解绑
+
     # 上传文件的所属类型，分别为用户与项目
     UPLOAD_FILE_FOR_USER = "u"
     UPLOAD_FILE_FOR_PROJECT = "p"

@@ -28,8 +28,8 @@ def checkContact():
     checkUserUUID = getValueFromRequestByKey("check_user_uuid")
 
     # 验证用户是否存在
-    result = verifyUserIsExists(checkUserUUID)
-    if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
+    # result = verifyUserIsExists(checkUserUUID)
+    # if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
 
     dataDict = getPeopleContact(userUUID, checkUserUUID)
     if dataDict == None:

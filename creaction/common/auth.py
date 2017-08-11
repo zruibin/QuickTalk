@@ -109,6 +109,11 @@ def vertifyTokenHandle(func):
     return wrapper
 
 
+class ThirdPartyAlreadyBeBindException(Exception):  
+    def __init__(self, err='Third Party Already Bindied Exception!'):  
+        Exception.__init__(self,err)  
+
+
 
 if __name__ == '__main__':
     pass

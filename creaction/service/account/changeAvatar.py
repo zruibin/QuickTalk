@@ -22,14 +22,15 @@ from common.tools import getValueFromRequestByKey
 from common.file import FileTypeException, uploadPicture
 from service.account.universal import verifyUserIsExists
 
+
 @account.route('/change_avatar', methods=["POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def changeAvatar():
     userUUID = getValueFromRequestByKey("user_uuid")
 
     # 验证用户是否存在
-    result = verifyUserIsExists(userUUID) # 没问题则返回文件名列表
-    if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
+    # result = verifyUserIsExists(userUUID) # 没问题则返回文件名列表
+    # if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
 
     result = uploadAvatar(userUUID)
     if type(result) != list:
@@ -77,8 +78,8 @@ def updateStorage(userUUID, nameList):
             fullPath = path + oldName
             if os.path.exists(fullPath): os.remove(fullPath)
     except Exception as e:
-            Loger.error(e, __file__)
-            return RESPONSE_JSON(CODE_ERROR_SERVICE)
+        Loger.error(e, __file__)
+        return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
         return RESPONSE_JSON(CODE_SUCCESS)
     
