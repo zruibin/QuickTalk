@@ -18,9 +18,6 @@ from module.log.Log import LogHandle
 from common.tools import jsonTool
 from common.auth import vertifyTokenHandle
 
-from common.code import *
-from common.file import uploadFile
-from common.mail import sendEmailForVerifyCodeByCache
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
@@ -44,10 +41,10 @@ def home():
 #     resp = Response(image, mimetype="image/jpeg")
 #     return resp
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    return uploadFile("user", "zruibin")
-    pass
+# @app.route('/upload', methods=['POST'])
+# def upload():
+#     return uploadFile("user", "zruibin")
+#     pass
 
 
 register.registerBlueprint(app)

@@ -33,9 +33,9 @@ class Config(object):
 
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # 上传文件限制，程序限制大小为其一半
     MAX_CONTENT_LENGTH_VERIFY = MAX_CONTENT_LENGTH / 2 # 上传文件的真实要求大小
-    UPLOAD_FOLDER = "medias/"
+    UPLOAD_FOLDER = "medias/" # 多媒体存放的目录，必须加上/
     FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
-    ALLOWED_EXTENSIONS = set(["txt", "pdf", "png", "jpg", "jpeg", "gif"])
+    ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
 
     MAIL_HOST = "smtp.126.com"  #设置服务器
     MAIL_USER = "creaction"    #用户名
@@ -55,6 +55,10 @@ class Config(object):
     TYPE_FOR_AUTH_WECHAT = "8"
     TYPE_FOR_AUTH_QQ = "9"
     TYPE_FOR_AUTH_WEIBO = "10"
+
+    # 上传文件的所属类型，分别为用户与项目
+    UPLOAD_FILE_FOR_USER = "u"
+    UPLOAD_FILE_FOR_PROJECT = "p"
 
     STATUS_ON = 1
     STATUS_OFF = 0

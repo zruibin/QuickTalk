@@ -51,6 +51,7 @@ env/
 .vscode
 log.txt
 build/
+media/*
 
 #svn文件夹忽略
 .svn/

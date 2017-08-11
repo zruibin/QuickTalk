@@ -26,4 +26,5 @@ from service.account import contact
 from service.account import checkContact
 from service.account import changeInfo
 from service.account import getVerifyCode
+from service.account import changeAvatar
 
