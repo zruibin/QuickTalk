@@ -49,12 +49,6 @@ def upload():
     return uploadFile("user", "zruibin")
     pass
 
-@app.route('/sendcode', methods=['GET'])
-def sendcode():
-    email = request.args.get("email")
-    sendEmailForVerifyCodeByCache(email)
-    return RESPONSE_JSON(CODE_SUCCESS)
-    pass
 
 register.registerBlueprint(app)
 
