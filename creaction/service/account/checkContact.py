@@ -18,13 +18,14 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from service.account.universal import verifyUserIsExists
+from common.tools import getValueFromRequestByKey
+
 
 @account.route('/check_contact', methods=["GET"])
 # @vertifyTokenHandle
 def checkContact():
-    
-    userUUID = request.args.get("user_uuid")
-    checkUserUUID = request.args.get("check_user_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
+    checkUserUUID = getValueFromRequestByKey("check_user_uuid")
 
     # 验证用户是否存在
     result = verifyUserIsExists(checkUserUUID)

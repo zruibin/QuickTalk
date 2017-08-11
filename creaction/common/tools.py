@@ -11,7 +11,7 @@
 json 响应包装工具
 """
 
-from flask import current_app
+from flask import current_app, request
 import json, uuid, time, hashlib
 
 
@@ -34,6 +34,7 @@ def generateCurrentTime():
     timeStr = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     return timeStr
     
+
 def md5hex(word):  
     """ MD5加密算法，返回32位小写16进制符号 """  
     if len(word) == 0:
@@ -44,7 +45,17 @@ def md5hex(word):
         word = str(word)  
     m = hashlib.md5()  
     m.update(word)  
-    return m.hexdigest() 
+    return m.hexdigest()
+
+
+def getValueFromRequestByKey(key):
+    """从request中的args或form中取得值"""
+    value = request.args.get(key) if request.args.get(key) else request.form.get(key)
+    return value
+    
+
+
+
 
 if __name__ == '__main__':
     pass

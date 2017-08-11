@@ -17,11 +17,13 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
+from common.tools import getValueFromRequestByKey
+
 
 @account.route('/contact', methods=["GET"])
 @vertifyTokenHandle
 def contact():
-    userUUID = request.args.get("user_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
     dataDict = getMyContactList(userUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

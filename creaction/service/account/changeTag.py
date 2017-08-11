@@ -18,12 +18,14 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
+from common.tools import getValueFromRequestByKey
+
 
 @account.route('/change_tag', methods=["POST"])
 @vertifyTokenHandle
 def changeTag():
-    userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
-    taglistStr = request.args.get("taglist") if request.args.get("taglist") else request.form.get("taglist")
+    userUUID = getValueFromRequestByKey("user_uuid")
+    taglistStr = getValueFromRequestByKey("taglist")
 
     taglist = None
     try:

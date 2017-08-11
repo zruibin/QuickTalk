@@ -17,13 +17,15 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
+from common.tools import getValueFromRequestByKey
+
 
 @account.route('/change_contact', methods=["POST"])
 @vertifyTokenHandle
 def changeContact():
-    userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
-    typeStr = request.args.get("type") if request.args.get("type") else request.form.get("type")
-    content = request.args.get("content") if request.args.get("content") else request.form.get("content")
+    userUUID = getValueFromRequestByKey("user_uuid")
+    typeStr = getValueFromRequestByKey("type")
+    content = getValueFromRequestByKey("content")
 
     if changeUserContactStorage(userUUID, typeStr, content):
         return RESPONSE_JSON(CODE_SUCCESS)

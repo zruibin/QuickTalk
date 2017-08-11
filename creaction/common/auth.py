@@ -25,6 +25,7 @@ from flask import  request, Response,make_response
 from common.code import *
 from module.log.Log import Loger
 from module.cache.RuntimeCache import CacheManager
+from common.tools import getValueFromRequestByKey
 
 ENCODE_UTF8 = "utf-8"
 ENCODE_BASE64 = "base64"
@@ -95,8 +96,8 @@ def tokenErrorResponse():
 def vertifyTokenHandle(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        userUUID = request.args.get("user_uuid") if request.args.get("user_uuid") else request.form.get("user_uuid")
-        token = request.cookies.get("token") if request.cookies.get("token") else request.args.get("token")
+        userUUID = getValueFromRequestByKey("user_uuid")
+        token = getValueFromRequestByKey("token")
 
         if userUUID == None or token == None:
             return RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)

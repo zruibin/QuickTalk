@@ -17,14 +17,14 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import generateToken, cacheToken
-from common.tools import md5hex
+from common.tools import md5hex, getValueFromRequestByKey
 from service.account.universal import verifyUserIsExists, verifyUserPassword
 
 
 @account.route("/token", methods=["POST", "GET"])
 def token():
-    userUUID = request.args.get("user_uuid")
-    password = md5hex(request.args.get("password")) # md5后(32位)
+    userUUID = getValueFromRequestByKey("user_uuid")
+    password = md5hex(getValueFromRequestByKey("password")) # md5后(32位)
 
     # 参数没有直接报错返回
     if userUUID == None or  password == None:

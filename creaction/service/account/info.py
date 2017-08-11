@@ -17,10 +17,12 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
+from common.tools import getValueFromRequestByKey
+
 
 @account.route('/info', methods=["GET"])
 def info():
-    userUUID = request.args.get("user_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
     dataDict = getUserBaseInfo(userUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

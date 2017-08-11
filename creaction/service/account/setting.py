@@ -25,14 +25,15 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
+from common.tools import getValueFromRequestByKey
 
 
 @account.route('/setting', methods=["POST"])
 @vertifyTokenHandle
 def setting():
-    userUUID = request.args.get("user_uuid")
-    typeStr = request.args.get("type")
-    status = request.args.get("status")
+    userUUID = getValueFromRequestByKey("user_uuid")
+    typeStr = getValueFromRequestByKey("type")
+    status = getValueFromRequestByKey("status")
 
     # 参数没有直接报错返回
     if userUUID == None or typeStr == None or status == None:

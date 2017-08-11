@@ -20,13 +20,14 @@ from common.tools import generateUUID, generateCurrentTime, md5hex
 from common.code import *
 from common.auth import generateToken, cacheToken
 from service.account.verifyEmailOrPhone import *
+from common.tools import getValueFromRequestByKey
 
 
 @account.route("/register", methods=["POST"])
 def register():                         
-        accountStr = request.args.get("account")
-        password = md5hex(request.args.get("password")) # md5后(32位)
-        typeStr = request.args.get("type")
+        accountStr = getValueFromRequestByKey("account")
+        password = md5hex(getValueFromRequestByKey("password")) # md5后(32位)
+        typeStr = getValueFromRequestByKey("type")
 
         # 参数没有直接报错返回
         if accountStr == None or password == None or typeStr == None:
@@ -34,7 +35,7 @@ def register():
 
         # 邮箱注册则看验证码是否过期或存在
         if typeStr == Config.TYPE_FOR_EMAIL:
-                code = request.args.get("code")
+                code = getValueFromRequestByKey("code")
                 if code == None:
                         return RESPONSE_JSON(CODE_ERROR_TEST_AND_VERIFY)
                 else:
@@ -61,8 +62,8 @@ def register():
         time = generateCurrentTime()
         
         # 用于测试在无用户的情况下第三方登录，则生成一个新的账号并与第三方的进行绑定
-        # authType = request.args.get("authType")
-        # authOpenId = request.args.get("authOpenId")
+        # authType = getValueFromRequestByKey("authType")
+        # authOpenId = getValueFromRequestByKey("authOpenId")
         # if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
         #         return RESPONSE_JSON(CODE_ERROR_SERVICE)
         # 用户数据入库

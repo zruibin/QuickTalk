@@ -18,11 +18,13 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from service.account.universal import verifyEmailIsExists, verifyPhoneIsExists
+from common.tools import getValueFromRequestByKey
+
 
 @account.route("/verify_phone_and_email", methods=["POST", "GET"])
 def verifyEmailOrPhone():
-        accountStr = request.args.get("account")
-        typeStr = request.args.get("type")
+        accountStr = getValueFromRequestByKey("account")
+        typeStr = getValueFromRequestByKey("type")
 
         # 参数没有直接报错返回
         if accountStr == None or  typeStr == None:
