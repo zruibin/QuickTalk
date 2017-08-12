@@ -24,7 +24,8 @@ class CacheManager(object):
     def __init__(self):
         super(CacheManager, self).__init__()
         try:
-            pool = redis.ConnectionPool(host=Config.CACHE_HOST, port=Config.CACHE_PORT)
+            pool = redis.ConnectionPool(host=Config.CACHE_HOST, port=Config.CACHE_PORT, 
+                                                db=0, password=Config.CACHE_PASSWORD)
             self.__redisClient = redis.Redis(connection_pool=pool)
         except Exception, e:
             Loger.error(e, __file__)

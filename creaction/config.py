@@ -28,6 +28,7 @@ class Config(object):
     CACHE_DB = "redis"
     CACHE_HOST = DBHOST
     CACHE_PORT = 6379
+    CACHE_PASSWORD = DBPWD
     CACHE_EXPIRE = 3600 #一个小时
 
     TOKEN_EXPIRE = 3600
