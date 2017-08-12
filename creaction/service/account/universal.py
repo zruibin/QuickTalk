@@ -20,11 +20,11 @@ def verifyEmailIsExists(email):
             SELECT email FROM t_user WHERE email='%s'; """ % email
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
-            print resultData
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0: result = True
+        # print resultData
     except Exception as e:
-            Loger.error(e, __file__)
+        Loger.error(e, __file__)
 
     return result
 
@@ -35,10 +35,10 @@ def verifyPhoneIsExists(phone):
             SELECT phone FROM t_user WHERE phone='%s'; """ % phone
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0: result = True
     except Exception as e:
-            Loger.error(e, __file__)
+        Loger.error(e, __file__)
 
     return result
 
@@ -49,10 +49,10 @@ def verifyUserIsExists(userUUID):
         SELECT uuid FROM t_user WHERE uuid='%s'; """ % userUUID
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            if len(resultData) > 0: result = True
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0: result = True
     except Exception as e:
-            Loger.error(e, __file__)
+        Loger.error(e, __file__)
 
     return result
 
@@ -63,12 +63,13 @@ def verifyUserPassword(userUUID, password):
         SELECT password FROM t_user_auth WHERE user_uuid='%s'; """ % userUUID
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            resultData = dbManager.executeSingleQuery(querySQL)
-            dataPassword = ""
-            if len(resultData) > 0 : dataPassword = resultData[0][0]
-            if dataPassword == password: result = True
+        resultData = dbManager.executeSingleQuery(querySQL)
+        dataPassword = ""
+        dataPassword = resultData[0]["password"]
+        if dataPassword == password or  len(dataPassword) == 0: 
+                result = True
     except Exception as e:
-            Loger.error(e, __file__)
+        Loger.error(e, __file__)
 
     return result
 

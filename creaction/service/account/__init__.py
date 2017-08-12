@@ -28,4 +28,5 @@ from service.account import changeInfo
 from service.account import getVerifyCode
 from service.account import changeAvatar
 from service.account import thirdParty
+from service.account import changePassword
 
