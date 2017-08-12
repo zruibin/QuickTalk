@@ -12,6 +12,7 @@
 """
 
 import smtplib
+from smtplib import SMTP_SSL
 from email.MIMEText import MIMEText
 import threading
 from module.log.Log import Loger
@@ -21,21 +22,27 @@ from common.tools import generateVerificationCode3
   
 
 def sendEmail(to, sub, content):  
+    loginAccount = Config.MAIL_USER + "@" + Config.MAIL_POSTFIX
     me = "<" + Config.MAIL_USER + "@" + Config.MAIL_POSTFIX + ">"
-    msg = MIMEText(content, _subtype='html', _charset='utf-8')  
+    msg = MIMEText(content, _subtype='html', _charset='utf-8')    
     
     msg['Subject'] = sub
     msg['From'] = "可行APP" + me
     msg['To'] = to
     smtp = smtplib.SMTP()
+    #ssl登录
+    smtp = SMTP_SSL(Config.MAIL_HOST)
+    
     try:  
-        smtp.connect(Config.MAIL_HOST)  #连接smtp服务器
-        smtp.login(Config.MAIL_USER, Config.MAIL_PASSWORD)  #登陆服务器
+        #是用来调试的。参数值为1表示开启调试模式，参数值为0关闭调试模式
+        # smtp.set_debuglevel(1)
+        smtp.ehlo(Config.MAIL_HOST)
+        smtp.login(loginAccount, Config.MAIL_PASSWORD)  #登陆服务器
         smtp.sendmail(me, to, msg.as_string())  #发送邮件
     except Exception, e:
         Loger.error(e, __file__)
     finally:
-        smtp.close()
+        smtp.quit()
     pass
 
 
@@ -47,12 +54,14 @@ def sendEmailForVerifyCode(email, code):
         @Return: 无
     '''
     content = "此次可用验证码："+ code + " (仅30分钟内有效)"
-    t = threading.Thread(target=sendEmail, args=(email, "验证码", content))
-    t.start()
+    sendEmail(email, "验证码", content)
+    # t = threading.Thread(target=sendEmail, args=(email, "验证码", content))
+    # t.start()
     pass
 
 
 def sendEmailForVerifyCodeByCache(email):
+    """Note: 此方法由Celery进行异步调用，dispatch发邮件"""
     result = False
     try:
         code = CacheManager.shareInstanced().getCache(email)
@@ -65,7 +74,9 @@ def sendEmailForVerifyCodeByCache(email):
         Loger.error(e, __file__)
 
     return result
-    
+
+
+
 
 
 if __name__ == '__main__':

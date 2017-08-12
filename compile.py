@@ -64,7 +64,7 @@ def help():
 
 
 def copyRequireFile():
-    dirList = ["./requirements.txt", "./conf/start.sh", "./conf/creaction.conf", "./conf/supervisor.conf", "./conf/nginx.conf"]
+    dirList = ["./requirements.txt", "./conf/start.sh", "./conf/creaction.conf", "./conf/supervisor.conf", "./conf/nginx.conf", "./conf/redis.conf"]
     for directory in dirList:
         newDir = RELEASE + "/" + os.path.basename(directory)
         shutil.copyfile(directory, newDir)

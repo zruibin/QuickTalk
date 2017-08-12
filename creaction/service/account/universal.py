@@ -22,6 +22,7 @@ def verifyEmailIsExists(email):
     try: 
             resultData = dbManager.executeSingleQuery(querySQL)
             if len(resultData) > 0: result = True
+            print resultData
     except Exception as e:
             Loger.error(e, __file__)
 

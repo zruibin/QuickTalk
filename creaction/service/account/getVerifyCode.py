@@ -20,7 +20,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
-from common.mail import sendEmailForVerifyCodeByCache
+from dispatch.tasks import dispatchSendEmailForVerifyCode
 from service.account.universal import verifyEmailIsExists
 
 
@@ -33,7 +33,8 @@ def getVerifyCode():
         # 验证email是否已使用了
         if verifyEmailIsExists(account) :  return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
 
-        if sendEmailForVerifyCodeByCache(account):
+        # 利用Celery异步发邮件
+        if dispatchSendEmailForVerifyCode.delay(account):
             return RESPONSE_JSON(CODE_SUCCESS)
         else:
             return RESPONSE_JSON(CODE_ERROR_SERVICE)

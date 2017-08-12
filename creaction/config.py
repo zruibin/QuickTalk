@@ -25,6 +25,7 @@ class Config(object):
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
 
+    CACHE_DB = "redis"
     CACHE_HOST = DBHOST
     CACHE_PORT = 6379
     CACHE_EXPIRE = 3600 #一个小时
@@ -37,10 +38,10 @@ class Config(object):
     FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
 
-    MAIL_HOST = "smtp.126.com"  #设置服务器
-    MAIL_USER = "creaction"    #用户名
-    MAIL_PASSWORD = "creaction362436"   #口令 
-    MAIL_POSTFIX = "126.com"  #发件箱的后缀
+    MAIL_HOST = "smtp.exmail.qq.com"  #设置服务器
+    MAIL_USER = "auto.mail"    #用户名
+    MAIL_PASSWORD = "CreAction1"   #口令 
+    MAIL_POSTFIX = "creactism.com"  #发件箱的后缀
 
     # 数据类型
     TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的

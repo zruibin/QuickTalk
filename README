@@ -3,7 +3,7 @@
 
 ####架构方案
 
-**Python 2.7 + flask + gunicorn + gevent +  supervisor + nginx + MySQL 5.6**
+**Python 2.7 + flask + gunicorn + gevent + Celery +  supervisor + nginx + MySQL 5.6**
 
 note: 项目部署于/home/creaction下
 
