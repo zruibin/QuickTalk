@@ -17,7 +17,7 @@ from werkzeug import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 from config import Config
 from module.log.Log import Loger
-from common.tools import jsonTool, generateUUID
+from common.tools import jsonTool, generateFileName
 from common.code import *
 
 
@@ -75,7 +75,7 @@ def uploadPicture(fieType, uuid):
                     suffix = filename.rsplit('.', 1)[1]
 
                     #文件名生产规则
-                    filename = str(generateUUID()) + "." + suffix
+                    filename = str(generateFileName()) + "." + suffix
 
                     fullPath = os.path.join(path, filename)
                     # 保存文件

@@ -33,7 +33,12 @@ def generateUUID():
 def generateCurrentTime():
     timeStr = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     return timeStr
-    
+
+
+def generateCurrentTimeInNumber():
+    timeStr = time.strftime("%Y%m%d%H%M%S", time.localtime(time.time()))
+    return timeStr
+ 
 
 def md5hex(word):  
     """ MD5加密算法，返回32位小写16进制符号 """  
@@ -99,6 +104,12 @@ def getValueFromRequestByKey(key):
     return value
     
 
+def generateFileName():
+    """文件名，不包含后缀，规则:当时时间(秒级)加6位随机数字字母"""
+    timeNum = generateCurrentTimeInNumber()
+    randomNum = generateVerificationCode()
+    return timeNum + randomNum
+    
 
 
 

@@ -23,7 +23,7 @@ from service.account.universal import verifyUserPassword
 
 
 @account.route('/change_password', methods=["POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def changePassword():
     userUUID = getValueFromRequestByKey("user_uuid")
     oldpassword = md5hex(getValueFromRequestByKey("oldpassword"))
