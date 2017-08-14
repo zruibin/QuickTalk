@@ -23,6 +23,7 @@ from common.tools import getValueFromRequestByKey
 @account.route('/info', methods=["GET"])
 def info():
     userUUID = getValueFromRequestByKey("user_uuid")
+    if userUUID == None: return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
     dataDict = getUserBaseInfo(userUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

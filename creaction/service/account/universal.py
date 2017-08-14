@@ -29,6 +29,21 @@ def verifyEmailIsExists(email):
     return result
 
 
+def verifyEmailIsExistsForReturnUUID(email):
+    result  = None
+    querySQL = """
+            SELECT uuid FROM t_user WHERE email='%s'; """ % email
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0:
+            result = resultData[0]["uuid"]
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    return result
+
+
 def verifyPhoneIsExists(phone):
     result  = False
     querySQL = """
@@ -40,6 +55,20 @@ def verifyPhoneIsExists(phone):
     except Exception as e:
         Loger.error(e, __file__)
 
+    return result
+
+
+def verifyPhoneIsExistsForReturnUUID(phone):
+    result  = None
+    querySQL = """
+            SELECT uuid FROM t_user WHERE phone='%s'; """ % phone
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0: 
+            result = resultData[0]["uuid"]
+    except Exception as e:
+        Loger.error(e, __file__)
     return result
 
 

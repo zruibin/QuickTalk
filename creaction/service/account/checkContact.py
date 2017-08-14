@@ -22,7 +22,7 @@ from common.tools import getValueFromRequestByKey
 
 
 @account.route('/check_contact', methods=["GET"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def checkContact():
     userUUID = getValueFromRequestByKey("user_uuid")
     checkUserUUID = getValueFromRequestByKey("check_user_uuid")
