@@ -16,7 +16,7 @@ from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 from config import *
-from common.tools import generateUUID, generateCurrentTime, md5hex
+from common.tools import generateUUID, generateCurrentTime, md5hex, fullPathForMediasFile
 from common.code import *
 from common.auth import generateToken, cacheToken
 from service.account.universal import verifyEmailIsExists, verifyPhoneIsExists
@@ -147,13 +147,15 @@ def generateResponseData(userUUID, token):
         try: 
                 results = dbManager.executeTransactionQuery(querySQL)
                 tupleData  = results[0]
-
+                avatar = tupleData["avatar"]
+                if len(avatar) > 0:
+                        avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
                 dataDict = {
                         "token" : token,
                         "user_uuid" : tupleData["uuid"],
                         "user_id" : str(tupleData["id"]),
                         "nickame" : tupleData["nickname"],
-                        "avatar" : tupleData["avatar"],
+                        "avatar" : avatar,
                         "phone" : tupleData["phone"],
                         "email" : tupleData["email"],
                         "password" : tupleData["password"],

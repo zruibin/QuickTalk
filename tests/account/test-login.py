@@ -33,9 +33,9 @@ def loginWithNewThirdPart():
     print(r.text)
 
 if __name__ == '__main__':
-    # login()
+    login()
     # loginWithThirdPart()
-    loginWithNewThirdPart()
+    # loginWithNewThirdPart()
     pass
 
 

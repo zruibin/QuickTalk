@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, md5hex, generateUUID, generateCurrentTime
+from common.tools import getValueFromRequestByKey, md5hex, generateUUID, generateCurrentTime, fullPathForMediasFile
 from module.cache.RuntimeCache import CacheManager
 from common.auth import generateToken, cacheToken
 from service.account.register import createNewUserOperation
@@ -107,12 +107,16 @@ def cacheUserDataWithToken(resultData):
         token = generateToken(userUUID)
         if token == None or cacheToken(userUUID, token) == False: 
                 return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
+
+        avatar = resultData["avatar"]
+        if len(avatar) > 0:
+            avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
         dataDict = {
             "token": token,
             "uuid": userUUID,
             "id": resultData["id"],
             "nickname": resultData["nickname"],
-            "avatar": resultData["avatar"],
+            "avatar": avatar,
             "phone": resultData["phone"],
             "email": resultData["email"],
             "password": resultData["password"],

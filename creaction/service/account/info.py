@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 
 
 @account.route('/info', methods=["GET"])
@@ -54,10 +54,13 @@ def getUserBaseInfo(userUUID):
             dataDict = {}
             rows = dbManager.executeSingleQuery(querySQL)
             row  = rows[0]
+            avatar = row["avatar"]
+            if len(avatar) > 0:
+                avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
             dataDict["uuid"] = row["uuid"]
             dataDict["userId"] = row["id"]
             dataDict["nickname"] = row["nickname"]
-            dataDict["avatar"] = row["avatar"]
+            dataDict["avatar"] = avatar
             dataDict["gender"] = row["gender"]
             dataDict["location"] = row["area"]
             dataDict["detail"] = row["detail"]

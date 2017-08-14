@@ -13,6 +13,7 @@ json 响应包装工具
 
 from flask import current_app, request
 import json, uuid, time, hashlib, random
+from config import *
 
 
 def jsonTool(obj):
@@ -111,6 +112,9 @@ def generateFileName():
     return timeNum + randomNum
     
 
+def fullPathForMediasFile(fileType, uuid, fileName):
+    fileName = Config.WEB_SITE_HOST + Config.UPLOAD_FOLDER +  fileType + "/" + uuid + "/" + fileName
+    return fileName
 
 
 if __name__ == '__main__':

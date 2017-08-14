@@ -17,6 +17,8 @@ class Config(object):
 
     DEBUG = True
 
+    WEB_SITE_HOST = "http://creactism.com/"
+
     DBHOST = "localhost"
     DBPORT = 3306
     DBUSER = "root"
