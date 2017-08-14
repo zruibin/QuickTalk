@@ -16,14 +16,12 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.auth import vertifyTokenHandle
 from service.account.universal import verifyEmailIsExistsForReturnUUID, verifyPhoneIsExistsForReturnUUID
 from common.tools import getValueFromRequestByKey, md5hex
 from module.cache.RuntimeCache import CacheManager
 
 
-@account.route('/forget_password', methods=["POST", "GET"])
-@vertifyTokenHandle
+@account.route('/forget_password', methods=["POST"])
 def forgetPassword():
     accountStr = getValueFromRequestByKey("account")
     password = getValueFromRequestByKey("newpassword")

@@ -57,73 +57,78 @@ def register():
                 result = verifyPhoneIsExists(phone)
                 if result :  return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
 
-        # 生成用户的uuid
-        userUUID = generateUUID()
-        time = generateCurrentTime()
-        
-        # 用于测试在无用户的情况下第三方登录，则生成一个新的账号并与第三方的进行绑定
-        # authType = getValueFromRequestByKey("authType")
-        # authOpenId = getValueFromRequestByKey("authOpenId")
-        # if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
-        #         return RESPONSE_JSON(CODE_ERROR_SERVICE)
-        # 用户数据入库
-        if operationDataStorage(userUUID, password, time, phone, email) == False:
-                return RESPONSE_JSON(CODE_ERROR_SERVICE)
-
-        # 生成token并缓存
-        token = generateToken(userUUID)
-        if token == None or cacheToken(userUUID, token) == False: 
-                return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
-        dataDict = generateResponseData(userUUID, token)
-
-        response = RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
-        response.set_cookie('token', token)
+        response = createNewUserOperation(phone=phone, email=email)
         return response
 
 
-def  operationDataStorage(userUUID, password, time, phone="", email="", authType="", authOpenId=""):
+def createNewUserOperation(password="", time="", phone="", email="", authType="", authOpenId=""):
+        try:
+                # 生成用户的uuid
+                userUUID = generateUUID()
+                time = generateCurrentTime()
+
+                # 用户数据入库
+                if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
+                        return RESPONSE_JSON(CODE_ERROR_SERVICE)
+
+                # 生成token并缓存
+                token = generateToken(userUUID)
+                if token == None or cacheToken(userUUID, token) == False: 
+                        return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
+                dataDict = generateResponseData(userUUID, token)
+
+                response = RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
+                response.set_cookie('token', token)
+                return response
+        except Exception as e:
+                Loger.error(e, __file__)
+                return RESPONSE_JSON(CODE_ERROR_SERVICE)
+
+
+def  operationDataStorage(userUUID, password="", time="", phone="", email="", authType="", authOpenId=""):
         results = False
-        sqlList = []
-        userSQL = """ 
-                INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`, `contact_phone`, `contact_email`, `weibo`)
-                VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s', '', '', '');
-        """ % (userUUID, phone, email, time)
-        sqlList.append(userSQL)
-
-        userAuthSQL = """
-                INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
-                VALUES('%s', '%s', '', '', '');
-                """ % (userUUID, password)
-        sqlList.append(userAuthSQL)
-        
-        userSettingSQL = """
-                INSERT INTO t_user_setting (user_uuid, type, status) 
-                VALUES ('%s', %d, %d), ('%s', %d, %d), 
-                        ('%s', %d, %d), ('%s', %d, %d), ('%s', %d, %d), 
-                        ('%s', %d, %d);
-        """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.STATUS_ON,
-                userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.STATUS_ON)
-        sqlList.append(userSettingSQL)
-
-        if len(authType) > 0:
-                typeDict = {
-                        Config.TYPE_FOR_AUTH_WECHAT : "wechat",
-                        Config.TYPE_FOR_AUTH_QQ : "qq",
-                        Config.TYPE_FOR_AUTH_WEIBO : "weibo"
-                }
-                typeContent = typeDict[authType]
-                updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeContent, authOpenId, userUUID)
-                sqlList.append(updateSQL)
-
-        dbManager = DB.DBManager.shareInstanced()
         try: 
+                sqlList = []
+                userSQL = """ 
+                        INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`, `contact_phone`, `contact_email`, `weibo`)
+                        VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s', '', '', '');
+                """ % (userUUID, phone, email, time)
+                sqlList.append(userSQL)
+
+                userAuthSQL = """
+                        INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
+                        VALUES('%s', '%s', '', '', '');
+                        """ % (userUUID, password)
+                sqlList.append(userAuthSQL)
+
+                userSettingSQL = """
+                        INSERT INTO t_user_setting (user_uuid, type, status) 
+                        VALUES ('%s', %d, %d), ('%s', %d, %d), 
+                                ('%s', %d, %d), ('%s', %d, %d), ('%s', %d, %d), 
+                                ('%s', %d, %d);
+                """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.STATUS_ON,
+                        userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.STATUS_ON,
+                        userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.STATUS_ON,
+                        userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.STATUS_ON,
+                        userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.STATUS_ON,
+                        userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.STATUS_ON)
+                sqlList.append(userSettingSQL)
+
+                if len(authType) > 0:
+                        typeDict = {
+                                Config.TYPE_FOR_AUTH_WECHAT : "wechat",
+                                Config.TYPE_FOR_AUTH_QQ : "qq",
+                                Config.TYPE_FOR_AUTH_WEIBO : "weibo"
+                        }
+                        typeContent = typeDict[authType]
+                        updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeContent, authOpenId, userUUID)
+                        sqlList.append(updateSQL)
+
+                dbManager = DB.DBManager.shareInstanced()
                 results = dbManager.executeTransactionMutltiDml(sqlList)  
         except Exception as e:
                 Loger.error(e, __file__)
+                raise e
 
         return results 
 
@@ -143,41 +148,27 @@ def generateResponseData(userUUID, token):
                 results = dbManager.executeTransactionQuery(querySQL)
                 tupleData  = results[0]
 
-                user_uuid = tupleData["uuid"]
-                user_id = str(tupleData["id"])
-                userName = tupleData["nickname"]
-                avatar = tupleData["avatar"]
-                phone = tupleData["phone"]
-                email = tupleData["email"]
-                contactPhone = tupleData["contact_phone"]
-                contactEmail = tupleData["contact_email"]
-                contactQQ = tupleData["qq"]
-                contactWeibo = tupleData["weibo"]
-                contactWechat = tupleData["wechat"]
-                password = tupleData["password"]
-                authQQ = tupleData["authQQ"]
-                authWechat = tupleData["authWechat"]
-                authWeibo = tupleData["authWeibo"]
                 dataDict = {
                         "token" : token,
-                        "user_uuid" : user_uuid,
-                        "user_id" : user_id,
-                        "userName" : userName,
-                        "avatar" : avatar,
-                        "phone" : phone,
-                        "email" : email,
-                        "password" : password,
-                        "authQQ" : authQQ,
-                        "authWechat" : authWechat,
-                        "authWeibo" : authWeibo,
-                        "contactPhone" : contactPhone,
-                        "contactEmail" : contactEmail,
-                        "contactQQ" : contactQQ,
-                        "contactWeibo" : contactWeibo,
-                        "contactWechat" : contactWechat
+                        "user_uuid" : tupleData["uuid"],
+                        "user_id" : str(tupleData["id"]),
+                        "nickame" : tupleData["nickname"],
+                        "avatar" : tupleData["avatar"],
+                        "phone" : tupleData["phone"],
+                        "email" : tupleData["email"],
+                        "password" : tupleData["password"],
+                        "authQQ" : tupleData["authQQ"],
+                        "authWechat" : tupleData["authWechat"],
+                        "authWeibo" : tupleData["authWeibo"],
+                        "contactPhone" : tupleData["contact_phone"],
+                        "contactEmail" : tupleData["contact_email"],
+                        "contactQQ" : tupleData["qq"],
+                        "contactWeibo" : tupleData["weibo"],
+                        "contactWechat" : tupleData["wechat"]
                 }
                 results  = dataDict
         except Exception as e:
                 Loger.error(e, __file__)
+                raise e
 
         return results

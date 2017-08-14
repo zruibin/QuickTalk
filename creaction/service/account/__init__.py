@@ -30,4 +30,5 @@ from service.account import changeAvatar
 from service.account import thirdParty
 from service.account import changePassword
 from service.account import forgetPassword
+from service.account import login
 

@@ -47,6 +47,7 @@ class Config(object):
     # 数据类型
     TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
     TYPE_FOR_PHONE = "2" # 只用于登录，区别于联系的
+    
     TYPE_FOR_WECHAT = "3" # 用于信息显示，方便联系
     TYPE_FOR_QQ = "4" #  用于信息显示，方便联系
     TYPE_FOR_WEIBO = "5" #  用于信息显示，方便联系
