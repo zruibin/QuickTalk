@@ -63,8 +63,6 @@ def changeUserContactStorage(userUUID, typeStr, content):
 
     return result
     
-    
-
 
 if __name__ == '__main__':
     pass

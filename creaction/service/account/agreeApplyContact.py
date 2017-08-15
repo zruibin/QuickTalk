@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
-from service.account.universal import verifyUserIsExists
+from common.verifyMethods import verifyUserIsExists
 
 
 @account.route('/agree_apply_contact', methods=["POST"])

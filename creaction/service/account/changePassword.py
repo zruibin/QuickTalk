@@ -19,7 +19,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, md5hex
-from service.account.universal import verifyUserPassword
+from common.verifyMethods import verifyUserPassword
 
 
 @account.route('/change_password', methods=["POST"])
@@ -52,12 +52,6 @@ def changeUserPasswordInStorage(userUUID, password):
         Loger.error(e, __file__)
             
     return result
-
-
-
-
-    
-
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle, ThirdPartyAlreadyBeBindException
 from common.tools import getValueFromRequestByKey
-from service.account.universal import verifyUserIsExists
+from common.verifyMethods import verifyUserIsExists
 
 
 @account.route('/third_party', methods=["POST"])

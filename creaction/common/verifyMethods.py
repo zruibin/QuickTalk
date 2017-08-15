@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# universal.py
+# verifyMethods.py
 #
-# Created by ruibin.chow on 2017/08/10.
+# Created by ruibin.chow on 2017/08/15.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-account下需要用到的通用方法
+需要用到校验的通用方法
 """
 from module.database import DB
 from module.log.Log import Loger
@@ -106,3 +106,4 @@ def verifyUserPassword(userUUID, password):
 
 if __name__ == '__main__':
     pass
+

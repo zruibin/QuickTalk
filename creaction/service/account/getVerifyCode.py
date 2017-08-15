@@ -21,7 +21,7 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from dispatch.tasks import dispatchSendEmailForVerifyCode
-from service.account.universal import verifyEmailIsExists
+from common.verifyMethods import verifyEmailIsExists
 
 
 @account.route('/get_verify_code', methods=["GET"])
@@ -42,9 +42,6 @@ def getVerifyCode():
     else:
         return RESPONSE_JSON(CODE_ERROR_ONLY_FOR_EMAIL)
     
-
-
-
 
 if __name__ == '__main__':
     pass

@@ -19,7 +19,7 @@ from config import *
 from common.tools import generateUUID, generateCurrentTime, md5hex, fullPathForMediasFile
 from common.code import *
 from common.auth import generateToken, cacheToken
-from service.account.universal import verifyEmailIsExists, verifyPhoneIsExists
+from common.verifyMethods import verifyEmailIsExists, verifyPhoneIsExists
 from common.tools import getValueFromRequestByKey
 
 

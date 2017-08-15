@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from service.account.universal import verifyUserIsExists
+from common.verifyMethods import verifyUserIsExists
 from common.tools import getValueFromRequestByKey
 
 
@@ -75,9 +75,9 @@ def getPeopleContact(userUUID, checkUserUUID):
 
     except Exception as e:
             Loger.error(e, __file__)
-            
 
     return dataDict
+
 
 if __name__ == '__main__':
     pass

@@ -20,7 +20,7 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from common.file import FileTypeException, uploadPicture
-from service.account.universal import verifyUserIsExists
+from common.verifyMethods import verifyUserIsExists
 
 
 @account.route('/change_avatar', methods=["POST"])
