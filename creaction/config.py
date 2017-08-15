@@ -68,6 +68,8 @@ class Config(object):
     UPLOAD_FILE_FOR_USER = "u"
     UPLOAD_FILE_FOR_PROJECT = "p"
 
+    PAGE_OF_SIZE = 10 # 分页每页数量
+
     STATUS_ON = 1
     STATUS_OFF = 0
 

@@ -23,7 +23,7 @@ import common.notification as notification
 
 
 @start.route('/start_action', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def startAction():
     userUUID = getValueFromRequestByKey("user_uuid")
     action = getValueFromRequestByKey("action")

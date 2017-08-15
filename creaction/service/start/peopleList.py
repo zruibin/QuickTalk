@@ -22,18 +22,23 @@ from common.verifyMethods import verifyUserIsExists
 
 
 @start.route('/people_list', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def peopleList():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
+    index = getValueFromRequestByKey("index")
 
     if typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+    if index == None:
+        index = 1
+    else:
+        index = int(index)
 
     return getDataListFromStorage(userUUID, typeStr)
 
 
-def getDataListFromStorage(userUUID, typeStr):
+def getDataListFromStorage(userUUID, typeStr, index=1):
     print userUUID, typeStr
     sql = ""
     if typeStr == Config.TYPE_FOR_USER_QUERY_FOLLOWING: # 关注者
@@ -43,6 +48,8 @@ def getDataListFromStorage(userUUID, typeStr):
         sql = """SELECT t_user_user.user_uuid FROM t_user_user 
         WHERE t_user_user.other_user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
 
+    limit = "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
+
     querySQL = """
         SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, 
         (SELECT count(t_project.uuid) FROM t_project WHERE t_project.author_uuid=t_user.uuid) AS myproject,
@@ -51,10 +58,10 @@ def getDataListFromStorage(userUUID, typeStr):
         (SELECT count(t_user_user.type) FROM t_user_user 
                 WHERE t_user_user.other_user_uuid=t_user.uuid AND type={follow}) AS followed
         FROM t_user 
-        WHERE t_user.uuid IN ({sql});
+        WHERE t_user.uuid IN ({sql}) {limit};
     """.format(user_uuid=userUUID, joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
-             follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql)
-    print querySQL
+             follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql, limit=limit)
+
     dbManager = DB.DBManager.shareInstanced()
     try: 
         rows = dbManager.executeSingleQuery(querySQL)
