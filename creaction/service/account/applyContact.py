@@ -48,10 +48,19 @@ def applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
     insertSQL = """INSERT INTO t_message_contact (user_uuid, type, content_uuid, owner_user_uuid, status, content) 
     VALUES ('%s', 1, '%s', '%s', %d, '%s'); """ % (beApplyUserUUID, userUUID, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, content)
 
+    # 避免多次申请
+    querySQL = """
+        SELECT user_uuid FROM t_message_contact WHERE user_uuid='%s' 
+        AND content_uuid='%s' AND owner_user_uuid='%s'; """ % (beApplyUserUUID, userUUID, userUUID)
+
     dbManager = DB.DBManager.shareInstanced()
-    try: 
-        result = dbManager.executeTransactionDml(insertSQL)
-        notification.notificationUserForContent(beApplyUserUUID, content)
+    try:
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0: 
+            result = True
+        else:
+            result = dbManager.executeTransactionDml(insertSQL)
+            notification.notificationUserForContent(beApplyUserUUID, content)
     except Exception as e:
         Loger.error(e, __file__)
             
