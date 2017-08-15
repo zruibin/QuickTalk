@@ -36,16 +36,16 @@ def getUserBaseInfo(userUUID):
     dataDict = None
     querySQL = """ 
     SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.gender, t_user.area, t_user.detail, t_user.career,
-        (SELECT count(type) FROM t_user_user WHERE user_uuid='{user_uuid}' AND type={following}) AS following,
-        (SELECT count(type) FROM t_user_user WHERE user_uuid='{user_uuid}' AND type={followed}) AS followed,
+        (SELECT count(type) FROM t_user_user WHERE user_uuid='{user_uuid}' AND type={follow}) AS following,
+        (SELECT count(type) FROM t_user_user WHERE other_user_uuid='{user_uuid}' AND type={follow}) AS followed,
         (SELECT count(uuid) FROM t_project WHERE author_uuid='{user_uuid}') AS myproject,
         (SELECT count(type) FROM  t_project_user WHERE user_uuid='{user_uuid}' AND type={joinedProject}) AS joinedProject,
         (SELECT count(type) FROM  t_project_user WHERE user_uuid='{user_uuid}' AND type={followedProject}) AS followedProject
         FROM t_user WHERE t_user.uuid='{user_uuid}' 
-    """.format(user_uuid=userUUID, following=Config.TYPE_FOR_USER_FOLLOWING,
-             followed=Config.TYPE_FOR_USER_FOLLOWED, 
+    """.format(user_uuid=userUUID, follow=Config.TYPE_FOR_USER_FOLLOWING,
              joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
              followedProject=Config.TYPE_FOR_PROJECT_FOLLOWER)
+    
     querySchoolSQL = """
     SELECT school FROM t_user_eduction WHERE user_uuid='%s' ORDER BY sorting ASC
     """ % userUUID

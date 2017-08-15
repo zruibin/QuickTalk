@@ -22,7 +22,7 @@ from common.verifyMethods import verifyUserIsExists
 
 
 @start.route('/people_list', methods=["GET", "POST"])
-@vertifyTokenHandle
+# @vertifyTokenHandle
 def peopleList():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
@@ -34,6 +34,14 @@ def peopleList():
 
 
 def getDataListFromStorage(userUUID, typeStr):
+    print userUUID, typeStr
+    sql = ""
+    if typeStr == Config.TYPE_FOR_USER_QUERY_FOLLOWING: # 关注者
+        sql = """SELECT t_user_user.other_user_uuid FROM t_user_user 
+        WHERE t_user_user.user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
+    else: # 粉丝 TYPE_FOR_USER_QUERY_FOLLOWED
+        sql = """SELECT t_user_user.user_uuid FROM t_user_user 
+        WHERE t_user_user.other_user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
 
     querySQL = """
         SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, 
@@ -41,15 +49,12 @@ def getDataListFromStorage(userUUID, typeStr):
         (SELECT count(t_project_user.type) FROM  t_project_user 
             WHERE t_project_user.user_uuid=t_user.uuid AND type={joinedProject}) AS joinedProject,
         (SELECT count(t_user_user.type) FROM t_user_user 
-                WHERE t_user_user.user_uuid=t_user.uuid AND type={followed}) AS followed
+                WHERE t_user_user.other_user_uuid=t_user.uuid AND type={follow}) AS followed
         FROM t_user 
-        WHERE t_user.uuid IN (
-                SELECT t_user_user.other_user_uuid
-                FROM t_user_user 
-                WHERE t_user_user.user_uuid='{user_uuid}' AND t_user_user.type={typeStr})
+        WHERE t_user.uuid IN ({sql});
     """.format(user_uuid=userUUID, joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
-             followed=Config.TYPE_FOR_USER_FOLLOWED, typeStr=typeStr)
-
+             follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql)
+    print querySQL
     dbManager = DB.DBManager.shareInstanced()
     try: 
         rows = dbManager.executeSingleQuery(querySQL)

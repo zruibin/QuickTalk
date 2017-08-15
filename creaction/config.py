@@ -84,13 +84,15 @@ class Config(object):
     # 联系人消息
     NOTIFICATION_FOR_CONTACT = 6
 
-    TYPE_FOR_USER_FOLLOWING = "0" # 关注的人
-    TYPE_FOR_USER_FOLLOWED = "1" # 粉丝
+    TYPE_FOR_USER_FOLLOWING = "1" # 关注的人与粉丝
     TYPE_FOR_USER_CONTACT = "2" # 已交换联系方式的人
 
+    TYPE_FOR_USER_QUERY_FOLLOWING = "1" # 查询关注人
+    TYPE_FOR_USER_QUERY_FOLLOWED = "2" # 查询粉丝
+
     # 项目成员与关注者
-    TYPE_FOR_PROJECT_MEMBER = "0" # 项目成员
-    TYPE_FOR_PROJECT_FOLLOWER = "1" # 项目的关注者，项目成员加入时默认关注该项目
+    TYPE_FOR_PROJECT_MEMBER = "1" # 项目成员
+    TYPE_FOR_PROJECT_FOLLOWER = "2" # 项目的关注者，项目成员加入时默认关注该项目
 
     # 项目状态
     TYPE_FOR_PROJECT_STATUS_PROGRESSING = 0 # 进行中
@@ -104,6 +106,11 @@ class Config(object):
     # 请求消息中已执行与未执行状态
     TYPE_FOR_MESSAGE_ACTION_ON = 1 # 已执行
     TYPE_FOR_MESSAGE_ACTION_OFF = 0 # 未执行
+
+    TYPE_FOR_START_PROJECT = "1" # 关注或取消关注项目
+    TYPE_FOR_START_USER = "2" # 关注或取消关注用户
+    TYPE_FOR_START_ACTION_STARTING = "1" # 关注
+    TYPE_FOR_START_ACTION_UNSTART = "2" # 取消
 
     pass
 

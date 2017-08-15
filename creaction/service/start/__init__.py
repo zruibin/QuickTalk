@@ -15,3 +15,4 @@ from flask import Blueprint
 start = Blueprint("start", __name__)
   
 from service.start import peopleList
+from service.start import startAction

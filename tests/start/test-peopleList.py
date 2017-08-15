@@ -14,7 +14,7 @@ import requests
 
 def applyContact():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
-        "type": "0"
+        "type": "2"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/start/people_list", params=params) 
     print r.cookies

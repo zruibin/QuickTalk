@@ -23,7 +23,7 @@ import common.notification as notification
 
 
 @account.route('/apply_contact', methods=["POST"])
-@vertifyTokenHandle
+# @vertifyTokenHandle
 def applyContact():
     userUUID = getValueFromRequestByKey("user_uuid")
     beApplyUserUUID = getValueFromRequestByKey("be_apply_user_uuid") # 被申请者的uuid
@@ -54,15 +54,17 @@ def applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
     querySQL = """
         SELECT user_uuid FROM t_message_contact WHERE user_uuid='%s' 
         AND content_uuid='%s' AND owner_user_uuid='%s'; """ % (beApplyUserUUID, userUUID, userUUID)
+    # 多次申请只保留一条
+    deleteSQL = """ DELETE FROM t_message_contact WHERE user_uuid='%s' 
+        AND content_uuid='%s' AND owner_user_uuid='%s'; """ % (beApplyUserUUID, userUUID, userUUID)
 
     dbManager = DB.DBManager.shareInstanced()
     try:
         resultData = dbManager.executeSingleQuery(querySQL)
         if len(resultData) > 0: 
-            result = True
-        else:
-            result = dbManager.executeTransactionDml(insertSQL)
-            notification.notificationUserForContent(beApplyUserUUID, content)
+            dbManager.executeTransactionDml(deleteSQL)
+        result = dbManager.executeTransactionDml(insertSQL)
+        notification.notificationUserForContent(beApplyUserUUID, content)
     except Exception as e:
         Loger.error(e, __file__)
             
