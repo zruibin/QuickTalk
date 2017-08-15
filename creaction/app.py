@@ -18,6 +18,10 @@ from module.log.Log import LogHandle
 from common.tools import jsonTool
 from common.auth import vertifyTokenHandle
 
+import sys 
+reload(sys) # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入 
+sys.setdefaultencoding('utf-8') 
+
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH

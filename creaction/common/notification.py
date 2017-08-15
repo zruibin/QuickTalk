@@ -8,8 +8,16 @@
 # 
 
 """
-
+APNS通过调用通用接口
+note: 尚未接入，调研第三方
 """
+
+def notificationUserForContent(userUUID, content):
+    print userUUID
+    print content
+    pass
+    
+
 
 
 if __name__ == '__main__':

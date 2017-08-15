@@ -91,6 +91,9 @@ class Config(object):
     TYPE_FOR_PROJECT_MEMBER = "0" # 项目成员
     TYPE_FOR_PROJECT_FOLLOWER = "1" # 项目的关注者，项目成员加入时默认关注该项目
     
+    TYPE_FOR_MESSAGE_READ = 1
+    TYPE_FOR_MESSAGE_UNREAD = 0
+
     pass
 
 
