@@ -88,12 +88,20 @@ class Config(object):
     TYPE_FOR_USER_FOLLOWED = "1" # 粉丝
     TYPE_FOR_USER_CONTACT = "2" # 已交换联系方式的人
 
+    # 项目成员与关注者
     TYPE_FOR_PROJECT_MEMBER = "0" # 项目成员
     TYPE_FOR_PROJECT_FOLLOWER = "1" # 项目的关注者，项目成员加入时默认关注该项目
+
+    # 项目状态
+    TYPE_FOR_PROJECT_STATUS_PROGRESSING = 0 # 进行中
+    TYPE_FOR_PROJECT_STATUS_COMPLETE = 1 # 完成
+    TYPE_FOR_PROJECT_STATUS_GIVEUP = 2 # 放弃
     
+    # 消息已读与未读状态
     TYPE_FOR_MESSAGE_READ = 1
     TYPE_FOR_MESSAGE_UNREAD = 0
 
+    # 请求消息中已执行与未执行状态
     TYPE_FOR_MESSAGE_ACTION_ON = 1 # 已执行
     TYPE_FOR_MESSAGE_ACTION_OFF = 0 # 未执行
 

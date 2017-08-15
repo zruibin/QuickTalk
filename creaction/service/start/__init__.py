@@ -10,7 +10,8 @@
 """
 
 """
-
-
-if __name__ == '__main__':
-    pass
+from flask import Blueprint
+  
+start = Blueprint("start", __name__)
+  
+from service.start import peopleList

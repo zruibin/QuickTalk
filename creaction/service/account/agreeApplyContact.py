@@ -22,7 +22,7 @@ from common.verifyMethods import verifyUserIsExists
 
 
 @account.route('/agree_apply_contact', methods=["POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def agreeApplyContact():
     userUUID = getValueFromRequestByKey("user_uuid")
     applyUserUUID = getValueFromRequestByKey("apply_user_uuid") # 申请者的uuid
