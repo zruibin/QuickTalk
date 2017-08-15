@@ -45,8 +45,10 @@ def applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
     result = False
     content = userName + "向你申请交换联系方式"
 
-    insertSQL = """INSERT INTO t_message_contact (user_uuid, type, content_uuid, owner_user_uuid, status, content) 
-    VALUES ('%s', 1, '%s', '%s', %d, '%s'); """ % (beApplyUserUUID, userUUID, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, content)
+    insertSQL = """INSERT INTO t_message_contact (user_uuid, type, content_uuid, owner_user_uuid, status, content, action) 
+    VALUES ('%s', %d, '%s', '%s', %d, '%s', %d); """ % (beApplyUserUUID, Config.NOTIFICATION_FOR_CONTACT, 
+    userUUID, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, 
+    content, Config.TYPE_FOR_MESSAGE_ACTION_OFF)
 
     # 避免多次申请
     querySQL = """

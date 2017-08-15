@@ -221,6 +221,7 @@ CREATE TABLE `t_message_project`(
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    `action` TINYINT UNSIGNED NOT NULL COMMENT '行为(是否已通过)',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -269,6 +270,7 @@ CREATE TABLE `t_message_contact`(
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
+    `action` TINYINT UNSIGNED NOT NULL COMMENT '行为(是否已通过)',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

@@ -32,4 +32,5 @@ from service.account import changePassword
 from service.account import forgetPassword
 from service.account import login
 from service.account import applyContact
+from service.account import agreeApplyContact
 

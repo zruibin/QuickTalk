@@ -94,6 +94,9 @@ class Config(object):
     TYPE_FOR_MESSAGE_READ = 1
     TYPE_FOR_MESSAGE_UNREAD = 0
 
+    TYPE_FOR_MESSAGE_ACTION_ON = 1 # 已执行
+    TYPE_FOR_MESSAGE_ACTION_OFF = 0 # 未执行
+
     pass
 
 
