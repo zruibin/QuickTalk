@@ -26,12 +26,18 @@ if DEBUG:
 else:
     reload = False
     debug = False 
-    loglevel = 'error'
+    loglevel = 'warning'
     
 
 bind = '127.0.0.1:5000'
-pidfile = 'logs/gunicorn.pid'
-logfile = 'logs/debug.log'
+
+path_of_current_file = os.path.abspath(__file__)
+path_of_current_dir = os.path.split(path_of_current_file)[0]
+_file_name = "gunicorn"
+pidfile = '%s/logs/%s.pid' % (path_of_current_dir, _file_name)
+logfile = '%s/logs/%s.pid' % (path_of_current_dir, _file_name)
+errorlog = '%s/logs/%s_error.log' % (path_of_current_dir, _file_name)
+accesslog = '%s/logs/%s_access.log' % (path_of_current_dir, _file_name)
 
 
 #启动的进程数与线程
