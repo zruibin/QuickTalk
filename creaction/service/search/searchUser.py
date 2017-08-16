@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
-from common.commonMethods import verifyUserIsExists
+from common.commonMethods import verifyUserIsExists, limit
 
 
 @search.route('/search_user', methods=["GET", "POST"])
@@ -38,8 +38,6 @@ def searchUser():
 
 def searchUserByNickName(searchText, userUUID, index):
     dataList = None
-
-    limit = "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
 
     isFollowingSQL = ""
     subWhereSQL = ""
@@ -64,10 +62,10 @@ def searchUserByNickName(searchText, userUUID, index):
     ) AS isFollowing
 
     FROM t_user WHERE t_user.nickname LIKE '%{searchText}%' 
-    {subWhereSQL} {limit} 
+    {subWhereSQL} ORDER BY t_user.time DESC  {limit} 
     """.format(following=Config.TYPE_FOR_USER_FOLLOWING,
         member=Config.TYPE_FOR_PROJECT_MEMBER, isFollowingSQL=isFollowingSQL,
-        searchText=searchText, subWhereSQL=subWhereSQL, limit=limit)
+        searchText=searchText, subWhereSQL=subWhereSQL, limit=limit(index))
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

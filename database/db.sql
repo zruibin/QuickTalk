@@ -95,7 +95,7 @@ CREATE TABLE `t_project`(
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态',
     `have_plan` TINYINT UNSIGNED NOT NULL COMMENT '是否含有计划列表',
-    `have_medias` TINYINT UNSIGNED NOT NULL COMMENT '是否含有多媒体',
+    `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -141,7 +141,7 @@ CREATE TABLE `t_project_plan`(
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
     `excution_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '执行时间戳',
-    `have_medias` TINYINT UNSIGNED NOT NULL COMMENT '是否含有多媒体',
+    `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

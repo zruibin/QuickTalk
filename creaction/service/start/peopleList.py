@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
-from common.commonMethods import verifyUserIsExists
+from common.commonMethods import verifyUserIsExists, limit
 
 
 @start.route('/people_list', methods=["GET", "POST"])
@@ -49,8 +49,6 @@ def getDataListFromStorage(userUUID, typeStr, index=1):
         sql = """SELECT t_user_user.user_uuid FROM t_user_user 
         WHERE t_user_user.other_user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
 
-    limit = "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
-
     querySQL = """
         SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, 
         (SELECT count(t_project.uuid) FROM t_project WHERE t_project.author_uuid=t_user.uuid) AS myproject,
@@ -59,9 +57,9 @@ def getDataListFromStorage(userUUID, typeStr, index=1):
         (SELECT count(t_user_user.type) FROM t_user_user 
                 WHERE t_user_user.other_user_uuid=t_user.uuid AND type={follow}) AS followed
         FROM t_user 
-        WHERE t_user.uuid IN ({sql}) ORDER BY t_user.time  {limit};
+        WHERE t_user.uuid IN ({sql}) ORDER BY t_user.time DESC {limit};
     """.format(user_uuid=userUUID, joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
-             follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql, limit=limit)
+             follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql, limit=limit(index))
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

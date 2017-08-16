@@ -38,8 +38,10 @@ def projectTitle():
 def searchByProjectTitle(searchText, index):
     dataDict = None
 
-    subSQL = """, t_tag_project.content AS tag FROM t_project, t_tag_project
-        WHERE t_tag_project.project_uuid=t_project.uuid AND t_project.title LIKE '%{searchText}%'  ORDER BY t_project.time  """.format(searchText=searchText)
+    # subSQL = """, t_tag_project.content AS tag FROM t_project, t_tag_project
+    #     WHERE t_tag_project.project_uuid=t_project.uuid AND t_project.title LIKE '%{searchText}%'  ORDER BY t_project.time  DESC """.format(searchText=searchText)
+    subSQL = """, t_project.detail FROM t_project
+        WHERE t_project.title LIKE '%{searchText}%'  ORDER BY t_project.time  DESC """.format(searchText=searchText)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -61,29 +63,32 @@ def packageData(dataDict):
         time = str(time) 
         data["time"] = time
 
-    uuidList = list(set(projectUUIDList))
-    uuidList.sort(key = projectUUIDList.index)
+    #标签归整
+    # uuidList = list(set(projectUUIDList))
+    # uuidList.sort(key = projectUUIDList.index)
 
-    tempDict = {}
-    for data in dataDict:
-        if not tempDict.has_key(data["uuid"]):
-            tempDict[data["uuid"]] = data
+    # tempDict = {}
+    # for data in dataDict:
+    #     if not tempDict.has_key(data["uuid"]):
+    #         tempDict[data["uuid"]] = data
 
-    # tempDict = {data["uuid"]:data for data in dataDict if not tempDict.has_key(data["uuid"])}
+    # # tempDict = {data["uuid"]:data for data in dataDict if not tempDict.has_key(data["uuid"])}
     
-    tagDict = {}
-    for data in dataDict:
-        if not tagDict.has_key(data["uuid"]):
-            tagDict[data["uuid"]] = []
-        tagDict[data["uuid"]].append(data["tag"])
+    # tagDict = {}
+    # for data in dataDict:
+    #     if not tagDict.has_key(data["uuid"]):
+    #         tagDict[data["uuid"]] = []
+    #     tagDict[data["uuid"]].append(data["tag"])
 
-    datatList = []
-    for uuid in uuidList:
-        data = tempDict[uuid]
-        data["tag"] = tagDict[uuid]
-        datatList.append(data)
+    # datatList = []
+    # for uuid in uuidList:
+    #     data = tempDict[uuid]
+    #     data["tag"] = tagDict[uuid]
+    #     datatList.append(data)
         
-    return datatList
+    # return datatList
+
+    return dataDict
     
 
 

@@ -105,24 +105,25 @@ def verifyUserPassword(userUUID, password):
     return result
 
 
-def queryProjectString(string, index):
-    limit = "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
+def limit(index):
+    return "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
 
+
+def queryProjectString(string, index):
     querySQL = """
-        SELECT t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like,
+        SELECT t_project.id, t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like,
+
+        (SELECT nickname FROM t_user WHERE t_user.uuid=t_project.author_uuid) AS author,
 
         (SELECT count(uuid) FROM t_comment WHERE project_uuid=t_project.uuid) AS commentNum,
         (SELECT count(user_uuid) FROM t_project_user WHERE project_uuid=t_project.uuid AND type={follower}) AS followNum,
 
         (SELECT count(user_uuid) FROM t_project_user WHERE project_uuid=t_project.uuid AND type={member}) AS memberNum,
-        (SELECT count(uuid) FROM t_project_journal WHERE project_uuid=t_project.uuid) AS journalNum,
-
-        (SELECT content FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournal,
-        (SELECT medias_count FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournalMediasCount
+        (SELECT count(uuid) FROM t_project_journal WHERE project_uuid=t_project.uuid) AS journalNum
 
         {sql} {limit};
     """.format(follower=Config.TYPE_FOR_PROJECT_FOLLOWER,
-                    member=Config.TYPE_FOR_PROJECT_MEMBER, sql=string, limit=limit)
+                    member=Config.TYPE_FOR_PROJECT_MEMBER, sql=string, limit=limit(index))
     
     return querySQL
 
@@ -130,7 +131,11 @@ def queryProjectString(string, index):
 def queryProjectDataFromStorageBySubSQL(sql, index=1):
     dataDict = None
 
-    subSQL = """FROM t_project WHERE t_project.uuid IN ({sql}) ORDER BY t_project.time """.format(sql=sql)
+    subSQL = """
+        ,
+        (SELECT content FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournal,
+        (SELECT medias_count FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournalMediasCount
+        FROM t_project WHERE t_project.uuid IN ({sql}) ORDER BY t_project.time DESC""".format(sql=sql)
     querySQL = queryProjectString(subSQL, index)
 
     dbManager = DB.DBManager.shareInstanced()
