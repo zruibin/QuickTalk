@@ -15,3 +15,4 @@ from flask import Blueprint
 search = Blueprint("search", __name__)
 
 from service.search import projectTitle
+from service.search import searchUser
