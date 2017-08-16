@@ -103,11 +103,11 @@ def verifyUserPassword(userUUID, password):
         Loger.error(e, __file__)
 
     return result
-    
 
-def queryProjectDataFromStorageBySubSQL(sql, index=1):
-    dataDict = None
+
+def queryProjectString(string, index):
     limit = "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
+
     querySQL = """
         SELECT t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like,
 
@@ -120,9 +120,18 @@ def queryProjectDataFromStorageBySubSQL(sql, index=1):
         (SELECT content FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournal,
         (SELECT medias_count FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournalMediasCount
 
-        FROM t_project WHERE t_project.uuid IN ({sql}) {limit};
+        {sql} {limit};
     """.format(follower=Config.TYPE_FOR_PROJECT_FOLLOWER,
-                    member=Config.TYPE_FOR_PROJECT_MEMBER, sql=sql, limit=limit)
+                    member=Config.TYPE_FOR_PROJECT_MEMBER, sql=string, limit=limit)
+    
+    return querySQL
+
+
+def queryProjectDataFromStorageBySubSQL(sql, index=1):
+    dataDict = None
+
+    subSQL = """FROM t_project WHERE t_project.uuid IN ({sql}) ORDER BY t_project.time """.format(sql=sql)
+    querySQL = queryProjectString(subSQL, index)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

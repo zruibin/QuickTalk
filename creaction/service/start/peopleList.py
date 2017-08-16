@@ -59,7 +59,7 @@ def getDataListFromStorage(userUUID, typeStr, index=1):
         (SELECT count(t_user_user.type) FROM t_user_user 
                 WHERE t_user_user.other_user_uuid=t_user.uuid AND type={follow}) AS followed
         FROM t_user 
-        WHERE t_user.uuid IN ({sql}) {limit};
+        WHERE t_user.uuid IN ({sql}) ORDER BY t_user.time  {limit};
     """.format(user_uuid=userUUID, joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
              follow=Config.TYPE_FOR_USER_FOLLOWING, sql=sql, limit=limit)
 

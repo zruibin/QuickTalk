@@ -16,6 +16,7 @@ from service.admin import admin
 
 from service.account import account
 from service.start import start
+from service.search import search
 
 def registerBlueprint(app):
     """ 注册蓝图，并指定前缀""" 
@@ -24,6 +25,7 @@ def registerBlueprint(app):
 
     app.register_blueprint(account, url_prefix='/service/account') # 帐号
     app.register_blueprint(start, url_prefix='/service/start') # 关注
+    app.register_blueprint(search, url_prefix='/service/search') # 搜索
 
 
 if __name__ == '__main__':
