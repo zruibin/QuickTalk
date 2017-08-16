@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
-from common.verifyMethods import verifyUserIsExists
+from common.commonMethods import verifyUserIsExists
 import common.notification as notification
 
 

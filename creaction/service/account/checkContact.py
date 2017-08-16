@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.verifyMethods import verifyUserIsExists
+from common.commonMethods import verifyUserIsExists
 from common.tools import getValueFromRequestByKey
 
 

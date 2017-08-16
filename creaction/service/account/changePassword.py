@@ -19,7 +19,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, md5hex
-from common.verifyMethods import verifyUserPassword
+from common.commonMethods import verifyUserPassword
 
 
 @account.route('/change_password', methods=["POST"])

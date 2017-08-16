@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
-from common.verifyMethods import verifyUserIsExists
+from common.commonMethods import verifyUserIsExists
 
 
 @start.route('/people_list', methods=["GET", "POST"])
@@ -30,10 +30,11 @@ def peopleList():
 
     if typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-    if index == None:
+
+    if index is None:
         index = 1
-    else:
-        index = int(index)
+    # print type(index)
+    index = int(index)
 
     return getDataListFromStorage(userUUID, typeStr)
 

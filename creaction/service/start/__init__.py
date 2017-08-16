@@ -16,3 +16,4 @@ start = Blueprint("start", __name__)
   
 from service.start import peopleList
 from service.start import startAction
+from service.start import projectList

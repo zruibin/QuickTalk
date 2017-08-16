@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import generateToken, cacheToken
 from common.tools import md5hex, getValueFromRequestByKey
-from common.verifyMethods import verifyUserIsExists, verifyUserPassword
+from common.commonMethods import verifyUserIsExists, verifyUserPassword
 
 
 @account.route("/token", methods=["POST", "GET"])

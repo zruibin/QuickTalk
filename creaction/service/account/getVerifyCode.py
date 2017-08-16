@@ -21,7 +21,7 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from dispatch.tasks import dispatchSendEmailForVerifyCode
-from common.verifyMethods import verifyEmailIsExists
+from common.commonMethods import verifyEmailIsExists
 
 
 @account.route('/get_verify_code', methods=["GET"])

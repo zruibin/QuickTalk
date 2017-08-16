@@ -94,6 +94,8 @@ CREATE TABLE `t_project`(
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态',
+    `have_plan` TINYINT UNSIGNED NOT NULL COMMENT '是否含有计划列表',
+    `have_medias` TINYINT UNSIGNED NOT NULL COMMENT '是否含有多媒体',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -134,14 +136,32 @@ DROP TABLE IF EXISTS
     `t_project_plan`;
 CREATE TABLE `t_project_plan`(
     `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
     `excution_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '执行时间戳',
+    `have_medias` TINYINT UNSIGNED NOT NULL COMMENT '是否含有多媒体',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_project_plan` ADD INDEX t_project_plan_project_uuid ( `project_uuid` );
+
+DROP TABLE IF EXISTS
+    `t_project_plan_media`;
+CREATE TABLE `t_project_plan_media`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `plan_uuid` VARCHAR(100) NOT NULL COMMENT '计划uuid',
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
+    `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
+    `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_project_plan_media` ADD INDEX t_project_plan_media_plan_uuid ( `plan_uuid` );
+ALTER TABLE `t_project_plan_media` ADD INDEX t_project_plan_media_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
     `t_comment`;
@@ -173,6 +193,7 @@ CREATE TABLE `t_project_journal`(
     `content` TEXT NOT NULL COMMENT '内容',
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录时间戳',
     `like` INT(11) UNSIGNED NOT NULL COMMENT '点赞数量',
+    `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -184,6 +205,7 @@ DROP TABLE IF EXISTS
 CREATE TABLE `t_project_journal_media`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `journal_uuid` VARCHAR(100) NOT NULL COMMENT '日志uuid',
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',

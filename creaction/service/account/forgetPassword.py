@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.verifyMethods import verifyEmailIsExistsForReturnUUID, verifyPhoneIsExistsForReturnUUID
+from common.commonMethods import verifyEmailIsExistsForReturnUUID, verifyPhoneIsExistsForReturnUUID
 from common.tools import getValueFromRequestByKey, md5hex
 from module.cache.RuntimeCache import CacheManager
 
