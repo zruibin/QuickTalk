@@ -98,6 +98,7 @@ def vertifyTokenHandle(func):
     def wrapper(*args, **kwargs):
         userUUID = getValueFromRequestByKey("user_uuid")
         token = getValueFromRequestByKey("token")
+        if token == None: token = request.cookies.get('token')
 
         if userUUID == None or token == None:
             return RESPONSE_JSON(CODE_ERROR_TOKEN_NOT_FOUND)

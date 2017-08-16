@@ -15,8 +15,8 @@ from celery import Celery
 from common.mail import sendEmailForVerifyCodeByCache
 from config import *
 
-broker = Config.CACHE_DB + "://" + Config.CACHE_HOST + ":" + str(Config.CACHE_PORT) + "/3"
-# print broker
+broker = Config.CACHE_DB + "://:" + Config.CACHE_PASSWORD + "@" + Config.CACHE_HOST + ":" + str(Config.CACHE_PORT) + "/3"
+
 celery = Celery('tasks', broker=broker)
 
 
