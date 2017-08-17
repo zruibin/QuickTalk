@@ -24,7 +24,7 @@ from common.commonMethods import verifyUserIsExists
 
 
 @account.route('/change_avatar', methods=["POST"])
-@vertifyTokenHandle
+# @vertifyTokenHandle
 def changeAvatar():
     userUUID = getValueFromRequestByKey("user_uuid")
 
@@ -33,18 +33,18 @@ def changeAvatar():
     # if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
 
     result = uploadAvatar(userUUID)
-    if type(result) != list:
+    if type(result) != dict:
         return result
     else:
         # 存储图片没问题操作后续更新数据库
-        response = updateStorage(userUUID, result)
+        response = updateStorage(userUUID, result.values())
         return response
         
 
 def uploadAvatar(userUUID):
-    saveNameList = None
+    saveNameDict = None
     try:
-        saveNameList = uploadPicture(Config.UPLOAD_FILE_FOR_USER, userUUID)
+        saveNameDict = uploadPicture(Config.UPLOAD_FILE_FOR_USER, userUUID)
     except FileTypeException as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_UNSUPPORTED_TYPE)
@@ -55,7 +55,7 @@ def uploadAvatar(userUUID):
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_SERVICE_ERROR)
     else:
-        return saveNameList
+        return saveNameDict
 
 
 def updateStorage(userUUID, nameList):

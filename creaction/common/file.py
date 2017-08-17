@@ -49,7 +49,7 @@ def removeAllUploadFile(fieType, uuid):
 
 def uploadPicture(fieType, uuid):
     """上传图片(单张或多张)，方式利用表单form的file方式"""
-    saveNameList = []
+    saveNameDict = {}
     try:
         path = Config.FULL_UPLOAD_FOLDER + fieType + "/" + uuid + "/"
         # 取得表单所有file字段
@@ -57,34 +57,32 @@ def uploadPicture(fieType, uuid):
         for uploadFile in fileList:
             key = uploadFile[0]
             # 文件name可以自定义
-            files = request.files.getlist(key)
+            file = request.files.getlist(key)[0]
+            if file and allowedFileSuffix(file.filename):
+                # 以流的方式读取
+                blob = file.read()
+                size = len(blob)
+                if size > Config.MAX_CONTENT_LENGTH_VERIFY:
+                    raise RequestEntityTooLarge()
+                
+                # 该文件保存的目录不存在则创建该目录，并更改权限
+                if not os.path.exists(path): os.makedirs(path)
+                # os.chmod(path, stat.S_IRWXU)
 
-            for file in files:
-                if file and allowedFileSuffix(file.filename):
-                    # 以流的方式读取
-                    blob = file.read()
-                    size = len(blob)
-                    if size > Config.MAX_CONTENT_LENGTH_VERIFY:
-                        raise RequestEntityTooLarge()
-                    
-                    # 该文件保存的目录不存在则创建该目录，并更改权限
-                    if not os.path.exists(path): os.makedirs(path)
-                    # os.chmod(path, stat.S_IRWXU)
+                filename = secure_filename(file.filename)
+                suffix = filename.rsplit('.', 1)[1]
 
-                    filename = secure_filename(file.filename)
-                    suffix = filename.rsplit('.', 1)[1]
+                #文件名生产规则
+                filename = str(generateFileName()) + "." + suffix
 
-                    #文件名生产规则
-                    filename = str(generateFileName()) + "." + suffix
-
-                    fullPath = os.path.join(path, filename)
-                    # 保存文件
-                    with open(fullPath, 'a' ) as fileHandle:
-                        fileHandle.write(blob)
-                    file.close()
-                    saveNameList.append(filename)
-                else:
-                    raise FileTypeException()
+                fullPath = os.path.join(path, filename)
+                # 保存文件
+                with open(fullPath, 'a' ) as fileHandle:
+                    fileHandle.write(blob)
+                file.close()
+                saveNameDict[key] = filename
+            else:
+                raise FileTypeException()
     except FileTypeException as e:
         Loger.error(e, __file__)
         raise e
@@ -97,7 +95,7 @@ def uploadPicture(fieType, uuid):
         removeAllUploadFile(fieType, uuid)
         raise e
     else:
-        return saveNameList
+        return saveNameDict
 
 
 

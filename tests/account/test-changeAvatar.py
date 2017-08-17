@@ -13,7 +13,7 @@
 
 import requests
 
-files = {'file1': open("pic/aaa.gif", 'rb')}
+files = {'1': open("pic/aaa.gif", 'rb')}
 
 
 url = "http://127.0.0.1:5000/service/account/change_avatar"
