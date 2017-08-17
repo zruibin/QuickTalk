@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile, parsePageIndex
 from common.commonMethods import verifyUserIsExists, limit
 
 
@@ -31,10 +31,7 @@ def peopleList():
     if typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    if index is None:
-        index = 1
-    # print type(index)
-    index = int(index)
+    index = parsePageIndex(index)
 
     return getDataListFromStorage(userUUID, typeStr)
 
@@ -43,11 +40,13 @@ def getDataListFromStorage(userUUID, typeStr, index=1):
     print userUUID, typeStr
     sql = ""
     if typeStr == Config.TYPE_FOR_USER_QUERY_FOLLOWING: # 关注者
-        sql = """SELECT t_user_user.other_user_uuid FROM t_user_user 
-        WHERE t_user_user.user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
+        sql = """
+            SELECT t_user_user.other_user_uuid FROM t_user_user 
+            WHERE t_user_user.user_uuid='%s' AND t_user_user.type=%s ORDER BY t_user_user.time DESC""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
     else: # 粉丝 TYPE_FOR_USER_QUERY_FOLLOWED
-        sql = """SELECT t_user_user.user_uuid FROM t_user_user 
-        WHERE t_user_user.other_user_uuid='%s' AND t_user_user.type=%s""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
+        sql = """
+            SELECT t_user_user.user_uuid FROM t_user_user 
+            WHERE t_user_user.other_user_uuid='%s' AND t_user_user.type=%s ORDER BY t_user_user.time DESC""" % (userUUID, Config.TYPE_FOR_USER_FOLLOWING)
 
     querySQL = """
         SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, 

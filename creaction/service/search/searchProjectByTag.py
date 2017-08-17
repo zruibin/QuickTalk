@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile, parsePageIndex
 from common.commonMethods import queryProjectString
 
 
@@ -28,9 +28,7 @@ def searchProjectByTag():
     if searchText == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    if index is None:
-        index = 1
-    index = int(index)
+    index = parsePageIndex(index)
     
     return searchProjectByTagInStorage(searchText, index)
     

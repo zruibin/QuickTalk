@@ -117,5 +117,13 @@ def fullPathForMediasFile(fileType, uuid, fileName):
     return fileName
 
 
+def parsePageIndex(index):
+    if index == None:
+        index = 1
+    index = int(index)
+    return index
+
+
+
 if __name__ == '__main__':
     pass

@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, parsePageIndex
 from common.commonMethods import queryProjectDataFromStorageBySubSQL
 
 
@@ -26,18 +26,14 @@ from common.commonMethods import queryProjectDataFromStorageBySubSQL
 def projectList():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
-
-    if index is None:
-        index = 1
-    # print type(index)
-    index = int(index)
+    index = parsePageIndex(index)
 
     return getStartProjectFromStorage(userUUID, index)
 
 
 def getStartProjectFromStorage(userUUID, index=1):
     sql = """
-        SELECT project_uuid FROM t_project_user WHERE user_uuid='%s' AND type=%s""" % (userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
+        SELECT project_uuid FROM t_project_user WHERE user_uuid='%s' AND type=%s ORDER BY t_project_user.time DESC""" % (userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
 
     try:
         dataDict = queryProjectDataFromStorageBySubSQL(sql, index)

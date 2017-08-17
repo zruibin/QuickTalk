@@ -128,16 +128,19 @@ def queryProjectString(string, index):
     return querySQL
 
 
-def queryProjectDataFromStorageBySubSQL(sql, index=1):
+def queryProjectDataFromStorageBySubSQL(sql, index=1, haveDetail=False):
     dataDict = None
+    
+    detail = ""
+    if haveDetail: detail = ", t_project.detail"
 
-    subSQL = """
+    subSQL = """ {detail}
         ,
-        (SELECT content FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournal,
-        (SELECT medias_count FROM  t_project_journal  WHERE project_uuid=t_project.uuid GROUP BY  time DESC LIMIT 0,1) AS lastJournalMediasCount
-        FROM t_project WHERE t_project.uuid IN ({sql}) ORDER BY t_project.time DESC""".format(sql=sql)
+        (SELECT content FROM  t_project_journal  WHERE project_uuid=t_project.uuid ORDER BY  time DESC LIMIT 0,1) AS lastJournal,
+        (SELECT medias_count FROM  t_project_journal  WHERE project_uuid=t_project.uuid ORDER BY  time DESC LIMIT 0,1) AS lastJournalMediasCount
+        FROM t_project WHERE t_project.uuid IN ({sql}) ORDER BY t_project.time DESC""".format(sql=sql, detail=detail)
     querySQL = queryProjectString(subSQL, index)
-
+    # print querySQL 
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataDict = dbManager.executeSingleQuery(querySQL)
