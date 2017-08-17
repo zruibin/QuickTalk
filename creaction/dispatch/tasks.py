@@ -12,8 +12,9 @@
 """
 
 from celery import Celery
-from common.mail import sendEmailForVerifyCodeByCache
 from config import *
+from common.mail import sendEmailForVerifyCodeByCache
+import common.notification as notification
 
 broker = Config.CACHE_DB + "://:" + Config.CACHE_PASSWORD + "@" + Config.CACHE_HOST + ":" + str(Config.CACHE_PORT) + "/3"
 
@@ -25,6 +26,12 @@ def dispatchSendEmailForVerifyCode(email):
     # print('sending email to %s...' % email)
     sendEmailForVerifyCodeByCache(email)
     # print('email sent.')
+
+@celery.task
+def dispatchNotificationUserForContent(userUUID, content):
+    notification.notificationUserForContent(userUUID, content)
+
+
 
 
 if __name__ == '__main__':

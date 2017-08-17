@@ -21,6 +21,7 @@ from common.tools import getValueFromRequestByKey, generateUUID
 from common.file import FileTypeException, uploadPicture
 import json, os
 import common.notification as notification
+# from dispatch.tasks import dispatchNotificationUserForContent
 
 
 @project.route('/create', methods=["GET", "POST"])
@@ -165,6 +166,7 @@ def notificationMember(dataJsonDict):
     for uuid in memberList:
         content = dataJsonDict["nickname"] + "邀请你加入" + dataJsonDict["title"]
         notification.notificationUserForContent(uuid, content)
+        # dispatchNotificationUserForContent.delay(uuid, content)
 
 
         

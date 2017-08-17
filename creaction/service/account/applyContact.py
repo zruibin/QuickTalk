@@ -20,6 +20,7 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from common.commonMethods import verifyUserIsExists
 import common.notification as notification
+from dispatch.tasks import dispatchNotificationUserForContent
 
 
 @account.route('/apply_contact', methods=["POST"])
@@ -65,6 +66,7 @@ def applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
             dbManager.executeTransactionDml(deleteSQL)
         result = dbManager.executeTransactionDml(insertSQL)
         notification.notificationUserForContent(beApplyUserUUID, content)
+        # dispatchNotificationUserForContent.delay(beApplyUserUUID, content)
     except Exception as e:
         Loger.error(e, __file__)
             
