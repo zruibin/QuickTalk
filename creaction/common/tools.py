@@ -28,6 +28,7 @@ def generateUUID():
     """由MAC地址、当前时间戳、随机数生成。可以保证全球范围内的唯一性，
         但MAC的使用同时带来安全性问题，局域网中可以使用IP来代替MAC """
     uuidStr = uuid.uuid1()
+    uuidStr = str(uuidStr)
     return uuidStr
 
 

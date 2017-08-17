@@ -140,7 +140,8 @@ CREATE TABLE `t_project_plan`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
-    `excution_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '执行时间戳',
+    `start_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间戳',
+    `finish_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间戳',
     `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

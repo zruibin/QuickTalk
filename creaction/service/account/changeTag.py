@@ -52,8 +52,7 @@ def changeUserTagListInStorage(userUUID, taglist):
         values = ""
         tagListNum = len(taglist)
         for i in range(tagListNum):
-            tempString = """('%s', %d, %d, '%s')""" % (userUUID, i, 0, taglist[i])
-            values += tempString + ","
+            values += """('%s', %d, %d, '%s'),""" % (userUUID, i, 0, taglist[i])
         values = values[:-1] + ";"
         insertSQL += values
         excuteSQLList.append(insertSQL)
