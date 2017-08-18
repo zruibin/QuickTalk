@@ -52,7 +52,7 @@ class Loger(object):
         # 创建TimedRotatingFileHandler处理对象
         # 间隔5(S)创建新的名称为log%Y%m%d_%H%M%S.txt的文件，并一直占用log文件。
         fileshandle = logging.handlers.TimedRotatingFileHandler(Config.LOG_DIR+"log", 
-                                                when="D", interval=1, backupCount=0)
+                                                when="D", interval=1, backupCount=7)
         # 设置日志文件后缀，以当前时间作为日志文件后缀名。
         fileshandle.suffix = "%Y%m%d_%H%M%S.txt"
         # 设置日志输出级别和格式
