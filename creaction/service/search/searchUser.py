@@ -31,10 +31,10 @@ def searchUser():
 
     index = parsePageIndex(index)
 
-    return searchUserByNickName(searchText, userUUID, index)
+    return __searchUserByNickName(searchText, userUUID, index)
 
 
-def searchUserByNickName(searchText, userUUID, index):
+def __searchUserByNickName(searchText, userUUID, index):
     dataList = None
 
     isFollowingSQL = ""

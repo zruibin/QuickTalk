@@ -24,15 +24,14 @@ from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 def info():
     userUUID = getValueFromRequestByKey("user_uuid")
     if userUUID == None: return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-    dataDict = getUserBaseInfo(userUUID)
+    dataDict = __getUserBaseInfo(userUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
         return RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
     
 
-
-def getUserBaseInfo(userUUID):
+def __getUserBaseInfo(userUUID):
     dataDict = None
     querySQL = """ 
     SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.gender, t_user.area, t_user.detail, t_user.career,
@@ -90,7 +89,6 @@ def getUserBaseInfo(userUUID):
 
     return dataDict
     
-
 
 if __name__ == '__main__':
     pass

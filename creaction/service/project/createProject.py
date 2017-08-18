@@ -41,16 +41,16 @@ def createProject():
 
     projectUUID = generateUUID()
 
-    mediasDict = uploadMedias(projectUUID)
+    mediasDict = __uploadMedias(projectUUID)
     if type(mediasDict) != dict:
         return mediasDict
     else:
         # 存储图片没问题操作后续更新数据库
-        response = insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict)
+        response = __insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict)
         return response
 
 
-def uploadMedias(projectUUID):
+def __uploadMedias(projectUUID):
     saveNameDict = None
     try:
         saveNameDict = uploadPicture(Config.UPLOAD_FILE_FOR_PROJECT, projectUUID)
@@ -67,28 +67,28 @@ def uploadMedias(projectUUID):
         return saveNameDict
 
 
-def insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict):
+def __insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict):
     path = Config.FULL_UPLOAD_FOLDER + Config.UPLOAD_FILE_FOR_PROJECT + "/" + projectUUID + "/"
     if len(mediasDict) > 9:
-        removeFileOnError(path, mediasDict.values())
+        __removeFileOnError(path, mediasDict.values())
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
     
-    sqlList = packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict)
+    sqlList = __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict)
 
     dbManager = DB.DBManager.shareInstanced()
     try:
         dbManager.executeTransactionMutltiDml(sqlList)
     except Exception as e:
         Loger.error(e, __file__)
-        removeFileOnError(path, mediasDict.values())
+        __removeFileOnError(path, mediasDict.values())
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
-        notificationMember(dataJsonDict)
+        __notificationMember(dataJsonDict)
         return RESPONSE_JSON(CODE_SUCCESS)
     
 
-def packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict):
+def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict):
     sqlList = []
 
     # 项目多媒体内容
@@ -155,13 +155,13 @@ def packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict):
     return sqlList
     
 
-def removeFileOnError(path, fileList):
+def __removeFileOnError(path, fileList):
     for fileName in fileList:
         fullPath = path + fileName
         os.remove(fullPath)
         
 
-def notificationMember(dataJsonDict):
+def __notificationMember(dataJsonDict):
     memberList = dataJsonDict["memberList"]
     for uuid in memberList:
         content = dataJsonDict["nickname"] + "邀请你加入" + dataJsonDict["title"]

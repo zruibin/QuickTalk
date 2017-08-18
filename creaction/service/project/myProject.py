@@ -29,10 +29,10 @@ def myProject():
 
     index = parsePageIndex(index)
 
-    return getMyProjectFromStorage(userUUID, index)
+    return __getMyProjectFromStorage(userUUID, index)
 
 
-def getMyProjectFromStorage(userUUID, index):
+def __getMyProjectFromStorage(userUUID, index):
 
     subSQL = """
         , t_project.detail FROM t_project 

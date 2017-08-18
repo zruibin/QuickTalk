@@ -35,16 +35,16 @@ def login():
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
         else:
             password = md5hex(password) # md5加密后
-            return loginForUserAndPassword(accountStr, typeStr, password)
+            return __loginForUserAndPassword(accountStr, typeStr, password)
     if typeStr in (Config.TYPE_FOR_AUTH_WECHAT, Config.TYPE_FOR_AUTH_QQ, Config.TYPE_FOR_AUTH_WEIBO):
         if  authOpenId is None:
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
         else:
-            return loginForThirdAuth(typeStr, authOpenId)
+            return __loginForThirdAuth(typeStr, authOpenId)
         
 
 
-def loginForUserAndPassword(accountStr, typeStr, password):
+def __loginForUserAndPassword(accountStr, typeStr, password):
     typeDict = {Config.TYPE_FOR_EMAIL : "email",
         Config.TYPE_FOR_PHONE : "phone"
     }
@@ -61,7 +61,7 @@ def loginForUserAndPassword(accountStr, typeStr, password):
     try: 
         resultData = dbManager.executeSingleQuery(querySQL)
         if len(resultData) > 0:
-            return cacheUserDataWithToken(resultData[0])
+            return __cacheUserDataWithToken(resultData[0])
         else:
             # 登录失败
             if typeStr == Config.TYPE_FOR_EMAIL:
@@ -75,7 +75,7 @@ def loginForUserAndPassword(accountStr, typeStr, password):
         return RESPONSE_JSON(CODE_SUCCESS)
 
 
-def loginForThirdAuth(typeStr, authOpenId):
+def __loginForThirdAuth(typeStr, authOpenId):
     typeDict = {Config.TYPE_FOR_AUTH_WECHAT : "wechat",
         Config.TYPE_FOR_AUTH_QQ : "qq", Config.TYPE_FOR_AUTH_WEIBO : "weibo"
     }
@@ -90,7 +90,7 @@ def loginForThirdAuth(typeStr, authOpenId):
     try: 
         resultData = dbManager.executeSingleQuery(querySQL)
         if len(resultData) > 0:
-            return cacheUserDataWithToken(resultData[0])
+            return __cacheUserDataWithToken(resultData[0])
         else:
             # 登录不存在用户则注册新用户，调用register模块的createNewUserOperation
             return createNewUserOperation(authType=typeStr, authOpenId=authOpenId)
@@ -101,7 +101,7 @@ def loginForThirdAuth(typeStr, authOpenId):
         return RESPONSE_JSON(CODE_SUCCESS)
 
 
-def cacheUserDataWithToken(resultData):
+def __cacheUserDataWithToken(resultData):
     try:
         userUUID = resultData["uuid"]
         token = generateToken(userUUID)

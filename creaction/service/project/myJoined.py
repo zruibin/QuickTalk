@@ -27,10 +27,10 @@ def myJoinedProject():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
-    return getMyJoinedProjectFromStorage(userUUID, index)
+    return __getMyJoinedProjectFromStorage(userUUID, index)
 
 
-def getMyJoinedProjectFromStorage(userUUID, index):
+def __getMyJoinedProjectFromStorage(userUUID, index):
     """由于mysql中不支持IN子查询中的limit，则先查询出所有in的子查询数据，不为空则再进一步查询"""
     limitSQL = limit(index)
     inSQL = """

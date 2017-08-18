@@ -31,7 +31,7 @@ def checkContact():
     # result = verifyUserIsExists(checkUserUUID)
     # if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
 
-    dataDict = getPeopleContact(userUUID, checkUserUUID)
+    dataDict = __getPeopleContact(userUUID, checkUserUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
@@ -50,7 +50,7 @@ data:{
 }
 }
 """
-def getPeopleContact(userUUID, checkUserUUID):
+def __getPeopleContact(userUUID, checkUserUUID):
     dataDict = None
     querySQL = """
         SELECT uuid, id, contact_phone, contact_email, qq, weibo, wechat

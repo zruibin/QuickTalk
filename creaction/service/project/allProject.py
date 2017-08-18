@@ -29,10 +29,10 @@ def allProject():
 
     index = parsePageIndex(index)
 
-    return getAllProjectFromStorage(userUUID, index)
+    return __getAllProjectFromStorage(userUUID, index)
 
 
-def getAllProjectFromStorage(userUUID, index=1):
+def __getAllProjectFromStorage(userUUID, index=1):
     limitSQL = limit(index)
     sql = """
         SELECT uuid FROM (

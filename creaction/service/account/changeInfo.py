@@ -37,13 +37,13 @@ def changeInfo():
     if len(userDict) < 6:
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
-    if changeUserInfoInStorage(userUUID, userDict):
+    if __changeUserInfoInStorage(userUUID, userDict):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def changeUserInfoInStorage(userUUID, userDict):
+def __changeUserInfoInStorage(userUUID, userDict):
     result = False
     excuteSQLList = []
     

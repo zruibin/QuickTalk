@@ -30,10 +30,10 @@ def searchProjectByTag():
 
     index = parsePageIndex(index)
     
-    return searchProjectByTagInStorage(searchText, index)
+    return __searchProjectByTagInStorage(searchText, index)
     
 
-def searchProjectByTagInStorage(searchText, index):
+def __searchProjectByTagInStorage(searchText, index):
     dataList = None
 
     subSQL = """

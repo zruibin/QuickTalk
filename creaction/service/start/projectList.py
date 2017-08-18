@@ -28,10 +28,10 @@ def projectList():
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
 
-    return getStartProjectFromStorage(userUUID, index)
+    return __getStartProjectFromStorage(userUUID, index)
 
 
-def getStartProjectFromStorage(userUUID, index=1):
+def __getStartProjectFromStorage(userUUID, index=1):
     sql = """
         SELECT project_uuid FROM t_project_user WHERE user_uuid='%s' AND type=%s ORDER BY t_project_user.time DESC""" % (userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
 

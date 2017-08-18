@@ -27,7 +27,7 @@ def changeContact():
     typeStr = getValueFromRequestByKey("type")
     content = getValueFromRequestByKey("content")
 
-    if changeUserContactStorage(userUUID, typeStr, content):
+    if __changeUserContactStorage(userUUID, typeStr, content):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -41,7 +41,7 @@ TYPE_FOR_CONTACT_PHONE = “6”
 TYPE_FOR_CONTACT_EMAIL = “7”
 """
 
-def changeUserContactStorage(userUUID, typeStr, content):
+def __changeUserContactStorage(userUUID, typeStr, content):
     result  = False
     typeDict = {
         Config.TYPE_FOR_WECHAT : "wechat",

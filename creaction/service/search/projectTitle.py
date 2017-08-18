@@ -30,10 +30,10 @@ def projectTitle():
     
     index = parsePageIndex(index)
     
-    return searchByProjectTitle(searchText, index)
+    return __searchByProjectTitle(searchText, index)
 
 
-def searchByProjectTitle(searchText, index):
+def __searchByProjectTitle(searchText, index):
     dataDict = None
 
     # subSQL = """, t_tag_project.content AS tag FROM t_project, t_tag_project
@@ -45,7 +45,7 @@ def searchByProjectTitle(searchText, index):
     try: 
         querySQL = queryProjectString(subSQL, index)
         tempDict = dbManager.executeSingleQuery(querySQL)
-        dataDict = packageData(tempDict)
+        dataDict = __packageData(tempDict)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -53,7 +53,7 @@ def searchByProjectTitle(searchText, index):
         return RESPONSE_JSON(CODE_SUCCESS, dataDict)
     
 
-def packageData(dataDict):
+def __packageData(dataDict):
     projectUUIDList = []
     for data in dataDict:
         projectUUIDList.append(data["uuid"])

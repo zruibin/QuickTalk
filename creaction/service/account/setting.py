@@ -39,13 +39,13 @@ def setting():
     if userUUID == None or typeStr == None or status == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    if changeSettingStatus(userUUID, typeStr, status):
+    if __changeSettingStatus(userUUID, typeStr, status):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     
 
-def changeSettingStatus(userUUID, typeStr, status):
+def __changeSettingStatus(userUUID, typeStr, status):
     result  = False
     querySQL = """
         UPDATE t_user_setting SET status='%s' WHERE user_uuid='%s' AND type='%s'; """ % (status, userUUID, typeStr)

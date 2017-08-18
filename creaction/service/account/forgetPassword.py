@@ -51,13 +51,13 @@ def forgetPassword():
         print userUUID
         if userUUID == None: return RESPONSE_JSON(CODE_ERROR_THE_PHONE_NOT_FOUND)
 
-    if changePasswordInStorage(userUUID, password):
+    if __changePasswordInStorage(userUUID, password):
         return RESPONSE_JSON(CODE_SUCCESS) 
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     
 
-def changePasswordInStorage(userUUID, password):
+def __changePasswordInStorage(userUUID, password):
     print "changePasswordInStorage"
     result = False
     updateSQL = """

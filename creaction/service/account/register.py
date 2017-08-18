@@ -68,7 +68,7 @@ def createNewUserOperation(password="", time="", phone="", email="", authType=""
                 time = generateCurrentTime()
 
                 # 用户数据入库
-                if operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
+                if __operationDataStorage(userUUID, password, time, phone, email, authType, authOpenId) == False:
                         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
                 # 生成token并缓存
@@ -85,7 +85,7 @@ def createNewUserOperation(password="", time="", phone="", email="", authType=""
                 return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def  operationDataStorage(userUUID, password="", time="", phone="", email="", authType="", authOpenId=""):
+def  __operationDataStorage(userUUID, password="", time="", phone="", email="", authType="", authOpenId=""):
         results = False
         try: 
                 sqlList = []

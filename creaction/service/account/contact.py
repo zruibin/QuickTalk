@@ -24,14 +24,14 @@ from common.tools import getValueFromRequestByKey
 @vertifyTokenHandle
 def contact():
     userUUID = getValueFromRequestByKey("user_uuid")
-    dataDict = getMyContactList(userUUID)
+    dataDict = __getMyContactList(userUUID)
     if dataDict == None:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
         return RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
 
 
-def getMyContactList(userUUID):
+def __getMyContactList(userUUID):
     dataDict = None
     querySQL = """
         SELECT uuid, id, contact_phone, contact_email, qq, weibo, wechat

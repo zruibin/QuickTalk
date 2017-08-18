@@ -33,13 +33,13 @@ def agreeApplyContact():
     if not verifyUserIsExists(applyUserUUID):
         return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
     
-    if agreeApplyExchangeContactOperation(userUUID, applyUserUUID):
+    if __agreeApplyExchangeContactOperation(userUUID, applyUserUUID):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def agreeApplyExchangeContactOperation(userUUID, applyUserUUID):
+def __agreeApplyExchangeContactOperation(userUUID, applyUserUUID):
     result = False
     insertSQL = """INSERT INTO t_user_user (user_uuid, type, other_user_uuid) 
     VALUES ('{userUUID}', {typeInt}, '{applyUserUUID}'), ('{applyUserUUID}', {typeInt}, '{userUUID}'); """.format(userUUID=userUUID, typeInt=Config.TYPE_FOR_USER_CONTACT, applyUserUUID=applyUserUUID)

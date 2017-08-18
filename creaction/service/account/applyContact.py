@@ -36,13 +36,13 @@ def applyContact():
     if not verifyUserIsExists(beApplyUserUUID):
         return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
     
-    if applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
+    if __applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
+def __applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
     result = False
     content = userName + "向你申请交换联系方式"
 

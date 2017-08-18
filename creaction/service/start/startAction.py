@@ -35,15 +35,15 @@ def startAction():
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
     if typeStr == Config.TYPE_FOR_START_PROJECT: # 关注或取消关注项目
-        return startOrUnStartProject(userUUID, otherUUID, action)
+        return __startOrUnStartProject(userUUID, otherUUID, action)
     elif typeStr == Config.TYPE_FOR_START_USER: # 关注或取消关注用户
         if nickname == None: return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-        return startOrUnStartUser(userUUID, otherUUID, action, nickname)
+        return __startOrUnStartUser(userUUID, otherUUID, action, nickname)
     else:
         return RESPONSE_JSON(CODE_SUCCESS)
 
 
-def startOrUnStartProject(userUUID, otherUUID, action):
+def __startOrUnStartProject(userUUID, otherUUID, action):
     querySQL = """
         SELECT user_uuid FROM t_project_user WHERE project_uuid='%s' AND user_uuid='%s' AND type=%s; """ % (otherUUID, userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
     insertSQL = """
@@ -67,7 +67,7 @@ def startOrUnStartProject(userUUID, otherUUID, action):
         return RESPONSE_JSON(CODE_SUCCESS) 
 
 
-def startOrUnStartUser(userUUID, otherUUID, action, nickname): 
+def __startOrUnStartUser(userUUID, otherUUID, action, nickname): 
 
     dbManager = DB.DBManager.shareInstanced()
     try:

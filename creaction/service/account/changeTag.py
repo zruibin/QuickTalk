@@ -34,13 +34,13 @@ def changeTag():
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_ILLEGAL_TAG_CONTENT)
 
-    if changeUserTagListInStorage(userUUID, taglist):
+    if __changeUserTagListInStorage(userUUID, taglist):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def changeUserTagListInStorage(userUUID, taglist):
+def __changeUserTagListInStorage(userUUID, taglist):
     result  = False
     excuteSQLList = []
     deleteSQL = """

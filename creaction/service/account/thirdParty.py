@@ -49,14 +49,14 @@ def thirdParty():
    
     if method == Config.TYPE_FOR_AUTH_ACTION_OFF:
         # 解绑
-        return unbindAccount(userUUID, typeStr)
+        return __unbindAccount(userUUID, typeStr)
     else:
         # 绑定
-        return bindAccount(userUUID, typeStr, openId)
+        return __bindAccount(userUUID, typeStr, openId)
     pass
 
 
-def bindAccount(userUUID, typeStr, openId):
+def __bindAccount(userUUID, typeStr, openId):
     """绑定第三方帐号，先检查该openId是否已被绑定了，已被绑定则抛出错误"""
     querySQL = """SELECT user_uuid FROM t_user_auth WHERE %s='%s'; """ % (typeStr, openId)
     updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeStr, openId, userUUID)
@@ -80,7 +80,7 @@ def bindAccount(userUUID, typeStr, openId):
     pass
     
 
-def unbindAccount(userUUID, typeStr):
+def __unbindAccount(userUUID, typeStr):
     """解除绑定"""
     updateSQL = """UPDATE t_user_auth SET %s='' WHERE user_uuid='%s'; """ % (typeStr, userUUID)
     dbManager = DB.DBManager.shareInstanced()

@@ -33,13 +33,13 @@ def changePassword():
         return RESPONSE_JSON(CODE_ERROR_PASSWORD_ERROR)
 
     # 更新密码
-    if changeUserPasswordInStorage(userUUID, newpassword):
+    if __changeUserPasswordInStorage(userUUID, newpassword):
         return RESPONSE_JSON(CODE_SUCCESS)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def changeUserPasswordInStorage(userUUID, password):
+def __changeUserPasswordInStorage(userUUID, password):
     result = False
     updateSQL = """
         UPDATE t_user_auth SET password='%s' WHERE user_uuid='%s'; """ % (password, userUUID)

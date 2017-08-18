@@ -32,16 +32,16 @@ def changeAvatar():
     # result = verifyUserIsExists(userUUID) # 没问题则返回文件名列表
     # if not result:  return RESPONSE_JSON(CODE_ERROR_USER_NOT_EXISTS)
 
-    result = uploadAvatar(userUUID)
+    result = __uploadAvatar(userUUID)
     if type(result) != dict:
         return result
     else:
         # 存储图片没问题操作后续更新数据库
-        response = updateStorage(userUUID, result.values())
+        response = __updateStorage(userUUID, result.values())
         return response
         
 
-def uploadAvatar(userUUID):
+def __uploadAvatar(userUUID):
     saveNameDict = None
     try:
         saveNameDict = uploadPicture(Config.UPLOAD_FILE_FOR_USER, userUUID)
@@ -58,10 +58,10 @@ def uploadAvatar(userUUID):
         return saveNameDict
 
 
-def updateStorage(userUUID, nameList):
+def __updateStorage(userUUID, nameList):
     path = Config.FULL_UPLOAD_FOLDER + Config.UPLOAD_FILE_FOR_USER + "/" + userUUID + "/"
     if len(nameList) > 1:
-        removeFileOnError(path, nameList)
+        __removeFileOnError(path, nameList)
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
 
@@ -84,7 +84,7 @@ def updateStorage(userUUID, nameList):
         return RESPONSE_JSON(CODE_SUCCESS)
     
 
-def removeFileOnError(path, fileList):
+def __removeFileOnError(path, fileList):
     for fileName in fileList:
         fullPath = path + fileName
         os.remove(fullPath)

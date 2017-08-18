@@ -33,10 +33,10 @@ def peopleList():
 
     index = parsePageIndex(index)
 
-    return getDataListFromStorage(userUUID, typeStr)
+    return __getDataListFromStorage(userUUID, typeStr)
 
 
-def getDataListFromStorage(userUUID, typeStr, index=1):
+def __getDataListFromStorage(userUUID, typeStr, index=1):
     print userUUID, typeStr
     sql = ""
     if typeStr == Config.TYPE_FOR_USER_QUERY_FOLLOWING: # 关注者
