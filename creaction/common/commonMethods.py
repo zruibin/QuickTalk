@@ -155,6 +155,12 @@ def queryProjectDataFromStorageBySubSQL(sql, index=1, haveDetail=False):
         return dataDict
     
 
+class MemberQueryException(Exception):  
+    def __init__(self, err='Member Query Exception!'):  
+        Exception.__init__(self,err)  
+
+        
+
 if __name__ == '__main__':
     pass
 

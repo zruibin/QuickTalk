@@ -175,8 +175,7 @@ CREATE TABLE `t_comment`(
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `is_reply` INT(11) NOT NULL COMMENT '是否回复',
-    `reply_user_uuid` VARCHAR(100) NOT NULL COMMENT '回复者uuid',
-    `reply_comment_id` INT DEFAULT NULL COMMENT '回复的评论的id',
+    `reply_comment_uuid` VARCHAR(100) DEFAULT NULL COMMENT '回复的评论的uuid',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

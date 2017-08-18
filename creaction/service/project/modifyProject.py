@@ -20,6 +20,7 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID
 from common.file import FileTypeException, uploadPicture
 import json, os
+from common.commonMethods import MemberQueryException
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
 
@@ -194,10 +195,6 @@ def __notificationMessageToMember(projectUUID, userUUID, memberList):
         notification.notificationUserForContent(memeber, content)
         # dispatchNotificationUserForContent.delay(memeber, content)
 
-
-class MemberQueryException(Exception):  
-    def __init__(self, err='Member Query Exception!'):  
-        Exception.__init__(self,err)  
 
 
 if __name__ == '__main__':

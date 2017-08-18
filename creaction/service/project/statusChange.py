@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, parsePageIndex
+from common.tools import getValueFromRequestByKey
 from common.commonMethods import queryProjectString
 
 
