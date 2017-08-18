@@ -114,6 +114,7 @@ def generateFileName():
     
 
 def fullPathForMediasFile(fileType, uuid, fileName):
+    if len(fileName) == 0: return ""
     fileName = Config.WEB_SITE_HOST + Config.UPLOAD_FOLDER +  fileType + "/" + uuid + "/" + fileName.strip()
     return fileName
 

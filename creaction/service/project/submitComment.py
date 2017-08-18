@@ -24,7 +24,7 @@ import common.notification as notification
 
 
 @project.route('/submit_comment', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def submitComment():
     userUUID = getValueFromRequestByKey("user_uuid")
     projectUUID = getValueFromRequestByKey("project_uuid")
