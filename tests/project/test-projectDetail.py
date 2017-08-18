@@ -13,7 +13,7 @@
 import requests
 
 def projectDetail():
-    params = {"project_uuid": "f6e996f8-7d83-11e7-889b-222222",
+    params = {"project_uuid": "000000-7d83-11e7-889b-bbbbbb",
     }
     r = requests.post(url="http://127.0.0.1:5000/service/project/project", params=params) 
     print r.cookies

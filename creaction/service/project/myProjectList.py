@@ -38,7 +38,7 @@ def __getMyProjectFromStorage(userUUID, index):
         , t_project.detail FROM t_project 
         WHERE author_uuid='%s' ORDER BY time DESC """ % userUUID
     querySQL = queryProjectString(subSQL, index)
-    print querySQL
+
     dbManager = DB.DBManager.shareInstanced()
     try:
         dataList = dbManager.executeSingleQuery(querySQL)

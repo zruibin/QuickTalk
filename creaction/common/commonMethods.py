@@ -109,7 +109,7 @@ def limit(index):
     return "LIMIT %d,%d" % ((index-1)*Config.PAGE_OF_SIZE, Config.PAGE_OF_SIZE)
 
 
-def queryProjectString(string, index):
+def queryProjectString(string, index=1):
     querySQL = """
         SELECT t_project.id, t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like,
 

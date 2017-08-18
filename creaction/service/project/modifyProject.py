@@ -147,8 +147,9 @@ def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     if tagListLen > 0 :
         insertTagSQL = """INSERT INTO t_tag_project (project_uuid, sorting, type, content) VALUES """
         values = ""
+        typeString = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
         for i in range(tagListLen):
-            values += """('%s', %d, %d, '%s'),""" % (projectUUID, i, i, tagList[i])
+            values += """('%s', %d, %d, '%s'),""" % (projectUUID, i, typeString, tagList[i])
         insertTagSQL += values[:-1] + ";"
         sqlList.append(insertTagSQL)
 
