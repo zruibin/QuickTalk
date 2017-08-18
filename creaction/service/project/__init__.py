@@ -14,9 +14,9 @@ from flask import Blueprint
   
 project = Blueprint("project", __name__)
 
-from service.project import allProject
-from service.project import myProject
-from service.project import myJoined
+from service.project import allProjectList
+from service.project import myProjectList
+from service.project import myJoinedList
 from service.project import createProject
 from service.project import statusChange
 from service.project import modifyProject

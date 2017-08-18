@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# myProject.py
+# myProjectList.py
 #
 # Created by ruibin.chow on 2017/08/17.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-我创建的可行项目
+我创建的可行项目列表
 """
 from service.project import project
 from flask import Flask, Response, request
@@ -21,9 +21,9 @@ from common.tools import getValueFromRequestByKey, parsePageIndex
 from common.commonMethods import queryProjectString
 
 
-@project.route('/my_project', methods=["GET", "POST"])
+@project.route('/my_project_list', methods=["GET", "POST"])
 @vertifyTokenHandle
-def myProject():
+def myProjectList():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
 

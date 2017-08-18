@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# allProject.py
+# allProjectList.py
 #
 # Created by ruibin.chow on 2017/08/17.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-全部可行项目(我参与的、我关注的、我创建的)
+全部可行项目(我参与的、我关注的、我创建的)列表
 """
 from service.project import project
 from flask import Flask, Response, request
@@ -21,9 +21,9 @@ from common.tools import getValueFromRequestByKey, parsePageIndex
 from common.commonMethods import queryProjectDataFromStorageBySubSQL, limit
 
 
-@project.route('/all_project', methods=["GET", "POST"])
+@project.route('/all_project_list', methods=["GET", "POST"])
 @vertifyTokenHandle
-def allProject():
+def allProjectList():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
 

@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# myJoined.py
+# myJoinedList.py
 #
 # Created by ruibin.chow on 2017/08/17.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-我参与的可行
+我参与的可行列表
 """
 from service.project import project
 from flask import Flask, Response, request
@@ -21,9 +21,9 @@ from common.tools import getValueFromRequestByKey, parsePageIndex
 from common.commonMethods import queryProjectString, limit
 
 
-@project.route('/my_joined', methods=["GET", "POST"])
+@project.route('/my_joined_list', methods=["GET", "POST"])
 @vertifyTokenHandle
-def myJoinedProject():
+def myJoinedProjectList():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
