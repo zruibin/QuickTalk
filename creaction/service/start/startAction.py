@@ -20,6 +20,7 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 from common.commonMethods import verifyUserIsExists
 import common.notification as notification
+# from dispatch.tasks import dispatchNotificationUserForContent
 
 
 @start.route('/start_action', methods=["GET", "POST"])
@@ -88,6 +89,7 @@ def __startOrUnStartUser(userUUID, otherUUID, action, nickname):
             dbManager.executeTransactionMutltiDml([insertRelationSQL, insertMessageSQL])
             # 发送通知
             notification.notificationUserForContent(otherUUID, content)
+            # dispatchNotificationUserForContent.delay(otherUUID, content)
 
         if action == Config.TYPE_FOR_START_ACTION_UNSTART:
             # 删除关系

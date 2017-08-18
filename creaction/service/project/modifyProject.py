@@ -20,6 +20,8 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID
 from common.file import FileTypeException, uploadPicture
 import json, os
+import common.notification as notification
+# from dispatch.tasks import dispatchNotificationUserForContent
 
 
 @project.route('/modify_project', methods=["GET", "POST"])
@@ -33,8 +35,13 @@ def modifyProject():
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
     
     dataJsonDict = None
+    mediasDict = None
     try:
         dataJsonDict = json.loads(dataJson)
+        memberList = __queryProjectMembers(projectUUID)
+    except MemberQueryException as mbe:
+        Loger.error(mbe, __file__)
+        return RESPONSE_JSON(CODE_ERROR_QUERY_PROJECT_MEMBER)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_ILLEGAL_CREATE_PROJECT_JSON_CONTENT)
@@ -44,10 +51,8 @@ def modifyProject():
         return mediasDict
 
     # 存储图片没问题操作后续更新数据库
-    response = __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict)
+    response = __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict, memberList)
     return response
-
-    pass
     
 
 def __uploadMedias(projectUUID):
@@ -67,7 +72,7 @@ def __uploadMedias(projectUUID):
         return saveNameDict
 
 
-def __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict):
+def __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     path = Config.FULL_UPLOAD_FOLDER + Config.UPLOAD_FILE_FOR_PROJECT + "/" + projectUUID + "/"
     if len(mediasDict) > 9:
         __removeFileOnError(path, mediasDict.values())
@@ -75,7 +80,7 @@ def __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict):
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
     
     oldMediasQuerySQL = """ SELECT media_name FROM t_project_media WHERE project_uuid='%s';""" % projectUUID
-    sqlList = __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict)
+    sqlList = __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, memberList)
 
     fileList = []
     dbManager = DB.DBManager.shareInstanced()
@@ -89,6 +94,7 @@ def __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict):
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
         __removeFileOnError(path, fileList)
+        __notificationMessageToMember(projectUUID, userUUID, memberList)
         return RESPONSE_JSON(CODE_SUCCESS)
 
 
@@ -98,7 +104,7 @@ def __removeFileOnError(path, fileList):
         os.remove(fullPath)
 
 
-def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict):
+def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     sqlList = []
 
     # 项目多媒体内容(先删除后插入新的)
@@ -153,8 +159,44 @@ def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict):
         medias_count=medias_count)
     sqlList.append(updateProjectSQL)
 
+    # 通知成员项目更新了
+    insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action) VALUES """
+    values = ""
+    typeString = Config.TYPE_FOR_MESSAGE_IN_PROJECT_UPDATE_PROJECT
+    for member in memberList:
+        values += """('%s', %d, '%s', '%s', 0, '%s', 0),""" % (member, typeString, projectUUID, userUUID, '更新了项目')
+    insertProjectMessageSQL += values[:-1] + ";"
+    sqlList.append(insertProjectMessageSQL)
+
     return sqlList
     
+
+def __queryProjectMembers(projectUUID):
+    memberList = None
+    queryProjectMemberSQL = """SELECT user_uuid FROM t_project_user WHERE project_uuid='%s' AND type=%s""" % (projectUUID, Config.TYPE_FOR_PROJECT_MEMBER)
+
+    dbManager = DB.DBManager.shareInstanced()
+    try:
+        tempList = dbManager.executeSingleQuery(queryProjectMemberSQL, False)
+        memberList = [data[0] for data in tempList]
+
+    except Exception as e:
+        Loger.error(e, __file__)
+        raise MemberQueryException()
+    else:
+        return memberList
+
+
+def __notificationMessageToMember(projectUUID, userUUID, memberList):
+    for memeber in memberList:
+        content = "更新了项目"
+        notification.notificationUserForContent(memeber, content)
+        # dispatchNotificationUserForContent.delay(memeber, content)
+
+
+class MemberQueryException(Exception):  
+    def __init__(self, err='Member Query Exception!'):  
+        Exception.__init__(self,err)  
 
 
 if __name__ == '__main__':
