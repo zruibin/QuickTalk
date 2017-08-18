@@ -19,6 +19,7 @@ from service.project import myProject
 from service.project import myJoined
 from service.project import createProject
 from service.project import statusChange
+from service.project import modifyProject
   
 
 
