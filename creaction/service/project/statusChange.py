@@ -10,8 +10,8 @@
 """
 项目状态更改(包含完成、放弃，放弃了的项目只能评论)
 """
+
 from service.project import project
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

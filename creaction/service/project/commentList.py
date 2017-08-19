@@ -10,8 +10,8 @@
 """
 查看项目评论
 """
+
 from service.project import project
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

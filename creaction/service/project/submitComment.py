@@ -10,8 +10,8 @@
 """
 提交评论
 """
+
 from service.project import project
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -66,7 +66,7 @@ def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, c
             typeStr = Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT
             for people in peopleList:
                 values += """('%s', %s, '%s', '%s', %d, '%s'),""" % (people, typeStr, 
-                                    uuid, '', Config.TYPE_FOR_MESSAGE_UNREAD, content)
+                                    uuid, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, content)
             insertMessageCommentSQL += values[:-1] + ";"
             sqlList.append(insertMessageCommentSQL)
             notificationContent = "收到一条评论"  
@@ -74,7 +74,7 @@ def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, c
             people = __queryCommentUserUUID(replyCommentUUID)
             typeStr = Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_REPLY_COMMENT
             values += """('%s', %s, '%s', '%s', %d, '%s')""" % (people, typeStr, 
-                                    uuid, '', Config.TYPE_FOR_MESSAGE_UNREAD,
+                                    uuid, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD,
                                     content)
             insertMessageCommentSQL += values + ";"
             peopleList = [people]
