@@ -10,8 +10,8 @@
 """
 关注的人列表跟粉丝列表
 """
+
 from service.start import start
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

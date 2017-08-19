@@ -11,8 +11,8 @@
 手机或邮箱获得验证码
 (手机暂时用第三方，不需要，客户端与第三方进行验证)
 """
+
 from service.account import account
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

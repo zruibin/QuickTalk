@@ -10,8 +10,8 @@
 """
 根据昵称搜索用户
 """
+
 from service.search import search
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

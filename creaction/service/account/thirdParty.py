@@ -10,8 +10,8 @@
 """
 第三方帐号绑定与解绑
 """
+
 from service.account import account
-from flask import Flask, Response, request
 import os.path
 from module.database import DB
 from module.log.Log import Loger

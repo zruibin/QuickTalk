@@ -10,8 +10,8 @@
 """
 项目与人的关注跟取消关注
 """
+
 from service.start import start
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

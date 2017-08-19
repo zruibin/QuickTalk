@@ -10,8 +10,8 @@
 """
 修改个人信息
 """
+
 from service.account import account
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *

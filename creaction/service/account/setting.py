@@ -18,8 +18,8 @@ PS:是否要走APNS(手机通知栏的显示)的通知，默认为全部都开
 5、关注的人(被关注是否有消息通知)
 6、联系人消息
 """
+
 from service.account import account
-from flask import Flask, Response, request
 from module.database import DB
 from module.log.Log import Loger
 from config import *
