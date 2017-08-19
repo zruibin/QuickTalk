@@ -27,6 +27,7 @@ class Config(object):
     DBNAME = "creaction"
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
+    DB_BACKUP_DIR = "/home/mysqlbak" # 数据库备份目录
 
     CACHE_DB = "redis"
     CACHE_HOST = DBHOST
