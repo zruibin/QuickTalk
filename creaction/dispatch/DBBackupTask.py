@@ -27,10 +27,9 @@ username = Config.DBUSER
 #mysql password
 userpwd = Config.DBPWD
 # dump path
-dumpPath = "/usr/local/mysql/bin/mysqldump"
+dumpPath = "mysqldump"
 #db name
 dbName = Config.DBNAME # --all-databases 
-
 
 
 @celery.task
@@ -43,7 +42,7 @@ def backup():
 
     if os.path.exists(backupDir) == False: os.mkdir(backupDir)
 
-    cmd = dumpPath +" -u" + username + " -p" + userpwd + " " + dbName + " > " + fullPath
+    cmd = dumpPath +" -u " + username + " -p'" + userpwd + "' " + dbName + " > " + fullPath
     os.system(cmd)
 
     bz2CMD = """tar -jcvf {backupDir}/{bz2File} -C  {backupDir} {fileName}""".format(backupDir=backupDir, bz2File=bz2File, fileName=fileName)
