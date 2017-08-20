@@ -92,6 +92,7 @@ CREATE TABLE `t_project`(
     `result` TEXT NOT NULL COMMENT '结果',
     `author_uuid` VARCHAR(100) NOT NULL COMMENT '创建者uuid',
     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间戳',
+    `over_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束或放弃时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态',
     `have_plan` TINYINT UNSIGNED NOT NULL COMMENT '是否含有计划列表',

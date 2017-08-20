@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, generateCurrentTime
 from common.commonMethods import queryProjectString
 
 
@@ -39,9 +39,9 @@ def statusChange():
     
 
 def __changeProjectStatus(userUUID, projectUUID, status):
-    
-    updateSQL = """ UPDATE t_project SET status=%d WHERE uuid='%s' AND author_uuid='%s'; """ % (status, projectUUID, userUUID)
-    print  updateSQL
+    overTime = generateCurrentTime()
+    updateSQL = """ UPDATE t_project SET status=%d, over_time='%s' WHERE uuid='%s' AND author_uuid='%s'; """ % (status, overTime, projectUUID, userUUID)
+    # print  updateSQL
     dbManager = DB.DBManager.shareInstanced()
     try:
         result = dbManager.executeTransactionDml(updateSQL)

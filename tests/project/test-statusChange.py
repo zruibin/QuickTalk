@@ -13,7 +13,7 @@
 import requests
 
 def changeProjectStatus():
-    params = {"user_uuid": "f6e996f8-7d83-11e7-889b-22222",
+    params = {"user_uuid": "f6e996f8-7d83-11e7-889b-222222",
         "project_uuid" : "000000-7d83-11e7-889b-aaaaaa",
         "status": "1"
     }
