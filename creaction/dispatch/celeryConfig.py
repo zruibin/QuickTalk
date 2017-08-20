@@ -18,8 +18,8 @@ from celery.schedules import crontab
 
 CeleryDB = Config.CACHE_DB + "://:" + Config.CACHE_PASSWORD + "@" + Config.CACHE_HOST + ":" + str(Config.CACHE_PORT)
 
-BROKER_URL = CeleryDB               ##指定 Broker    
-CELERY_RESULT_BACKEND = CeleryDB + "/3"  ##指定 Backend    
+BROKER_URL = CeleryDB + "/2"               ##指定 Broker    
+CELERY_RESULT_BACKEND = BROKER_URL  ##指定 Backend    
 CELERY_TIMEZONE="Asia/Shanghai"                     ##指定时区，默认是 UTC
 
 ##CELERY_TIMEZONE="UTC"                             
