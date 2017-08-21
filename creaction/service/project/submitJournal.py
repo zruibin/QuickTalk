@@ -20,7 +20,7 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID
 from common.commonMethods import verifyProjectMember, MemberQueryException
 from common.file import FileTypeException, uploadPicture
-import shutil
+import shutil, os.path
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
 
@@ -69,7 +69,7 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
 
     path = __journalMediasPath(projectUUID, journalUUID)
     if len(mediasDict) > 9: 
-        shutil.rmtree(path)
+        if os.path.exists(path): shutil.rmtree(path)
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
 
@@ -90,7 +90,7 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
     # 通知成员项目更新了
     memberList = __queryProjectMembers(projectUUID, userUUID)
     if type(memberList) != list:
-        shutil.rmtree(path)
+        if os.path.exists(path): shutil.rmtree(path)
         Loger.error(MESSAGE[CODE_ERROR_QUERY_PROJECT_MEMBER], __file__)
         return RESPONSE_JSON(CODE_ERROR_QUERY_PROJECT_MEMBER)
     else:
@@ -106,7 +106,7 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
         dbManager.executeTransactionMutltiDml(sqlList)
     except Exception as e:
         Loger.error(e, __file__)
-        shutil.rmtree(path)
+        if os.path.exists(path): shutil.rmtree(path)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
         __notificationMember(memberList)
