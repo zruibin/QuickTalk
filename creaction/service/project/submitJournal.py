@@ -68,7 +68,7 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
     sqlList = []
 
     path = __journalMediasPath(projectUUID, journalUUID)
-    if len(mediasDict) > 9: 
+    if len(mediasDict) > Config.UPLOAD_FILE_FOR_JOURNAL_MEDIAS_COUNT: 
         if os.path.exists(path): shutil.rmtree(path)
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)

@@ -70,6 +70,10 @@ class Config(object):
     UPLOAD_FILE_FOR_USER = "u"
     UPLOAD_FILE_FOR_PROJECT = "p"
 
+    # 上传图片最大数量
+    UPLOAD_FILE_FOR_PROJECT_MEDIAS_COUNT = 9
+    UPLOAD_FILE_FOR_JOURNAL_MEDIAS_COUNT = 9
+
     PAGE_OF_SIZE = 10 # 分页每页数量
 
     STATUS_ON = 1

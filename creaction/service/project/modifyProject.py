@@ -75,7 +75,7 @@ def __uploadMedias(projectUUID):
 
 def __updateProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     path = Config.FULL_UPLOAD_FOLDER + Config.UPLOAD_FILE_FOR_PROJECT + "/" + projectUUID + "/"
-    if len(mediasDict) > 9:
+    if len(mediasDict) > Config.UPLOAD_FILE_FOR_PROJECT_MEDIAS_COUNT:
         __removeFileOnError(path, mediasDict.values())
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
