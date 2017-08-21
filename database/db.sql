@@ -138,7 +138,6 @@ DROP TABLE IF EXISTS
     `t_project_plan`;
 CREATE TABLE `t_project_plan`(
     `id` INT UNSIGNED AUTO_INCREMENT,
-    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
@@ -148,14 +147,12 @@ CREATE TABLE `t_project_plan`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_project_plan` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_project_plan` ADD INDEX t_project_plan_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
     `t_project_plan_media`;
 CREATE TABLE `t_project_plan_media`(
     `id` INT UNSIGNED AUTO_INCREMENT,
-    `plan_uuid` VARCHAR(100) NOT NULL COMMENT '计划uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
@@ -164,7 +161,6 @@ CREATE TABLE `t_project_plan_media`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_project_plan_media` ADD INDEX t_project_plan_media_plan_uuid ( `plan_uuid` );
 ALTER TABLE `t_project_plan_media` ADD INDEX t_project_plan_media_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
