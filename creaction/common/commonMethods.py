@@ -159,6 +159,23 @@ class MemberQueryException(Exception):
     def __init__(self, err='Member Query Exception!'):  
         Exception.__init__(self,err)  
 
+
+def verifyProjectMember(userUUID, projectUUID):
+    result  = False
+    querySQL = """
+        SELECT user_uuid FROM t_project_user WHERE user_uuid='%s' AND project_uuid='%s'; """ % (userUUID, projectUUID)
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        resultData = dbManager.executeSingleQuery(querySQL)
+        queryUserUUID = ""
+        queryUserUUID = resultData[0]["user_uuid"]
+        if queryUserUUID == userUUID or  len(dataPassword) > 0: 
+                result = True
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    return result
+    
         
 
 if __name__ == '__main__':
