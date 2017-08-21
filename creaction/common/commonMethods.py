@@ -163,7 +163,7 @@ class MemberQueryException(Exception):
 def verifyProjectMember(userUUID, projectUUID):
     result  = False
     querySQL = """
-        SELECT user_uuid FROM t_project_user WHERE user_uuid='%s' AND project_uuid='%s'; """ % (userUUID, projectUUID)
+        SELECT user_uuid FROM t_project_user WHERE user_uuid='%s' AND project_uuid='%s' AND type=%s; """ % (userUUID, projectUUID, Config.TYPE_FOR_PROJECT_MEMBER)
     dbManager = DB.DBManager.shareInstanced()
     try: 
         resultData = dbManager.executeSingleQuery(querySQL)

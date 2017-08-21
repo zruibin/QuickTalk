@@ -63,7 +63,7 @@ def __queryProjectDetailFromStorage(projectUUID):
 
             memberList = dbManager.executeSingleQuery(queryMemberSQL)
             for member in memberList:
-                member["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_PROJECT, projectUUID, member["avatar"])
+                member["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, member["uuid"], member["avatar"])
             dataDict["memberList"] = memberList
     except Exception as e:
         Loger.error(e, __file__)

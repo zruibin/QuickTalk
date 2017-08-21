@@ -22,7 +22,7 @@ import shutil, os.path
 
 
 @project.route('/delete_journal', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def deleteJournal():
     userUUID = getValueFromRequestByKey("user_uuid")
     projectUUID = getValueFromRequestByKey("project_uuid")
