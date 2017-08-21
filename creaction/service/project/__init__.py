@@ -26,5 +26,6 @@ from service.project import commentList
 from service.project import deleteComment
 from service.project import submitJournal
 from service.project import deleteJournal
+from service.project import journalList
 
 
