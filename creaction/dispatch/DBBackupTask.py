@@ -34,7 +34,7 @@ dbName = Config.DBNAME # --all-databases
 
 @celery.task
 def backup():
-    baseName = dbName + "_" + time.strftime("%Y%m%d%-H%M%S")
+    baseName = dbName + "_" + time.strftime("%Y%m%d-%H%M%S")
     fileName = baseName + ".sql"
     fullPath =  backupDir + "/" + fileName
 
