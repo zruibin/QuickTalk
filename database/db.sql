@@ -54,6 +54,7 @@ CREATE TABLE `t_user_user`(
 
 ALTER TABLE `t_user_user` ADD INDEX t_user_auth_uuid (`user_uuid`);
 ALTER TABLE `t_user_user` ADD INDEX t_user_type (`type`);
+ALTER TABLE `t_user_user` ADD INDEX t_user_other_user_uuid (`other_user_uuid`);
 
 DROP TABLE IF EXISTS
     `t_user_setting`;
@@ -147,6 +148,7 @@ CREATE TABLE `t_project_plan`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_project_plan` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_project_plan` ADD INDEX t_project_plan_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
@@ -183,6 +185,7 @@ CREATE TABLE `t_comment`(
 ALTER TABLE `t_comment` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_comment` ADD INDEX t_comment_project_uuid ( `project_uuid` );
 ALTER TABLE `t_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
+ALTER TABLE `t_comment` ADD INDEX t_comment_reply_comment_uuid ( `reply_comment_uuid` );
 
 DROP TABLE IF EXISTS
     `t_project_journal`;
@@ -200,6 +203,7 @@ CREATE TABLE `t_project_journal`(
 
 ALTER TABLE `t_project_journal` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_project_journal` ADD INDEX t_project_journal_project_uuid ( `project_uuid` );
+ALTER TABLE `t_project_journal` ADD INDEX t_project_journal_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_project_journal_media`;
@@ -215,6 +219,7 @@ CREATE TABLE `t_project_journal_media`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_project_journal_media` ADD INDEX t_project_journal_media_journal_uuid ( `journal_uuid` );
+ALTER TABLE `t_project_journal_media` ADD INDEX t_project_journal_media_project_uuid ( `project_uuid` );
 
 
 DROP TABLE IF EXISTS
@@ -232,6 +237,8 @@ CREATE TABLE `t_message_like`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_like` ADD INDEX t_message_like_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_like` ADD INDEX t_message_like_content_uuid ( `content_uuid` );
+ALTER TABLE `t_message_like` ADD INDEX t_message_like_owner_user_uuid ( `owner_user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_project`;
@@ -249,6 +256,8 @@ CREATE TABLE `t_message_project`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_project` ADD INDEX t_message_project_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_project` ADD INDEX t_message_project_content_uuid ( `content_uuid` );
+ALTER TABLE `t_message_project` ADD INDEX t_message_project_owner_user_uuid ( `owner_user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_comment`;
@@ -265,6 +274,8 @@ CREATE TABLE `t_message_comment`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_comment` ADD INDEX t_message_comment_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_comment` ADD INDEX t_message_comment_content_uuid ( `content_uuid` );
+ALTER TABLE `t_message_comment` ADD INDEX t_message_comment_owner_user_uuid ( `owner_user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_start`;
@@ -281,6 +292,8 @@ CREATE TABLE `t_message_start`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_start` ADD INDEX t_message_start_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_start` ADD INDEX t_message_start_content_uuid ( `content_uuid` );
+ALTER TABLE `t_message_start` ADD INDEX t_message_start_owner_user_uuid ( `owner_user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_contact`;
@@ -298,6 +311,8 @@ CREATE TABLE `t_message_contact`(
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_message_contact` ADD INDEX t_message_contact_user_uuid ( `user_uuid` );
+ALTER TABLE `t_message_contact` ADD INDEX t_message_contact_content_uuid ( `content_uuid` );
+ALTER TABLE `t_message_contact` ADD INDEX t_message_contact_owner_user_uuid ( `owner_user_uuid` );
 
 
 DROP TABLE IF EXISTS

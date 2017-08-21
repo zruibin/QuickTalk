@@ -26,9 +26,12 @@ def jsonTool(obj):
 
 def generateUUID():
     """由MAC地址、当前时间戳、随机数生成。可以保证全球范围内的唯一性，
-        但MAC的使用同时带来安全性问题，局域网中可以使用IP来代替MAC """
+        但MAC的使用同时带来安全性问题，局域网中可以使用IP来代替MAC，
+        由于安全问题此处将生成的uuid md5加密一次
+     """
     uuidStr = uuid.uuid1()
     uuidStr = str(uuidStr)
+    uuidStr = md5hex(uuidStr)
     return uuidStr
 
 
