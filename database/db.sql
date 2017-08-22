@@ -217,6 +217,18 @@ CREATE TABLE `t_project_journal_media`(
 ALTER TABLE `t_project_journal_media` ADD INDEX t_project_journal_media_journal_uuid ( `journal_uuid` );
 ALTER TABLE `t_project_journal_media` ADD INDEX t_project_journal_media_project_uuid ( `project_uuid` );
 
+DROP TABLE IF EXISTS
+    `t_project_announce`;
+CREATE TABLE `t_project_announce`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
+    `content` VARCHAR(200) NOT NULL COMMENT '公告内容',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_project_announce` ADD INDEX t_project_announce_project_uuid ( `project_uuid` );
+
 
 DROP TABLE IF EXISTS
     `t_message_like`;
