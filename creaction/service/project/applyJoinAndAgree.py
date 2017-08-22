@@ -61,8 +61,6 @@ def __applyJoinProject(userUUID, projectUUID, authorUUID):
         __notificationMember(authorUUID, "申请加入项目")
         return RESPONSE_JSON(CODE_SUCCESS)
 
-    return RESPONSE_JSON(CODE_SUCCESS)
-
 
 def __agreeJoinIntoProject(userUUID, projectUUID, authorUUID):
     sqlList = []
