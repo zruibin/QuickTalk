@@ -17,18 +17,22 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile, parsePageIndex
+from common.commonMethods import limit
 
 
 @message.route('/contact', methods=["GET", "POST"])
 @vertifyTokenHandle
 def contactMessage():
     userUUID = getValueFromRequestByKey("user_uuid")
-    
-    return __queryContactMessageFromStorage(userUUID)
+    index = getValueFromRequestByKey("index")
+
+    index = parsePageIndex(index)
+    return __queryContactMessageFromStorage(userUUID, index)
 
 
-def __queryContactMessageFromStorage(userUUID):
+def __queryContactMessageFromStorage(userUUID, index):
+    limitSQL = limit(index)
     dataList = None
     querySQL = """
         SELECT uuid, nickname, avatar, 
@@ -38,9 +42,9 @@ def __queryContactMessageFromStorage(userUUID):
         AND t_message_contact.user_uuid='{userUUID}'
         AND t_message_contact.content_uuid=t_user.uuid
         AND t_message_contact.type={typeStr} AND t_message_contact.status={status}
-        ORDER BY time DESC
+        ORDER BY time DESC {limitSQL}
     """.format(userUUID=userUUID, typeStr=Config.NOTIFICATION_FOR_CONTACT, 
-                    status=Config.TYPE_FOR_MESSAGE_UNREAD)
+                    status=Config.TYPE_FOR_MESSAGE_UNREAD, limitSQL=limitSQL)
 
     updataSQL = """UPDATE t_message_contact SET status=%s WHERE user_uuid='%s' """ % (Config.TYPE_FOR_MESSAGE_READ, userUUID)
 

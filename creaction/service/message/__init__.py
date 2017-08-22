@@ -15,3 +15,4 @@ from flask import Blueprint
 message = Blueprint("message", __name__)
 
 from service.message import contactMessage
+from service.message import commentAndStart

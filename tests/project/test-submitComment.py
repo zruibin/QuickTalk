@@ -12,17 +12,17 @@
 """
 import requests
 
-def changeProjectStatus():
+def submitComment():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-222222",
-        "project_uuid" : "000000-7d83-11e7-889b-aaaaaa",
-        "is_reply": "0", "content": "19999999999999999",
+        "project_uuid" : "000000-7d83-11e7-889b-bbbbbb",
+        "is_reply": "0", "content": "333333333333333333",
         "reply_comment_uuid":""
     }
 
-    replyParams = {"user_uuid": "f6e996f8-7d83-11e7-889b-111111",
+    replyParams = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
         "project_uuid" : "000000-7d83-11e7-889b-bbbbbb",
-        "is_reply": "1", "content": "qqqeqeqqeqwsdfdsfsf",
-        "reply_comment_uuid" : "746c7c68-84a7-11e7-8492-8c8590135ddc"
+        "is_reply": "1", "content": "vvvvvvvvvvvvvvvvvv",
+        "reply_comment_uuid" : "3f6823d3b1e29e7ae8a74c0d1178d50e"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/project/submit_comment", params=replyParams) 
     print r.cookies
@@ -31,5 +31,5 @@ def changeProjectStatus():
 
 
 if __name__ == '__main__':
-    changeProjectStatus()
+    submitComment()
     pass

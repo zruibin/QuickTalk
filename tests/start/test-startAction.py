@@ -31,7 +31,7 @@ def unStartProjectAction():
 
 def startUserAction():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
-        "type": "2", "action":"1", "other_uuid":"f6e996f8-7d83-11e7-889b-000000",
+        "type": "2", "action":"1", "other_uuid":"f6e996f8-7d83-11e7-889b-222222",
         "nickname": "Ruibin.Chow"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/start/start_action", params=params) 
@@ -51,7 +51,7 @@ def unStartUserAction():
 if __name__ == '__main__':
     # startProjectAction()
     # unStartProjectAction()
-    # startUserAction()
-    unStartUserAction()
+    startUserAction()
+    # unStartUserAction()
     pass
 
