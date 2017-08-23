@@ -12,7 +12,7 @@
 """
 import requests
 
-def commentAndStart():
+def projectUpdate():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc"}
 
     r = requests.post(url="http://127.0.0.1:5000/service/message/project_update", params=params) 
@@ -22,6 +22,6 @@ def commentAndStart():
 
 
 if __name__ == '__main__':
-    commentAndStart()
+    projectUpdate()
     pass
 

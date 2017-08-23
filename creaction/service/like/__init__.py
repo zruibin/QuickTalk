@@ -15,3 +15,4 @@ from flask import Blueprint
 like = Blueprint("like", __name__)
 
 from service.like import likeAction
+from service.like import queryLike
