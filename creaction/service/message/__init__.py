@@ -16,3 +16,4 @@ message = Blueprint("message", __name__)
 
 from service.message import contactMessage
 from service.message import commentAndStart
+from service.message import projectUpdate
