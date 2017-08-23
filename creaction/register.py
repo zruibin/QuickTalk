@@ -20,6 +20,7 @@ from service.search import search
 from service.project import project
 from service.user import user
 from service.message import message
+from service.like import like
 
 
 def registerBlueprint(app):
@@ -33,7 +34,8 @@ def registerBlueprint(app):
     app.register_blueprint(project, url_prefix="/service/project") # 项目
     app.register_blueprint(user, url_prefix="/service/user") # 用户
     app.register_blueprint(message, url_prefix="/service/message") # 用户消息
-
+    app.register_blueprint(like, url_prefix="/service/like") # 点赞
+    
 
 if __name__ == '__main__':
     pass

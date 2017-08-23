@@ -13,9 +13,9 @@
 import requests
 
 def submitJournal():
-    data = {"user_uuid": "f6e996f8-7d83-11e7-889b-111111",
+    data = {"user_uuid": "f6e996f8-7d83-11e7-889b-222222",
         "project_uuid" : "000000-7d83-11e7-889b-bbbbbb",
-        "content": "但是，几十年过去了，我们对于 MVC 这种设计模式真的用得好吗？其实不是的，MVC 这种分层方式虽然清楚，但是如果使用不当，很可能让大量代码都集中在 Controller 之中，让 MVC 模式变成了 Massive View Controller 模式。"
+        "content": "对于 View 来说，你如果抽象得好，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。"
     }
     files = {'1': open("../pic/aaa.gif", 'rb'), '2': open("../pic/bbb.jpeg", 'rb')}
 

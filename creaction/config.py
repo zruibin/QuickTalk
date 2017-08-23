@@ -141,7 +141,14 @@ class Config(object):
     TYPE_FOR_START_ACTION_STARTING = "1" # 关注
     TYPE_FOR_START_ACTION_UNSTART = "2" # 取消
 
-    
+    # 点赞相关的类型
+    TYPE_FOR_LIKE_IN_PROJECT = "1" # 项目
+    TYPE_FOR_LIKE_IN_COMMENT = "2" # 评论
+    TYPE_FOR_LIKE_IN_JOURNAL = "3" # 日志
+
+    #点赞行为
+    TYPE_FOR_LIKE_ACTION_ON = 1 # 点赞
+    TYPE_FOR_LIKE_ACTION_OFF = 0 # 取消点赞
 
     pass
 

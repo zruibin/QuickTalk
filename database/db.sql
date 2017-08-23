@@ -231,6 +231,20 @@ CREATE TABLE `t_project_announce`(
 ALTER TABLE `t_project_announce` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_project_announce` ADD INDEX t_project_announce_project_uuid ( `project_uuid` );
 
+DROP TABLE IF EXISTS
+    `t_like`;
+CREATE TABLE `t_like`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_like` ADD INDEX t_like_content_uuid ( `content_uuid` );
+ALTER TABLE `t_like` ADD INDEX t_like_types ( `type` );
+ALTER TABLE `t_like` ADD INDEX t_like_user_uuid ( `user_uuid` );
 
 DROP TABLE IF EXISTS
     `t_message_like`;
