@@ -61,10 +61,11 @@ def __queryJournalFromStorage(projectUUID, index):
 def __packageData(projectUUID, dataDict):
     projectUUIDList = []
     for data in dataDict:
-        del data["sorting"]
+        if data["media_name"] is not None:
+            del data["sorting"]
+            path = projectUUID + "/" + data["journal_uuid"]
+            data["media_name"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_PROJECT, path, data["media_name"])
         data["time"] = str(data["time"])
-        path = projectUUID + "/" + data["journal_uuid"]
-        data["media_name"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_PROJECT, path, data["media_name"])
         data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, data["user_uuid"], data["avatar"])
         projectUUIDList.append(data["journal_uuid"])
 

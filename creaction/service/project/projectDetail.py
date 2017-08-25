@@ -32,7 +32,7 @@ def projectDetail():
 def __queryProjectDetailFromStorage(projectUUID):
     dataDict = None
 
-    subSQL = """,  t_project.detail FROM  t_project WHERE  t_project.uuid='%s' """ % projectUUID
+    subSQL = """,  t_project.detail, t_project.result FROM  t_project WHERE  t_project.uuid='%s' """ % projectUUID
     queryProjectSQL = queryProjectString(subSQL)
     
     queryResultMediasSQL = """SELECT media_name FROM t_project_media WHERE project_uuid='%s'  AND type=%d ORDER BY sorting ASC;""" % (projectUUID, Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
@@ -46,6 +46,10 @@ def __queryProjectDetailFromStorage(projectUUID):
         )
     """ % (projectUUID, Config.TYPE_FOR_PROJECT_MEMBER)
 
+    queryPlanSQL = """
+        SELECT content, start_time AS startTime, finish_time AS finishTime FROM t_project_plan WHERE project_uuid='%s' ORDER BY sorting ASC;
+    """ % (projectUUID)
+
     dbManager = DB.DBManager.shareInstanced()
     try:
         dataList = dbManager.executeSingleQuery(queryProjectSQL)
@@ -55,7 +59,7 @@ def __queryProjectDetailFromStorage(projectUUID):
 
             resulteList = dbManager.executeSingleQuery(queryResultMediasSQL, False)
             resulteList = [fullPathForMediasFile(Config.UPLOAD_FILE_FOR_PROJECT, projectUUID, result[0]) for result in resulteList]
-            dataDict["resulteList"] = resulteList
+            dataDict["resultMedias"] = resulteList
 
             tagList = dbManager.executeSingleQuery(queryTagsSQL, False)
             tagList = [tag[0] for tag in tagList]
@@ -65,6 +69,12 @@ def __queryProjectDetailFromStorage(projectUUID):
             for member in memberList:
                 member["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, member["uuid"], member["avatar"])
             dataDict["memberList"] = memberList
+
+            planList = dbManager.executeSingleQuery(queryPlanSQL)
+            for plan in planList:
+                plan["startTime"] = str(plan["startTime"])
+                plan["finishTime"] = str(plan["finishTime"])
+            dataDict["planList"] = planList
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

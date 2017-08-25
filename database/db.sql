@@ -150,20 +150,6 @@ CREATE TABLE `t_project_plan`(
 ALTER TABLE `t_project_plan` ADD INDEX t_project_plan_project_uuid ( `project_uuid` );
 
 DROP TABLE IF EXISTS
-    `t_project_plan_media`;
-CREATE TABLE `t_project_plan_media`(
-    `id` INT UNSIGNED AUTO_INCREMENT,
-    `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
-    `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
-    `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
-    `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
-    PRIMARY KEY(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-ALTER TABLE `t_project_plan_media` ADD INDEX t_project_plan_media_project_uuid ( `project_uuid` );
-
-DROP TABLE IF EXISTS
     `t_comment`;
 CREATE TABLE `t_comment`(
     `id` INT UNSIGNED AUTO_INCREMENT,

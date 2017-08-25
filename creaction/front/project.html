@@ -2,16 +2,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-        <title>项目</title>
+
+<title></title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
 <meta http-equiv="Access-Control-Allow-Origin" content="*, *">
 
-<meta name="author" content="www.zruibin.cc" />
+<script src="/js/reqwest.min.js"></script>
 
-<script src="/js/jquery-1.10.2.min.js"></script>
 
 <link rel="stylesheet" href="/css/project.css" />
 
@@ -32,63 +32,46 @@
 
 
 <div id="project" >
-
-    <div id="memberList" class="background" onclick="onClick()">
-        
-    </div>
+    <div id="memberList" class="background" onclick="onClick()"></div>
     <div id="detail" class="background" onclick="onClick()"></div>
     <div id="plan" class="background" onclick="onClick()"></div>
     <div id="result" class="background" onclick="onClick()"></div>
 </div>
 
-<div id="journal">
-    <!-- <div class="journalContent">
-            <div class="journalHeader" >
-                    <img src="images/logo.png" alt="" class="avatar journalAvatar">
-                    <div>
-                            <span class="username">John Snow</span><span class="tip">更新了日志</span>
-                            <div class="likeNum">1213</div>
-                            <img src="images/like.png" alt="" class="like">
-                    </div>
-                    <div><span class="journalTime">17/14 12:12</span></div>
-            </div>
-            <div class="journalText" > 在使用当中，通常还会利用双向绑定技术，使得 Model 变化时，ViewModel 会自动更新，而 ViewModel 变化时，View 也会自动变化。而这个过程我们可以使用KVO和Notification来实现，但这样并不是最理想和高效的方式，所以我们需要结合ReactiveCocoa一起使用
-                
-            </div>
-            <img src="./images/logo.png" alt="" class="journalImage">
-            <img src="./images/logo.png" alt="" class="journalImage">
-            <img src="./images/logo.png" alt="" class="journalImage">
-            <img src="./images/logo.png" alt="" class="journalImage">
-    </div> -->
-
-<!-- 
-    <div style="width:100%; height:200px; background:#585858" class="journalContent"></div>
-    <div style="width:100%; height:400px; background:greenyellow" class="journalContent"></div>
-    <div style="width:100%; height:200px; background:#585858" class="journalContent"></div> -->
-</div>
+<div id="journal"></div>
 
 </div>
+
+
+<div id="overlayMask" class="overlayMask">
+        <div class="spinner">
+                <div class="spinner-container container1">
+                  <div class="circle1"></div>
+                  <div class="circle2"></div>
+                  <div class="circle3"></div>
+                  <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container2">
+                  <div class="circle1"></div>
+                  <div class="circle2"></div>
+                  <div class="circle3"></div>
+                  <div class="circle4"></div>
+                </div>
+                <div class="spinner-container container3">
+                  <div class="circle1"></div>
+                  <div class="circle2"></div>
+                  <div class="circle3"></div>
+                  <div class="circle4"></div>
+                </div>
+        </div>
+</div>
+
 
 </body>
 
 
 <script type="text/javascript" src="/js/project.js"></script>
-<script type="text/javascript">
     
-function getQueryString() 
-{ 
-    var url = location.search; //获取url中"?"符后的字串 
-    console.log('url: ' + url);
-    // var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-    // var r = window.location.search.substr(1).match(reg); 
-    // if (r != null) return unescape(r[2]); return null;  
-    thisDLoc = document.location; 
-    path = thisDLoc.pathname
-    strs = path.split("/");
-    console.log(strs);
-} 
-getQueryString();
-
 
 
 </script>

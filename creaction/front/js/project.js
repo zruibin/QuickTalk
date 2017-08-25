@@ -45,22 +45,33 @@ function makeLineLocation(index) {
 
 function onClick() {
     console.log("onClick");
-    window.location.href="index.html"; 
+    window.location.href="/index.html"; 
+}
+
+function avatar() {
+    return "/images/logo.png"
 }
 
 
 /*------------------------------项目------------------------------------*/ 
 
-function memberHtml() {
+function memberHtml(memberList) {
     var w = tab.offsetWidth;
-    num = parseInt(w / (45 + 12));
+    var num = parseInt(w / (45 + 12));
     // console.log(num)
-    content = '<div class="member" onclick="showProject()"> \
-          <img src="images/logo.png" alt="" class="avatar"> \
-          <div class="nickname">成员成员成员成员</div>  \
-    </div>'
-    html = '<div id="memberListTitle">成员</div>';
+    var html = '<div id="memberListTitle">成员</div>';
+
+    if (memberList.length < num) {
+        num = memberList.length;
+    }
     for (var i=0; i<num; i++) {
+        var member = memberList[i];
+        var avatar = member.avatar;
+        if (avatar.length == 0) avatar = avatar();
+        content = '<div class="member" onclick="showProject()"> \
+        <img src="' + avatar + '" alt="" class="avatar" onerror="this.src=\'/images/logo.png\'"> \
+        <div class="nickname">' + member.nickname + '</div>  \
+                </div>'
         html += content
     }
     var memberList = document.getElementById("memberList");
@@ -68,10 +79,8 @@ function memberHtml() {
 }
 
 function detailHtml(content, tagList) {
-    html = '<div id="detailTitle" class="title">简单介绍</div>\
-    <hr>\
-    <div id="detailContent">'+ content +'</div> \
-    <hr>';
+    var html = '<div id="detailTitle" class="title">简单介绍</div>\
+    <hr><div id="detailContent">'+ content +'</div><hr>';
 
     for (var i = 0; i < tagList.length; i++) {
         var tag = tagList[i];
@@ -83,38 +92,43 @@ function detailHtml(content, tagList) {
     detail.innerHTML = html;
 }
 
-function planHtml() {
-    content = '<div id="planTitle" class="title">计划</div> \
-    <div id="planTime" class="title">10月12日 截止</div> \
-    <hr> \
-    <div class="planContent"> \
-            <div class="planContentLeft">1、对于 View 来说，你如果抽象得好，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。</div> \
-            <div class="planContentRight">10月12日 截止</div> \
-    </div> \
-    <div class="planContent"> \
-            <div class="planContentLeft">2、对于 View 来说，你如果抽象得好，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。</div> \
-            <div class="planContentRight">10月12日 截止</div> \
-    </div> \
-    <div class="planContent"> \
-            <div class="planContentLeft">3、对于 View 来说，你如果抽象得好，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。</div> \
-            <div class="planContentRight">10月12日 截止</div> \
-    </div>';
+function planHtml(planList) {
+    var content = '<div id="planTitle" class="title">计划</div> \
+    <div id="planTime" class="title"></div><hr>';
+
+    if (planList.length == 0) {
+        content += '<div class="blankContent">暂无内容</div>'
+    } else {
+        for (var i = 0; i < planList.length; i++) {
+            var plan = planList[i];
+            content += '<div class="planContent"> \
+                    <div class="planContentLeft">'+ (i+1) + '.' + plan.content +'</div> \
+                        <div class="planContentRight">'+ plan.finishTime +' 截止</div> \
+                </div>';
+        }
+    }
     var plan = document.getElementById("plan");
     plan.innerHTML = content;
 }
 
-function resultHtml() {
-    content = '<div class="title">预期结果:</div> \
-    <hr> \
-    <div id="resultContent">对于 Model 来说，它其实是用来存储业务的数据的，如果做得好，它也可以方便地复用。比如我当时在做有道云笔记 iPad 版的时候，我们就直接和 iOS 版复用了所有的 Model 层的代码。在创业做猿题库客户端时，iOS 和 iPad 版的 Model 层代码再次被复用上了。当然，因为和业务本身的数据意义相关，Model 层的复用大多数是在一个产品内部，不太可能像 View 层那样开源给社区。</div> \
-    <div id="resultImageContent"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-            <img src="./images/logo.png" alt="" class="resultImage"> \
-    </div>';
+function resultHtml(result, resultMedias) {
+    // result = '';
+    // resultList = []
+    var  content = '<div class="title">预期结果:</div><hr>';
+
+    if (result.length==0 && resultMedias.length==0) {
+        content += '<div class="blankContent">暂无内容</div>';
+    } else {
+        if (result.length != 0) {
+            content += '<div id="resultContent">' + result + '</div>';
+        }
+        for (var i = 0; i < resultMedias.length; i++) {
+            var image = resultMedias[i];
+            content += '<img src="'+ image + '" alt="" class="resultImage" onerror="this.src=\'/images/logo.png\'">';
+            
+        }
+    }
+    content += '</div>';
     var result = document.getElementById("result");
     result.innerHTML = content;
 }
@@ -132,34 +146,48 @@ function arrangeResultImage() {
 
 /*------------------------------日志------------------------------------*/ 
 
-function journalHtmlTemplate(journalAvatar, userName, likeNum, time, content, imageArray) {
-    content = ' \
+function journalHtmlTemplate(journalAvatar, userName, likeNum, time, text, imageArray) {
+    var content = ' \
     <div class="journalContent"  onclick="onClick()"> \
     <div class="journalHeader" > \
-            <img src="'+journalAvatar+'" alt="" class="avatar journalAvatar"> \
+            <img src="'+journalAvatar+'" alt="" class="avatar journalAvatar" onerror="this.src=\'/images/logo.png\'"> \
             <div> \
                     <span class="username">'+userName+'</span><span class="tip">更新了日志 </span>  \
                     <div class="likeNum">'+likeNum+'</div> \
-                    <img src="images/like.png" alt="" class="like"> \
+                    <img src="/images/like.png" alt="" class="like"> \
             </div> \
             <div><span class="journalTime">'+time+'</span></div> \
-    </div> \
-    <div class="journalText" >'+content+'</div>';
+    </div>';
+
+    if (text.length > 0) {
+        content += '<div class="journalText" >'+text+'</div>';
+    }
 
     for (var i = 0; i < imageArray.length; i++) {
         var image = imageArray[i];
-        content += '<img src="'+image+'" alt="" class="journalImage">';
+        if (image) {
+            content += '<img src="'+image+'" alt="" class="journalImage" onerror="this.src=\'/images/logo.png\'">';
+        }
     }
     
     content += '</div>';
     return content;
 }
 
-function journalHtml() {
-    content = '';
-    for (var i = 0; i < 10; i++) {
-        content +=  journalHtmlTemplate("images/logo.png", "userName", 
-        "123", "12/12 02:17", "Helvetica: 被评为设计师最爱的字体，Realist风格，简洁现代的线条，非常受到追捧。在Mac下面被认为是最佳的网页字体，在Windows下由于Hinting的原因显示很糟糕", ["images/logo.png", "images/logo.png"]);    
+function journalHtml(data) {
+    var content = '';
+    for (var i = 0; i < data.length; i++) {
+        var obj = data[i]
+        var avatar = obj.avatar;
+        var nickname = obj.nickname;
+        var time = obj.time;
+        var text = obj.content;
+        var like = obj.like;
+        var medias = obj.medias;
+
+        if (avatar.length == 0) avatar = avatar();
+
+        content +=  journalHtmlTemplate(avatar, nickname, like, time, text, medias);    
     }
     
     var journal = document.getElementById("journal");
@@ -184,118 +212,68 @@ function arrangeJournalImage() {
 
 
 function showProjectFromJsonObj(obj){
+    document.title = obj.data.title;
     showProject()
-    memberHtml();
-    // detailHtml(obj.data.detail, obj.data.tagList);
-    planHtml();
-    resultHtml();
+    memberHtml(obj.data.memberList);
+    detailHtml(obj.data.detail, obj.data.tagList);
+    planHtml(obj.data.planList);
+    resultHtml(obj.data.result, obj.data.resultMedias);
     arrangeResultImage();
+}
 
-    journalHtml();
+function showJournalFromJsonObj(obj) {
+    journalHtml(obj.data);
     arrangeJournalImage();
 }
 
 
-
-
 /*-----------------------------请求-------------------------------------*/ 
 
-function requestText () {
-  var path = "http://192.168.0.116/service/project/project?project_uuid="+"000000-7d83-11e7-889b-bbbbbb";
-//   var path = "http://zruibin.cc/api/index.json";
-// var path = "http://192.168.0.116/service/api/";
-  var xmlhttp;
 
-  if (window.XMLHttpRequest) {
-      xmlhttp = new XMLHttpRequest();
-      if (xmlhttp.overrideMimeType) {
-          xmlhttp.overrideMimeType("text/json");
-      }
-    } else if (window.ActiveXObject) {
-      var activexName = ["MSXML2.XMLHTTP","Microsoft.XMLHTTP"];
-      for (var i = 0; i < activexName.length; i++) {
-          try{
-              xmlhttp = new ActiveXObject(activexName[i]);
-              break;
-          } catch(e){
-          }
-      }
-    }
+function loadingProjectData(uuid) {
 
-    function callback() {
-      if (xmlhttp.readyState == 4) {
-          if (xmlhttp.status == 200) {
-              var responseText = xmlhttp.responseText;
-              
-            //   var obj = JSON.parse(responseText); 
-              alert(responseText);
-              
-            //   showProjectFromJsonObj(obj);
+    var projectPath = "/service/project/project?project_uuid=" + uuid;
+    var journalPath = "/service/project/journal?project_uuid=" + uuid;
 
-          } else {
-            alert(xmlhttp.status);
-          }
-      }
-    }
-    xmlhttp.onreadystatechange = callback;
-    // xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest"); //请求头部，需要服务端同时设置
-    // xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlhttp.open("GET", path, true);
-    xmlhttp.send();
-    // alert(path);
+    reqwest({
+        url: projectPath, 
+        type: 'json', 
+        method: 'get'
+    }).then(function (projectData) {
+        // console.log(resp);     
+        loadingJournalData(projectData, journalPath)
+    }).fail(function (err, msg) {
+        // console.log(err);     
+        alert("请求失败，请重新刷新！");
+    });
 }
 
-// requestText ();
-
-
-$(document).ready(function() {
-
-    // var path = "http://192.168.0.116/service/project/project?project_uuid="+"000000-7d83-11e7-889b-bbbbbb";
-    // path = "http://zruibin.cc/api/index.json"
-    // alert("1111111");
-    // console.log(path);
-    // $.get(path, function(obj){
-    //     console.log(obj);
-    //     // alert(obj);
-    //     // showProjectFromJsonObj(obj);
-    // });
-
-    function showLocation(json)
-    {
-        console.log("json: " + json);    
-    }
-
-    var path = "http://39.108.174.16/service/project/project?project_uuid="+"000000-7d83-11e7-889b-bbbbbb";
-   $.ajax({
-        url:path,
-        dataType:'jsonp',
-        processData: false,
-        // jsonp: "callback",
-        type:'GET',
-        timeout: 3000,
-        crossDomain: true,
-        async:false,
-        dataType: 'jsonp',
-        jsonp: 'callback',
-        jsonpCallback:"showLocation",
-        contentType: "application/json;utf-8",
-        success:function(data, textStatus){
-            data =  $.parseJSON(data);
-            console.log(data);
-        },
-        error:function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log("XMLHttpRequest.status: " + XMLHttpRequest.status);
-            console.log("XMLHttpRequest.readyState: " + XMLHttpRequest.readyState);
-            console.log("textStatus: "+ textStatus);
-            console.log("errorThrown: " + errorThrown);     
-        }
+function loadingJournalData(projectData, journalPath) {
+    reqwest({
+        url: journalPath, 
+        type: 'json', 
+        method: 'get'
+    }).then(function (journalData) {
+        // console.log(resp);
+        var mask = document.getElementById('overlayMask');
+        mask.parentNode.removeChild(mask); 
+        showProjectFromJsonObj(projectData);
+        showJournalFromJsonObj(journalData);
+    }).fail(function (err, msg) {
+        // console.log(err);     
+        alert("请求失败，请重新刷新！");
     });
-    
-
-});
+}
 
 
+function loadingData() 
+{ 
+    var url = location.search.toString(); //获取url中"?"符后的字串含?
+    var uuid = url.substring(1, url.length);
+    // console.log('url: ' + uuid);
+    loadingProjectData(uuid);
+} 
 
-// setTimeout("showProjectFromJsonObj('')", 3000);
 
 
+loadingData();
