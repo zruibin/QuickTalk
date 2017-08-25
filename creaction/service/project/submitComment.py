@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, generateUUID
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from common.commonMethods import queryProjectString, MemberQueryException
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
@@ -45,19 +45,21 @@ def submitComment():
     
 
 def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, content):
-
     uuid = generateUUID()
+    time = generateCurrentTime()
+
     dbManager = DB.DBManager.shareInstanced()
     peopleList = None
     notificationContent = ""
     try:
         sqlList = []
         insertCommentSQL = """
-            INSERT INTO t_comment (uuid, project_uuid, user_uuid, content, `like`, is_reply, reply_comment_uuid) VALUES ('%s', '%s', '%s', '%s', 0, %s, '%s')""" % (uuid, projectUUID, userUUID,  content, isReply, replyCommentUUID)
+            INSERT INTO t_comment (uuid, project_uuid, user_uuid, content, `like`, is_reply, reply_comment_uuid, time) 
+            VALUES ('%s', '%s', '%s', '%s', 0, %s, '%s', '%s');""" % (uuid, projectUUID, userUUID,  content, isReply, replyCommentUUID, time)
         sqlList.append(insertCommentSQL)
 
         insertMessageCommentSQL = """INSERT INTO t_message_comment (user_uuid, type,
-                content_uuid, owner_user_uuid, status, content) VALUES """
+                content_uuid, owner_user_uuid, status, content, time) VALUES """
         values = ""
         if isReply == Config.TYPE_FRO_COMMENT: # 只是评论则通知作者与成员
             peopleList = __queryProjectAllPeople(projectUUID)
@@ -65,8 +67,9 @@ def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, c
             if userUUID in peopleList: peopleList.remove(userUUID)
             typeStr = Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT
             for people in peopleList:
-                values += """('%s', %s, '%s', '%s', %d, '%s'),""" % (people, typeStr, 
-                                    uuid, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, content)
+                values += """('%s', %s, '%s', '%s', %d, '%s', '%s'),""" % (people, typeStr, 
+                                    uuid, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, 
+                                    content, time)
             insertMessageCommentSQL += values[:-1] + ";"
             sqlList.append(insertMessageCommentSQL)
             notificationContent = "收到一条评论"  

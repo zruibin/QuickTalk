@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, generateUUID
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from common.commonMethods import queryProjectString, MemberQueryException
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
@@ -30,7 +30,7 @@ def inviteAndAgreeJoinIntoProject():
     projectUUID = getValueFromRequestByKey("project_uuid")
     memberUUID = getValueFromRequestByKey("member_uuid") 
     typeStr = int(getValueFromRequestByKey("type"))
-
+    
     if typeStr == Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_INVITE:
         return __invitePeopleIntoProject(userUUID, projectUUID, memberUUID)
     elif typeStr == Config.TYPE_FOR_MESSAGE_IN_PROJECT_INVITE_AGREE:
@@ -43,11 +43,13 @@ def __invitePeopleIntoProject(userUUID, projectUUID, memberUUID):
     if userUUID == None or projectUUID==None or memberUUID==None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
 
+    time = generateCurrentTime()
+
     insertMessageSQL = """
         INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid,
-            status, action) VALUES ('%s', %d, '%s', '%s', %d, %d);
+            status, action, time) VALUES ('%s', %d, '%s', '%s', %d, %d, '%s');
     """ % (memberUUID,  Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_INVITE, projectUUID,
-            userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, Config.TYPE_FOR_MESSAGE_ACTION_OFF)
+            userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, Config.TYPE_FOR_MESSAGE_ACTION_OFF, time)
 
     dbManager = DB.DBManager.shareInstanced()
     try:
@@ -65,15 +67,16 @@ def __agreeIntoProject(userUUID, projectUUID):
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
     
     sqlList = []
+    time = generateCurrentTime()
 
     # 成为项目成员同时关注该项目
     insertProjectUserSQL = """
-        INSERT INTO t_project_user (project_uuid, type, user_uuid) 
-        VALUES ('{projectUUID}', {memberType}, '{userUUID}'), 
-            ('{projectUUID}', {followType}, '{userUUID}');
+        INSERT INTO t_project_user (project_uuid, type, user_uuid, time) 
+        VALUES ('{projectUUID}', {memberType}, '{userUUID}', '{time}'), 
+            ('{projectUUID}', {followType}, '{userUUID}', '{time}');
     """.format(projectUUID=projectUUID, userUUID=userUUID, 
                 memberType=Config.TYPE_FOR_PROJECT_MEMBER, 
-                followType=Config.TYPE_FOR_PROJECT_FOLLOWER)
+                followType=Config.TYPE_FOR_PROJECT_FOLLOWER, time=time)
     sqlList.append(insertProjectUserSQL)
 
     # 消息中action状态改为已执行即on 
@@ -87,7 +90,7 @@ def __agreeIntoProject(userUUID, projectUUID):
     dbManager = DB.DBManager.shareInstanced()
     try:
         # 加入项目时查看跟作者是否已经交换联系方式了，没有就双双交换
-        exchangeContactSQL = __exchangeContactSQLMethod(userUUID, projectUUID)
+        exchangeContactSQL = __exchangeContactSQLMethod(userUUID, projectUUID, time)
         if exchangeContactSQL != None: sqlList.append(exchangeContactSQL)
 
         dbManager.executeTransactionMutltiDml(sqlList)
@@ -104,7 +107,7 @@ def __notificationMember(userUUID):
     # dispatchNotificationUserForContent.delay(userUUID)
 
 
-def __exchangeContactSQLMethod(userUUID, projectUUID):
+def __exchangeContactSQLMethod(userUUID, projectUUID, time):
     queryAuthorSQL = """SELECT author_uuid FROM t_project WHERE uuid='%s';""" % projectUUID
     dbManager = DB.DBManager.shareInstanced()
     try:
@@ -118,9 +121,11 @@ def __exchangeContactSQLMethod(userUUID, projectUUID):
                         userUUID=userUUID)
         result = dbManager.executeTransactionQuery(queryContactSQL)
         if len(result) == 0:
-            insertContactSQL = """INSERT INTO t_user_user (user_uuid, type, other_user_uuid) 
-                VALUES ('{userUUID}', {typeInt}, '{authorUUID}'), ('{authorUUID}', {typeInt},
-                '{userUUID}'); """.format(userUUID=userUUID, 
+            insertContactSQL = """
+                INSERT INTO t_user_user (user_uuid, type, other_user_uuid, time) 
+                VALUES ('{userUUID}', {typeInt}, '{authorUUID}', '{time}'), 
+                ('{authorUUID}', {typeInt},'{userUUID}', '{time}'); 
+                """.format(userUUID=userUUID, time=time,
                 typeInt=Config.TYPE_FOR_USER_CONTACT, authorUUID=authorUUID)
             return insertContactSQL
         else:

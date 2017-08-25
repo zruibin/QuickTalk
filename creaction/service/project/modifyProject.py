@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, generateUUID
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from common.file import FileTypeException, uploadPicture
 import json, os
 from common.commonMethods import MemberQueryException
@@ -107,17 +107,18 @@ def __removeFileOnError(path, fileList):
 
 def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     sqlList = []
+    time = generateCurrentTime()
 
     # 项目多媒体内容(先删除后插入新的)
     deleteMdiasSQL = """DELETE FROM t_project_media WHERE project_uuid='%s';""" % projectUUID
     sqlList.append(deleteMdiasSQL)
     medias_count = len(mediasDict)
     if medias_count > 0:
-        insertMediasSQL = """INSERT INTO t_project_media (project_uuid, sorting, type, media_name) VALUES """
+        insertMediasSQL = """INSERT INTO t_project_media (project_uuid, sorting, type, media_name, time) VALUES """
         values = ""
         typeInt = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
         for key, value in mediasDict.items():
-            values += """('%s', %s, %d, '%s'),""" % (projectUUID, key, typeInt, value)
+            values += """('%s', %s, %d, '%s', '%s'),""" % (projectUUID, key, typeInt, value, time)
         insertMediasSQL += values[:-1] + ";"
         sqlList.append(insertMediasSQL)
     
@@ -162,11 +163,12 @@ def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, memberList):
     sqlList.append(updateProjectSQL)
 
     # 通知成员项目更新了
-    insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action) VALUES """
+    insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid,
+         owner_user_uuid, status, content, action, time) VALUES """
     values = ""
     typeString = Config.TYPE_FOR_MESSAGE_IN_PROJECT_UPDATE_PROJECT
     for member in memberList:
-        values += """('%s', %d, '%s', '%s', 0, '%s', 0),""" % (member, typeString, projectUUID, userUUID, '更新了项目')
+        values += """('%s', %d, '%s', '%s', 0, '%s', 0, '%s'),""" % (member, typeString, projectUUID, userUUID, '更新了项目', time)
     insertProjectMessageSQL += values[:-1] + ";"
     sqlList.append(insertProjectMessageSQL)
 

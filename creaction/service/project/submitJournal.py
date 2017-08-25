@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, generateUUID
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from common.commonMethods import verifyProjectMember, MemberQueryException
 from common.file import FileTypeException, uploadPicture
 import shutil, os.path
@@ -66,6 +66,7 @@ def __uploadMedias(journalUUID, projectUUID):
 
 def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, mediasDict={}):
     sqlList = []
+    time = generateCurrentTime()
 
     path = __journalMediasPath(projectUUID, journalUUID)
     if len(mediasDict) > Config.UPLOAD_FILE_FOR_JOURNAL_MEDIAS_COUNT: 
@@ -76,15 +77,16 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
     # 项目多媒体内容
     mediasCount = len(mediasDict)
     if mediasCount > 0:
-        insertMediasSQL = __insertMediasSQLString(journalUUID, projectUUID, mediasDict)
+        insertMediasSQL = __insertMediasSQLString(journalUUID, projectUUID, mediasDict, time)
         sqlList.append(insertMediasSQL)
 
     # 插入日志
     insertJournalSQL = """
-        INSERT INTO t_project_journal (uuid, project_uuid, user_uuid, content, `like`,medias_count)
-        VALUES ('{journalUUID}', '{projectUUID}', '{userUUID}', '{content}', 0, {mediasCount});
+        INSERT INTO t_project_journal (uuid, project_uuid, user_uuid, content, `like`,medias_count, time)
+        VALUES ('{journalUUID}', '{projectUUID}', '{userUUID}', '{content}', 0, {mediasCount}, 
+        '{time}');
     """.format(journalUUID=journalUUID, projectUUID=projectUUID, userUUID=userUUID, 
-            content=content, mediasCount=mediasCount)
+            content=content, mediasCount=mediasCount, time=time)
     sqlList.append(insertJournalSQL)
 
     # 通知成员项目更新了
@@ -96,7 +98,7 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
     else:
         if len(memberList) > 0:
             insertProjectMessageSQL = __insertProjectMessageSQLString(memberList,
-                                                    projectUUID, userUUID)
+                                                    projectUUID, userUUID, time)
             sqlList.append(insertProjectMessageSQL)
 
     # print sqlList
@@ -133,22 +135,22 @@ def __queryProjectMembers(projectUUID, userUUID):
         return memberList
     
 
-def __insertMediasSQLString(journalUUID, projectUUID, mediasDict):
-    insertMediasSQL = """INSERT INTO t_project_journal_media (journal_uuid, project_uuid, sorting, type, media_name) VALUES """
+def __insertMediasSQLString(journalUUID, projectUUID, mediasDict, time):
+    insertMediasSQL = """INSERT INTO t_project_journal_media (journal_uuid, project_uuid, sorting, type, media_name, time) VALUES """
     values = ""
     typeInt = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
     for key, value in mediasDict.items():
-        values += """('%s', '%s', %s, %d, '%s'),""" % (journalUUID, projectUUID, key, typeInt, value)
+        values += """('%s', '%s', %s, %d, '%s', '%s'),""" % (journalUUID, projectUUID, key, typeInt, value, time)
     insertMediasSQL += values[:-1] + ";"
     return insertMediasSQL
 
 
-def __insertProjectMessageSQLString(memberList, projectUUID, userUUID):
-    insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action) VALUES """
+def __insertProjectMessageSQLString(memberList, projectUUID, userUUID, time):
+    insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action, time) VALUES """
     values = ""
     typeString = Config.TYPE_FOR_MESSAGE_IN_PROJECT_UPDATE_JOURNAL
     for member in memberList:
-        values += """('%s', %d, '%s', '%s', 0, '%s', 0),""" % (member, typeString, projectUUID, userUUID, '提交了日志')
+        values += """('%s', %d, '%s', '%s', 0, '%s', 0, '%s'),""" % (member, typeString, projectUUID, userUUID, '提交了日志', time)
     insertProjectMessageSQL += values[:-1] + ";"
     return insertProjectMessageSQL
 

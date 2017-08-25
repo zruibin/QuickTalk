@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, generateCurrentTime
 from common.commonMethods import verifyUserIsExists
 import common.notification as notification
 from dispatch.tasks import dispatchNotificationUserForContent
@@ -45,11 +45,13 @@ def applyContact():
 def __applyExchangeContactOperation(userUUID, userName, beApplyUserUUID):
     result = False
     content = userName + "向你申请交换联系方式"
-
-    insertSQL = """INSERT INTO t_message_contact (user_uuid, type, content_uuid, owner_user_uuid, status, content, action) 
-    VALUES ('%s', %d, '%s', '%s', %d, '%s', %d); """ % (beApplyUserUUID, Config.NOTIFICATION_FOR_CONTACT, 
+    time = generateCurrentTime()
+    
+    insertSQL = """INSERT INTO t_message_contact (user_uuid, type, content_uuid, owner_user_uuid, status, content, action, time) 
+    VALUES ('%s', %d, '%s', '%s', %d, '%s', %d, '%s'); """ % (beApplyUserUUID, 
+    Config.NOTIFICATION_FOR_CONTACT, 
     userUUID, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD, 
-    content, Config.TYPE_FOR_MESSAGE_ACTION_OFF)
+    content, Config.TYPE_FOR_MESSAGE_ACTION_OFF, time)
 
     # 避免多次申请
     querySQL = """

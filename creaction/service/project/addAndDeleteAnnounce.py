@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, generateUUID
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
 @project.route('/add_and_delete_announce', methods=["GET", "POST"])
@@ -41,11 +41,11 @@ def __addAnnounce(projectUUID, content):
     if projectUUID==None or content==None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
     uuid = generateUUID()
-
+    time = generateCurrentTime()
     insertSQL = """
-        INSERT INTO t_project_announce (uuid, project_uuid, content)
-        VALUES ('%s', '%s', '%s');
-    """ % (uuid, projectUUID, content)
+        INSERT INTO t_project_announce (uuid, project_uuid, content, time)
+        VALUES ('%s', '%s', '%s', '%s');
+    """ % (uuid, projectUUID, content, time)
 
     dbManager = DB.DBManager.shareInstanced()
     try:

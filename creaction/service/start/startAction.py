@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile, generateCurrentTime
 from common.commonMethods import verifyUserIsExists
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
@@ -45,10 +45,13 @@ def startAction():
 
 
 def __startOrUnStartProject(userUUID, otherUUID, action):
+    time = generateCurrentTime()
     querySQL = """
         SELECT user_uuid FROM t_project_user WHERE project_uuid='%s' AND user_uuid='%s' AND type=%s; """ % (otherUUID, userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
     insertSQL = """
-    INSERT INTO t_project_user (project_uuid, type, user_uuid) VALUES ('%s', %s, '%s'); """ % (otherUUID, Config.TYPE_FOR_USER_CONTACT, userUUID)
+        INSERT INTO t_project_user (project_uuid, type, user_uuid, time) 
+        VALUES ('%s', %s, '%s', '%s'); """ % (otherUUID, Config.TYPE_FOR_USER_CONTACT, 
+        userUUID, time)
 
     deleteSQL = """
         DELETE FROM t_project_user WHERE project_uuid='%s' AND user_uuid='%s' AND type=%s; """ % (otherUUID, userUUID, Config.TYPE_FOR_PROJECT_FOLLOWER)
@@ -69,7 +72,7 @@ def __startOrUnStartProject(userUUID, otherUUID, action):
 
 
 def __startOrUnStartUser(userUUID, otherUUID, action, nickname): 
-
+    time = generateCurrentTime()
     dbManager = DB.DBManager.shareInstanced()
     try:
         if action == Config.TYPE_FOR_START_ACTION_STARTING:
@@ -80,9 +83,9 @@ def __startOrUnStartUser(userUUID, otherUUID, action, nickname):
             insertRelationSQL = """
                 INSERT INTO t_user_user (user_uuid, type, other_user_uuid) VALUES ('%s', %s, '%s'); """ % (userUUID, Config.TYPE_FOR_USER_FOLLOWING, otherUUID)
             # 插入关注消息
-            insertMessageSQL = """INSERT INTO t_message_start (user_uuid, type, content_uuid, owner_user_uuid, status, content) 
-            VALUES ('%s', %s, '%s', '%s', %d, '%s'); """ % (otherUUID, Config.TYPE_FOR_START_USER, 
-            userUUID, userUUID, Config.TYPE_FOR_MESSAGE_UNREAD,content)
+            insertMessageSQL = """INSERT INTO t_message_start (user_uuid, type, content_uuid, owner_user_uuid, status, content, time) 
+            VALUES ('%s', %s, '%s', '%s', %d, '%s', '%s'); """ % (otherUUID, Config.TYPE_FOR_START_USER, userUUID, userUUID, 
+            Config.TYPE_FOR_MESSAGE_UNREAD, content, time)
 
             rows = dbManager.executeSingleQuery(querySQL)
             if len(rows) > 0: raise Exception()

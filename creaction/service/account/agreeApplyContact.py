@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, generateCurrentTime
 from common.commonMethods import verifyUserIsExists
 
 
@@ -41,8 +41,10 @@ def agreeApplyContact():
 
 def __agreeApplyExchangeContactOperation(userUUID, applyUserUUID):
     result = False
-    insertSQL = """INSERT INTO t_user_user (user_uuid, type, other_user_uuid) 
-    VALUES ('{userUUID}', {typeInt}, '{applyUserUUID}'), ('{applyUserUUID}', {typeInt}, '{userUUID}'); """.format(userUUID=userUUID, typeInt=Config.TYPE_FOR_USER_CONTACT, applyUserUUID=applyUserUUID)
+    time = generateCurrentTime()
+    insertSQL = """INSERT INTO t_user_user (user_uuid, type, other_user_uuid, time) 
+    VALUES ('{userUUID}', {typeInt}, '{applyUserUUID}', '{time}'), ('{applyUserUUID}', {typeInt}, '{userUUID}', '{time}'); """.format(userUUID=userUUID, 
+        typeInt=Config.TYPE_FOR_USER_CONTACT, applyUserUUID=applyUserUUID, time=time)
 
     # 避免多次通过
     querySQL = """

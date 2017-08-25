@@ -16,7 +16,7 @@ CREATE TABLE `t_user`(
     `career` VARCHAR(50) NOT NULL COMMENT '职业',
     `contact_phone` VARCHAR(20) NOT NULL COMMENT '联系手机',
     `contact_email` VARCHAR(20) NOT NULL COMMENT '联系邮箱',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '注册时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -48,7 +48,7 @@ CREATE TABLE `t_user_user`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型(1、关注者与粉丝，2、已交换联系方式的人)',
     `other_user_uuid` VARCHAR(100) NOT NULL COMMENT '被关联的用户uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '关联时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '关联时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -75,8 +75,8 @@ CREATE TABLE `t_user_eduction`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `school` VARCHAR(100) NOT NULL COMMENT '学校',
-    `begin_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间戳',
-    `end_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间戳',
+    `begin_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '开始时间戳',
+    `end_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '结束时间戳',
     `major` VARCHAR(100) NOT NULL COMMENT '专业',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -92,8 +92,8 @@ CREATE TABLE `t_project`(
     `detail` TEXT NOT NULL COMMENT '详细介绍',
     `result` TEXT NOT NULL COMMENT '结果',
     `author_uuid` VARCHAR(100) NOT NULL COMMENT '创建者uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间戳',
-    `over_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束或放弃时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '创建时间戳',
+    `over_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '结束或放弃时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态',
     `have_plan` TINYINT UNSIGNED NOT NULL COMMENT '是否含有计划列表',
@@ -112,7 +112,7 @@ CREATE TABLE `t_project_user`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型(成员与关注者)',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -128,7 +128,7 @@ CREATE TABLE `t_project_media`(
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -141,8 +141,8 @@ CREATE TABLE `t_project_plan`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `content` TEXT NOT NULL COMMENT '内容',
-    `start_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间戳',
-    `finish_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间戳',
+    `start_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '开始时间戳',
+    `finish_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '结束时间戳',
     `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -157,7 +157,7 @@ CREATE TABLE `t_project_plan_media`(
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -171,7 +171,7 @@ CREATE TABLE `t_comment`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '评论时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
     `is_reply` INT(11) NOT NULL COMMENT '是否回复',
     `reply_comment_uuid` VARCHAR(100) DEFAULT NULL COMMENT '回复的评论的uuid',
@@ -191,7 +191,7 @@ CREATE TABLE `t_project_journal`(
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '记录时间戳',
     `like` INT(11) UNSIGNED NOT NULL COMMENT '点赞数量',
     `medias_count` TINYINT UNSIGNED NOT NULL COMMENT '多媒体数量',
     PRIMARY KEY(`id`)
@@ -210,7 +210,7 @@ CREATE TABLE `t_project_journal_media`(
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
     `media_name` VARCHAR(100) NOT NULL COMMENT '媒体名称',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -224,7 +224,7 @@ CREATE TABLE `t_project_announce`(
     `uuid` VARCHAR(100) NOT NULL COMMENT '公告uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
     `content` VARCHAR(200) NOT NULL COMMENT '公告内容',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '加入时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -238,7 +238,7 @@ CREATE TABLE `t_like`(
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -253,7 +253,7 @@ CREATE TABLE `t_message_like`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -271,7 +271,7 @@ CREATE TABLE `t_message_project`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -290,7 +290,7 @@ CREATE TABLE `t_message_comment`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -308,7 +308,7 @@ CREATE TABLE `t_message_start`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -326,7 +326,7 @@ CREATE TABLE `t_message_contact`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生消息的时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生消息的时间戳',
     `owner_user_uuid` VARCHAR(100) NOT NULL COMMENT '拥有内容的用户uuid',
     `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(是否已读)',
     `content` VARCHAR(200) DEFAULT NULL COMMENT '消息内容',
@@ -380,7 +380,7 @@ CREATE TABLE `t_backoffice_user`(
     `area` VARCHAR(40) NOT NULL COMMENT '地区',
     `avator` VARCHAR(200) NOT NULL COMMENT '头像',
     `career` VARCHAR(50) NOT NULL COMMENT '职业',
-    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '注册时间戳',
     `password` VARCHAR(100) NOT NULL COMMENT '用户密码加盐(md5)',
     `level` TINYINT UNSIGNED NOT NULL COMMENT '级别',
     PRIMARY KEY(`id`)

@@ -26,7 +26,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, generateCurrentTime
 import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
 
@@ -54,6 +54,7 @@ def likeAction():
 
 def __likeActionForProject(userUUID, action, likeUUID):
     dbManager = DB.DBManager.shareInstanced()
+    time = generateCurrentTime()
     try:
         querySQL = """SELECT author_uuid FROM t_project WHERE uuid='%s'; """ % likeUUID
         resultList = dbManager.executeSingleQuery(querySQL)
@@ -67,16 +68,16 @@ def __likeActionForProject(userUUID, action, likeUUID):
                 return RESPONSE_JSON(CODE_ERROR_ALREADY_LIKE) 
             updateProjectSQL = """UPDATE t_project SET `like`=`like`+1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """INSERT INTO t_message_like (user_uuid, type,
-                 content_uuid, owner_user_uuid, status, content) 
-                 VALUES ('%s', %s, '%s', '%s', 0, '%s');""" % (authorUUID, 
-                 Config.TYPE_FOR_LIKE_IN_PROJECT, likeUUID, userUUID, "赞了该项目")
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_PROJECT, userUUID, action)
+                 content_uuid, owner_user_uuid, status, content, time) 
+                 VALUES ('%s', %s, '%s', '%s', 0, '%s', '%s');""" % (authorUUID, 
+                 Config.TYPE_FOR_LIKE_IN_PROJECT, likeUUID, userUUID, "赞了该项目", time)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_PROJECT, userUUID, action, time)
         elif action == Config.TYPE_FOR_LIKE_ACTION_OFF:
             updateProjectSQL = """UPDATE t_project SET `like`=`like`-1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """DELETE FROM t_message_like WHERE user_uuid='%s' 
                 AND type=%s AND content_uuid='%s' AND owner_user_uuid='%s';
                 """% (authorUUID, Config.TYPE_FOR_LIKE_IN_PROJECT, likeUUID, userUUID)
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_PROJECT, userUUID, action)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_PROJECT, userUUID, action, time)
         else:
             return RESPONSE_JSON(CODE_ERROR_PARAM) 
 
@@ -94,6 +95,7 @@ def __likeActionForProject(userUUID, action, likeUUID):
 
 def __likeActionForComment(userUUID, action, likeUUID):
     dbManager = DB.DBManager.shareInstanced()
+    time = generateCurrentTime()
     try:
         querySQL = """SELECT user_uuid FROM t_comment WHERE uuid='%s';""" % likeUUID
         resultList = dbManager.executeSingleQuery(querySQL)
@@ -107,17 +109,17 @@ def __likeActionForComment(userUUID, action, likeUUID):
                 return RESPONSE_JSON(CODE_ERROR_ALREADY_LIKE) 
             updateProjectSQL = """UPDATE t_comment SET `like`=`like`+1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """INSERT INTO t_message_like (user_uuid, type,
-                 content_uuid, owner_user_uuid, status, content) 
-                 VALUES ('%s', %s, '%s', '%s', 0, '%s');""" % (notifyUserUUID, 
-                 Config.TYPE_FOR_LIKE_IN_COMMENT, likeUUID, userUUID, "赞了该评论")
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_COMMENT, userUUID, action)
+                 content_uuid, owner_user_uuid, status, content, time) 
+                 VALUES ('%s', %s, '%s', '%s', 0, '%s', '%s');""" % (notifyUserUUID, 
+                 Config.TYPE_FOR_LIKE_IN_COMMENT, likeUUID, userUUID, "赞了该评论", time)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_COMMENT, userUUID, action, time)
         elif action == Config.TYPE_FOR_LIKE_ACTION_OFF:
             updateProjectSQL = """UPDATE t_comment SET `like`=`like`-1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """DELETE FROM t_message_like WHERE user_uuid='%s' 
                 AND type=%s AND content_uuid='%s' AND owner_user_uuid='%s';
                 """% (notifyUserUUID, Config.TYPE_FOR_LIKE_IN_COMMENT, 
                 likeUUID, userUUID)
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_COMMENT, userUUID, action)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_COMMENT, userUUID, action, time)
         else:
             return RESPONSE_JSON(CODE_ERROR_PARAM) 
 
@@ -135,6 +137,7 @@ def __likeActionForComment(userUUID, action, likeUUID):
 
 def __likeActionForJournal(userUUID, action, likeUUID):
     dbManager = DB.DBManager.shareInstanced()
+    time = generateCurrentTime()
     try:
         querySQL = """SELECT user_uuid FROM t_project_journal WHERE uuid='%s';""" % likeUUID
         resultList = dbManager.executeSingleQuery(querySQL)
@@ -148,16 +151,16 @@ def __likeActionForJournal(userUUID, action, likeUUID):
                 return RESPONSE_JSON(CODE_ERROR_ALREADY_LIKE) 
             updateProjectSQL = """UPDATE t_project_journal SET `like`=`like`+1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """INSERT INTO t_message_like (user_uuid, type,
-                 content_uuid, owner_user_uuid, status, content) 
-                 VALUES ('%s', %s, '%s', '%s', 0, '%s');""" % (journalUserUUID, 
-                 Config.TYPE_FOR_LIKE_IN_JOURNAL, likeUUID, userUUID, "赞了该日志")
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_JOURNAL, userUUID, action)
+                 content_uuid, owner_user_uuid, status, content, time) 
+                 VALUES ('%s', %s, '%s', '%s', 0, '%s', '%s');""" % (journalUserUUID, 
+                 Config.TYPE_FOR_LIKE_IN_JOURNAL, likeUUID, userUUID, "赞了该日志", time)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_JOURNAL, userUUID, action, time)
         elif action == Config.TYPE_FOR_LIKE_ACTION_OFF:
             updateProjectSQL = """UPDATE t_project_journal SET `like`=`like`-1 WHERE uuid='%s'; """ % likeUUID
             projectMessageSQL = """DELETE FROM t_message_like WHERE user_uuid='%s' 
                 AND type=%s AND content_uuid='%s' AND owner_user_uuid='%s';
                 """% (journalUserUUID, Config.TYPE_FOR_LIKE_IN_JOURNAL, likeUUID, userUUID)
-            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_JOURNAL, userUUID, action)
+            likeSQL = __likeSQLMethod(likeUUID, Config.TYPE_FOR_LIKE_IN_JOURNAL, userUUID, action, time)
         else:
             return RESPONSE_JSON(CODE_ERROR_PARAM) 
 
@@ -173,11 +176,11 @@ def __likeActionForJournal(userUUID, action, likeUUID):
         return RESPONSE_JSON(CODE_SUCCESS) 
 
 
-def __likeSQLMethod(contentUUID, typeStr, userUUID, action):
+def __likeSQLMethod(contentUUID, typeStr, userUUID, action, time):
     if action == Config.TYPE_FOR_LIKE_ACTION_ON:
         insertLikeSQL = """
-            INSERT INTO t_like (content_uuid, type, user_uuid) VALUES ('%s', %s, '%s');
-        """ % (contentUUID, typeStr, userUUID)
+            INSERT INTO t_like (content_uuid, type, user_uuid, time) VALUES ('%s', %s, '%s');
+        """ % (contentUUID, typeStr, userUUID, time)
         return insertLikeSQL
     else:
         deleteLikeSQL = """
