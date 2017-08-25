@@ -34,7 +34,7 @@ else:
     pidfile = '%s/logs/%s.pid' % (path_of_current_dir, _file_name)
     logfile = '%s/logs/%s.pid' % (path_of_current_dir, _file_name)
     errorlog = '%s/logs/%s_error.log' % (path_of_current_dir, _file_name)
-    accesslog = '%s/logs/%s_access.log' % (path_of_current_dir, _file_name)
+    # accesslog = '%s/logs/%s_access.log' % (path_of_current_dir, _file_name)
     
 
 
