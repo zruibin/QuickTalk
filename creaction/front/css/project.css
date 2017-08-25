@@ -1,0 +1,350 @@
+/*
+ * project.css
+ *
+ * Created by ruibin.chow on 2017/08/23.
+ * Copyright (c) 2017年 ruibin.chow All rights reserved.
+ */
+
+ * { font-family: Georgia, Arial, Helvetica, "Helvetica Neue"; }
+ 
+ body{ 
+	 background-color: #efefef;
+	 display: block;
+	 margin: 0px;
+ } 
+ 
+ /* a { color: #585858;;} */
+ a:link{ text-decoration:none; }
+ a:visited{ text-decoration:none; }
+ a:hover{ text-decoration:none;}
+ a:active{ text-decoration:none;}
+ 
+ 
+ 
+ .container {
+	 margin-right: auto;
+	 margin-left: auto;
+	 min-width:44px;
+	 max-width:600px;
+	 font-size: 16px;
+ }
+
+.background {
+	border-bottom:1px solid #e4e4e4; background:white;
+}
+
+.avatar {
+	width: 45px;
+	height: 45px;
+	border:0;
+	-moz-border-radius: 22.5px;      
+	-webkit-border-radius: 22.5px;   
+	border-radius:22.5px; 
+}
+
+.nickname, .detailTag {
+	text-align: center;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+ /* tab部分 */
+ 
+#tab {
+	 height: 44px;
+ }
+ 
+ #projectTab {float:left; }
+ #journalTab {float:right;}
+ 
+ .tabContent {
+	 height: 44px;
+	 width: 50%;
+	 text-align:center;
+	 line-height:44px;
+	 font-size: 14px;
+	 min-width:25px;
+	 background: white;
+ }
+ 
+ #lineTab {
+	 width: 65px;
+	 height: 4px;
+	 background-color: #FF6633;
+	 position:relative;
+	 top: 41px;
+ }
+ 
+/* 容器 */
+
+ #project, #journal{position:relative;}
+
+.title {
+	/* background-color: red; */
+	padding-left: 10px;
+	padding-top: 10px;
+	font-size: 12px;
+	color: #666666;
+	display:inline-block; 
+	*display:inline; 
+	*zoom:1; 
+}
+
+img {background-color: #91A954;}
+
+#detailContent, .planContentLeft, #resultContent {
+	font-size: 14px;
+	color: #585858;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+hr {
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 0;
+    border-top: 1px solid #e4e4e4;
+}
+ 
+/* 成员列表 */
+
+ #memberList {
+	 margin-top: 5px;
+	 width:100%; 
+	 height:110px;
+	 overflow:hidden
+ }
+
+ #memberListTitle {
+	padding-left: 10px;
+	padding-top: 10px;
+	font-size: 12px;
+	color: #666666;
+ }
+
+ .member {
+	 margin-top: 5px;
+	 width: 45px;
+	 height: 65px;
+	float:left;
+	margin-left: 12px;
+	margin-bottom: -10px;
+ }
+
+
+
+ .nickname {
+	 padding-top: 5px;
+	 font-size: 12px;
+	 color: black;
+ }
+
+  /* 项目部分 */
+
+  /* 详细内容 */
+
+#detail {
+	margin-top: 5px;
+	width:100%; 
+	/* height:180px; */
+	overflow:hidden
+}
+
+
+
+.detailTag {
+	width: 58px;
+	height: 24px;
+	line-height: 24px;
+	background-color: #38a4d5;
+	float:left;
+	margin-left: 12px;
+	margin-bottom: 10px;
+	margin-top: 2px;
+	font-size: 12px;
+	color: white;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.arrow:after {
+	float: right;
+	margin-right: 15px;
+	margin-top: 10px;
+	content: " ";;
+	display: inline-block;
+	height: 6px;
+	width: 6px;
+	border-width: 2px 2px 0 0;
+	border-color: #AEAEAE;
+	border-style: solid;
+	-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+	transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+}
+
+/* 计划列表 */
+
+#plan {
+	margin-top: 5px;
+	width:100%; 
+	/* height:220px; */
+	overflow:hidden
+}
+
+#planTime {
+	float: right;
+	margin-right: 10px;
+	font-size: 12px;
+}
+
+.planContent{
+	width: 100%;
+	margin-bottom: 10px;
+	height:20px;
+	/* background-color:yellow; */
+}
+
+.planContentLeft{
+	float: left;
+	width: 65%;
+	/* background-color: rebeccapurple; */
+	/* overflow: hidden; */
+	text-align: left;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.planContentRight{
+	float: right;
+	width: 25%;
+	font-size: 12px;
+	text-align: right;
+	margin-right: 10px;
+	/* background-color: red */
+}
+
+/* 结果列表 */
+
+#result {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-bottom: 10px;
+	width:100%; 
+	/* height:240px; */
+	/* overflow:hidden */
+}
+
+#resultImageContent {
+	/* text-align: center; */
+	/* float: left; */
+	/* background-color: red; */
+	/* margin-bottom: 10px; */
+	margin-top: 5px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	-webkit-flex-flow: row wrap;
+	/* justify-content: space-around; */
+}
+
+.resultImage{
+	/* flex-grow: 1; */
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	/* padding: 5px 5px; */
+}
+
+
+/* 日志部分 */
+
+.journalContent {
+	margin-top: 5px;
+	/* overflow:hidden; */
+	padding-bottom: 10px;
+	border-bottom:1px solid #e4e4e4; background:white;
+}
+
+#journal:last-child { margin-bottom: 15px;}
+
+.journalHeader {
+	width: 100%;
+	height: 45px;
+	padding-top: 5px;
+	/* background-color: royalblue; */
+}
+
+.journalAvatar {
+	width: 45px;
+	height: 45px;
+	float: left;
+	margin-left: 10px;
+}
+
+.journalHeader div {
+	height: 20px;
+	/* background-color: brown; */
+}
+.journalHeader div:nth-child(2) {
+	margin-top: 5px;
+	/* background-color: brown; */
+}
+
+.username {
+	float: left;
+	max-width: 120px;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	font-size: 14px;
+	margin-left: 10px;
+	color: #5d97d5;
+}
+
+.tip {
+	float: left;
+	font-size: 14px;
+	margin-left: 1px;
+	color: #666666;
+}
+
+.journalTime {
+	color: #666666;
+	margin-left: 10px;
+	font-size: 12px;
+}
+
+.likeNum {
+	float: right;
+	margin-right: 10px;
+	color: #666666;
+	font-size: 14px;
+	margin-top: 2px;
+}
+
+.like {
+	background-color:white;
+	width: 14px;
+	height: 14px;
+	float: right;
+	margin-top: 2px;
+	margin-right: 2px;
+}
+
+.journalText{
+	padding: 10px 10px;
+	font-size: 14px;
+	color: #585858;
+	/* background-color: red; */
+}
+
+.journalImage{
+	text-align: center;
+	margin-left: 5px;
+	/* margin-top: 5px; */
+	/* margin-bottom: 5px; */
+}

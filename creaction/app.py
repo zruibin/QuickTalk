@@ -26,6 +26,8 @@ sys.setdefaultencoding('utf-8')
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
 app.config['ALLOWED_EXTENSIONS'] = Config.ALLOWED_EXTENSIONS
+app.config["JSONIFY_MIMETYPE"] = Config.JSONIFY_MIMETYPE
+# app.config['JSON_AS_ASCII'] = False
 app.config['DEBUG'] = Config.DEBUG
 
 

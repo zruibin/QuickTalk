@@ -11,7 +11,7 @@
 json 响应包装工具
 """
 
-from flask import current_app, request
+from flask import current_app, request, Response
 import json, uuid, time, hashlib, random
 from config import *
 
@@ -21,6 +21,9 @@ def jsonTool(obj):
     separators = (',', ':')
     jsonStr = json.dumps(obj, indent=indent, separators=separators)
     response = current_app.response_class((jsonStr, "\n"), mimetype=current_app.config["JSONIFY_MIMETYPE"])
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    response.headers['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, Accept"
+    print response
     return response
 
 

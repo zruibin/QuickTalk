@@ -87,6 +87,7 @@ def cacheToken(userUUID, token):
 
 def tokenErrorResponse():
     response = RESPONSE_JSON(CODE_ERROR_TOKEN_EXPIRED)
+    response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "GET,POST"
     response.headers["Access-Control-Allow-Headers"] = "Referer,Accept,Origin,User-Agent"
     response.headers["WWW-Authenticate"] = "Authentication Required"

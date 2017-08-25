@@ -42,6 +42,7 @@ class Config(object):
     UPLOAD_FOLDER = "medias/" # 多媒体存放的目录，必须加上/
     FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
+    JSONIFY_MIMETYPE = "application/json"
 
     MAIL_HOST = "smtp.exmail.qq.com"  #设置服务器
     MAIL_USER = "auto.mail"    #用户名
