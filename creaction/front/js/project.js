@@ -176,18 +176,22 @@ function journalHtmlTemplate(journalAvatar, userName, likeNum, time, text, image
 
 function journalHtml(data) {
     var content = '';
-    for (var i = 0; i < data.length; i++) {
-        var obj = data[i]
-        var avatar = obj.avatar;
-        var nickname = obj.nickname;
-        var time = obj.time;
-        var text = obj.content;
-        var like = obj.like;
-        var medias = obj.medias;
+    if (!data) {
+        content += '<div class="blankContent" style="width:100%; height:100px;">暂无内容</div>';
+    } else {
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i]
+            var avatar = obj.avatar;
+            var nickname = obj.nickname;
+            var time = obj.time;
+            var text = obj.content;
+            var like = obj.like;
+            var medias = obj.medias;
 
-        if (avatar.length == 0) avatar = avatar();
+            if (avatar.length == 0) avatar = avatar();
 
-        content +=  journalHtmlTemplate(avatar, nickname, like, time, text, medias);    
+            content +=  journalHtmlTemplate(avatar, nickname, like, time, text, medias);    
+        }
     }
     
     var journal = document.getElementById("journal");
@@ -222,7 +226,8 @@ function showProjectFromJsonObj(obj){
 }
 
 function showJournalFromJsonObj(obj) {
-    journalHtml(obj.data);
+    var data = obj.data;
+    journalHtml(data);
     arrangeJournalImage();
 }
 
@@ -241,7 +246,11 @@ function loadingProjectData(uuid) {
         method: 'get'
     }).then(function (projectData) {
         // console.log(resp);     
-        loadingJournalData(projectData, journalPath)
+        if (projectData.data) {
+            loadingJournalData(projectData, journalPath);
+        } else {
+            alert("请求不存在！");
+        }
     }).fail(function (err, msg) {
         // console.log(err);     
         alert("请求失败，请重新刷新！");
