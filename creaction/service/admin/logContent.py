@@ -30,17 +30,22 @@ def logContent():
 
     try: 
         if file == None:
+            dataList = []
             fileList = __getAllFileInDir(Config.LOG_DIR)
-            return RESPONSE_JSON(CODE_SUCCESS, fileList)
+            for filename in fileList:
+                filePath = path + filename
+                size = os.path.getsize(filePath)
+                sizeStr = sizeCover(size)
+                dataList.append({"size": sizeStr, "filename": filename})
+            return RESPONSE_JSON(CODE_SUCCESS, dataList)
         else:
-            fileContentList = __readFile(path + file)
+            filePath = path + file
+            fileContentList = __reversedReadFile(filePath)
 
-            if "\n" in fileContentList:
-                fileContentList.remove("\n")
-            
-            # 倒序
-            fileContentList = list(reversed(fileContentList)) 
-            return RESPONSE_JSON(CODE_SUCCESS, fileContentList)
+            size = os.path.getsize(filePath)
+            sizeStr = sizeCover(size)
+            data = {"size": sizeStr, "contentList": fileContentList }
+            return RESPONSE_JSON(CODE_SUCCESS, data)
     except Exception as e:
         print e
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -76,8 +81,36 @@ def __readFile(filePath):
             if not lines:
                 break
             for line in lines:
-                fileContentList.append(line)
+                line.strip()
+                if len(line) > 0:
+                    fileContentList.append(line)
+    # 倒序
+    # fileContentList = list(reversed(fileContentList)) 
     return fileContentList
+
+
+def __reversedReadFile(filePath):
+    filesize = os.path.getsize(filePath)
+    blocksize = 1024
+    datFile = open(filePath, 'r')
+    lastLine = ""
+    
+    lines =  datFile.readlines()
+    count = len(lines)
+    if count > 500:
+        num = 500
+    else:
+        num = count
+    i=1
+    lastre = []
+    for i in range(1, (num+1)):
+        if lines :
+            n = -i
+            lastLine = lines[n].strip()
+            datFile.close()
+            lastre.append(lastLine)
+    # print lastre
+    return lastre
 
 
 def __cleanFile(cleanFile):
@@ -89,6 +122,17 @@ def __cleanFile(cleanFile):
         print e
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
+
+def sizeCover(size):
+    if size < 1000:
+        return str(size) + "B"
+    elif 1000 < size < 1000*1000:
+        return str(size/1000) + "KB"
+    elif 1000*1000 < size < 1000*1000*1000:
+        return str(size/1000*1000) + "MB"
+    else:
+        return str(size/1000*1000*1000) + "GB"
+    
 
 
 if __name__ == '__main__':

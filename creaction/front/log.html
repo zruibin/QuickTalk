@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>日志</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+
+<script src="/js/reqwest.min.js"></script>
+
+<style>
+
+/* #table {width: 100%; max-width: 100%;} */
+#table,  #table td{border:1px solid #585858; line-height:22px;} 
+#table td {padding: 10px 10px; word-break: break-all;}
+</style>
+
+</head>
+
+
+
+<body>
+
+    <div id="container">
+    <table cellspacing="0" cellpadding="0" id="table">
+            <tbody><tr>
+                    <td>现在，MVC 已经成为主流的客户端编程框架，在 iOS 开发中，系统为我们实现好了公共的视图类：UIView，和控制器类：UIViewController。大多数时候，我们都需要继承这些类来实现我们的程序逻辑，因此，我们几乎逃避不开 MVC 这种设计模式。
+                            
+                            但是，几十年过去了，我们对于 MVC 这种设计模式真的用得好吗？其实不是的，MVC 这种分层方式虽然清楚，但是如果使用不当，很可能让大量代码都集中在 Controller 之中，让 MVC 模式变成了 Massive View Controller 模式。</td>
+                    <td>2</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                        <td>11111111111111</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                            <td>11111111111111</td>
+                            <td>2</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                                <td>11111111111111</td>
+                                <td>2</td>
+                                <td>3</td>
+                            </tr>
+    </tbody>
+            <tr><td></td>
+                    <td></td>
+                    <td></td>
+            </tr>
+            
+    </table>
+</div>
+</body>
+
+
+<script>
+
+
+var path = "/admin/log"
+
+lookLog();
+
+function lookLog() {
+    reqwest({
+        url: path, 
+        type: 'json', 
+        method: 'get'
+    }).then(function (response) {  
+        // console.log(response.data);     
+        showFileList(response.data);
+    }).fail(function (err, msg) {
+        // console.log(err);     
+        alert("请求失败，请重新刷新！");
+    });
+}
+
+function lookContent(fileName) {
+    var url = path + "?file=" + fileName
+    reqwest({
+        url: url, 
+        type: 'json', 
+        method: 'get'
+    }).then(function (response) {
+        showFileContent(response.data, fileName);
+    }).fail(function (err, msg) {
+        // console.log(err);     
+        alert("请求失败，请重新刷新！");
+    });
+}
+
+function cleanFile(fileName) {
+    console.info(fileName);
+    var url = path + "?clean=" + fileName
+    reqwest({
+        url: url, 
+        type: 'json', 
+        method: 'get'
+    }).then(function (response) {
+        lookContent(fileName);
+    }).fail(function (err, msg) {
+        // console.log(err);     
+        alert("请求失败，请重新刷新！");
+    });
+}
+
+
+
+function showFileList(dataList) {
+    var html = "<h2>文件列表</h2>";
+    if (dataList) { //有数据时
+        html += '<table cellspacing="0" cellpadding="0" id="table">';
+        
+        for (var i = 0; i < dataList.length; i++) {
+            var data = dataList[i];
+            html += '<tr>';
+            html += '<td>'+ data.filename +'</td>';
+            html += '<td>'+ data.size +'</td>';
+            html += '<td><button onclick=lookContent("'+ data.filename +'")>查看</button></td>';
+            html += '</tr>';
+        }
+        
+        html += '</table>';
+    } else {
+        html = '<h3>无内容！</h3>';
+    }
+    var container = document.getElementById("container");
+    container.innerHTML = html;
+}
+
+function showFileContent(data, fileName) {
+
+    var contentList = data.contentList;
+
+    var html = "<h2>" + fileName + "</h2>";
+    html += "<span>大小：" + data.size + "</span>";
+    html += '&nbsp;&nbsp;&nbsp;<button onclick=cleanFile("'+ fileName +'")>清空内容</button>'
+    html += '<br/><br/>';
+    html += '<button onclick=lookLog()>返回文件列表</button>'
+    html += '<br/><br/>';
+    if (contentList) { //有数据时
+        html += '<table cellspacing="0" cellpadding="0" id="table">';
+        
+        for (var i = 0; i < contentList.length; i++) {
+            var element = contentList[i];
+            html += '<tr>';
+            html += '<td>'+ element +'</td>';
+            html += '</tr>';
+        }
+        
+        html += '</table>';
+    } else {
+        html = '<h3>无内容！</h3>';
+    }
+    
+    var container = document.getElementById("container");
+    container.innerHTML = html;
+}
+
+
+</script>
+
+</html>
