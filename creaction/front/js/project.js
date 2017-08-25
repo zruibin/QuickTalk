@@ -45,7 +45,7 @@ function makeLineLocation(index) {
 
 function onClick() {
     console.log("onClick");
-    window.location.href="/index.html"; 
+    window.location.href="/"; 
 }
 
 function avatar() {

@@ -52,6 +52,7 @@ env/
 log.txt
 build/
 medias/
+logs/
 
 #svn文件夹忽略
 .svn/
