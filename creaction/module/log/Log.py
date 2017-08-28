@@ -12,9 +12,10 @@
 """
 
 from config import Config
-import logging, logging.handlers
+import logging, logging.handlers, logging.config
 import inspect, os
 from functools import wraps
+import cloghandler
 
 
 class Loger(object):  
@@ -37,30 +38,69 @@ class Loger(object):
     库会判断是否有超过这个10，若超过，则会从最先创建的开始删除
 
     Note: http://blog.csdn.net/t163ang/article/details/38495533
+
+    多进程下写日志到文件里
+    https://pypi.python.org/pypi/ConcurrentLogHandler/0.9.1
+    http://www.restran.net/2015/08/19/python-concurrent-logging/
+    http://blog.csdn.net/ubuntu64fan/article/details/51315969
     """
 
     # 定义日志输出格式
     fmtStr = "%(asctime)s [%(levelname)s] [%(threadName)s] %(message)s"
+    datefmt = "%Y-%m-%d %H:%M:%S"
 
     if Config.DEBUG:
         logging.basicConfig(level=logging.WARNING,  
-                    format=fmtStr, datefmt="%Y-%m-%d %H:%M:%S") 
+                    format=fmtStr, datefmt=datefmt) 
     else:
         # 初始化
-        logging.basicConfig()
+        # logging.basicConfig()
 
-        # 创建TimedRotatingFileHandler处理对象
-        # 间隔5(S)创建新的名称为log%Y%m%d_%H%M%S.txt的文件，并一直占用log文件。
-        fileshandle = logging.handlers.TimedRotatingFileHandler(Config.LOG_DIR+"log", 
-                                                when="D", interval=1, backupCount=7)
-        # 设置日志文件后缀，以当前时间作为日志文件后缀名。
-        fileshandle.suffix = "%Y%m%d_%H%M%S.txt"
-        # 设置日志输出级别和格式
-        fileshandle.setLevel(logging.WARNING)
-        formatter = logging.Formatter(fmtStr)
-        fileshandle.setFormatter(formatter)
-        # 添加到日志处理对象集合
-        logging.getLogger('').addHandler(fileshandle)
+        # # 创建TimedRotatingFileHandler处理对象
+        # # 间隔5(S)创建新的名称为log%Y%m%d_%H%M%S.txt的文件，并一直占用log文件。
+        # fileshandle = logging.handlers.TimedRotatingFileHandler(Config.LOG_DIR+"log", 
+        #                                         when="D", interval=1, backupCount=7)
+        # # 设置日志文件后缀，以当前时间作为日志文件后缀名。
+        # fileshandle.suffix = "%Y%m%d_%H%M%S.txt"
+        # # 设置日志输出级别和格式
+        # fileshandle.setLevel(logging.WARNING)
+        # formatter = logging.Formatter(fmtStr)
+        # fileshandle.setFormatter(formatter)
+        # # 添加到日志处理对象集合
+        # logging.getLogger('').addHandler(fileshandle)
+
+        logging.config.dictConfig({
+            'version': 1,
+            'disable_existing_loggers': True,
+            'formatters': {
+                'verbose': {
+                    'format': fmtStr,
+                    'datefmt': datefmt
+                }
+            },
+            'handlers': {
+                'file': {
+                    'level': 'INFO',
+                    # 如果没有使用并发的日志处理类，在多实例的情况下日志会出现缺失
+                    'class': 'cloghandler.ConcurrentRotatingFileHandler',
+                    # 当达到5MB时分割日志
+                    'maxBytes':  1024 * 1024 * 5,
+                    # 最多保留50份文件
+                    'backupCount': 50,
+                    # If delay is true,
+                    # then file opening is deferred until the first call to emit().
+                    'delay': True,
+                    'filename': Config.LOG_DIR+"log",
+                    'formatter': 'verbose'
+                }
+            },
+            'loggers': {
+                '': {
+                    'handlers': ['file'],
+                    'level': 'INFO',
+                },
+            }
+        })
 
 
     def __init__(self):

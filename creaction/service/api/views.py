@@ -26,6 +26,7 @@ def index():
             CacheManager.shareInstanced().setCache("name", "Ruibin.Chow")
             print CacheManager.shareInstanced().getCache("name")
         except Exception, e:
+            Loger.info("info test Log!", __file__)
             Loger.error(e, __file__)
 
         # Log.test()
