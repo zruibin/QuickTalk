@@ -6,40 +6,318 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="shortcut icon" href="/images/logo.png" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta name="keywords" content="creaction, 可行, creactism" />
+<meta name="description" content="CreAction可行 一个创造和行动的平台" />
+<meta name="COPYRIGHT" content="版权所有2017,http://www.creactism.com">
+
 
 <title>Creation</title>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/responsive.css">
+
+<!-- <link rel="stylesheet" href="css/main.css"> -->
+<style>
+
+* { font-family:  Arial, Georgia, Helvetica, "Helvetica Neue"; }
+
+html { height:100%; margin:0; }
+body { height:100%; margin:0; }
+
+a { color: #666666;}
+a:link{text-decoration:none;}
+a:visited{text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:active{text-decoration:none;}
+
+
+#mask {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position:absolute;
+  bottom:0; 
+  overflow:hidden;
+  filter:alpha(opacity=70);  
+  -moz-opacity:0.7;  
+  -khtml-opacity: 0.7;  
+  opacity: 0.7;
+  display:none;
+  text-align: center;
+}
+
+#mask img{
+  width: 200px;
+  height: 200px;
+  margin-top: 200px;
+  background-color: red;
+}
+
+
+#copyright {
+  color: #5D5D5D;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #1A1A1A;
+  display:none;
+  position:absolute;
+  bottom:0; 
+  overflow:hidden;
+
+}
+
+
+#pc {
+  margin-right: auto;
+  margin-left: auto;
+  width: 90%;
+  height: 600px;
+  max-height: 600px;
+  /* background-color: red; */
+  display:none;
+}
+
+#main {
+  float: left;
+  margin-top: 40px;
+  width: 60%;
+  height: 400px;
+  /* background-color: yellow; */
+}
+
+#download {
+  float: left;
+  margin-top: 40px;
+  width: 60%;
+  height: 100px;
+  /* background-color: green; */
+  text-align: center;
+  position:absolute;
+  bottom:20%; 
+  overflow:hidden;
+  display:none;
+}
+
+#download img {
+  height: 80px;
+  width: 30%;
+  max-width: 212px;
+}
+
+#side {
+  /* float: right; */
+  /* margin-top: 40px; */
+  top: 20px;
+  left: 60%;
+  position: relative;
+  width: 40%;
+  height: 550px;
+  /* background-color: blue; */
+}
+
+#phone {
+  display:none;
+  width: 100%;
+  height: 100%;
+  /* background-color: rebeccapurple; */
+  text-align: center;
+}
+
+#header {
+  width: 100%;
+  height: 85%;
+  /* background-color: red; */
+}
+
+#header  img {
+  width: 85%;
+  height: 100%;
+  /* background-color: yellow; */
+}
+
+#footer {
+  width: 100%;
+  height: 15%;
+  /* background-color: blue; */
+  text-align: center;
+}
+
+#footer img {
+  margin-top: 5px;
+  width: 205px;
+  height: 44px;
+}
+
+
+
+</style>
+
 </head>
 
-<body>
-<!-- header section -->
-<section class="banner" role="banner">
-  <!-- banner text section-->
-  <div id="banner" class="container">
-    <div class="col-md-5 col-sm-12"> <img class="banner-img img-responsive" src="images/app-screen.png"> </div>
-    <div class="col-md-7 col-sm-12">
-      <div class="banner-text">
-        <h1>Beautiful and Elegant App Landing Page for <span>Startup</span> business</h1>
-        <p>Amazing, clean and modern landing page template for showcase your mobile application to the world. Best Start Up For Your New App. </p>
-        <div class="banner-btn">
-            <a href="#"><img src="images/apple-store-btn.png" width="200px" height="60px"></a> 
-            <a href="#"><img src="images/android-btn.png" width="200px" height="60px"></a> </div>
-      </div>
-    </div>
-  </div>
-</section>
+<body id="body">
 
-<footer class="section footer">
-    <div class="container">
-      <div class="col-md-12">
-        <p>© Copyright © 2017 Creation Inc. All Rights Reserved. </p>
-      </div>
-    </div>
-</footer>
+
+<div id="pc">
+  <div id="main">
+    <img src="" alt="">
+  </div>
+  
+  
+  
+  <div id="side"></div>
+</div>
+
+<div id="download">
+  <a href="#"><img src="/images/ios_btn.png"  onclick="maskAction(1);"></a> 
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="#"><img src="/images/android_btn.png" onclick="maskAction(2);"></a> 
+</div>
+
+<div id="copyright" >
+  <!-- <p class="alignright"> -->
+      &copy; 2017
+      <a href="http://www.creactism.com">可行 www.creactism.com</a> | 
+      <a href="#">粤ICP备17104783号</a> | 思集科技（深圳）有限公司
+  &nbsp;   
+  <!-- </p>   -->
+</div>
+
+<div id="mask" onclick="maskAction()">
+  <img id="qrcode" src="" alt="">
+</div>
+
+
+
+<div id="phone">
+  <div id="header">
+    <img src="/images/phone.png" alt="">
+  </div>
+  <div id="footer">
+    <img src="/images/phone_btn.png" onclick="clickAction();">
+  </div>
+</div>
+
+
 
 </body>
+
+
+
+<script type="text/javascript">
+  function isMobile() {
+       var sUserAgent = navigator.userAgent.toLowerCase(),
+       bIsIpad = sUserAgent.match(/ipad/i) == "ipad",
+       bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os",
+       bIsMidp = sUserAgent.match(/midp/i) == "midp",
+       bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4",
+       bIsUc = sUserAgent.match(/ucweb/i) == "ucweb",
+       bIsAndroid = sUserAgent.match(/android/i) == "android",
+       bIsCE = sUserAgent.match(/windows ce/i) == "windows ce",
+       bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile",
+       bIsWebview = sUserAgent.match(/webview/i) == "webview";
+       return (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM);
+  }
+  
+  function show() {
+    var pc = document.getElementById("pc");
+    var phone = document.getElementById("phone");
+    var copyright = document.getElementById("copyright");
+    var body = document.getElementById("body");
+    download
+    var download = document.getElementById("download");
+
+    if (isMobile()) {
+      pc.style.cssText = "display:none;"
+      copyright.style.cssText = "display:none;"
+      download.style.cssText = "display:none;"
+      phone.style.cssText = "display:block;";
+      body.style.cssText = "background:url(images/bg.png) repeat;";
+    } else {
+      pc.style.cssText = "display:block;"
+      copyright.style.cssText = "display:block;"
+      download.style.cssText = "display:block;"
+      phone.style.cssText = "display:none;";
+      body.style.cssText = "background:url(images/bg.png); background-size:100% 100%; ";
+    }
+  
+  }
+
+  show();
+
+  
+var maskHidden = false;
+
+function maskAction(platform) {
+  var mask = document.getElementById("mask");
+  var qrcode = document.getElementById("qrcode");
+  
+  if (!maskHidden) {
+    mask.style.cssText = "display:block;";
+  } else {
+    mask.style.cssText = "display:none;";
+  }
+  maskHidden = !maskHidden;
+
+  qrcode.src = "";
+  if (platform == 1) {
+    qrcode.src = "/images/logo.png";
+  }
+}
+  
+  //js判断是否是苹果设备
+  function checkIsAppleDevice() {
+      var u = navigator.userAgent;
+      var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+      var iPad = u.indexOf("iPad") > -1;
+      var iPhone = u.indexOf("iPhone") > -1 || u.indexOf("Mac") > -1;
+      if (ios || iPad || iPhone) {
+          return true;
+      } else {
+          return false;
+      }
+  }
+  
+  //js判断是否为Android设备
+  function checkIsAndroidDevice(){
+    var u = navigator.userAgent;
+    if ( u.indexOf("Android") > -1 || u,indexOf("Adr") > -1 ){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  
+  function clickAction(platform) {
+    if (isMobile()) {
+      alert("敬请期待！");
+      if (checkIsAppleDevice()) {
+        // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
+      }
+      if (checkIsAndroidDevice()) {
+        // alert("敬请期待！");
+      }
+    } else {
+      if (platform == 1) {
+        alert("iOS版敬请期待！");
+      } else {
+        alert("Android版敬请期待！");
+      }
+    }
+  }
+  
+  
+  
+  
+  
+  
+  </script>
+
 </html>
