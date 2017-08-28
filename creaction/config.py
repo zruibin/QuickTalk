@@ -41,6 +41,7 @@ class Config(object):
     MAX_CONTENT_LENGTH_VERIFY = MAX_CONTENT_LENGTH / 2 # 上传文件的真实要求大小
     UPLOAD_FOLDER = "medias/" # 多媒体存放的目录，必须加上/
     FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
+    FULL_UPLOAD_FOLDER_TEMP = FULL_UPLOAD_FOLDER + "tmp/"
     ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
     JSONIFY_MIMETYPE = "application/json"
 

@@ -19,6 +19,7 @@ from config import Config
 from module.log.Log import Loger
 from common.tools import jsonTool, generateFileName
 from common.code import *
+import shutil
 
 
 class FileTypeException(Exception):  
@@ -50,8 +51,9 @@ def removeAllUploadFile(fieType, uuid):
 def uploadPicture(fieType, uuid):
     """上传图片(单张或多张)，方式利用表单form的file方式"""
     saveNameDict = {}
+    tempPath = Config.FULL_UPLOAD_FOLDER_TEMP + fieType + "/" + uuid + "/"
+    path = Config.FULL_UPLOAD_FOLDER + fieType + "/" + uuid + "/"
     try:
-        path = Config.FULL_UPLOAD_FOLDER + fieType + "/" + uuid + "/"
         # 取得表单所有file字段
         fileList = request.files.lists()
         for uploadFile in fileList:
@@ -65,9 +67,8 @@ def uploadPicture(fieType, uuid):
                 if size > Config.MAX_CONTENT_LENGTH_VERIFY:
                     raise RequestEntityTooLarge()
                 
-                # 该文件保存的目录不存在则创建该目录，并更改权限
-                if not os.path.exists(path): os.makedirs(path)
-                # os.chmod(path, stat.S_IRWXU)
+                # 该文件保存的临时目录不存在则创建该目录
+                if not os.path.exists(tempPath): os.makedirs(tempPath)
 
                 filename = secure_filename(file.filename)
                 suffix = filename.rsplit('.', 1)[1]
@@ -75,7 +76,7 @@ def uploadPicture(fieType, uuid):
                 #文件名生产规则
                 filename = str(generateFileName()) + "." + suffix
 
-                fullPath = os.path.join(path, filename)
+                fullPath = os.path.join(tempPath, filename)
                 # 保存文件
                 with open(fullPath, 'a' ) as fileHandle:
                     fileHandle.write(blob)
@@ -95,6 +96,14 @@ def uploadPicture(fieType, uuid):
         removeAllUploadFile(fieType, uuid)
         raise e
     else:
+        # 真实目录不存在则创建
+        if not os.path.exists(path): os.makedirs(path)
+        # 从临时目录移动到真实目录
+        for filename in saveNameDict.values():
+            fullPath = os.path.join(path, filename)
+            tempFullPath = os.path.join(tempPath, filename)
+            shutil.move(tempFullPath, fullPath)      
+
         return saveNameDict
 
 

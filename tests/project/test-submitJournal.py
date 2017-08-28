@@ -21,7 +21,7 @@ def submitJournal():
 
 
     r = requests.post(url="http://127.0.0.1:5000/service/project/submit_journal", 
-                data=data)#, files=files) 
+                data=data, files=files) 
     print r.cookies
     print(r.text)
 

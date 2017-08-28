@@ -19,8 +19,8 @@ def createProject():
 
     data = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
         "nickname": "Ruibin.Chow",
-        "title":"项目标题",
-        "detail":"项目简介",
+        "title":"python文件复制移动shutil模块",
+        "detail":"shutil.copyfile( src, dst) 从源src复制到dst中去。当然前提是目标地址是具备可写权限。抛出的异常信息为",
         "result":"预期结果",
         "resultMedias":["预期结果多媒体1(多媒体异步提交，名称使用数字标识1.png)", "预期结果多媒体2", "预期结果多媒体3"],
         "tagList":["标签1", "标签2", "标签3"],
