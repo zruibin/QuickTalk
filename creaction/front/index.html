@@ -1,9 +1,5 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
-
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 
@@ -18,19 +14,122 @@
 
 <title>Creation</title>
 
-<!-- <link rel="stylesheet" href="css/main.css"> -->
+
 <style>
 
-* { font-family:  Arial, Georgia, Helvetica, "Helvetica Neue"; }
+*{
+  font-family:  Arial, Georgia, Helvetica, "Helvetica Neue";
+  box-sizing: border-box;
+  padding: 0;
+}
 
-html { height:100%; margin:0; }
-body { height:100%; margin:0; }
+body { 
+  margin:0; 
+  height: 100%;
+  background-color: #1A1A1A;
+}
 
 a { color: #666666;}
 a:link{text-decoration:none;}
 a:visited{text-decoration:none;}
 a:hover{text-decoration:underline;}
 a:active{text-decoration:none;}
+
+.wrap{
+  overflow:hidden;
+  background-color: #efefef;
+  background:url(images/bg.png); background-size:100% 100%;
+  display:none;
+}
+.left,.right{
+  float: left;
+  width: 50%;
+  padding: 2px;
+}
+.left{
+  padding-left: 5px;
+  /* background-color: rebeccapurple; */
+}
+.right{
+  padding-right: 5px;
+  /* background-color: yellowgreen; */
+}
+.inner{
+  padding-top: 100%;
+  position:relative;  
+}
+.left-top img, .right img {
+  width: 100%;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.right img {
+  padding: 30px 30px;
+}
+
+.left-top{
+  height:70%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* background-color: gray; */
+}
+.left-bottom{
+  height:30%;
+  position: absolute;
+  top: 70%;
+  width: 100%;
+  padding-top: 1px;
+}
+.bottom-inner{
+  height:100%;
+  position:relative;
+}
+
+.left-bottom-inner {
+  float: left;
+  /* position: absolute; */
+  width: 50%;
+  height: 100%;
+  /* background-color: red; */
+  padding: 10px;
+}
+
+.left-bottom-inner img {
+   width: 100%;
+   height: 100%;
+   /* padding: 20px; */
+   padding: 15% 10%;
+}
+
+.left-bottom-inner-left{
+  padding-left: 5px;
+  /* background-color: yellow; */
+}
+
+.left-bottom-inner-right{
+  padding-right: 5px;
+  /* background-color: purple; */
+}
+
+
+#copyright {
+  color: #5D5D5D;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #1A1A1A;
+  bottom:0; 
+  overflow:hidden;
+
+}
 
 
 #mask {
@@ -56,154 +155,94 @@ a:active{text-decoration:none;}
 }
 
 
-#copyright {
-  color: #5D5D5D;
-  width: 100%;
-  height: 100px;
-  line-height: 100px;
-  text-align: center;
-  font-size: 14px;
-  background-color: #1A1A1A;
-  display:none;
-  position:absolute;
-  bottom:0; 
-  overflow:hidden;
-
-}
-
-
-#pc {
-  margin-right: auto;
-  margin-left: auto;
-  width: 90%;
-  height: 600px;
-  max-height: 600px;
-  /* background-color: red; */
-  display:none;
-}
-
-#main {
-  float: left;
-  margin-top: 40px;
-  width: 60%;
-  height: 400px;
-  /* background-color: yellow; */
-}
-
-#download {
-  float: left;
-  margin-top: 40px;
-  width: 60%;
-  height: 100px;
-  /* background-color: green; */
-  text-align: center;
-  position:absolute;
-  bottom:20%; 
-  overflow:hidden;
-  display:none;
-}
-
-#download img {
-  height: 80px;
-  width: 30%;
-  max-width: 212px;
-}
-
-#side {
-  /* float: right; */
-  /* margin-top: 40px; */
-  top: 20px;
-  left: 60%;
-  position: relative;
-  width: 40%;
-  height: 550px;
-  /* background-color: blue; */
-}
 
 #phone {
   display:none;
   width: 100%;
   height: 100%;
-  /* background-color: rebeccapurple; */
+  padding-top: 5px;
+  padding-bottom: 10px;
   text-align: center;
 }
 
-#header {
+.phone-header {
   width: 100%;
   height: 85%;
   /* background-color: red; */
 }
 
-#header  img {
+.phone-header  img {
   width: 85%;
   height: 100%;
   /* background-color: yellow; */
 }
 
-#footer {
+.phone-footer {
   width: 100%;
   height: 15%;
   /* background-color: blue; */
   text-align: center;
 }
 
-#footer img {
+.phone-footer img {
   margin-top: 5px;
   width: 205px;
   height: 44px;
 }
 
-
-
 </style>
 
 </head>
-
 <body id="body">
 
+<div class="wrap" id="pc">
 
-<div id="pc">
-  <div id="main">
-    <img src="" alt="">
+    <div class="left">
+        <div class="inner">
+          <div class="left-top"><img src="/images/logo.png" alt=""></div>
+          <div class="left-bottom">
+            <div class="bottom-inner">
+                <div class="left-bottom-inner left-bottom-inner-left">
+                    <img src="/images/ios_btn.png"  onclick="pcMaskAction(1);">
+                </div>
+                <div class="left-bottom-inner left-bottom-inner-right">
+                    <img src="/images/android_btn.png" onclick="pcMaskAction(2);"> 
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <div class="right">
+    <div class="inner">
+      <img src="/images/pc_side.png" alt="">
+    </div>  
   </div>
   
-  
-  
-  <div id="side"></div>
-</div>
-
-<div id="download">
-  <a href="#"><img src="/images/ios_btn.png"  onclick="maskAction(1);"></a> 
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="#"><img src="/images/android_btn.png" onclick="maskAction(2);"></a> 
 </div>
 
 <div id="copyright" >
-  <!-- <p class="alignright"> -->
-      &copy; 2017
-      <a href="http://www.creactism.com">可行 www.creactism.com</a> | 
-      <a href="#">粤ICP备17104783号</a> | 思集科技（深圳）有限公司
-  &nbsp;   
-  <!-- </p>   -->
+  &copy; 2017
+  <a href="http://www.creactism.com">可行 www.creactism.com</a> | 
+  <a href="#">粤ICP备17104783号</a> | 思集科技（深圳）有限公司
+&nbsp;   
 </div>
 
-<div id="mask" onclick="maskAction()">
-  <img id="qrcode" src="" alt="">
+<div id="mask" onclick="pcMaskAction(3)">
+    <img id="qrcode" src="" alt="">
 </div>
 
 
 
 <div id="phone">
-  <div id="header">
-    <img src="/images/phone.png" alt="">
+    <div class="phone-header">
+      <img src="/images/phone.png" alt="">
+    </div>
+    <div class="phone-footer">
+      <img src="/images/phone_btn.png" onclick="phoneClickAction();">
+    </div>
   </div>
-  <div id="footer">
-    <img src="/images/phone_btn.png" onclick="clickAction();">
-  </div>
-</div>
-
 
 
 </body>
@@ -211,113 +250,106 @@ a:active{text-decoration:none;}
 
 
 <script type="text/javascript">
-  function isMobile() {
-       var sUserAgent = navigator.userAgent.toLowerCase(),
-       bIsIpad = sUserAgent.match(/ipad/i) == "ipad",
-       bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os",
-       bIsMidp = sUserAgent.match(/midp/i) == "midp",
-       bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4",
-       bIsUc = sUserAgent.match(/ucweb/i) == "ucweb",
-       bIsAndroid = sUserAgent.match(/android/i) == "android",
-       bIsCE = sUserAgent.match(/windows ce/i) == "windows ce",
-       bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile",
-       bIsWebview = sUserAgent.match(/webview/i) == "webview";
-       return (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM);
-  }
   
-  function show() {
+function isMobile() {
+      var sUserAgent = navigator.userAgent.toLowerCase(),
+      bIsIpad = sUserAgent.match(/ipad/i) == "ipad",
+      bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os",
+      bIsMidp = sUserAgent.match(/midp/i) == "midp",
+      bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4",
+      bIsUc = sUserAgent.match(/ucweb/i) == "ucweb",
+      bIsAndroid = sUserAgent.match(/android/i) == "android",
+      bIsCE = sUserAgent.match(/windows ce/i) == "windows ce",
+      bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile",
+      bIsWebview = sUserAgent.match(/webview/i) == "webview";
+      return (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM);
+}
+
+function show() {
     var pc = document.getElementById("pc");
     var phone = document.getElementById("phone");
     var copyright = document.getElementById("copyright");
     var body = document.getElementById("body");
-    download
-    var download = document.getElementById("download");
 
     if (isMobile()) {
-      pc.style.cssText = "display:none;"
-      copyright.style.cssText = "display:none;"
-      download.style.cssText = "display:none;"
-      phone.style.cssText = "display:block;";
-      body.style.cssText = "background:url(images/bg.png) repeat;";
+        pc.style.cssText = "display:none;"
+        copyright.style.cssText = "display:none;"
+        phone.style.cssText = "display:block; ";
+        body.style.cssText = "background:url(images/bg.png) repeat; ";
     } else {
-      pc.style.cssText = "display:block;"
-      copyright.style.cssText = "display:block;"
-      download.style.cssText = "display:block;"
-      phone.style.cssText = "display:none;";
-      body.style.cssText = "background:url(images/bg.png); background-size:100% 100%; ";
+        pc.style.cssText = "display:block;"
+        copyright.style.cssText = "display:block;"
+        phone.style.cssText = "display:none;";
     }
-  
-  }
 
-  show();
+}
+
+show();
 
   
 var maskHidden = false;
 
-function maskAction(platform) {
-  var mask = document.getElementById("mask");
-  var qrcode = document.getElementById("qrcode");
-  
-  if (!maskHidden) {
-    mask.style.cssText = "display:block;";
-  } else {
-    mask.style.cssText = "display:none;";
-  }
-  maskHidden = !maskHidden;
+function pcMaskAction(platform) {
+    alert("敬请期待！"); return;
 
-  qrcode.src = "";
-  if (platform == 1) {
-    qrcode.src = "/images/logo.png";
-  }
+    if (platform == 2) { alert("Android版敬请期待！"); return;}
+
+    var mask = document.getElementById("mask");
+    var qrcode = document.getElementById("qrcode");
+    
+    if (!maskHidden) {
+        mask.style.cssText = "display:block;";
+    } else {
+        mask.style.cssText = "display:none;";
+    }
+    maskHidden = !maskHidden;
+
+    qrcode.src = "";
+    if (platform == 1) {
+        qrcode.src = "/images/logo.png";
+    }
 }
   
-  //js判断是否是苹果设备
-  function checkIsAppleDevice() {
-      var u = navigator.userAgent;
-      var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-      var iPad = u.indexOf("iPad") > -1;
-      var iPhone = u.indexOf("iPhone") > -1 || u.indexOf("Mac") > -1;
-      if (ios || iPad || iPhone) {
-          return true;
-      } else {
-          return false;
-      }
-  }
-  
-  //js判断是否为Android设备
-  function checkIsAndroidDevice(){
+function checkIsAppleDevice() {
     var u = navigator.userAgent;
-    if ( u.indexOf("Android") > -1 || u,indexOf("Adr") > -1 ){
-      return true;
+    var ios = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    var iPad = u.indexOf("iPad") > -1;
+    var iPhone = u.indexOf("iPhone") > -1 || u.indexOf("Mac") > -1;
+    if (ios || iPad || iPhone) {
+        return true;
     } else {
-      return false;
+        return false;
     }
-  }
-  
-  
-  function clickAction(platform) {
+}
+
+function checkIsAndroidDevice(){
+    var u = navigator.userAgent;
+    if ( u.indexOf("Android") > -1 || u.indexOf("Adr") > -1 ){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function phoneClickAction(platform) {
     if (isMobile()) {
-      alert("敬请期待！");
-      if (checkIsAppleDevice()) {
-        // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
-      }
-      if (checkIsAndroidDevice()) {
-        // alert("敬请期待！");
-      }
-    } else {
-      if (platform == 1) {
-        alert("iOS版敬请期待！");
-      } else {
-        alert("Android版敬请期待！");
-      }
-    }
-  }
+        alert("敬请期待！");
+        if (checkIsAppleDevice()) {
+          // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
+        }
+        if (checkIsAndroidDevice()) {
+            console.log("android!");
+            // alert("敬请期待！");
+        }
+    } 
+}
+
   
-  
-  
-  
-  
-  
+    
+    
+    
+    
   </script>
 
 </html>

@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, md5hex, generateUUID, generateCurrentTime, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, md5hex, generateUUID, generateCurrentTime, fullPathForMediasFile, makeCookie
 from module.cache.RuntimeCache import CacheManager
 from common.auth import generateToken, cacheToken
 from service.account.register import createNewUserOperation
@@ -107,7 +107,6 @@ def __cacheUserDataWithToken(resultData):
         token = generateToken(userUUID)
         if token == None or cacheToken(userUUID, token) == False: 
                 return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
-
         avatar = resultData["avatar"]
         if len(avatar) > 0:
             avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
@@ -130,7 +129,7 @@ def __cacheUserDataWithToken(resultData):
             "contactWechat" : resultData["wechat"]
         }
         response = RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
-        response.set_cookie('token', token)
+        response = makeCookie(response, "token", token)
         return response
     except Exception as e:
         Loger.error(e, __file__)

@@ -12,7 +12,7 @@ json 响应包装工具
 """
 
 from flask import current_app, request, Response
-import json, uuid, time, hashlib, random
+import json, uuid, time, hashlib, random, datetime
 from config import *
 
 
@@ -131,6 +131,11 @@ def parsePageIndex(index):
     index = int(index)
     return index
 
+
+def makeCookie(response, key, value):
+    outdate = datetime.datetime.today() + datetime.timedelta(seconds=Config.TOKEN_EXPIRE) 
+    response.set_cookie(key, value, expires=outdate)
+    return response
 
 
 if __name__ == '__main__':

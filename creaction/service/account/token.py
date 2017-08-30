@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import generateToken, cacheToken
-from common.tools import md5hex, getValueFromRequestByKey
+from common.tools import md5hex, getValueFromRequestByKey, makeCookie
 from common.commonMethods import verifyUserIsExists, verifyUserPassword
 
 
@@ -44,7 +44,7 @@ def token():
             return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
 
     response = RESPONSE_JSON(CODE_SUCCESS, data={"token": token})
-    response.set_cookie('token', token)
+    response = makeCookie(response, "token", token)
     return response
 
 

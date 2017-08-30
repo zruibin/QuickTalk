@@ -16,7 +16,7 @@ from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 from config import *
-from common.tools import generateUUID, generateCurrentTime, md5hex, fullPathForMediasFile
+from common.tools import generateUUID, generateCurrentTime, md5hex, fullPathForMediasFile, makeCookie
 from common.code import *
 from common.auth import generateToken, cacheToken
 from common.commonMethods import verifyEmailIsExists, verifyPhoneIsExists
@@ -78,7 +78,7 @@ def createNewUserOperation(password="", time="", phone="", email="", authType=""
                 dataDict = generateResponseData(userUUID, token)
 
                 response = RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
-                response.set_cookie('token', token)
+                response = makeCookie(response, "token", token)
                 return response
         except Exception as e:
                 Loger.error(e, __file__)
