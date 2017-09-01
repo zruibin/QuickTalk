@@ -12,8 +12,8 @@
 """
 from flask import Blueprint
   
-start = Blueprint("start", __name__)
+star = Blueprint("star", __name__)
   
-from service.start import peopleList
-from service.start import startAction
-from service.start import projectList
+from service.star import peopleList
+from service.star import startAction
+from service.star import projectList

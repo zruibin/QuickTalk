@@ -19,7 +19,7 @@ def startProjectList():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
         "index": "1"
     }
-    r = requests.post(url="http://127.0.0.1:5000/service/start/project_list", params=params) 
+    r = requests.post(url="http://127.0.0.1:5000/service/star/project_list", params=params) 
     print r.cookies
     print(r.text)
 

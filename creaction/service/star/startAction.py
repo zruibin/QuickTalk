@@ -11,7 +11,7 @@
 项目与人的关注跟取消关注
 """
 
-from service.start import start
+from service.star import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -23,7 +23,7 @@ import common.notification as notification
 # from dispatch.tasks import dispatchNotificationUserForContent
 
 
-@start.route('/start_action', methods=["GET", "POST"])
+@star.route('/star_action', methods=["GET", "POST"])
 @vertifyTokenHandle
 def startAction():
     userUUID = getValueFromRequestByKey("user_uuid")

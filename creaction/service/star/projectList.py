@@ -11,7 +11,7 @@
 关注的项目列表
 """
 
-from service.start import start
+from service.star import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -21,7 +21,7 @@ from common.tools import getValueFromRequestByKey, parsePageIndex
 from common.commonMethods import queryProjectDataFromStorageBySubSQL
 
 
-@start.route('/project_list', methods=["GET", "POST"])
+@star.route('/project_list', methods=["GET", "POST"])
 @vertifyTokenHandle
 def projectList():
     userUUID = getValueFromRequestByKey("user_uuid")

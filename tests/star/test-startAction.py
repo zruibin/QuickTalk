@@ -17,7 +17,7 @@ def startProjectAction():
     params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
         "type": "1", "action":"1", "other_uuid":"000000-7d83-11e7-889b-aaaaaa"
     }
-    r = requests.post(url="http://127.0.0.1:5000/service/start/start_action", params=params) 
+    r = requests.post(url="http://127.0.0.1:5000/service/star/star_action", params=params) 
     print r.cookies
     print(r.text)
 

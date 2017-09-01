@@ -11,7 +11,7 @@
 关注的人列表跟粉丝列表
 """
 
-from service.start import start
+from service.star import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -21,7 +21,7 @@ from common.tools import getValueFromRequestByKey, fullPathForMediasFile, parseP
 from common.commonMethods import verifyUserIsExists, limit
 
 
-@start.route('/people_list', methods=["GET", "POST"])
+@star.route('/people_list', methods=["GET", "POST"])
 @vertifyTokenHandle
 def peopleList():
     userUUID = getValueFromRequestByKey("user_uuid")
