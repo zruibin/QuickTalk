@@ -39,7 +39,7 @@ CELERYBEAT_SCHEDULE = {
     # },
     "database_backup_task" : {
         "task" : "dispatch.DBBackupTask.backup",
-        "schedule" : crontab(minute=0, hour=0)
+        "schedule" : crontab(hour=1, minute=0)
     }
     # "multiply-at-some-time": {
     #     "task": "celery_app.task2.multiply",
