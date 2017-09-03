@@ -14,6 +14,7 @@
 
 <title>Creation</title>
 
+<script src="js/toast.js"></script>
 
 <style>
 
@@ -24,7 +25,7 @@
 }
 
 body { 
-  margin:0; 
+  margin:0 0; 
   height: 100%;
   background-color: #1A1A1A;
 }
@@ -290,9 +291,9 @@ show();
 var maskHidden = false;
 
 function pcMaskAction(platform) {
-    alert("敬请期待！"); return;
+    toast("敬请期待！"); return;
 
-    if (platform == 2) { alert("Android版敬请期待！"); return;}
+    if (platform == 2) { toast("Android版敬请期待！"); return;}
 
     var mask = document.getElementById("mask");
     var qrcode = document.getElementById("qrcode");
@@ -334,7 +335,7 @@ function checkIsAndroidDevice(){
 
 function phoneClickAction(platform) {
     if (isMobile()) {
-        alert("敬请期待！");
+        toast("敬请期待！");
         if (checkIsAppleDevice()) {
           // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
         }
