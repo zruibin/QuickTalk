@@ -71,7 +71,7 @@ def __updateStorage(userUUID, nameList):
     dbManager = DB.DBManager.shareInstanced()
     try:
         rows = dbManager.executeSingleQuery(querySQL)
-        oldName  = rows[0]["avatar"]
+        oldName  = rows[0]["avatar"].strip()
         action = dbManager.executeTransactionDml(updateSQL)
         if action and len(oldName) > 0:
             #删除旧的头像文件

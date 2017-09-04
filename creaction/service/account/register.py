@@ -57,7 +57,7 @@ def register():
                 result = verifyPhoneIsExists(phone)
                 if result :  return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
 
-        response = createNewUserOperation(phone=phone, email=email)
+        response = createNewUserOperation(phone=phone, email=email, password=password)
         return response
 
 
@@ -147,14 +147,14 @@ def generateResponseData(userUUID, token):
         try: 
                 results = dbManager.executeTransactionQuery(querySQL)
                 tupleData  = results[0]
-                avatar = tupleData["avatar"]
+                avatar = tupleData["avatar"].strip()
                 if len(avatar) > 0:
                         avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
                 dataDict = {
                         "token" : token,
-                        "user_uuid" : tupleData["uuid"],
-                        "user_id" : str(tupleData["id"]),
-                        "nickame" : tupleData["nickname"],
+                        "uuid" : tupleData["uuid"],
+                        "id" : str(tupleData["id"]),
+                        "nickname" : tupleData["nickname"],
                         "avatar" : avatar,
                         "phone" : tupleData["phone"],
                         "email" : tupleData["email"],

@@ -71,7 +71,7 @@ def __searchUserByNickName(searchText, userUUID, index):
         for data in dataList:
             if userUUID is not None: data["isFollowing"] = 0
             data["projectNum"] = int(data["projectNum"])
-            avatar = data["avatar"]
+            avatar = data["avatar"].strip()
             if len(avatar) > 0:
                 avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, data["uuid"], avatar)
                 data["avatar"] = avatar

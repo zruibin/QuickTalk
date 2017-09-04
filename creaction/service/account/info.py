@@ -56,7 +56,7 @@ def __getUserBaseInfo(userUUID):
             dataDict = {}
             rows = dbManager.executeSingleQuery(querySQL)
             row  = rows[0]
-            avatar = row["avatar"]
+            avatar = row["avatar"].strip()
             if len(avatar) > 0:
                 avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
             dataDict["uuid"] = row["uuid"]

@@ -23,7 +23,7 @@ from dispatch.tasks import dispatchSendEmailForVerifyCode
 from common.commonMethods import verifyEmailIsExists
 
 
-@account.route('/get_verify_code', methods=["GET"])
+@account.route('/get_verify_code', methods=["GET", "POST"])
 def getVerifyCode():
     account = getValueFromRequestByKey("account")
     typeStr = getValueFromRequestByKey("type")

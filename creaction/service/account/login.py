@@ -107,9 +107,10 @@ def __cacheUserDataWithToken(resultData):
         token = generateToken(userUUID)
         if token == None or cacheToken(userUUID, token) == False: 
                 return RESPONSE_JSON(CODE_ERROR_TOKEN_CACHE_FAIL)
-        avatar = resultData["avatar"]
+        avatar = resultData["avatar"].strip()
         if len(avatar) > 0:
             avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
+        print avatar
         dataDict = {
             "token": token,
             "uuid": userUUID,
