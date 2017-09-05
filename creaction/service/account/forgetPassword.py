@@ -27,6 +27,9 @@ def forgetPassword():
     password = getValueFromRequestByKey("newpassword")
     typeStr = str(getValueFromRequestByKey("type"))
 
+    print accountStr
+    print password
+    print typeStr
     # 参数没有直接报错返回
     if accountStr == None or password == None or typeStr == None:
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
@@ -43,7 +46,7 @@ def forgetPassword():
                 codeCache = CacheManager.shareInstanced().getCache(accountStr)
                 if code != codeCache:
                         return RESPONSE_JSON(CODE_ERROR_VERIFY_CODE_OUTDATE)
-        userUUID = verifyPhoneIsExistsForReturnUUID(accountStr)
+        userUUID = verifyEmailIsExistsForReturnUUID(accountStr)
         if userUUID == None: return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_NOT_FOUND)
     
     if typeStr == Config.TYPE_FOR_PHONE:

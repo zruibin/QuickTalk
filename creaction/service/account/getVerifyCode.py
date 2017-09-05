@@ -20,7 +20,7 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from dispatch.tasks import dispatchSendEmailForVerifyCode
-from common.commonMethods import verifyEmailIsExists
+from common.commonMethods import verifyEmailIsExistsForReturnUUID
 
 
 @account.route('/get_verify_code', methods=["GET", "POST"])
@@ -29,8 +29,9 @@ def getVerifyCode():
     typeStr = getValueFromRequestByKey("type")
 
     if typeStr == Config.TYPE_FOR_EMAIL:
-        # 验证email是否已使用了
-        if verifyEmailIsExists(account) :  return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
+        # 验证email是否存在了
+        userUUID = verifyEmailIsExistsForReturnUUID(account)
+        if userUUID == None: return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_NOT_FOUND)
 
         # 利用Celery异步发邮件
         if dispatchSendEmailForVerifyCode.delay(account):
