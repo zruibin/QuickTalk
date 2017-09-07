@@ -35,4 +35,4 @@ from service.account import applyContact
 from service.account import agreeApplyContact
 from service.account import settingList
 from service.account import changeInfoDetail
-
+from service.account import changeEmailOrPhone
