@@ -18,13 +18,13 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
-from common.tools import getValueFromRequestByKey
+from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 from common.file import FileTypeException, uploadPicture
 from common.commonMethods import verifyUserIsExists
 
 
 @account.route('/change_avatar', methods=["POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def changeAvatar():
     userUUID = getValueFromRequestByKey("user_uuid")
 
@@ -77,11 +77,11 @@ def __updateStorage(userUUID, nameList):
             #删除旧的头像文件
             fullPath = path + oldName
             if os.path.exists(fullPath): os.remove(fullPath)
+        fullPathAvatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, nameList[0])
+        return RESPONSE_JSON(CODE_SUCCESS, data={"avatar":fullPathAvatar})
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
-    else:
-        return RESPONSE_JSON(CODE_SUCCESS)
     
 
 def __removeFileOnError(path, fileList):

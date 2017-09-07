@@ -17,7 +17,7 @@ files = {'1': open("../pic/aaa.gif", 'rb')}
 
 
 url = "http://127.0.0.1:5000/service/account/change_avatar"
-data = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc"}
+data = {"user_uuid": "3f05136c7c04def451b764c88fbcb72c"}
 
 # response = requests.post(url=url, params=params, files=files)
 
