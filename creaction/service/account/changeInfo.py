@@ -18,6 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
+import json
 
 
 @account.route('/change_info', methods=["POST"])
@@ -63,9 +64,9 @@ def __changeUserInfoInStorage(userUUID, userDict):
         excuteSQLList.append(insertSQL)
 
     updateSQL = """
-        UPDATE t_user SET nickname='%s', gender=%d, area='%s', detail='%s', career='%s'
+        UPDATE t_user SET nickname='%s', gender=%d, area='%s', career='%s'
         WHERE uuid='%s'; """ % (userDict["nickname"], int(userDict["gender"]), 
-        userDict["area"], userDict["detail"], userDict["career"], userUUID)
+        userDict["area"], userDict["career"], userUUID)
     excuteSQLList.append(updateSQL)
 
     dbManager = DB.DBManager.shareInstanced()
@@ -76,9 +77,6 @@ def __changeUserInfoInStorage(userUUID, userDict):
             
     return result
     
-
-
-
 
 
 if __name__ == '__main__':
