@@ -43,11 +43,12 @@ def changeTag():
 def __changeUserTagListInStorage(userUUID, taglist):
     result  = False
     excuteSQLList = []
+
     deleteSQL = """
         DELETE FROM t_tag_user WHERE user_uuid='%s'; """ % userUUID
-    if len(taglist) == 0:
-        excuteSQLList.append(deleteSQL)
-    else:
+    excuteSQLList.append(deleteSQL)
+
+    if len(taglist) > 0:
         insertSQL = """ INSERT INTO t_tag_user (user_uuid, sorting, type, content) VALUES """
         values = ""
         tagListNum = len(taglist)

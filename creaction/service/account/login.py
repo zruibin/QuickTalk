@@ -111,7 +111,6 @@ def __cacheUserDataWithToken(resultData):
         avatar = resultData["avatar"].strip()
         if len(avatar) > 0:
             avatar = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, userUUID, avatar)
-        print avatar
         dataDict = {
             "token": token,
             "uuid": userUUID,
