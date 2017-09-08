@@ -12,6 +12,8 @@ from service.api import api
 from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
+from dispatch.BackupTask import backup
+# from dispatch.tasks import dispatchNotificationUserForContent
 
 
 @api.route('/')
@@ -31,3 +33,11 @@ def index():
 
         # Log.test()
         return '<h1>Hello zruibin, From Service API!</h1>'
+
+
+@api.route('/test_backup_data')
+def test_backup_data():                         
+        
+    backup.delay()
+    # Log.test()
+    return '<h1>test_backup_data success</h1>'

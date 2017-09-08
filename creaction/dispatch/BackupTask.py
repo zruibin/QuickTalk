@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# dbBackup.py
+# BackupTask.py
 # ruibin.chow@qq.com
 #
 # Created by Ruibin.Chow on 2017/05/17.
@@ -21,19 +21,26 @@ reload(sys)
 sys.setdefaultencoding('utf8')  
 
 #bakup file path
-backupDir = Config.DB_BACKUP_DIR
-#mysql username
-username = Config.DBUSER
-#mysql password
-userpwd = Config.DBPWD
-# dump path
-dumpPath = "mysqldump"
-#db name
-dbName = Config.DBNAME # --all-databases 
+backupDir = Config.BACKUP_DIR
 
 
 @celery.task
 def backup():
+    __backupDB()
+    __backupMedias()
+    pass
+
+
+def __backupDB():
+    #mysql username
+    username = Config.DBUSER
+    #mysql password
+    userpwd = Config.DBPWD
+    # dump path
+    dumpPath = "mysqldump"
+    #db name
+    dbName = Config.DBNAME # --all-databases 
+
     baseName = dbName + "_" + time.strftime("%Y%m%d-%H%M%S")
     fileName = baseName + ".sql"
     fullPath =  backupDir + "/" + fileName
@@ -50,6 +57,21 @@ def backup():
     os.system(bz2CMD)
 
     os.remove(fullPath)
+    pass
+
+
+def __backupMedias():
+    """
+    tar -jcvf {backupDir}/{bz2File} -C {siteDir} {meidasDir}
+    """
+    bz2File = "creaction_medias_" + time.strftime("%Y%m%d-%H%M%S") + ".tar.bz2"
+    siteDir = Config.WEB_SITE_DIR
+    meidasDir = Config.UPLOAD_FOLDER
+
+    bz2CMD = """tar -jcvf {backupDir}/{bz2File} -C {siteDir} {meidasDir}""".format(backupDir=backupDir, bz2File=bz2File, siteDir=siteDir, meidasDir=meidasDir)
+    print bz2CMD
+    os.system(bz2CMD)
+
     pass
 
 

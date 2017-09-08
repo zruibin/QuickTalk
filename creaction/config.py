@@ -19,6 +19,8 @@ class Config(object):
 
     WEB_SITE_HOST = "http://creactism.com/"
     LOG_DIR = "logs/"
+    WEB_SITE_DIR = "/home/creaction"
+    BACKUP_DIR = "/home/creaction_bak" # 数据备份目录
 
     DBHOST = "localhost"
     DBPORT = 3306
@@ -27,7 +29,6 @@ class Config(object):
     DBNAME = "creaction"
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
-    DB_BACKUP_DIR = "/home/mysqlbak" # 数据库备份目录
 
     CACHE_DB = "redis"
     CACHE_HOST = DBHOST
