@@ -135,7 +135,7 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
 
 def generateResponseData(userUUID, token):
         querySQL = """
-                SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, t_user.detail,
+                SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, t_user.detail, t_user.gender,
                 t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat,
                 t_user_auth.qq as authQQ, t_user_auth.wechat as authWechat, t_user_auth.weibo as authWeibo
                 FROM t_user, t_user_auth WHERE t_user.uuid='{user_uuid}' 
@@ -159,6 +159,7 @@ def generateResponseData(userUUID, token):
                         "phone" : tupleData["phone"],
                         "email" : tupleData["email"],
                         "detail" : tupleData["detail"],
+                        "gender": resultData["gender"],
                         "authQQ" : tupleData["authQQ"],
                         "authWechat" : tupleData["authWechat"],
                         "authWeibo" : tupleData["authWeibo"],

@@ -80,7 +80,7 @@ def __loginForThirdAuth(typeStr, authOpenId):
         Config.TYPE_FOR_AUTH_QQ : "qq", Config.TYPE_FOR_AUTH_WEIBO : "weibo"
     }
     querySQL = """
-        SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, t_user.detail,
+        SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, t_user.detail, t_user.gender,
         t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat,
         t_user_auth.qq AS authQQ, t_user_auth.wechat AS authWechat, t_user_auth.weibo AS authWeibo
         FROM t_user, t_user_auth 
@@ -119,7 +119,8 @@ def __cacheUserDataWithToken(resultData):
             "avatar": avatar,
             "phone": resultData["phone"],
             "email": resultData["email"],
-            "detail": resultData["detail"], 
+            "detail": resultData["detail"],
+            "gender": resultData["gender"],
             "authQQ": resultData["authQQ"], 
             "authWechat":resultData["authWechat"], 
             "authWeibo":resultData["authWeibo"],
