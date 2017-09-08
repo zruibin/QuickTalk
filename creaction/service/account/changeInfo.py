@@ -35,7 +35,7 @@ def changeInfo():
         return RESPONSE_JSON(CODE_ERROR_ILLEGAL_DATA_CONTENT)
     pass
 
-    if len(userDict) < 6:
+    if len(userDict) < 5:
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     if __changeUserInfoInStorage(userUUID, userDict):
@@ -55,10 +55,11 @@ def __changeUserInfoInStorage(userUUID, userDict):
     if len(schoolList) != 0:
         insertSQL = """INSERT INTO t_user_eduction (user_uuid, sorting, school) VALUES """
         values = ""
-        schoolListNum = len(schoolList)
-        for i in range(schoolListNum):
-            tempString = """('%s', %d, '%s')""" % (userUUID, i, schoolList[i])
+        i = 0
+        for school in schoolList:
+            tempString = """('%s', %d, '%s')""" % (userUUID, i, school)
             values += tempString + ","
+            i += 1
         values = values[:-1] + ";"
         insertSQL += values
         excuteSQLList.append(insertSQL)
