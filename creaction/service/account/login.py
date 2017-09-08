@@ -27,7 +27,9 @@ def login():
     accountStr = getValueFromRequestByKey("account")
     password = getValueFromRequestByKey("password")
     typeStr = getValueFromRequestByKey("type")
-    authOpenId = getValueFromRequestByKey("authOpenId")
+
+    if  accountStr is None:
+            return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
     # 检查参数是否为空
     if typeStr in (Config.TYPE_FOR_EMAIL, Config.TYPE_FOR_PHONE):
@@ -37,10 +39,8 @@ def login():
             password = md5hex(password) # md5加密后
             return __loginForUserAndPassword(accountStr, typeStr, password)
     if typeStr in (Config.TYPE_FOR_AUTH_WECHAT, Config.TYPE_FOR_AUTH_QQ, Config.TYPE_FOR_AUTH_WEIBO):
-        if  authOpenId is None:
-            return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-        else:
-            return __loginForThirdAuth(typeStr, authOpenId)
+        authOpenId = accountStr
+        return __loginForThirdAuth(typeStr, authOpenId)
         
 
 
