@@ -31,6 +31,9 @@ def peopleList():
     if typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
+    if typeStr not in (Config.TYPE_FOR_USER_QUERY_FOLLOWING, Config.TYPE_FOR_USER_QUERY_FOLLOWED):
+        return RESPONSE_JSON(CODE_ERROR_PARAM)
+
     index = parsePageIndex(index)
 
     return __getDataListFromStorage(userUUID, typeStr)
