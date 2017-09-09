@@ -58,17 +58,17 @@ def thirdParty():
 
 def __bindAccount(userUUID, typeStr, openId):
     """绑定第三方帐号，先检查该openId是否已被绑定了，已被绑定则抛出错误"""
-    querySQL = """SELECT user_uuid FROM t_user_auth WHERE %s='%s'; """ % (typeStr, openId)
-    updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeStr, openId, userUUID)
+    querySQL = """SELECT user_uuid FROM t_user_auth WHERE """+typeStr+"""=%s; """
+    updateSQL = """UPDATE t_user_auth SET """+typeStr+"""=%s WHERE user_uuid=%s; """
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        rows = dbManager.executeSingleQuery(querySQL)
+        rows = dbManager.executeSingleQueryWithArgs(querySQL, [openId])
 
         # 如果已被绑定了则抛出
         if len(rows) > 0: raise ThirdPartyAlreadyBeBindException()
             
-        dbManager.executeTransactionDml(updateSQL)
+        dbManager.executeTransactionDmlWithArgs(updateSQL, [openId, userUUID])
     except ThirdPartyAlreadyBeBindException as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_THIDR_ALREAD_BE_BIND)
@@ -82,10 +82,10 @@ def __bindAccount(userUUID, typeStr, openId):
 
 def __unbindAccount(userUUID, typeStr):
     """解除绑定"""
-    updateSQL = """UPDATE t_user_auth SET %s='' WHERE user_uuid='%s'; """ % (typeStr, userUUID)
+    updateSQL = """UPDATE t_user_auth SET """+typeStr+"""='' WHERE user_uuid=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionDml(updateSQL)
+        dbManager.executeTransactionDmlWithArgs(updateSQL, [userUUID])
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

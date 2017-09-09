@@ -43,24 +43,32 @@ def changeTag():
 def __changeUserTagListInStorage(userUUID, taglist):
     result  = False
     excuteSQLList = []
+    argsList = []
 
     deleteSQL = """
-        DELETE FROM t_tag_user WHERE user_uuid='%s'; """ % userUUID
+        DELETE FROM t_tag_user WHERE user_uuid=%s; """
     excuteSQLList.append(deleteSQL)
+    argsList.append([userUUID])
 
     if len(taglist) > 0:
         insertSQL = """ INSERT INTO t_tag_user (user_uuid, sorting, type, content) VALUES """
         values = ""
+        valuesList = []
         tagListNum = len(taglist)
         for i in range(tagListNum):
-            values += """('%s', %d, %d, '%s'),""" % (userUUID, i, 0, taglist[i])
+            values += """(%s, %s, %s, %s),"""
+            valuesList.append(userUUID)
+            valuesList.append(str(i))
+            valuesList.append(str(0))
+            valuesList.append(taglist[i])
         values = values[:-1] + ";"
         insertSQL += values
         excuteSQLList.append(insertSQL)
+        argsList.append(valuesList)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            result = dbManager.executeTransactionMutltiDml(excuteSQLList)
+            result = dbManager.executeTransactionMutltiDmlWithArgsList(excuteSQLList, argsList)
     except Exception as e:
             Loger.error(e, __file__)
     return result

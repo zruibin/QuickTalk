@@ -42,11 +42,11 @@ def changePassword():
 def __changeUserPasswordInStorage(userUUID, password):
     result = False
     updateSQL = """
-        UPDATE t_user_auth SET password='%s' WHERE user_uuid='%s'; """ % (password, userUUID)
+        UPDATE t_user_auth SET password=%s WHERE user_uuid=%s; """
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionDml(updateSQL)
+        result = dbManager.executeTransactionDmlWithArgs(updateSQL, [password, userUUID])
     except Exception as e:
         Loger.error(e, __file__)
             

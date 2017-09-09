@@ -38,12 +38,11 @@ def changeInfoDetail():
 
 def __changeUserInfoDetailInStorage(userUUID, detail):
     result = False
-    updateSQL = """
-        UPDATE t_user SET detail='%s' WHERE uuid='%s'; """ % (detail, userUUID)
-
+    updateSQL = """UPDATE t_user SET detail=%s WHERE uuid=%s; """
+    print updateSQL
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            result = dbManager.executeTransactionDml(updateSQL)
+            result = dbManager.executeTransactionDmlWithArgs(updateSQL, [detail, userUUID])
     except Exception as e:
             Loger.error(e, __file__)
             

@@ -54,12 +54,12 @@ def __getPeopleContact(userUUID, checkUserUUID):
     dataDict = None
     querySQL = """
         SELECT uuid, id, contact_phone, contact_email, qq, weibo, wechat
-                FROM t_user WHERE uuid IN (SELECT other_user_uuid FROM t_user_user WHERE user_uuid='%s' AND other_user_uuid='%s' AND type='%s');
-    """ % (userUUID, checkUserUUID, Config.TYPE_FOR_USER_CONTACT)
+                FROM t_user WHERE uuid IN (SELECT other_user_uuid FROM t_user_user WHERE user_uuid=%s AND other_user_uuid=%s AND type=%s);
+    """
     dbManager = DB.DBManager.shareInstanced()
     try: 
             dataDict = {}
-            rows = dbManager.executeSingleQuery(querySQL)
+            rows = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID, checkUserUUID, Config.TYPE_FOR_USER_CONTACT])
             if len(rows) > 0:
                 row  = rows[0]
                 dataDict["uuid"] = row["uuid"]

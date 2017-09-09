@@ -60,6 +60,24 @@ class DBManager(object):
             if cnx:  
                 cnx.close()
         return results
+
+    def executeSingleDmlWithArgs(self, strsql, args):
+        """ insert update delete 单条sql语句"""
+        results = True
+        try:  
+            cnx = self.__cnxpool.get_connection()  
+            cursor = cnx.cursor()  
+            cursor.execute(strsql, args)  
+            cursor.close()  
+            cnx.commit()  
+        except Exception as e:  
+            Loger.error(e, __file__)
+            results = False
+            raise e
+        finally:  
+            if cnx:  
+                cnx.close()
+        return results
       
     def executeSingleQuery(self, strsql, dictionary=True): 
         """ 查询 单条sql语句"""
@@ -68,6 +86,23 @@ class DBManager(object):
             cnx = self.__cnxpool.get_connection()  
             cursor = cnx.cursor(dictionary=dictionary)  
             cursor.execute(strsql)  
+            results = cursor.fetchall()  
+            cursor.close()  
+        except Exception as e:  
+            Loger.error(e, __file__)
+            raise e
+        finally:  
+            if cnx:  
+                cnx.close()  
+        return results  
+
+    def executeSingleQueryWithArgs(self, strsql, args, dictionary=True): 
+        """ 查询 单条sql语句"""
+        results = None  
+        try:  
+            cnx = self.__cnxpool.get_connection()  
+            cursor = cnx.cursor(dictionary=dictionary)  
+            cursor.execute(strsql, args)  
             results = cursor.fetchall()  
             cursor.close()  
         except Exception as e:  
@@ -125,6 +160,25 @@ class DBManager(object):
         finally:
             self.__endTransaction() 
 
+        return results
+
+    def executeTransactionQueryWithArgs(self, strsql, args, dictionary=True):
+        """ 事务下查询sql语句"""
+        results = None
+        self.__startTransaction()
+        try:  
+            cursor = self.__cnx.cursor(dictionary=dictionary)  
+            cursor.execute(strsql, args)  
+            results = cursor.fetchall()  
+            cursor.close()
+            self.__commitTransaction() 
+        except Exception as e:  
+            Loger.error(e, __file__)
+            self.__rollbackTransaction()
+            raise e
+        finally:
+            self.__endTransaction() 
+
         return results  
       
     def executeTransactionDml(self, strsql):
@@ -134,6 +188,24 @@ class DBManager(object):
         try:  
             cursor = self.__cnx.cursor()  
             cursor.execute(strsql)  
+            cursor.close()
+            self.__commitTransaction()
+        except Exception as e:  
+            Loger.error(e, __file__)
+            results = False
+            self.__rollbackTransaction()
+            raise e
+        finally:
+            self.__endTransaction()
+        return results
+
+    def executeTransactionDmlWithArgs(self, strsql, args):
+        """事务下 insert update delete 单条sql语句"""
+        results = True
+        self.__startTransaction()
+        try:  
+            cursor = self.__cnx.cursor()  
+            cursor.execute(strsql, args)  
             cursor.close()
             self.__commitTransaction()
         except Exception as e:  
@@ -164,6 +236,29 @@ class DBManager(object):
             self.__endTransaction()
         return results
   
+    def executeTransactionMutltiDmlWithArgsList(self, sqlList, argsList):
+        """事务下 insert update delete 多条sql语句
+            argsList 数量与 sqlList数量一致，若无，则该条sql对应为[]
+        """
+        results = True
+        self.__startTransaction()
+        try:  
+            cursor = self.__cnx.cursor()
+            index = 0
+            for strsql in sqlList:
+                args = argsList[index]
+                cursor.execute(strsql, args)
+                index +=1
+            cursor.close()
+            self.__commitTransaction()
+        except Exception as e:  
+            Loger.error(e, __file__)
+            results = False
+            self.__rollbackTransaction()
+            raise e
+        finally:
+            self.__endTransaction()
+        return results
 
   
 def test():  

@@ -47,32 +47,38 @@ def changeInfo():
 def __changeUserInfoInStorage(userUUID, userDict):
     result = False
     excuteSQLList = []
-    
-    deleteSQL = """DELETE FROM t_user_eduction WHERE user_uuid='%s'""" % userUUID
+    argsList = []
+
+    deleteSQL = """DELETE FROM t_user_eduction WHERE user_uuid=%s;"""
     excuteSQLList.append(deleteSQL)
+    argsList.append([userUUID])
 
     schoolList = userDict["school"]
     if len(schoolList) != 0:
         insertSQL = """INSERT INTO t_user_eduction (user_uuid, sorting, school) VALUES """
         values = ""
         i = 0
+        valuesList = []
         for school in schoolList:
-            tempString = """('%s', %d, '%s')""" % (userUUID, i, school)
+            tempString = """(%s, %s, %s)"""
             values += tempString + ","
             i += 1
+            valuesList.append(userUUID)
+            valuesList.append(str(i))
+            valuesList.append(school)
         values = values[:-1] + ";"
         insertSQL += values
         excuteSQLList.append(insertSQL)
+        argsList.append(valuesList)
 
     updateSQL = """
-        UPDATE t_user SET nickname='%s', gender=%d, area='%s', career='%s'
-        WHERE uuid='%s'; """ % (userDict["nickname"], int(userDict["gender"]), 
-        userDict["area"], userDict["career"], userUUID)
+        UPDATE t_user SET nickname=%s, gender=%s, area=%s, career=%s WHERE uuid=%s; """
     excuteSQLList.append(updateSQL)
+    argsList.append([userDict["nickname"], userDict["gender"], userDict["area"], userDict["career"], userUUID])
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            result = dbManager.executeTransactionMutltiDml(excuteSQLList)
+            result = dbManager.executeTransactionMutltiDmlWithArgsList(excuteSQLList, argsList)
     except Exception as e:
             Loger.error(e, __file__)
             

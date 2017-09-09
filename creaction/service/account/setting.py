@@ -48,10 +48,10 @@ def setting():
 def __changeSettingStatus(userUUID, typeStr, status):
     result  = False
     querySQL = """
-        UPDATE t_user_setting SET status='%s' WHERE user_uuid='%s' AND type='%s'; """ % (status, userUUID, typeStr)
+        UPDATE t_user_setting SET status=%s WHERE user_uuid=%s AND type=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            result = dbManager.executeSingleDml(querySQL)
+            result = dbManager.executeSingleDmlWithArgs(querySQL, [status, userUUID, typeStr])
     except Exception as e:
             Loger.error(e, __file__)
     return result

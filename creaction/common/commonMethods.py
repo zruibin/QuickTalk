@@ -19,10 +19,10 @@ import datetime
 def verifyEmailIsExists(email):
     result  = False
     querySQL = """
-            SELECT email FROM t_user WHERE email='%s'; """ % email
+            SELECT email FROM t_user WHERE email=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [email])
         if len(resultData) > 0: result = True
         # print resultData
     except Exception as e:
@@ -34,10 +34,10 @@ def verifyEmailIsExists(email):
 def verifyEmailIsExistsForReturnUUID(email):
     result  = None
     querySQL = """
-            SELECT uuid FROM t_user WHERE email='%s'; """ % email
+            SELECT uuid FROM t_user WHERE email=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [email])
         if len(resultData) > 0:
             result = resultData[0]["uuid"]
     except Exception as e:
@@ -49,10 +49,10 @@ def verifyEmailIsExistsForReturnUUID(email):
 def verifyPhoneIsExists(phone):
     result  = False
     querySQL = """
-            SELECT phone FROM t_user WHERE phone='%s'; """ % phone
+            SELECT phone FROM t_user WHERE phone=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [phone])
         if len(resultData) > 0: result = True
     except Exception as e:
         Loger.error(e, __file__)
@@ -63,10 +63,10 @@ def verifyPhoneIsExists(phone):
 def verifyPhoneIsExistsForReturnUUID(phone):
     result  = None
     querySQL = """
-            SELECT uuid FROM t_user WHERE phone='%s'; """ % phone
+            SELECT uuid FROM t_user WHERE phone=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [phone])
         if len(resultData) > 0: 
             result = resultData[0]["uuid"]
     except Exception as e:
@@ -77,10 +77,10 @@ def verifyPhoneIsExistsForReturnUUID(phone):
 def verifyUserIsExists(userUUID):
     result  = False
     querySQL = """
-        SELECT uuid FROM t_user WHERE uuid='%s'; """ % userUUID
+        SELECT uuid FROM t_user WHERE uuid=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
         if len(resultData) > 0: result = True
     except Exception as e:
         Loger.error(e, __file__)
@@ -91,10 +91,10 @@ def verifyUserIsExists(userUUID):
 def verifyUserPassword(userUUID, password):
     result  = False
     querySQL = """
-        SELECT password FROM t_user_auth WHERE user_uuid='%s'; """ % userUUID
+        SELECT password FROM t_user_auth WHERE user_uuid=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
         dataPassword = ""
         dataPassword = resultData[0]["password"]
         if dataPassword == password or  len(dataPassword) == 0: 

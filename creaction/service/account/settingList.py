@@ -33,11 +33,11 @@ def settingList():
 
 def __getSettingStatus(userUUID):
     querySQL = """
-        SELECT type, status FROM `t_user_setting` WHERE user_uuid='%s'; """ % userUUID
+        SELECT type, status FROM `t_user_setting` WHERE user_uuid=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataDict = {}
-        dataList = dbManager.executeSingleQuery(querySQL)
+        dataList = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
         for data in dataList:
             dataDict[data["type"]] = data["status"]
             

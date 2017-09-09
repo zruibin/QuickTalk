@@ -54,10 +54,10 @@ def __changeUserContactStorage(userUUID, typeStr, content):
     if typeContent == None: return False
 
     updateSQL = """
-        UPDATE t_user SET %s='%s' WHERE uuid='%s'; """ % (typeContent, content, userUUID)
+        UPDATE t_user SET %s=%s WHERE uuid=%s; """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-            result = dbManager.executeSingleDml(updateSQL)
+            result = dbManager.executeSingleDmlWithArgs(updateSQL, [typeContent, content, userUUID])
     except Exception as e:
             Loger.error(e, __file__)
 

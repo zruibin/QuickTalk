@@ -53,13 +53,13 @@ def __loginForUserAndPassword(accountStr, typeStr, password):
         t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat,
         t_user_auth.password, t_user_auth.qq AS authQQ, t_user_auth.wechat AS authWechat, t_user_auth.weibo AS authWeibo
         FROM t_user, t_user_auth 
-        WHERE t_user.%s='%s' AND t_user_auth.password='%s' 
+        WHERE t_user."""+ typeDict[typeStr] +"""=%s AND t_user_auth.password=%s
         AND t_user_auth.user_uuid=t_user.uuid; 
-        """ % (typeDict[typeStr], accountStr, password)
+        """
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [accountStr, password])
         if len(resultData) > 0:
             return __cacheUserDataWithToken(resultData[0])
         else:
@@ -85,11 +85,11 @@ def __loginForThirdAuth(typeStr, authOpenId):
         t_user_auth.qq AS authQQ, t_user_auth.wechat AS authWechat, t_user_auth.weibo AS authWeibo
         FROM t_user, t_user_auth 
         WHERE t_user.uuid=t_user_auth.user_uuid 
-        AND t_user_auth.%s='%s'; """ % (typeDict[typeStr], authOpenId)
-    print querySQL
+        AND t_user_auth.""" + typeDict[typeStr] + """=%s; """
+
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        resultData = dbManager.executeSingleQuery(querySQL)
+        resultData = dbManager.executeSingleQueryWithArgs(querySQL, [authOpenId])
         if len(resultData) > 0:
             return __cacheUserDataWithToken(resultData[0])
         else:

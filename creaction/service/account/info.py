@@ -35,26 +35,32 @@ def __getUserBaseInfo(userUUID):
     dataDict = None
     querySQL = """ 
     SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.gender, t_user.area, t_user.detail, t_user.career,
-        (SELECT count(type) FROM t_user_user WHERE user_uuid='{user_uuid}' AND type={follow}) AS following,
-        (SELECT count(type) FROM t_user_user WHERE other_user_uuid='{user_uuid}' AND type={follow}) AS followed,
-        (SELECT count(uuid) FROM t_project WHERE author_uuid='{user_uuid}') AS myproject,
-        (SELECT count(type) FROM  t_project_user WHERE user_uuid='{user_uuid}' AND type={joinedProject}) AS joinedProject,
-        (SELECT count(type) FROM  t_project_user WHERE user_uuid='{user_uuid}' AND type={followedProject}) AS followedProject
-        FROM t_user WHERE t_user.uuid='{user_uuid}' 
-    """.format(user_uuid=userUUID, follow=Config.TYPE_FOR_USER_FOLLOWING,
-             joinedProject=Config.TYPE_FOR_PROJECT_MEMBER,
-             followedProject=Config.TYPE_FOR_PROJECT_FOLLOWER)
-    
+        (SELECT count(type) FROM t_user_user WHERE user_uuid=%s AND type=%s) AS following,
+        (SELECT count(type) FROM t_user_user WHERE other_user_uuid=%s AND type=%s) AS followed,
+        (SELECT count(uuid) FROM t_project WHERE author_uuid=%s) AS myproject,
+        (SELECT count(type) FROM  t_project_user WHERE user_uuid=%s AND type=%s) AS joinedProject,
+        (SELECT count(type) FROM  t_project_user WHERE user_uuid=%s AND type=%s) AS followedProject
+        FROM t_user WHERE t_user.uuid=%s 
+    """
+    args = [userUUID, str(Config.TYPE_FOR_USER_FOLLOWING),
+                userUUID, str(Config.TYPE_FOR_USER_FOLLOWING),
+                userUUID, 
+                userUUID, str(Config.TYPE_FOR_PROJECT_MEMBER),
+                userUUID, str(Config.TYPE_FOR_PROJECT_FOLLOWER), 
+                userUUID
+                ]
+
     querySchoolSQL = """
-    SELECT school FROM t_user_eduction WHERE user_uuid='%s' ORDER BY sorting ASC
-    """ % userUUID
+    SELECT school FROM t_user_eduction WHERE user_uuid=%s ORDER BY sorting ASC
+    """
     queryUserTagSQL = """
-    SELECT content FROM t_tag_user WHERE user_uuid='%s' ORDER BY sorting ASC
-    """ % userUUID
+    SELECT content FROM t_tag_user WHERE user_uuid=%s ORDER BY sorting ASC
+    """
+
     dbManager = DB.DBManager.shareInstanced()
     try: 
             dataDict = {}
-            rows = dbManager.executeSingleQuery(querySQL)
+            rows = dbManager.executeSingleQueryWithArgs(querySQL, args)
             row  = rows[0]
             avatar = row["avatar"].strip()
             if len(avatar) > 0:
@@ -72,13 +78,13 @@ def __getUserBaseInfo(userUUID):
             dataDict["following"] = row["following"]
             dataDict["followed"] = row["followed"]
 
-            rows = dbManager.executeSingleQuery(querySchoolSQL, False)
+            rows = dbManager.executeSingleQueryWithArgs(querySchoolSQL, [userUUID], False)
             schoolList = []
             for row in rows:
                 schoolList.append(row[0])
             dataDict["school"] = schoolList
 
-            rows = dbManager.executeSingleQuery(queryUserTagSQL, False)
+            rows = dbManager.executeSingleQueryWithArgs(queryUserTagSQL, [userUUID], False)
             tagsList = []
             for row in rows:
                 tagsList.append(row[0])

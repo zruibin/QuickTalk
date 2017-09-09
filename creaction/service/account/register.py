@@ -89,30 +89,36 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
         results = False
         try: 
                 sqlList = []
+                argsList = []
                 userSQL = """ 
                         INSERT INTO `t_user`(`uuid`, `nickname`, `detail`, `phone`, `email`, `qq`, `wechat`, `gender`, `area`, `avatar`, `career`, `time`, `contact_phone`, `contact_email`, `weibo`)
-                        VALUES('%s', '', '', '%s', '%s', '', '', 2, '', ' ', '', '%s', '', '', '');
-                """ % (userUUID, phone, email, time)
+                        VALUES(%s, '', '', %s, %s, '', '', 2, '', ' ', '', %s, '', '', '');
+                """
                 sqlList.append(userSQL)
+                argsList.append([userUUID, phone, email, time])
 
                 userAuthSQL = """
                         INSERT INTO `t_user_auth`(`user_uuid`, `password`, `qq`, `wechat`, `weibo`)
-                        VALUES('%s', '%s', '', '', '');
-                        """ % (userUUID, password)
+                        VALUES(%s, %s, '', '', '');
+                        """
                 sqlList.append(userAuthSQL)
+                argsList.append([userUUID, password])
 
                 userSettingSQL = """
                         INSERT INTO t_user_setting (user_uuid, type, status) 
-                        VALUES ('%s', %d, %d), ('%s', %d, %d), 
-                                ('%s', %d, %d), ('%s', %d, %d), ('%s', %d, %d), 
-                                ('%s', %d, %d);
-                """ % (userUUID, Config.NOTIFICATION_FOR_LIKE, Config.STATUS_ON,
-                        userUUID, Config.NOTIFICATION_FOR_COMMENT, Config.STATUS_ON,
-                        userUUID, Config.NOTIFICATION_FOR_JOURNAL, Config.STATUS_ON,
-                        userUUID, Config.NOTIFICATION_FOR_START_PROJECT, Config.STATUS_ON,
-                        userUUID, Config.NOTIFICATION_FOR_START_PEOPLE, Config.STATUS_ON,
-                        userUUID, Config.NOTIFICATION_FOR_CONTACT, Config.STATUS_ON)
+                        VALUES (%s, %s, %s), (%s, %s, %s), (%s, %s, %s), (%s, %s, %s), 
+                        (%s, %s, %s), (%s, %s, %s);
+                """
+                settingArgsList= [
+                        userUUID, str(Config.NOTIFICATION_FOR_LIKE), str(Config.STATUS_ON),
+                        userUUID, str(Config.NOTIFICATION_FOR_COMMENT), str(Config.STATUS_ON),
+                        userUUID, str(Config.NOTIFICATION_FOR_JOURNAL), str(Config.STATUS_ON),
+                        userUUID, str(Config.NOTIFICATION_FOR_START_PROJECT), str(Config.STATUS_ON),
+                        userUUID, str(Config.NOTIFICATION_FOR_START_PEOPLE), str(Config.STATUS_ON),
+                        userUUID, str(Config.NOTIFICATION_FOR_CONTACT), str(Config.STATUS_ON)]
                 sqlList.append(userSettingSQL)
+                argsList.append(settingArgsList)
+                
 
                 if len(authType) > 0:
                         typeDict = {
@@ -121,11 +127,12 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
                                 Config.TYPE_FOR_AUTH_WEIBO : "weibo"
                         }
                         typeContent = typeDict[authType]
-                        updateSQL = """UPDATE t_user_auth SET %s='%s' WHERE user_uuid='%s'; """ % (typeContent, authOpenId, userUUID)
+                        updateSQL = """UPDATE t_user_auth SET """ + typeContent + """=%s WHERE user_uuid=%s; """
                         sqlList.append(updateSQL)
+                        argsList.append([authOpenId, userUUID])
 
                 dbManager = DB.DBManager.shareInstanced()
-                results = dbManager.executeTransactionMutltiDml(sqlList)  
+                results = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)  
         except Exception as e:
                 Loger.error(e, __file__)
                 raise e
@@ -138,14 +145,14 @@ def generateResponseData(userUUID, token):
                 SELECT t_user.uuid, t_user.id, t_user.nickname, t_user.avatar, t_user.phone, t_user.email, t_user.detail, t_user.gender,
                 t_user.contact_phone, t_user.contact_email, t_user.qq, t_user.weibo, t_user.wechat,
                 t_user_auth.qq as authQQ, t_user_auth.wechat as authWechat, t_user_auth.weibo as authWeibo
-                FROM t_user, t_user_auth WHERE t_user.uuid='{user_uuid}' 
-                AND t_user_auth.user_uuid='{user_uuid}'
-        """.format(user_uuid=userUUID)
+                FROM t_user, t_user_auth WHERE t_user.uuid=%s
+                AND t_user_auth.user_uuid=%s
+        """
 
         dbManager = DB.DBManager.shareInstanced()
         results = None
         try: 
-                results = dbManager.executeTransactionQuery(querySQL)
+                results = dbManager.executeTransactionQueryWithArgs(querySQL, [userUUID, userUUID])
                 tupleData  = results[0]
                 avatar = tupleData["avatar"].strip()
                 if len(avatar) > 0:
@@ -159,7 +166,7 @@ def generateResponseData(userUUID, token):
                         "phone" : tupleData["phone"],
                         "email" : tupleData["email"],
                         "detail" : tupleData["detail"],
-                        "gender": resultData["gender"],
+                        "gender": tupleData["gender"],
                         "authQQ" : tupleData["authQQ"],
                         "authWechat" : tupleData["authWechat"],
                         "authWeibo" : tupleData["authWeibo"],

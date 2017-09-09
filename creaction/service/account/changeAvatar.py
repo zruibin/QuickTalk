@@ -65,14 +65,14 @@ def __updateStorage(userUUID, nameList):
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
 
-    querySQL = """SELECT avatar FROM t_user WHERE uuid='%s'; """ % userUUID
-    updateSQL = """UPDATE t_user SET avatar='%s' WHERE uuid='%s'; """ % (nameList[0], userUUID)
+    querySQL = """SELECT avatar FROM t_user WHERE uuid=%s; """
+    updateSQL = """UPDATE t_user SET avatar=%s WHERE uuid=%s; """
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        rows = dbManager.executeSingleQuery(querySQL)
+        rows = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
         oldName  = rows[0]["avatar"].strip()
-        action = dbManager.executeTransactionDml(updateSQL)
+        action = dbManager.executeTransactionDmlWithArgs(updateSQL, [nameList[0], userUUID])
         if action and len(oldName) > 0:
             #删除旧的头像文件
             fullPath = path + oldName

@@ -35,16 +35,16 @@ def __getMyContactList(userUUID):
     dataDict = None
     querySQL = """
         SELECT uuid, id, contact_phone, contact_email, qq, weibo, wechat
-                FROM t_user WHERE uuid='%s';
-    """ % userUUID
+                FROM t_user WHERE uuid=%s;
+    """
     exchangeSQL = """
         SELECT uuid, id, nickname, avatar FROM t_user 
-        WHERE uuid IN (SELECT other_user_uuid FROM t_user_user WHERE user_uuid='%s')
+        WHERE uuid IN (SELECT other_user_uuid FROM t_user_user WHERE user_uuid=%s)
     """ % userUUID
     dbManager = DB.DBManager.shareInstanced()
     try: 
             dataDict = {}
-            rows = dbManager.executeSingleQuery(querySQL)
+            rows = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
             row  = rows[0]
             dataDict["uuid"] = row["uuid"]
             dataDict["userId"] = row["id"]
@@ -54,7 +54,7 @@ def __getMyContactList(userUUID):
             dataDict["weibo"] = row["weibo"]
             dataDict["wechat"] = row["wechat"]
 
-            rows = dbManager.executeSingleQuery(exchangeSQL)
+            rows = dbManager.executeSingleQueryWithArgs(exchangeSQL, [userUUID])
             exchangeList = []
             for row in rows:
                 exchangeList.append(row)
