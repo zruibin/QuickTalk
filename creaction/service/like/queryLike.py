@@ -49,12 +49,12 @@ def __queryLikeInStorage(userUUID, typeStr, likeUUIDList):
     # print inString
 
     querySQL = """
-        SELECT content_uuid FROM t_like WHERE user_uuid='%s' AND type=%s AND content_uuid IN (%s)
-    """ % (userUUID, typeStr, inString)
+        SELECT content_uuid FROM t_like WHERE user_uuid=%s AND type=%s AND content_uuid IN ("""+inString+"""")
+    """
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        resultList = dbManager.executeSingleQuery(querySQL, False)
+        resultList = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID, typeStr], False)
         packageDict = __packageData(likeUUIDList, resultList)
         return RESPONSE_JSON(CODE_SUCCESS, packageDict) 
     except Exception as e:
