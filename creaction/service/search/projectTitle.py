@@ -35,16 +35,17 @@ def projectTitle():
 
 def __searchByProjectTitle(searchText, index):
     dataDict = None
+    searchText = "%" + searchText + "%"
 
     # subSQL = """, t_tag_project.content AS tag FROM t_project, t_tag_project
     #     WHERE t_tag_project.project_uuid=t_project.uuid AND t_project.title LIKE '%{searchText}%'  ORDER BY t_project.time  DESC """.format(searchText=searchText)
     subSQL = """, t_project.detail FROM t_project
-        WHERE t_project.title LIKE '%{searchText}%'  ORDER BY t_project.time  DESC """.format(searchText=searchText)
+        WHERE t_project.title LIKE %s  ORDER BY t_project.time  DESC """
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
         querySQL = queryProjectString(subSQL, index)
-        tempDict = dbManager.executeSingleQuery(querySQL)
+        tempDict = dbManager.executeSingleQueryWithArgs(querySQL, [searchText])
         dataDict = __packageData(tempDict)
     except Exception as e:
         Loger.error(e, __file__)

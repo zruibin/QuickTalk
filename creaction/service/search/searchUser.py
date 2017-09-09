@@ -36,6 +36,7 @@ def searchUser():
 
 def __searchUserByNickName(searchText, userUUID, index):
     dataList = None
+    searchText = "%" + searchText + "%"
 
     isFollowingSQL = ""
     subWhereSQL = ""
@@ -59,15 +60,15 @@ def __searchUserByNickName(searchText, userUUID, index):
     {isFollowingSQL}
     ) AS isFollowing
 
-    FROM t_user WHERE t_user.nickname LIKE '%{searchText}%' 
+    FROM t_user WHERE t_user.nickname LIKE %s 
     {subWhereSQL} ORDER BY t_user.time DESC  {limit} 
     """.format(following=Config.TYPE_FOR_USER_FOLLOWING,
         member=Config.TYPE_FOR_PROJECT_MEMBER, isFollowingSQL=isFollowingSQL,
-        searchText=searchText, subWhereSQL=subWhereSQL, limit=limit(index))
+        subWhereSQL=subWhereSQL, limit=limit(index))
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        dataList = dbManager.executeSingleQuery(querySQL)
+        dataList = dbManager.executeSingleQueryWithArgs(querySQL, [searchText])
         for data in dataList:
             if userUUID is not None: data["isFollowing"] = 0
             data["projectNum"] = int(data["projectNum"])

@@ -35,18 +35,19 @@ def searchProjectByTag():
 
 def __searchProjectByTagInStorage(searchText, index):
     dataList = None
+    searchText = "%" + searchText + "%"
 
     subSQL = """
         , t_project.detail,
         (SELECT count(t_comment.uuid) FROM t_comment WHERE project_uuid=t_project.uuid) AS commentNum
         FROM t_project WHERE uuid IN (
-            SELECT project_uuid FROM t_tag_project WHERE t_tag_project.content LIKE '%{searchText}%')
-        ORDER BY t_project.time DESC """.format(searchText=searchText)
+            SELECT project_uuid FROM t_tag_project WHERE t_tag_project.content LIKE %s)
+        ORDER BY t_project.time DESC """
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
         querySQL = queryProjectString(subSQL, index)
-        dataList = dbManager.executeSingleQuery(querySQL)
+        dataList = dbManager.executeSingleQueryWithArgs(querySQL, [searchText])
         for data in dataList:
             time = data["time"]
             time = str(time)
