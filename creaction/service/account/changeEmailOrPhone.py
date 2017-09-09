@@ -36,7 +36,7 @@ def changeEmailOrPhone():
     typeString = ""
     if typeStr == Config.TYPE_FOR_EMAIL:
         typeString = "email"
-        if verifyEmailIsExists(account): return ESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
+        if verifyEmailIsExists(account): return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_HAS_BE_USED)
         code = getValueFromRequestByKey("code")
         if code == None:
             return RESPONSE_JSON(CODE_ERROR_TEST_AND_VERIFY)
@@ -46,7 +46,7 @@ def changeEmailOrPhone():
                 return RESPONSE_JSON(CODE_ERROR_VERIFY_CODE_OUTDATE)
     elif typeStr == Config.TYPE_FOR_PHONE:
         typeString = "phone"
-        if verifyPhoneIsExists(account): return ESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
+        if verifyPhoneIsExists(account): return RESPONSE_JSON(CODE_ERROR_THE_PHONE_HAS_BE_USED)
     else:
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
