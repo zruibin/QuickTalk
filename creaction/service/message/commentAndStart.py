@@ -39,9 +39,9 @@ def __queryCommentAndStartMessageFromStorage(userUUID):
             ) AS title,
             t_user.uuid, t_user.nickname, t_user.avatar
         FROM t_message_comment INNER JOIN t_user
-            ON t_message_comment.user_uuid='{userUUID}'
+            ON t_message_comment.user_uuid=%s
             AND t_user.uuid=t_message_comment.owner_user_uuid
-            AND t_message_comment.status={status}
+            AND t_message_comment.status=%s
         UNION
         SELECT t_message_start.user_uuid, t_message_start.type,
                 t_message_start.content_uuid,
@@ -49,24 +49,29 @@ def __queryCommentAndStartMessageFromStorage(userUUID):
                 '' AS title,
                 t_user.uuid, t_user.nickname, t_user.avatar
             FROM t_message_start INNER JOIN t_user
-                ON t_message_start.user_uuid='{userUUID}'
+                ON t_message_start.user_uuid=%s
                 AND t_user.uuid=t_message_start.owner_user_uuid
-                AND t_message_start.status={status}
+                AND t_message_start.status=%s
         ORDER BY time DESC
-    """.format(userUUID=userUUID, status=Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT)
+    """
+    queryArgs = [userUUID, str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT),
+                        userUUID, str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT)]
 
-    updataCommentMessageSQL = """UPDATE t_message_comment SET status=%s WHERE user_uuid='%s' """ % (Config.TYPE_FOR_MESSAGE_READ, userUUID)
-    updataStartMessageSQL = """UPDATE t_message_start SET status=%s WHERE user_uuid='%s' """ % (Config.TYPE_FOR_MESSAGE_READ, userUUID)
+    updataCommentMessageSQL = """UPDATE t_message_comment SET status=%s WHERE user_uuid=%s """
+    updataStartMessageSQL = """UPDATE t_message_start SET status=%s WHERE user_uuid=%s """
+
+    updateSQLList = [updataCommentMessageSQL, updataStartMessageSQL]
+    updateArgsList = [[Config.TYPE_FOR_MESSAGE_READ, userUUID], [Config.TYPE_FOR_MESSAGE_READ, userUUID]]
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        dataList = dbManager.executeSingleQuery(querySQL)
+        dataList = dbManager.executeSingleQueryWithArgs(querySQL, queryArgs)
         for data in dataList:
             data["time"] = str(data["time"])
             data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, data["uuid"], data["avatar"])
         dataList = __queryReplyComment(dataList)
 
-        dbManager.executeTransactionMutltiDml([updataCommentMessageSQL, updataStartMessageSQL])
+        dbManager.executeTransactionMutltiDmlWithArgsList(updateSQLList, updateArgsList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
