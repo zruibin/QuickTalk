@@ -70,6 +70,15 @@ def copyRequireFile():
         shutil.copyfile(directory, newDir)
     pass
 
+def removeSomeDir():
+    dirList = ["/logs", "/medias"]
+    for dirPath in dirList:
+        dirName = RELEASE + dirPath
+        if os.path.exists(dirName):
+            shutil.rmtree(dirName)
+    pass
+
+
 def convert_character(string, origin_string, replace_string):
     """用指定的字符替换文本中指定的字符"""
     string = string.replace(origin_string, replace_string)
@@ -121,6 +130,7 @@ def Main(argsList):
             changeDebugStatus(distDir)
             compileall.compile_dir(distDir)
             copyRequireFile()
+            removeSomeDir()
             clean(distDir)
 
     # py_compile.compile(r'H:\game\test.py')
