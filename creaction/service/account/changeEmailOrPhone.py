@@ -19,6 +19,7 @@ from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey
 from common.commonMethods import verifyEmailIsExists, verifyPhoneIsExists
+from module.cache.RuntimeCache import CacheManager
 
 
 @account.route('/change_email_or_phone', methods=["POST"])

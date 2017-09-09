@@ -30,8 +30,8 @@ def getVerifyCode():
 
     if typeStr == Config.TYPE_FOR_EMAIL:
         # 验证email是否存在了
-        userUUID = verifyEmailIsExistsForReturnUUID(account)
-        if userUUID == None: return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_NOT_FOUND)
+        # userUUID = verifyEmailIsExistsForReturnUUID(account)
+        # if userUUID == None: return RESPONSE_JSON(CODE_ERROR_THE_EMAIL_NOT_FOUND)
 
         # 利用Celery异步发邮件
         if dispatchSendEmailForVerifyCode.delay(account):
