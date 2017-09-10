@@ -75,11 +75,11 @@ def __insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict, time
         Loger.error(MESSAGE[CODE_ERROR_IMAGE_NUMBER_TOO_MANY], __file__)
         return RESPONSE_JSON(CODE_ERROR_IMAGE_NUMBER_TOO_MANY)
     
-    sqlList = __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, time)
+    sqlList, argsList = __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, time)
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionMutltiDml(sqlList)
+        dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
     except Exception as e:
         Loger.error(e, __file__)
         __removeFileOnError(path, mediasDict.values())
@@ -91,17 +91,24 @@ def __insertProjectStorage(userUUID, projectUUID, dataJsonDict, mediasDict, time
 
 def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, time):
     sqlList = []
+    argsList = []
 
     # 项目多媒体内容
     medias_count = len(mediasDict)
     if medias_count > 0:
+        insertMediasArgs = []
         insertMediasSQL = """INSERT INTO t_project_media (project_uuid, sorting, type, media_name, time) VALUES """
         values = ""
-        typeInt = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
         for key, value in mediasDict.items():
-            values += """('%s', %s, %d, '%s', '%s'),""" % (projectUUID, key, typeInt, value, time)
+            values += """(%s, %s, %s, %s, %s),"""
+            insertMediasArgs.append(projectUUID)
+            insertMediasArgs.append(key)
+            insertMediasArgs.append(str(Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE))
+            insertMediasArgs.append(value)
+            insertMediasArgs.append(time)
         insertMediasSQL += values[:-1] + ";"
         sqlList.append(insertMediasSQL)
+        argsList.append(insertMediasArgs)
     
     # 项目计划列表
     have_plan = 0
@@ -109,54 +116,78 @@ def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, time):
     planListLen = len(planList)
     if planListLen > 0 :
         have_plan = 1
+        insertPlanArgs = []
         insertPlanSQL = """INSERT INTO t_project_plan (project_uuid, sorting, content, start_time, finish_time, medias_count) VALUES """
         values = ""
         for x in range(planListLen):
             data = planList[x]
-            content = data["content"]
-            startTime = data["startTime"]
-            finishTime = data["finishTime"]
-            values += """('%s', %d, '%s', '%s', '%s', 0),""" % (projectUUID, x, content, startTime, finishTime)
+            values += """(%s, %s, %s, %s, %s, 0),"""
+            insertPlanArgs.append(projectUUID)
+            insertPlanArgs.append(str(x))
+            insertPlanArgs.append(data["content"])
+            insertPlanArgs.append(data["startTime"])
+            insertPlanArgs.append(data["finishTime"])
         insertPlanSQL += values[:-1] + ";"
         sqlList.append(insertPlanSQL)
+        argsList.append(insertPlanArgs)
 
     # 项目标签列表
     tagList = dataJsonDict["tagList"]
     tagListLen = len(tagList)
     if tagListLen > 0 :
+        insertTagArgs = []
         insertTagSQL = """INSERT INTO t_tag_project (project_uuid, sorting, type, content) VALUES """
         values = ""
-        typeString = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
         for i in range(tagListLen):
-            values += """('%s', %d, %d, '%s'),""" % (projectUUID, i, typeString, tagList[i])
+            values += """(%s, %s, %s, %s),"""
+            insertTagArgs.append(projectUUID)
+            insertTagArgs.append(str(i))
+            insertTagArgs.append(Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
+            insertTagArgs.append(tagList[i])
         insertTagSQL += values[:-1] + ";"
         sqlList.append(insertTagSQL)
+        argsList.append(insertTagArgs)
 
     # 项目邀请成员 消息
     memberList = dataJsonDict["memberList"]
     memberListLen = len(memberList)
     if memberListLen > 0:
+        insertMessageProjectArgs = []
         insertMessageProjectSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action, time) VALUES """
         values = ""
         for i in range(memberListLen):
             content = dataJsonDict["nickname"] + "邀请你加入" + dataJsonDict["title"]
-            values += """('%s', %d, '%s', '%s', %d, '%s', %d, '%s'),""" % (memberList[i], 
-            Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_INVITE, projectUUID,
-            dataJsonDict["user_uuid"], Config.TYPE_FOR_MESSAGE_UNREAD, content,
-            Config.TYPE_FOR_MESSAGE_ACTION_OFF, time)
+            values += """(%s, %s, %s, %s, %s, %s, %s, %s),"""
+            insertMessageProjectArgs.append(memberList[i])
+            insertMessageProjectArgs.append(str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_INVITE))
+            insertMessageProjectArgs.append(projectUUID)
+            insertMessageProjectArgs.append(dataJsonDict["user_uuid"])
+            insertMessageProjectArgs.append(str(Config.TYPE_FOR_MESSAGE_UNREAD))
+            insertMessageProjectArgs.append(content)
+            insertMessageProjectArgs.append(str(Config.TYPE_FOR_MESSAGE_ACTION_OFF))
+            insertMessageProjectArgs.append(time)
         insertMessageProjectSQL += values[:-1] + ";"
         sqlList.append(insertMessageProjectSQL)
+        argsList.append(insertMessageProjectArgs)
 
     # 主项目
+    insertProjectArgs = []
     insertProjectSQL = """INSERT INTO t_project (uuid, title, detail, result, author_uuid,   status, have_plan, medias_count, time, over_time) 
-    VALUES ('{uuid}', '{title}', '{detail}', '{result}', '{author_uuid}', 0, {have_plan},
-    {medias_count}, '{time}', '{over_time}');""".format(uuid=projectUUID, 
-         title=dataJsonDict["title"], detail=dataJsonDict["detail"], 
-         result=dataJsonDict["result"], author_uuid=dataJsonDict["user_uuid"],
-         have_plan=have_plan, medias_count=medias_count, time=time, over_time=time)
-    sqlList.append(insertProjectSQL)
+    VALUES (%s, %s, %s, %s, %s, 0, %s, %s, %s, %s);"""
+    insertProjectArgs.append(projectUUID)
+    insertProjectArgs.append(dataJsonDict["title"])
+    insertProjectArgs.append(dataJsonDict["detail"])
+    insertProjectArgs.append(dataJsonDict["result"])
+    insertProjectArgs.append(dataJsonDict["user_uuid"])
+    insertProjectArgs.append(str(have_plan))
+    insertProjectArgs.append(str(medias_count))
+    insertProjectArgs.append(time)
+    insertProjectArgs.append(time)
 
-    return sqlList
+    sqlList.append(insertProjectSQL)
+    argsList.append(insertProjectArgs)
+
+    return sqlList, argsList
     
 
 def __removeFileOnError(path, fileList):

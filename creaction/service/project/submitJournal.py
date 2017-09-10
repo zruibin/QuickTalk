@@ -66,6 +66,7 @@ def __uploadMedias(journalUUID, projectUUID):
 
 def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, mediasDict={}):
     sqlList = []
+    argsList = []
     time = generateCurrentTime()
 
     path = __journalMediasPath(projectUUID, journalUUID)
@@ -77,17 +78,17 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
     # 项目多媒体内容
     mediasCount = len(mediasDict)
     if mediasCount > 0:
-        insertMediasSQL = __insertMediasSQLString(journalUUID, projectUUID, mediasDict, time)
+        insertMediasSQL, insertMediasArgs = __insertMediasSQLString(journalUUID, projectUUID, mediasDict, time)
         sqlList.append(insertMediasSQL)
+        argsList.append(insertMediasArgs)
 
     # 插入日志
     insertJournalSQL = """
         INSERT INTO t_project_journal (uuid, project_uuid, user_uuid, content, `like`,medias_count, time)
-        VALUES ('{journalUUID}', '{projectUUID}', '{userUUID}', '{content}', 0, {mediasCount}, 
-        '{time}');
-    """.format(journalUUID=journalUUID, projectUUID=projectUUID, userUUID=userUUID, 
-            content=content, mediasCount=mediasCount, time=time)
+        VALUES (%s, %s, %s, %s, 0, %s, %s);"""
+    insertJournalArgs = [journalUUID, projectUUID, userUUID, content, str(mediasCount), time]
     sqlList.append(insertJournalSQL)
+    argsList.append(insertJournalArgs)
 
     # 通知成员项目更新了
     memberList = __queryProjectMembers(projectUUID, userUUID)
@@ -97,15 +98,15 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
         return RESPONSE_JSON(CODE_ERROR_QUERY_PROJECT_MEMBER)
     else:
         if len(memberList) > 0:
-            insertProjectMessageSQL = __insertProjectMessageSQLString(memberList,
-                                                    projectUUID, userUUID, time)
+            insertProjectMessageSQL, insertProjectMessageArgs = __insertProjectMessageSQLString(memberList, projectUUID, userUUID, time)
             sqlList.append(insertProjectMessageSQL)
+            argsList.append(insertProjectMessageArgs)
 
     # print sqlList
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionMutltiDml(sqlList)
+        dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
     except Exception as e:
         Loger.error(e, __file__)
         if os.path.exists(path): shutil.rmtree(path)
@@ -118,14 +119,15 @@ def __submitJournalToStorage(journalUUID, userUUID, projectUUID, content, medias
 def __queryProjectMembers(projectUUID, userUUID):
     memberList = None
     queryProjectMemberSQL = """
-        SELECT user_uuid FROM t_project_user WHERE project_uuid='%s' AND type=%s 
+        SELECT user_uuid FROM t_project_user WHERE project_uuid=%s AND type=%s 
         UNION
-        SELECT author_uuid AS user_uuid FROM t_project WHERE uuid='%s';
-    """ % (projectUUID, Config.TYPE_FOR_PROJECT_MEMBER, projectUUID)
+        SELECT author_uuid AS user_uuid FROM t_project WHERE uuid=%s;
+    """
+    queryProjectMemberArgs = [projectUUID, Config.TYPE_FOR_PROJECT_MEMBER, projectUUID]
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        tempList = dbManager.executeSingleQuery(queryProjectMemberSQL, False)
+        tempList = dbManager.executeSingleQueryWithArgs(queryProjectMemberSQL, queryProjectMemberArgs, False)
         memberList = [data[0] for data in tempList]
         if userUUID in memberList: memberList.remove(userUUID)
     except Exception as e:
@@ -136,23 +138,37 @@ def __queryProjectMembers(projectUUID, userUUID):
     
 
 def __insertMediasSQLString(journalUUID, projectUUID, mediasDict, time):
+    insertMediasArgs = []
     insertMediasSQL = """INSERT INTO t_project_journal_media (journal_uuid, project_uuid, sorting, type, media_name, time) VALUES """
     values = ""
     typeInt = Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE
     for key, value in mediasDict.items():
-        values += """('%s', '%s', %s, %d, '%s', '%s'),""" % (journalUUID, projectUUID, key, typeInt, value, time)
+        values += """(%s, %s, %s, %s, %s, %s),"""
+        insertMediasArgs.append(journalUUID)
+        insertMediasArgs.append(projectUUID)
+        insertMediasArgs.append(key)
+        insertMediasArgs.append(str(typeInt))
+        insertMediasArgs.append(value)
+        insertMediasArgs.append(time)
     insertMediasSQL += values[:-1] + ";"
-    return insertMediasSQL
+    return insertMediasSQL, insertMediasArgs
 
 
 def __insertProjectMessageSQLString(memberList, projectUUID, userUUID, time):
+    insertProjectMessageArgs = []
     insertProjectMessageSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action, time) VALUES """
     values = ""
     typeString = Config.TYPE_FOR_MESSAGE_IN_PROJECT_UPDATE_JOURNAL
     for member in memberList:
-        values += """('%s', %d, '%s', '%s', 0, '%s', 0, '%s'),""" % (member, typeString, projectUUID, userUUID, '提交了日志', time)
+        values += """(%s, %s, %s, %s, 0, %s, 0, %s),"""
+        insertProjectMessageArgs.append(member)
+        insertProjectMessageArgs.append(str(typeString))
+        insertProjectMessageArgs.append(projectUUID)
+        insertProjectMessageArgs.append(userUUID)
+        insertProjectMessageArgs.append('提交了日志')
+        insertProjectMessageArgs.append(time)
     insertProjectMessageSQL += values[:-1] + ";"
-    return insertProjectMessageSQL
+    return insertProjectMessageSQL, insertProjectMessageArgs
 
 
 def __journalMediasPath(projectUUID, journalUUID):

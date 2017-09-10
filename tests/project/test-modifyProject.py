@@ -21,12 +21,12 @@ def modifyProject():
         "nickname": "Ruibin.Chow1111",
 
         "detail":"gevent.spawn()eeeeeeee",
-        "result":"注意，这里与上一篇greenlet中第一个例子运行的结果不一样，greenlet一个协程运行完后，必须显式切换，不然会返回其父协程。而在gevent中，一个协程运行完后，它会自动调度那些未完成的协程。",
+        "result":"注意，这里与'上一篇greenlet中第一个例子运行的结果不一样，greenlet一个协程运行完后，必须显式切换，不然会返回其父协程。而在gevent中，一个协程运行完后，它会自动调度那些未完成的协程。",
 
         "tagList":["标签101", "标签202", "标签303"],
         "planList":[
             {"startTime":"2017-01-11 12:11:12", "finishTime":"2017-03-15 12:11:44", "content":"基于协程的Python网络库gevent介绍"},
-            {"startTime":"2017-04-13 15:11:12", "finishTime":"2017-10-24 17:17:42", "content":"你根本无须像greenlet一样显式的切换，每当一个协程阻塞时，程序将自动调度，gevent处理了所有的底层细节。让我们看个例子来感受下吧。"}
+            {"startTime":"2017-04-13 15:11:12", "finishTime":"2017-10-24 17:17:42", "content":"你根本无须像greenlet一'样显式的切换，每当一个协程阻塞时，程序将自动调度，gevent处理了所有的底层细节。让我们看个例子来感受下吧。"}
         ],
 
     }

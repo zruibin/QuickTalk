@@ -15,7 +15,7 @@ import requests
 def submitJournal():
     data = {"user_uuid": "f6e996f8-7d83-11e7-889b-222222",
         "project_uuid" : "000000-7d83-11e7-889b-bbbbbb",
-        "content": "对于 View 来说，你如果抽象得好，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。"
+        "content": "对于 View 来说，你如果抽象得好'，那么一个 App 的动画效果可以很方便地移植到别的 App 上，而 Github 上也有很多 UI 控件，这些控件'都是在 View 层做了很好的封装设计，使得它能够方便地开源给大家复用。"
     }
     files = {'1': open("../pic/aaa.gif", 'rb'), '2': open("../pic/bbb.jpeg", 'rb')}
 

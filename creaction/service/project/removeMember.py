@@ -38,12 +38,13 @@ def removeMember():
 
 def __removeMemberInStorage(projectUUID, memberUUID):
     deleteSQL = """
-        DELETE FROM t_project_user WHERE project_uuid='%s' AND user_uuid='%s' AND type=%s
-    """ % (projectUUID, memberUUID, Config.TYPE_FOR_PROJECT_MEMBER)
+        DELETE FROM t_project_user WHERE project_uuid=%s AND user_uuid=%s AND type=%s
+    """
+    deleteArgs = [projectUUID, memberUUID, Config.TYPE_FOR_PROJECT_MEMBER]
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionDml(deleteSQL)
+        dbManager.executeTransactionDmlWithArgs(deleteSQL, deleteArgs)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

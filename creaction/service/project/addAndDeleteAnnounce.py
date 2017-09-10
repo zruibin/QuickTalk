@@ -44,12 +44,12 @@ def __addAnnounce(projectUUID, content):
     time = generateCurrentTime()
     insertSQL = """
         INSERT INTO t_project_announce (uuid, project_uuid, content, time)
-        VALUES ('%s', '%s', '%s', '%s');
-    """ % (uuid, projectUUID, content, time)
+        VALUES (%s, %s, %s, %s);
+    """
 
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionDml(insertSQL)
+        dbManager.executeTransactionDmlWithArgs(insertSQL, [uuid, projectUUID, content, time])
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -62,12 +62,12 @@ def __deleteAnnounce(uuid, projectUUID):
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
 
     deleteSQL = """
-        DELETE FROM t_project_announce WHERE uuid='%s' AND project_uuid='%s';
-    """ % (uuid, projectUUID)
+        DELETE FROM t_project_announce WHERE uuid=%s AND project_uuid=%s;
+    """
     
     dbManager = DB.DBManager.shareInstanced()
     try:
-        dbManager.executeTransactionDml(deleteSQL)
+        dbManager.executeTransactionDmlWithArgs(deleteSQL, [uuid, projectUUID])
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
