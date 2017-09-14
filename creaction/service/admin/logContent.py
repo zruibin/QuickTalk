@@ -129,9 +129,9 @@ def sizeCover(size):
     elif 1000 < size < 1000*1000:
         return str(size/1000) + "KB"
     elif 1000*1000 < size < 1000*1000*1000:
-        return str(size/1000*1000) + "MB"
+        return str(size/(1000*1000)) + "MB"
     else:
-        return str(size/1000*1000*1000) + "GB"
+        return str(size/(1000*1000*1000)) + "GB"
     
 
 
