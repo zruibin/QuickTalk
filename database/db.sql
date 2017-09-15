@@ -6,7 +6,7 @@ CREATE TABLE `t_user`(
     `email` VARCHAR(20) NOT NULL COMMENT '登录用的电子邮箱',
     `phone` VARCHAR(20) NOT NULL COMMENT '登录用的手机',
     `nickname` VARCHAR(100) NOT NULL COMMENT '昵称',
-    `detail` VARCHAR(200) NOT NULL COMMENT '简介',
+    `detail` TEXT NOT NULL COMMENT '简介',
     `qq` VARCHAR(20) NOT NULL COMMENT '用户QQ',
     `wechat` VARCHAR(40) NOT NULL COMMENT '微信',
     `weibo` VARCHAR(40) NOT NULL COMMENT '微博',
@@ -209,7 +209,7 @@ CREATE TABLE `t_project_announce`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `uuid` VARCHAR(100) NOT NULL COMMENT '公告uuid',
     `project_uuid` VARCHAR(100) NOT NULL COMMENT '项目uuid',
-    `content` VARCHAR(200) NOT NULL COMMENT '公告内容',
+    `content` TEXT NOT NULL COMMENT '公告内容',
     `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '加入时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
