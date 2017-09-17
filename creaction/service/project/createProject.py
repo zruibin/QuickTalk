@@ -156,9 +156,10 @@ def __packageSQL(userUUID, projectUUID, dataJsonDict, mediasDict, time):
         insertMessageProjectSQL = """INSERT INTO t_message_project (user_uuid, type, content_uuid, owner_user_uuid, status, content, action, time) VALUES """
         values = ""
         for i in range(memberListLen):
+            member = memberList[i]
             content = dataJsonDict["nickname"] + "邀请你加入" + dataJsonDict["title"]
             values += """(%s, %s, %s, %s, %s, %s, %s, %s),"""
-            insertMessageProjectArgs.append(memberList[i])
+            insertMessageProjectArgs.append(member["uuid"])
             insertMessageProjectArgs.append(str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_INVITE))
             insertMessageProjectArgs.append(projectUUID)
             insertMessageProjectArgs.append(dataJsonDict["user_uuid"])
@@ -198,7 +199,8 @@ def __removeFileOnError(path, fileList):
 
 def __notificationMember(dataJsonDict):
     memberList = dataJsonDict["memberList"]
-    for uuid in memberList:
+    for member in memberList:
+        uuid = member["uuid"]
         content = dataJsonDict["nickname"] + "邀请你加入" + dataJsonDict["title"]
         notification.notificationUserForContent(uuid, content)
         # dispatchNotificationUserForContent.delay(uuid, content)
