@@ -17,3 +17,4 @@ star = Blueprint("star", __name__)
 from service.star import peopleList
 from service.star import startAction
 from service.star import projectList
+from service.star import queryStar

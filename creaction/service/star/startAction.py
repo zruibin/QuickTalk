@@ -41,7 +41,7 @@ def startAction():
         if nickname == None: return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
         return __startOrUnStartUser(userUUID, otherUUID, action, nickname)
     else:
-        return RESPONSE_JSON(CODE_SUCCESS)
+        return RESPONSE_JSON(CODE_ERROR_PARAM)
 
 
 def __startOrUnStartProject(userUUID, otherUUID, action):
