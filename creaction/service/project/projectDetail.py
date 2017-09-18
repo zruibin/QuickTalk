@@ -42,9 +42,12 @@ def __queryProjectDetailFromStorage(projectUUID):
     queryMemberSQL = """
         SELECT uuid, avatar, nickname FROM t_user WHERE uuid IN 
         (
+            SELECT author_uuid AS user_uuid FROM t_project WHERE 		 
+            uuid='%s'
+			UNION
             SELECT  user_uuid FROM t_project_user WHERE project_uuid='%s' AND type=%s ORDER BY time ASC
         )
-    """ % (projectUUID, Config.TYPE_FOR_PROJECT_MEMBER)
+    """ % (projectUUID, projectUUID, Config.TYPE_FOR_PROJECT_MEMBER)
 
     queryPlanSQL = """
         SELECT content, start_time AS startTime, finish_time AS finishTime FROM t_project_plan WHERE project_uuid='%s' ORDER BY sorting ASC;
