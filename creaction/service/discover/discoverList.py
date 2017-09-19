@@ -33,7 +33,7 @@ def __queryDiscoverListFromStorage(index):
     
     dataList = None
     subSQL = """, t_project.detail,
-        (SELECT count(t_comment.uuid) FROM t_comment WHERE project_uuid=t_project.uuid) AS commentNum FROM t_project ORDER BY t_project.like DESC"""
+        (SELECT count(t_comment.uuid) FROM t_comment WHERE project_uuid=t_project.uuid) AS commentNum FROM t_project ORDER BY t_project.like DESC, t_project.time DESC"""
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
