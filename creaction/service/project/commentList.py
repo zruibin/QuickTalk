@@ -35,15 +35,14 @@ def comment():
 
 def __getCommentFromStorage(projectUUID, index, userUUID):
     limitSQL = limit(index)
-
     querySQL = ""
     if userUUID == None:
         querySQL = """
             SELECT t_comment.uuid, project_uuid, user_uuid, content, t_comment.time, `like`,
             is_reply AS isReply, t_user.nickname, t_user.avatar,
             reply_comment_uuid
-            FROM t_comment LEFT JOIN t_user
-            ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
+            FROM t_comment, t_user
+            WHERE project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
             ORDER BY t_comment.time DESC {limitSQL}
             """.format(projectUUID=projectUUID, limitSQL=limitSQL)
     else:
@@ -51,15 +50,14 @@ def __getCommentFromStorage(projectUUID, index, userUUID):
             SELECT t_comment.uuid, project_uuid, user_uuid, content, t_comment.time, `like`,
             is_reply AS isReply, t_user.nickname, t_user.avatar,
             (SELECT count(content_uuid) FROM t_like WHERE       
-                    content_uuid=t_comment.uuid AND user_uuid='{userUUID}
-' AND type='{likeType}') AS likeStatus,
+                    content_uuid=t_comment.uuid AND user_uuid='{userUUID}' AND type='{likeType}') AS likeStatus,
             reply_comment_uuid
-            FROM t_comment LEFT JOIN t_user
-            ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
+            FROM t_comment, t_user
+            WHERE project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
             ORDER BY t_comment.time DESC {limitSQL}
             """.format(projectUUID=projectUUID, limitSQL=limitSQL, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_COMMENT)
-
     dbManager = DB.DBManager.shareInstanced()
+
     try:
         dataDict = dbManager.executeSingleQuery(querySQL)
         for data in dataDict:
