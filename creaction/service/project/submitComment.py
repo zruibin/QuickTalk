@@ -24,7 +24,7 @@ import common.notification as notification
 
 
 @project.route('/submit_comment', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def submitComment():
     userUUID = getValueFromRequestByKey("user_uuid")
     projectUUID = getValueFromRequestByKey("project_uuid")
@@ -40,16 +40,15 @@ def submitComment():
     else:
         replyCommentUUID = ""
 
-
-    return __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, content)
+    return __submitCommentToStorage(userUUID, projectUUID, content, isReply, replyCommentUUID)
     
 
-def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, content):
+def __submitCommentToStorage(userUUID, projectUUID, content, isReply, replyCommentUUID):
     uuid = generateUUID()
     time = generateCurrentTime()
 
     dbManager = DB.DBManager.shareInstanced()
-    peopleList = None
+    peopleList = []
     notificationContent = ""
     try:
         sqlList = []
@@ -69,30 +68,32 @@ def __submitCommentToStorage(userUUID, projectUUID, isReply, replyCommentUUID, c
             peopleList = __queryProjectAllPeople(projectUUID)
             #若是作者或成员评论则通知时去除自己
             if userUUID in peopleList: peopleList.remove(userUUID)
-            for people in peopleList:
-                values += """(%s, %s, %s, %s, %s, %s, %s),"""
-                insertMessageCommentArgs.append(people)
-                insertMessageCommentArgs.append(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT)
-                insertMessageCommentArgs.append(uuid)
-                insertMessageCommentArgs.append(userUUID)
-                insertMessageCommentArgs.append(str(Config.TYPE_FOR_MESSAGE_UNREAD))
-                insertMessageCommentArgs.append(content)
-                insertMessageCommentArgs.append(time)
-            insertMessageCommentSQL += values[:-1] + ";"
-            sqlList.append(insertMessageCommentSQL)
-            argsList.append(insertMessageCommentArgs)
-            notificationContent = "收到一条评论"  
+            if len(peopleList) > 0:
+                for people in peopleList:
+                    values += """(%s, %s, %s, %s, %s, %s, %s),"""
+                    insertMessageCommentArgs.append(people)
+                    insertMessageCommentArgs.append(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT)
+                    insertMessageCommentArgs.append(uuid)
+                    insertMessageCommentArgs.append(userUUID)
+                    insertMessageCommentArgs.append(str(Config.TYPE_FOR_MESSAGE_UNREAD))
+                    insertMessageCommentArgs.append(content)
+                    insertMessageCommentArgs.append(time)
+                insertMessageCommentSQL += values[:-1] + ";"
+                sqlList.append(insertMessageCommentSQL)
+                argsList.append(insertMessageCommentArgs)
+                notificationContent = "收到一条评论"  
         else: # 回复则只通知评论者
             people = __queryCommentUserUUID(replyCommentUUID)
-            typeStr = Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_REPLY_COMMENT
-            values += """(%s, %s, %s, %s, %s, %s, %s)"""
-            insertMessageCommentArgs = [people, typeStr, uuid, userUUID, 
-                                    str(Config.TYPE_FOR_MESSAGE_UNREAD), content, time]
-            insertMessageCommentSQL += values + ";"
-            peopleList = [people]
-            sqlList.append(insertMessageCommentSQL)
-            argsList.append(insertMessageCommentArgs)
-            notificationContent = "收到一条回复"  
+            if people is not None:
+                typeStr = Config.TYPE_FOR_MESSAGE_IN_PROJECT_FOR_REPLY_COMMENT
+                values += """(%s, %s, %s, %s, %s, %s, %s)"""
+                insertMessageCommentArgs = [people, typeStr, uuid, userUUID, 
+                                        str(Config.TYPE_FOR_MESSAGE_UNREAD), content, time]
+                insertMessageCommentSQL += values + ";"
+                peopleList = [people]
+                sqlList.append(insertMessageCommentSQL)
+                argsList.append(insertMessageCommentArgs)
+                notificationContent = "收到一条回复"  
 
         dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
     except MemberQueryException, e:
