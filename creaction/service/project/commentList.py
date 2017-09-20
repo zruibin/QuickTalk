@@ -24,24 +24,40 @@ from common.commonMethods import limit
 def comment():
     projectUUID = getValueFromRequestByKey("project_uuid")
     index = getValueFromRequestByKey("index")
+    userUUID = getValueFromRequestByKey("user_uuid")
 
     index = parsePageIndex(index)
     if projectUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
     
-    return __getCommentFromStorage(projectUUID, index=1)
+    return __getCommentFromStorage(projectUUID, index, userUUID)
 
 
-def __getCommentFromStorage(projectUUID, index=1):
+def __getCommentFromStorage(projectUUID, index, userUUID):
     limitSQL = limit(index)
-    querySQL = """
-        SELECT t_comment.uuid, project_uuid, user_uuid, content, t_comment.time, `like`,
-         is_reply AS isReply, t_user.nickname, t_user.avatar,
-        reply_comment_uuid
-        FROM t_comment LEFT JOIN t_user
-        ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
-        ORDER BY t_comment.time ASC {limitSQL}
-        """.format(projectUUID=projectUUID, limitSQL=limitSQL)
+
+    querySQL = ""
+    if userUUID == None:
+        querySQL = """
+            SELECT t_comment.uuid, project_uuid, user_uuid, content, t_comment.time, `like`,
+            is_reply AS isReply, t_user.nickname, t_user.avatar,
+            reply_comment_uuid
+            FROM t_comment LEFT JOIN t_user
+            ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
+            ORDER BY t_comment.time ASC {limitSQL}
+            """.format(projectUUID=projectUUID, limitSQL=limitSQL)
+    else:
+        querySQL = """
+            SELECT t_comment.uuid, project_uuid, user_uuid, content, t_comment.time, `like`,
+            is_reply AS isReply, t_user.nickname, t_user.avatar,
+            (SELECT count(content_uuid) FROM t_like WHERE       
+                    content_uuid=t_comment.uuid AND user_uuid='{userUUID}
+' AND type='{likeType}') AS likeStatus,
+            reply_comment_uuid
+            FROM t_comment LEFT JOIN t_user
+            ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
+            ORDER BY t_comment.time ASC {limitSQL}
+            """.format(projectUUID=projectUUID, limitSQL=limitSQL, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_COMMENT)
 
     dbManager = DB.DBManager.shareInstanced()
     try:

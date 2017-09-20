@@ -23,30 +23,50 @@ from common.commonMethods import limit
 @project.route('/journal', methods=["GET", "POST"])
 def journalList():
     projectUUID = getValueFromRequestByKey("project_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
 
     index = parsePageIndex(index)
     if projectUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __queryJournalFromStorage(projectUUID, index)
+    return __queryJournalFromStorage(projectUUID, index, userUUID)
 
 
-def __queryJournalFromStorage(projectUUID, index):
+def __queryJournalFromStorage(projectUUID, index, userUUID):
     limitStr = limit(index)
-    querySQL = """
-        SELECT t_project_journal.uuid AS journal_uuid, t_project_journal.project_uuid, user_uuid, t_project_journal.time, `like`, content,
-        t_user.nickname, t_user.avatar,
-        t_project_journal_media.media_name, t_project_journal_media.sorting
-        FROM t_project_journal 
-        LEFT JOIN t_user
-            ON project_uuid='{projectUUID}' AND t_user.uuid=t_project_journal.user_uuid
-        LEFT JOIN t_project_journal_media
-            ON t_project_journal_media.journal_uuid=t_project_journal.uuid 
-            AND  t_project_journal_media.type={typeStr}
-        ORDER BY t_project_journal.time DESC {limitStr};
-    """.format(projectUUID=projectUUID, limitStr=limitStr,
-            typeStr=Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
+    querySQL = ""
+    if userUUID == None:
+        querySQL = """
+            SELECT t_project_journal.uuid AS journal_uuid, t_project_journal.project_uuid, user_uuid, t_project_journal.time, `like`, content,
+            t_user.nickname, t_user.avatar,
+            t_project_journal_media.media_name, t_project_journal_media.sorting
+            FROM t_project_journal 
+            LEFT JOIN t_user
+                ON project_uuid='{projectUUID}' AND t_user.uuid=t_project_journal.user_uuid
+            LEFT JOIN t_project_journal_media
+                ON t_project_journal_media.journal_uuid=t_project_journal.uuid 
+                AND  t_project_journal_media.type={typeStr}
+            ORDER BY t_project_journal.time DESC {limitStr};
+        """.format(projectUUID=projectUUID, limitStr=limitStr,
+                typeStr=Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
+    else:
+        querySQL = """
+            SELECT t_project_journal.uuid AS journal_uuid, t_project_journal.project_uuid, user_uuid, t_project_journal.time, `like`, content,
+            (SELECT count(content_uuid) FROM t_like WHERE       
+                    content_uuid=t_project_journal.uuid AND user_uuid='{userUUID}
+' AND type='{likeType}') AS likeStatus,
+            t_user.nickname, t_user.avatar,
+            t_project_journal_media.media_name, t_project_journal_media.sorting
+            FROM t_project_journal 
+            LEFT JOIN t_user
+                ON project_uuid='{projectUUID}' AND t_user.uuid=t_project_journal.user_uuid
+            LEFT JOIN t_project_journal_media
+                ON t_project_journal_media.journal_uuid=t_project_journal.uuid 
+                AND  t_project_journal_media.type={typeStr}
+            ORDER BY t_project_journal.time DESC {limitStr};
+        """.format(projectUUID=projectUUID, limitStr=limitStr,
+                typeStr=Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_JOURNAL)
 
     dbManager = DB.DBManager.shareInstanced()
     try:

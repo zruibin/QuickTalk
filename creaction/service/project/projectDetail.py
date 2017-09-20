@@ -23,18 +23,27 @@ from common.commonMethods import queryProjectString, limit
 @project.route('/project', methods=["GET", "POST"])
 def projectDetail():
     projectUUID = getValueFromRequestByKey("project_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
     if projectUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __queryProjectDetailFromStorage(projectUUID)
+    return __queryProjectDetailFromStorage(projectUUID, userUUID)
 
 
-def __queryProjectDetailFromStorage(projectUUID):
+def __queryProjectDetailFromStorage(projectUUID, userUUID):
     dataDict = None
-
-    subSQL = """,  t_project.detail, t_project.result FROM  t_project WHERE  t_project.uuid='%s' """ % projectUUID
-    queryProjectSQL = queryProjectString(subSQL)
     
+    subSQL = ""
+    if userUUID == None:
+        subSQL = """,  t_project.detail, t_project.result
+            FROM  t_project WHERE  t_project.uuid='%s' """ % projectUUID
+    else:
+        subSQL = """,  t_project.detail, t_project.result,
+            (SELECT count(content_uuid) FROM t_like WHERE content_uuid='{projectUUID}' AND user_uuid='{userUUID}' AND type='{likeType}') AS likeStatus,
+            (SELECT count(project_uuid) FROM t_project_user WHERE project_uuid='{projectUUID}' AND user_uuid='{userUUID}' AND type='{starType}') AS StarStatus
+            FROM  t_project WHERE  t_project.uuid='{projectUUID}' """.format(projectUUID=projectUUID, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_PROJECT, starType=Config.TYPE_FOR_PROJECT_FOLLOWER)
+    queryProjectSQL = queryProjectString(subSQL)
+
     queryResultMediasSQL = """SELECT media_name FROM t_project_media WHERE project_uuid='%s'  AND type=%d ORDER BY sorting ASC;""" % (projectUUID, Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
 
     queryTagsSQL = """ SELECT content FROM t_tag_project WHERE project_uuid='%s' AND type=%d  ORDER BY sorting ASC;""" % (projectUUID, Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
