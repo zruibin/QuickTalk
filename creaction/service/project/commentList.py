@@ -44,7 +44,7 @@ def __getCommentFromStorage(projectUUID, index, userUUID):
             reply_comment_uuid
             FROM t_comment LEFT JOIN t_user
             ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
-            ORDER BY t_comment.time ASC {limitSQL}
+            ORDER BY t_comment.time DESC {limitSQL}
             """.format(projectUUID=projectUUID, limitSQL=limitSQL)
     else:
         querySQL = """
@@ -56,7 +56,7 @@ def __getCommentFromStorage(projectUUID, index, userUUID):
             reply_comment_uuid
             FROM t_comment LEFT JOIN t_user
             ON project_uuid='{projectUUID}' AND t_user.uuid=t_comment.user_uuid
-            ORDER BY t_comment.time ASC {limitSQL}
+            ORDER BY t_comment.time DESC {limitSQL}
             """.format(projectUUID=projectUUID, limitSQL=limitSQL, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_COMMENT)
 
     dbManager = DB.DBManager.shareInstanced()
