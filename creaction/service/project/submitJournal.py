@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
-from common.commonMethods import verifyProjectMember, MemberQueryException
+from common.commonMethods import verifyIsProjectAuthor, verifyProjectMember, MemberQueryException
 from common.file import FileTypeException, uploadPicture
 import shutil, os.path
 import common.notification as notification
@@ -32,8 +32,9 @@ def submitJournal():
     projectUUID = getValueFromRequestByKey("project_uuid")
     content = getValueFromRequestByKey("content")
 
-    if verifyProjectMember(userUUID, projectUUID) == False:
-        return RESPONSE_JSON(CODE_ERROR_QUERY_PROJECT_MEMBER)
+    if verifyIsProjectAuthor(userUUID, projectUUID) == False:
+        if verifyProjectMember(userUUID, projectUUID) == False:
+            return RESPONSE_JSON(CODE_ERROR_QUERY_PROJECT_MEMBER)
     
     journalUUID = generateUUID()
 

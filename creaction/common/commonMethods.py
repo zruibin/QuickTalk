@@ -175,7 +175,23 @@ def verifyProjectMember(userUUID, projectUUID):
         Loger.error(e, __file__)
 
     return result
-    
+
+
+def verifyIsProjectAuthor(userUUID, projectUUID):
+    result  = False
+    querySQL = """
+        SELECT author_uuid FROM t_project WHERE uuid='%s' AND author_uuid='%s';""" % (projectUUID, userUUID)
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        resultData = dbManager.executeSingleQuery(querySQL)
+        if len(resultData) > 0:
+            result = True
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    return result
+
+
         
 
 if __name__ == '__main__':
