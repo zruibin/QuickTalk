@@ -167,10 +167,9 @@ def verifyProjectMember(userUUID, projectUUID):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         resultData = dbManager.executeSingleQuery(querySQL)
-        queryUserUUID = ""
-        queryUserUUID = resultData[0]["user_uuid"]
-        if queryUserUUID == userUUID or  len(dataPassword) > 0: 
-                result = True
+        if len(resultData) > 0:
+            queryUserUUID = resultData[0]["user_uuid"]
+            if queryUserUUID == userUUID: result = True
     except Exception as e:
         Loger.error(e, __file__)
 
