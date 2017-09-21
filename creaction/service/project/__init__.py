@@ -33,3 +33,4 @@ from service.project import inviteAndAgreeJoinProject
 from service.project import applyJoinAndAgree
 from service.project import addAndDeleteAnnounce
 from service.project import announceList
+from service.project import myStarList

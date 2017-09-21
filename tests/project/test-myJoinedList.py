@@ -13,7 +13,7 @@
 import requests
 
 def myJoinedList():
-    params = {"user_uuid": "f6e996f8-7d83-11e7-889b-8c8590135ddc",
+    params = {"user_uuid": "4fc193b19483091ffd422c964aee50a7",
         "index": "1"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/project/my_joined_list", params=params) 

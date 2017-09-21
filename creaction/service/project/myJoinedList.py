@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, parsePageIndex
-from common.commonMethods import queryProjectString, limit
+from common.commonMethods import queryProjectDataFromStorageBySubSQL, limit
 
 
 @project.route('/my_joined_list', methods=["GET", "POST"])
@@ -44,9 +44,7 @@ def __getMyJoinedProjectFromStorage(userUUID, index):
         if len(dataList) > 0:
             uuidList = [data["uuid"] for data in dataList]
             inString = "'" + "','".join(uuidList) + "'"
-            subSQL = """, t_project.detail FROM t_project WHERE uuid IN (%s) """ % inString
-            querySQL = queryProjectString(subSQL, 1)
-            dataList = dbManager.executeSingleQuery(querySQL)
+            dataList = queryProjectDataFromStorageBySubSQL(inString, 1, True)
             for data in dataList:
                 time = data["time"]
                 time = str(time) 
@@ -54,7 +52,6 @@ def __getMyJoinedProjectFromStorage(userUUID, index):
             return RESPONSE_JSON(CODE_SUCCESS, dataList) 
         else:
             return RESPONSE_JSON(CODE_SUCCESS) 
-        
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
