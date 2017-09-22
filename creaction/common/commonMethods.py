@@ -111,7 +111,7 @@ def limit(index):
 
 def queryProjectString(string, index=1):
     querySQL = """
-        SELECT t_project.id, t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like,
+        SELECT t_project.id, t_project.uuid, t_project.title, t_project.status, t_project.author_uuid, t_project.time, t_project.like, t_project.medias_count AS mediaCount,
 
         (SELECT nickname FROM t_user WHERE t_user.uuid=t_project.author_uuid) AS author,
 

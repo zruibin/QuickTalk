@@ -22,7 +22,7 @@ from common.commonMethods import queryProjectDataFromStorageBySubSQL, limit
 
 
 @project.route('/my_project_list', methods=["GET", "POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def myProjectList():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")
