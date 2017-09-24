@@ -48,11 +48,11 @@ def __queryJournalFromStorage(projectUUID, index, userUUID):
                     FROM t_project_journal, t_user
                     WHERE t_project_journal.project_uuid='{projectUUID}' 
                         AND t_user.uuid=t_project_journal.user_uuid
+                    ORDER BY t_project_journal.time DESC {limitStr}
             ) AS t_temp 
             LEFT JOIN t_project_journal_media 
             ON t_project_journal_media.journal_uuid=t_temp.journal_uuid
-                        AND  t_project_journal_media.type={typeStr}
-            ORDER BY t_temp.time DESC {limitStr};
+                        AND  t_project_journal_media.type={typeStr} ;
         """.format(projectUUID=projectUUID, limitStr=limitStr,
                 typeStr=Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE)
     else:
@@ -71,14 +71,14 @@ def __queryJournalFromStorage(projectUUID, index, userUUID):
                     FROM t_project_journal, t_user
                     WHERE t_project_journal.project_uuid='{projectUUID}' 
                         AND t_user.uuid=t_project_journal.user_uuid
+                    ORDER BY t_project_journal.time DESC {limitStr}
             ) AS t_temp 
             LEFT JOIN t_project_journal_media 
             ON t_project_journal_media.journal_uuid=t_temp.journal_uuid
-                        AND  t_project_journal_media.type={typeStr}
-            ORDER BY t_temp.time DESC {limitStr};
+                        AND  t_project_journal_media.type={typeStr} ;
         """.format(projectUUID=projectUUID, limitStr=limitStr,
                 typeStr=Config.TYPE_FOR_PROJECT_MEDIAS_PICTURE, userUUID=userUUID, likeType=Config.TYPE_FOR_LIKE_IN_JOURNAL)
-
+    # print querySQL
     dbManager = DB.DBManager.shareInstanced()
     try:
         dataDict = dbManager.executeSingleQuery(querySQL)
@@ -90,37 +90,55 @@ def __queryJournalFromStorage(projectUUID, index, userUUID):
  
 
 def __packageData(projectUUID, dataDict):
-    projectUUIDList = []
+    journalUUIDList = []
     for data in dataDict:
         if data["media_name"] is not None:
-            del data["sorting"]
             path = projectUUID + "/" + data["journal_uuid"]
             data["media_name"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_PROJECT, path, data["media_name"])
         data["time"] = str(data["time"])
         data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, data["user_uuid"], data["avatar"])
-        projectUUIDList.append(data["journal_uuid"])
-
-    #日志归整
-    uuidList = list(set(projectUUIDList))
-    uuidList.sort(key = projectUUIDList.index)
+        journalUUID = data["journal_uuid"]
+        if journalUUID not in journalUUIDList:
+            journalUUIDList.append(journalUUID)
 
     tempDict = {}
     for data in dataDict:
-        if not tempDict.has_key(data["journal_uuid"]):
-            tempDict[data["journal_uuid"]] = data
+        journalUUID = data["journal_uuid"]
+        if not tempDict.has_key(journalUUID):
+            tempDict[journalUUID] = data
 
+    # 整理多媒体数据
     mediaDict = {}
     for data in dataDict:
-        if not mediaDict.has_key(data["journal_uuid"]):
-            mediaDict[data["journal_uuid"]] = []
-        mediaDict[data["journal_uuid"]].append(data["media_name"])
+        journalUUID = data["journal_uuid"]
+        if not mediaDict.has_key(journalUUID):
+            mediaDict[journalUUID] = []
+        if data["media_name"] is not None:
+            sortingMediaDict = {str(data["sorting"]) : data["media_name"]}
+            mediaDict[journalUUID].append(sortingMediaDict)
 
+    # 归整多媒体数据
+    for key, mediaList in mediaDict.items():
+        count = len(mediaList)
+        medias = []
+        for index in range(count):
+            for media in mediaList:
+                if media.has_key(str(index)): 
+                    medias.append(media[str(index)])   
+        mediaDict[key] = medias
+
+    # 添加多媒体字段
     for key, value in tempDict.items():
         if mediaDict.has_key(key):
             value["medias"] = mediaDict[key]
         del value["media_name"]
+        del value["sorting"]
 
-    return tempDict.values()
+    outputList = []
+    for journalUUID in journalUUIDList:
+        outputList.append(tempDict[journalUUID])
+
+    return outputList
 
 
 
