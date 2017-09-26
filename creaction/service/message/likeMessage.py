@@ -29,11 +29,11 @@ from common.commonMethods import limit
 @vertifyTokenHandle
 def likeMessage():
     userUUID = getValueFromRequestByKey("user_uuid")
-    return __queryLikeFromStorage(userUUID)
+    noUpdate = getValueFromRequestByKey("no_update")
+    return __queryLikeFromStorage(userUUID, noUpdate)
 
 
-
-def __queryLikeFromStorage(userUUID):
+def __queryLikeFromStorage(userUUID, noUpdate):
     dataList = None
     querySQL = """
         SELECT uuid, nickname, avatar, 
@@ -68,7 +68,9 @@ def __queryLikeFromStorage(userUUID):
             data["time"] = str(data["time"])
             data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, 
                                                     data["uuid"], data["avatar"])
-        dbManager.executeTransactionDml(updataSQL)
+
+        if noUpdate == None:
+            dbManager.executeTransactionDml(updataSQL)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

@@ -24,11 +24,12 @@ from common.tools import getValueFromRequestByKey, fullPathForMediasFile, parseP
 @vertifyTokenHandle
 def contactMessage():
     userUUID = getValueFromRequestByKey("user_uuid")
+    noUpdate = getValueFromRequestByKey("no_update")
 
-    return __queryContactMessageFromStorage(userUUID)
+    return __queryContactMessageFromStorage(userUUID, noUpdate)
 
 
-def __queryContactMessageFromStorage(userUUID):
+def __queryContactMessageFromStorage(userUUID, noUpdate):
     dataList = None
     querySQL = """
         SELECT uuid, nickname, avatar, 
@@ -50,7 +51,8 @@ def __queryContactMessageFromStorage(userUUID):
             data["time"] = str(data["time"])
             data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, 
                                                     data["uuid"], data["avatar"])
-        dbManager.executeTransactionDml(updataSQL)
+        if noUpdate == None:
+            dbManager.executeTransactionDml(updataSQL)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

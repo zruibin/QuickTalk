@@ -24,8 +24,9 @@ from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 @vertifyTokenHandle
 def projectUpdate():
     userUUID = getValueFromRequestByKey("user_uuid")
+    noUpdate = getValueFromRequestByKey("no_update")
 
-    return __queryProjectMessageFromStorage(userUUID)
+    return __queryProjectMessageFromStorage(userUUID, noUpdate)
 
 
 """
@@ -42,7 +43,7 @@ def projectUpdate():
     TYPE_FOR_MESSAGE_IN_PROJECT_APPLY_AGREE = 8 # 作者同意加入
 """
 
-def __queryProjectMessageFromStorage(userUUID):
+def __queryProjectMessageFromStorage(userUUID, noUpdate):
     dataList = []
     querySQL = """
         SELECT user_uuid, type, content_uuid AS project_uuid,  t_message_project.time,
@@ -63,8 +64,8 @@ def __queryProjectMessageFromStorage(userUUID):
             data["time"] = str(data["time"])
             data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, 
                                                     data["owner_user_uuid"], data["avatar"])
-
-        dbManager.executeTransactionDml(updataMessageSQL)
+        if noUpdate == None:
+            dbManager.executeTransactionDml(updataMessageSQL)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

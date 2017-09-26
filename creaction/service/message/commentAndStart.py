@@ -25,11 +25,12 @@ from common.commonMethods import limit
 @vertifyTokenHandle
 def commentAndStart():
     userUUID = getValueFromRequestByKey("user_uuid")
+    noUpdate = getValueFromRequestByKey("no_update")
 
-    return __queryCommentAndStartMessageFromStorage(userUUID)
+    return __queryCommentAndStartMessageFromStorage(userUUID, noUpdate)
 
 
-def __queryCommentAndStartMessageFromStorage(userUUID):
+def __queryCommentAndStartMessageFromStorage(userUUID, noUpdate):
     dataList = None
     querySQL = """
     SELECT t_message_comment.user_uuid, t_message_comment.type,
@@ -57,11 +58,11 @@ def __queryCommentAndStartMessageFromStorage(userUUID):
     queryArgs = [userUUID, str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT),
                         userUUID, str(Config.TYPE_FOR_MESSAGE_IN_PROJECT_COMMENT)]
 
-    updataCommentMessageSQL = """UPDATE t_message_comment SET status=%s WHERE user_uuid=%s """
-    updataStartMessageSQL = """UPDATE t_message_start SET status=%s WHERE user_uuid=%s """
-
-    updateSQLList = [updataCommentMessageSQL, updataStartMessageSQL]
-    updateArgsList = [[Config.TYPE_FOR_MESSAGE_READ, userUUID], [Config.TYPE_FOR_MESSAGE_READ, userUUID]]
+    if noUpdate == None:
+        updataCommentMessageSQL = """UPDATE t_message_comment SET status=%s WHERE user_uuid=%s """
+        updataStartMessageSQL = """UPDATE t_message_start SET status=%s WHERE user_uuid=%s """
+        updateSQLList = [updataCommentMessageSQL, updataStartMessageSQL]
+        updateArgsList = [[Config.TYPE_FOR_MESSAGE_READ, userUUID], [Config.TYPE_FOR_MESSAGE_READ, userUUID]]
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
