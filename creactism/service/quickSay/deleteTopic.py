@@ -28,7 +28,7 @@ def deleteTopic():
 def __deleteAction(uuid):
     deleteTopicSQL = """DELETE FROM t_topic WHERE uuid='%s';""" % (uuid)
 
-    deleteCommentSQL = """DELETE FROM t_comment WHERE topic_uuid='%s';""" % (uuid)
+    deleteCommentSQL = """DELETE FROM t_topic_omment WHERE topic_uuid='%s';""" % (uuid)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

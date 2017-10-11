@@ -14,8 +14,8 @@ ALTER TABLE `t_topic` ADD UNIQUE (`uuid`);
 
 
 DROP TABLE IF EXISTS
-    `t_comment`;
-CREATE TABLE `t_comment`(
+    `t_topic_omment`;
+CREATE TABLE `t_topic_omment`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `topic_uuid` VARCHAR(100) NOT NULL COMMENT 'topic uuid',
@@ -25,8 +25,8 @@ CREATE TABLE `t_comment`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_comment` ADD UNIQUE (`uuid`);
-ALTER TABLE `t_comment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
+ALTER TABLE `t_topic_omment` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_topic_omment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
 
 
 

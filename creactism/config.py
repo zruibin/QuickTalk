@@ -19,14 +19,14 @@ class Config(object):
 
     WEB_SITE_HOST = "http://creactism.com/"
     LOG_DIR = "logs/"
-    WEB_SITE_DIR = "/home/quickSay"
-    BACKUP_DIR = "/home/quickSay_bak" # 数据备份目录
+    WEB_SITE_DIR = "/home/creactism"
+    BACKUP_DIR = "/home/creactism" # 数据备份目录
 
     DBHOST = "localhost"
     DBPORT = 3306
     DBUSER = "root"
     DBPWD = "0928"
-    DBNAME = "quickSay"
+    DBNAME = "creactism"
     DBCHAR = "utf8"
     DBPOOLSIZE = 10
 
