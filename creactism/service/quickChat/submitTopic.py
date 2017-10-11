@@ -11,7 +11,7 @@
 
 """
 
-from service.quickSay import quickSay
+from service.quickChat import quickChat
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 import json
 
 
-@quickSay.route('/submitTopic', methods=["GET", "POST"])
+@quickChat.route('/submitTopic', methods=["GET", "POST"])
 def submitTopic():
     jsondata = getValueFromRequestByKey("jsondata")
      
@@ -40,7 +40,7 @@ def __storageTopic(jsonList):
     for data in jsonList:
         uuid = generateUUID()
         time = generateCurrentTime()
-        insertSQL = "INSERT INTO t_topic (uuid, title, detail, href, time) VALUES (%s, %s, %s, %s, %s)"
+        insertSQL = "INSERT INTO t_quickChat_topic (uuid, title, detail, href, time) VALUES (%s, %s, %s, %s, %s)"
         args = [uuid, data["title"], data["detail"], data["href"], time]
         sqlList.append(insertSQL)
         argsList.append(args)
