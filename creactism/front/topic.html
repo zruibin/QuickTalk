@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>热门话题</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+
+<script src="/js/reqwest.min.js"></script>
+
+<style>
+
+textarea {
+	width: 100%;
+	height: 400px;
+}
+
+button {
+	width: 100px;
+	height: 40px;
+}
+
+#table,  #table td{border:1px solid #585858; line-height:22px;} 
+#table td {padding: 10px 10px; word-break: break-all;}
+
+</style>
+
+</head>
+
+<body>
+
+<textarea id="textarea" placeholder='[
+	{
+		"title": "",
+		"detail": "",
+		"href": ""
+	},
+
+	{
+		"title": "",
+		"detail": "",
+		"href": ""
+	},
+....
+]
+'></textarea>
+<br>
+<br>
+<button onclick="submit();">提交</button>
+<br>
+<br>
+<p id="result"></p>
+
+<hr>
+
+<button onclick="getTopic();">获得话题列表</button>
+<br>
+<div id="container"></div>
+
+
+</body>
+
+<script>
+
+function submit() {
+	var text = document.getElementById("textarea").value;
+	if (text.length > 0) {
+		console.log("fdd");
+		var url = "/service/quickChat/submitTopic?jsondata=" + text;
+		reqwest({
+			url: url, 
+			type: 'json', 
+			method: 'get'
+		}).then(function (response) {
+			// response.data
+			console.log(response);
+			var result = document.getElementById("result");
+			result.innerText = response.message;
+		}).fail(function (err, msg) {
+			console.log(err);     
+			alert("请求失败，请重新刷新！");
+		});
+	}
+}
+
+function getTopic() {
+	var url = "/service/quickChat/topicList?size=50";
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'get'
+	}).then(function (response) {
+		// console.log(response);
+		showTopicList(response.data);
+	}).fail(function (err, msg) {
+		console.log(err);     
+		alert("请求失败，请重新刷新！");
+	});
+}
+
+
+
+function showTopicList(dataList) {
+    var html = "<h4>话题列表</h4>";
+    if (dataList) { //有数据时
+        html += '<table cellspacing="0" cellpadding="0" id="table">';
+        
+        for (var i = 0; i < dataList.length; i++) {
+            var data = dataList[i];
+            html += '<tr>';
+            html += '<td>'+ data.id +'</td>';
+            html += '<td>'+ data.title +'</td>';
+            html += '<td><button onclick=deleteTopic("'+ data.uuid +'")>删除</button></td>';
+            html += '</tr>';
+        }
+        
+        html += '</table>';
+    } else {
+        html = '<h3>无内容！</h3>';
+    }
+    var container = document.getElementById("container");
+    container.innerHTML = html;
+}
+
+function deleteTopic(uuid) {
+	var url = "/service/quickChat/deleteTopic?uuid=" + uuid;
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'post'
+	}).then(function (response) {
+		// console.log(response);
+		getTopic();
+	}).fail(function (err, msg) {
+		console.log(err);     
+		alert("请求失败，请重新刷新！");
+	});
+}
+
+
+</script>
+
+</html>

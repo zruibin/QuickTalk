@@ -51,6 +51,7 @@ class Config(object):
     MAIL_PASSWORD = "CreAction1"   #口令 
     MAIL_POSTFIX = "creactism.com"  #发件箱的后缀
 
+    PAGE_OF_SIZE = 10 # 分页每页数量
 
     pass
 

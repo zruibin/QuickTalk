@@ -133,6 +133,10 @@ def parsePageIndex(index):
     return index
 
 
+def limit(index, size=Config.PAGE_OF_SIZE):
+    return "LIMIT %d,%d" % ((index-1)*size, size)
+
+
 def makeCookie(response, key, value):
     outdate = datetime.datetime.today() + datetime.timedelta(seconds=Config.TOKEN_EXPIRE) 
     response.set_cookie(key, value, expires=outdate)
