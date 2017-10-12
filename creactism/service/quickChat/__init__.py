@@ -20,3 +20,4 @@ from service.quickChat import commentList
 from service.quickChat import submitTopic
 from service.quickChat import deleteTopic
 from service.quickChat import like
+from service.quickChat import login

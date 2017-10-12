@@ -1,4 +1,23 @@
 DROP TABLE IF EXISTS
+    `t_quickChat_user`;
+CREATE TABLE `t_quickChat_user`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
+    `nickname` VARCHAR(200) NOT NULL COMMENT '昵称',
+    `phone` VARCHAR(200) NOT NULL COMMENT '手机',
+    `email` VARCHAR(200) NOT NULL COMMENT '邮箱',
+    `avatar` TEXT NOT NULL COMMENT '头像',
+    `wechat` VARCHAR(200) NOT NULL COMMENT '微信',
+    `qq` VARCHAR(200) NOT NULL COMMENT 'QQ',
+    `weibo` VARCHAR(200) NOT NULL COMMENT '微博',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '注册时间戳',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_quickChat_user` ADD UNIQUE (`uuid`);
+
+
+DROP TABLE IF EXISTS
     `t_quickChat_topic`;
 CREATE TABLE `t_quickChat_topic`(
     `id` INT UNSIGNED AUTO_INCREMENT,

@@ -53,6 +53,25 @@ class Config(object):
 
     PAGE_OF_SIZE = 10 # 分页每页数量
 
+      # 数据类型
+    TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
+    TYPE_FOR_PHONE = "2" # 只用于登录，区别于联系的
+    
+    TYPE_FOR_WECHAT = "3" # 用于信息显示，方便联系
+    TYPE_FOR_QQ = "4" #  用于信息显示，方便联系
+    TYPE_FOR_WEIBO = "5" #  用于信息显示，方便联系
+    TYPE_FOR_CONTACT_PHONE = "6" #  用于信息显示，方便联系
+    TYPE_FOR_CONTACT_EMAIL = "7" #  用于信息显示，方便联系
+
+    # 第三方授权的类型 
+    TYPE_FOR_AUTH_WECHAT = "8"
+    TYPE_FOR_AUTH_QQ = "9"
+    TYPE_FOR_AUTH_WEIBO = "10"
+
+    # 上传文件的所属类型，分别为用户与项目
+    UPLOAD_FILE_FOR_USER = "u"
+    UPLOAD_FILE_FOR_PROJECT = "p"
+
     pass
 
 

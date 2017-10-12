@@ -26,15 +26,26 @@ CELERY_TIMEZONE="Asia/Shanghai"                     ##指定时区，默认是 U
 
 # import
 CELERY_IMPORTS = (                                  ##指定导入的任务模块   
+    "dispatch.tasks",
     "dispatch.BackupTask" 
 )
 
 # schedules
 CELERYBEAT_SCHEDULE = {
+    # "add-every-30-seconds": {
+    #      "task": "dispatch.backupTask.add",
+    #      "schedule":  crontab(),#timedelta(seconds=5),       # 每 30 秒执行一次
+    #      "args": (5, 8)                           # 任务函数参数
+    # },
     "database_backup_task" : {
         "task" : "dispatch.BackupTask.backup",
         "schedule" : crontab(hour=18, minute=0) # 由于部署服务端时间问题，要提前8个小时来算，凌晨2点时备份
     }
+    # "multiply-at-some-time": {
+    #     "task": "celery_app.task2.multiply",
+    #     "schedule": crontab(hour=9, minute=50),   # 每天早上 9 点 50 分执行一次
+    #     "args": (3, 7)                            # 任务函数参数
+    # }
 }
 
 

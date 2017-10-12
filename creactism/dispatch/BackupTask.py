@@ -27,6 +27,7 @@ backupDir = Config.BACKUP_DIR
 @celery.task
 def backup():
     __backupDB()
+    __backupMedias()
     pass
 
 
@@ -56,6 +57,21 @@ def __backupDB():
     os.system(bz2CMD)
 
     os.remove(fullPath)
+    pass
+
+
+def __backupMedias():
+    """
+    tar -jcvf {backupDir}/{bz2File} -C {siteDir} {meidasDir}
+    """
+    bz2File = "creactisn_medias_" + time.strftime("%Y%m%d-%H%M%S") + ".tar.bz2"
+    siteDir = Config.WEB_SITE_DIR
+    meidasDir = Config.UPLOAD_FOLDER
+
+    bz2CMD = """tar -jcvf {backupDir}/{bz2File} -C {siteDir} {meidasDir}""".format(backupDir=backupDir, bz2File=bz2File, siteDir=siteDir, meidasDir=meidasDir)
+    print bz2CMD
+    os.system(bz2CMD)
+
     pass
 
 
