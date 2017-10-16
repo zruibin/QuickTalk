@@ -22,22 +22,23 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 @quickChat.route('/comment', methods=["GET", "POST"])
 def comment():
     topicUUID = getValueFromRequestByKey("topic_uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
     content = getValueFromRequestByKey("content")
 
-    if topicUUID == None or  content == None:
+    if topicUUID == None or  content == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
     return __insertCommentIntoStorage(topicUUID, content)
     
 
-def __insertCommentIntoStorage(topicUUID, content):
+def __insertCommentIntoStorage(topicUUID, content, userUUID):
     uuid = generateUUID()
     time = generateCurrentTime()
 
     insertSQL = """
-        INSERT INTO t_quickChat_topic_comment(uuid, user_uuid, topic_uuid, content, time, `like`) VALUES (%s, '', %s, %s, %s, 0)
+        INSERT INTO t_quickChat_topic_comment(uuid, user_uuid, topic_uuid, content, time, `like`) VALUES (%s, %s, %s, %s, %s, 0)
     """
-    args = [uuid, topicUUID, content, time]
+    args = [uuid, userUUID, topicUUID, content, time]
             
     dbManager = DB.DBManager.shareInstanced()
     try: 

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# login.py
+# loginWithAvatar.py
 #
 # Created by ruibin.chow on 2017/10/12.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
@@ -20,8 +20,8 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 from common.file import FileTypeException, uploadPicture
 
 
-@quickChat.route('/login', methods=["GET", "POST"])
-def login():
+@quickChat.route('/loginWithAvatar', methods=["GET", "POST"])
+def loginWithAvatar():
     openId = getValueFromRequestByKey("openId")
     typeStr = getValueFromRequestByKey("type")
 
