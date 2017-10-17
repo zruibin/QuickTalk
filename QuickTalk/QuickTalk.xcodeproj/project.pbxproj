@@ -1,0 +1,989 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0077F6E3851B0E180BB65818 /* libPods-QuickTalkUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */; };
+		31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */; };
+		DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */; };
+		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
+		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
+		E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B01F95A7CE00F1B8C8 /* Tools.m */; };
+		E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */; };
+		E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */; };
+		E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */; };
+		E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */; };
+		E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */; };
+		E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */; };
+		E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */; };
+		E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */; };
+		E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */; };
+		E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */; };
+		E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */; };
+		E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */; };
+		E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */; };
+		E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */; };
+		E0DF28F81F95A81000F1B8C8 /* QTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28BC1F95A7CE00F1B8C8 /* QTMainViewController.m */; };
+		E0DF28F91F95A81000F1B8C8 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28BE1F95A7CE00F1B8C8 /* QTTopicController.m */; };
+		E0DF28FA1F95A81000F1B8C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28CD1F95A7CE00F1B8C8 /* main.m */; };
+		E0DF28FB1F95A81000F1B8C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E0DF28911F95A57E00F1B8C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0DF28701F95A57E00F1B8C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0DF28771F95A57E00F1B8C8;
+			remoteInfo = QuickTalk;
+		};
+		E0DF289C1F95A57E00F1B8C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0DF28701F95A57E00F1B8C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0DF28771F95A57E00F1B8C8;
+			remoteInfo = QuickTalk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk.release.xcconfig"; sourceTree = "<group>"; };
+		504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalkUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests.release.xcconfig"; sourceTree = "<group>"; };
+		91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests.release.xcconfig"; sourceTree = "<group>"; };
+		9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickTalkTests.m; sourceTree = "<group>"; };
+		E0DF28961F95A57E00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickTalkUITests.m; sourceTree = "<group>"; };
+		E0DF28A11F95A57E00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E0DF28AF1F95A7CE00F1B8C8 /* Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
+		E0DF28B01F95A7CE00F1B8C8 /* Tools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
+		E0DF28B11F95A7CE00F1B8C8 /* UIButton+NetworkImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+NetworkImage.h"; sourceTree = "<group>"; };
+		E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+NetworkImage.m"; sourceTree = "<group>"; };
+		E0DF28B31F95A7CE00F1B8C8 /* UIColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		E0DF28B51F95A7CE00F1B8C8 /* UIImage+RBImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RBImage.h"; sourceTree = "<group>"; };
+		E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RBImage.m"; sourceTree = "<group>"; };
+		E0DF28B71F95A7CE00F1B8C8 /* UIImageView+NetworkImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+NetworkImage.h"; sourceTree = "<group>"; };
+		E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+NetworkImage.m"; sourceTree = "<group>"; };
+		E0DF28BB1F95A7CE00F1B8C8 /* QTMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMainViewController.h; sourceTree = "<group>"; };
+		E0DF28BC1F95A7CE00F1B8C8 /* QTMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMainViewController.m; sourceTree = "<group>"; };
+		E0DF28BD1F95A7CE00F1B8C8 /* QTTopicController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicController.h; sourceTree = "<group>"; };
+		E0DF28BE1F95A7CE00F1B8C8 /* QTTopicController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicController.m; sourceTree = "<group>"; };
+		E0DF28C41F95A7CE00F1B8C8 /* QTNetworkAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNetworkAgent.h; sourceTree = "<group>"; };
+		E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNetworkAgent.m; sourceTree = "<group>"; };
+		E0DF28C61F95A7CE00F1B8C8 /* QTNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNetworking.h; sourceTree = "<group>"; };
+		E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNetworking.m; sourceTree = "<group>"; };
+		E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTServiceCode.h; sourceTree = "<group>"; };
+		E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTServiceCode.m; sourceTree = "<group>"; };
+		E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E0DF28CC1F95A7CE00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF28CD1F95A7CE00F1B8C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E0DF28CE1F95A7CE00F1B8C8 /* QTMarcos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMarcos.h; sourceTree = "<group>"; };
+		E0DF28CF1F95A7CE00F1B8C8 /* QuickTalk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuickTalk-Prefix.pch"; sourceTree = "<group>"; };
+		E0DF28D11F95A7CE00F1B8C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E0DF28D21F95A7CE00F1B8C8 /* code.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = code.json; sourceTree = "<group>"; };
+		E0DF28D31F95A7CE00F1B8C8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E0DF28D61F95A7CE00F1B8C8 /* QTMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessage.h; sourceTree = "<group>"; };
+		E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessage.m; sourceTree = "<group>"; };
+		E0DF28D91F95A7CE00F1B8C8 /* QTNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNavigationController.h; sourceTree = "<group>"; };
+		E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNavigationController.m; sourceTree = "<group>"; };
+		E0DF28DC1F95A7CE00F1B8C8 /* QTProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTProgressHUD.h; sourceTree = "<group>"; };
+		E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTProgressHUD.m; sourceTree = "<group>"; };
+		E0DF28DF1F95A7CE00F1B8C8 /* QTRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefresh.h; sourceTree = "<group>"; };
+		E0DF28E01F95A7CE00F1B8C8 /* QTRefreshFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefreshFooter.h; sourceTree = "<group>"; };
+		E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTRefreshFooter.m; sourceTree = "<group>"; };
+		E0DF28E21F95A7CE00F1B8C8 /* QTRefreshHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefreshHeader.h; sourceTree = "<group>"; };
+		E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTRefreshHeader.m; sourceTree = "<group>"; };
+		E0DF28E41F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+QTRefresh.h"; sourceTree = "<group>"; };
+		E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+QTRefresh.m"; sourceTree = "<group>"; };
+		E0DF28E71F95A7CE00F1B8C8 /* QTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTViewController.h; sourceTree = "<group>"; };
+		E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTViewController.m; sourceTree = "<group>"; };
+		E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0DF28751F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288D1F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28981F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0077F6E3851B0E180BB65818 /* libPods-QuickTalkUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DE7D1760355DF4F24DAED83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */,
+				AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */,
+				504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54FC022EB6F35A908F5175AF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */,
+				0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */,
+				E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */,
+				91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */,
+				60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */,
+				6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E0DF286F1F95A57E00F1B8C8 = {
+			isa = PBXGroup;
+			children = (
+				E0DF287A1F95A57E00F1B8C8 /* QuickTalk */,
+				E0DF28931F95A57E00F1B8C8 /* QuickTalkTests */,
+				E0DF289E1F95A57E00F1B8C8 /* QuickTalkUITests */,
+				E0DF28791F95A57E00F1B8C8 /* Products */,
+				54FC022EB6F35A908F5175AF /* Pods */,
+				1DE7D1760355DF4F24DAED83 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E0DF28791F95A57E00F1B8C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */,
+				E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */,
+				E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0DF287A1F95A57E00F1B8C8 /* QuickTalk */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28C11F95A7CE00F1B8C8 /* 3rd */,
+				E0DF28AE1F95A7CE00F1B8C8 /* Util */,
+				E0DF28D41F95A7CE00F1B8C8 /* Components */,
+				E0DF28C21F95A7CE00F1B8C8 /* Modules */,
+				E0DF28D01F95A7CE00F1B8C8 /* Resources */,
+				E0DF28B91F95A7CE00F1B8C8 /* Services */,
+				E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */,
+				E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */,
+				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
+			);
+			path = QuickTalk;
+			sourceTree = "<group>";
+		};
+		E0DF28931F95A57E00F1B8C8 /* QuickTalkTests */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */,
+				E0DF28961F95A57E00F1B8C8 /* Info.plist */,
+			);
+			path = QuickTalkTests;
+			sourceTree = "<group>";
+		};
+		E0DF289E1F95A57E00F1B8C8 /* QuickTalkUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */,
+				E0DF28A11F95A57E00F1B8C8 /* Info.plist */,
+			);
+			path = QuickTalkUITests;
+			sourceTree = "<group>";
+		};
+		E0DF28AE1F95A7CE00F1B8C8 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28AF1F95A7CE00F1B8C8 /* Tools.h */,
+				E0DF28B01F95A7CE00F1B8C8 /* Tools.m */,
+				E0DF28B11F95A7CE00F1B8C8 /* UIButton+NetworkImage.h */,
+				E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */,
+				E0DF28B31F95A7CE00F1B8C8 /* UIColor+Additions.h */,
+				E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */,
+				E0DF28B51F95A7CE00F1B8C8 /* UIImage+RBImage.h */,
+				E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */,
+				E0DF28B71F95A7CE00F1B8C8 /* UIImageView+NetworkImage.h */,
+				E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		E0DF28B91F95A7CE00F1B8C8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28BA1F95A7CE00F1B8C8 /* Controller */,
+				E0DF28BF1F95A7CE00F1B8C8 /* Model */,
+				E0DF28C01F95A7CE00F1B8C8 /* View */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E0DF28BA1F95A7CE00F1B8C8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28BB1F95A7CE00F1B8C8 /* QTMainViewController.h */,
+				E0DF28BC1F95A7CE00F1B8C8 /* QTMainViewController.m */,
+				E0DF28BD1F95A7CE00F1B8C8 /* QTTopicController.h */,
+				E0DF28BE1F95A7CE00F1B8C8 /* QTTopicController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E0DF28BF1F95A7CE00F1B8C8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E0DF28C01F95A7CE00F1B8C8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E0DF28C11F95A7CE00F1B8C8 /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = 3rd;
+			sourceTree = "<group>";
+		};
+		E0DF28C21F95A7CE00F1B8C8 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28C31F95A7CE00F1B8C8 /* Networking */,
+				E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */,
+				E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		E0DF28C31F95A7CE00F1B8C8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28C41F95A7CE00F1B8C8 /* QTNetworkAgent.h */,
+				E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */,
+				E0DF28C61F95A7CE00F1B8C8 /* QTNetworking.h */,
+				E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28CC1F95A7CE00F1B8C8 /* Info.plist */,
+				E0DF28CD1F95A7CE00F1B8C8 /* main.m */,
+				E0DF28CE1F95A7CE00F1B8C8 /* QTMarcos.h */,
+				E0DF28CF1F95A7CE00F1B8C8 /* QuickTalk-Prefix.pch */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		E0DF28D01F95A7CE00F1B8C8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D11F95A7CE00F1B8C8 /* Assets.xcassets */,
+				E0DF28D21F95A7CE00F1B8C8 /* code.json */,
+				E0DF28D31F95A7CE00F1B8C8 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D51F95A7CE00F1B8C8 /* QTMessage */,
+				E0DF28D81F95A7CE00F1B8C8 /* QTNavigationController */,
+				E0DF28DB1F95A7CE00F1B8C8 /* QTProgressHUD */,
+				E0DF28DE1F95A7CE00F1B8C8 /* QTRefresh */,
+				E0DF28E61F95A7CE00F1B8C8 /* QTViewController */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E0DF28D51F95A7CE00F1B8C8 /* QTMessage */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D61F95A7CE00F1B8C8 /* QTMessage.h */,
+				E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */,
+			);
+			path = QTMessage;
+			sourceTree = "<group>";
+		};
+		E0DF28D81F95A7CE00F1B8C8 /* QTNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D91F95A7CE00F1B8C8 /* QTNavigationController.h */,
+				E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */,
+			);
+			path = QTNavigationController;
+			sourceTree = "<group>";
+		};
+		E0DF28DB1F95A7CE00F1B8C8 /* QTProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28DC1F95A7CE00F1B8C8 /* QTProgressHUD.h */,
+				E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */,
+			);
+			path = QTProgressHUD;
+			sourceTree = "<group>";
+		};
+		E0DF28DE1F95A7CE00F1B8C8 /* QTRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28DF1F95A7CE00F1B8C8 /* QTRefresh.h */,
+				E0DF28E01F95A7CE00F1B8C8 /* QTRefreshFooter.h */,
+				E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */,
+				E0DF28E21F95A7CE00F1B8C8 /* QTRefreshHeader.h */,
+				E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */,
+				E0DF28E41F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.h */,
+				E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */,
+			);
+			path = QTRefresh;
+			sourceTree = "<group>";
+		};
+		E0DF28E61F95A7CE00F1B8C8 /* QTViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28E71F95A7CE00F1B8C8 /* QTViewController.h */,
+				E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */,
+			);
+			path = QTViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0DF28771F95A57E00F1B8C8 /* QuickTalk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28A41F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalk" */;
+			buildPhases = (
+				0753BB94833051CF00FD90B6 /* [CP] Check Pods Manifest.lock */,
+				E0DF28741F95A57E00F1B8C8 /* Sources */,
+				E0DF28751F95A57E00F1B8C8 /* Frameworks */,
+				E0DF28761F95A57E00F1B8C8 /* Resources */,
+				1956FFA4858F18887182680D /* [CP] Embed Pods Frameworks */,
+				5893D1BB51CB940A19BFBBB1 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuickTalk;
+			productName = QuickTalk;
+			productReference = E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E0DF288F1F95A57E00F1B8C8 /* QuickTalkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28A71F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkTests" */;
+			buildPhases = (
+				A4D5608BCA47BFB93792F00D /* [CP] Check Pods Manifest.lock */,
+				E0DF288C1F95A57E00F1B8C8 /* Sources */,
+				E0DF288D1F95A57E00F1B8C8 /* Frameworks */,
+				E0DF288E1F95A57E00F1B8C8 /* Resources */,
+				7A7C01223ABD3F2EC0143786 /* [CP] Embed Pods Frameworks */,
+				28582B0CA28F5783D2C6DC76 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0DF28921F95A57E00F1B8C8 /* PBXTargetDependency */,
+			);
+			name = QuickTalkTests;
+			productName = QuickTalkTests;
+			productReference = E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E0DF289A1F95A57E00F1B8C8 /* QuickTalkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28AA1F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkUITests" */;
+			buildPhases = (
+				68A88FA2C52B75772F63AB58 /* [CP] Check Pods Manifest.lock */,
+				E0DF28971F95A57E00F1B8C8 /* Sources */,
+				E0DF28981F95A57E00F1B8C8 /* Frameworks */,
+				E0DF28991F95A57E00F1B8C8 /* Resources */,
+				888E4949E0DCB3DD03E7AC28 /* [CP] Embed Pods Frameworks */,
+				DD36522A41DC14EDE2BB8811 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0DF289D1F95A57E00F1B8C8 /* PBXTargetDependency */,
+			);
+			name = QuickTalkUITests;
+			productName = QuickTalkUITests;
+			productReference = E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0DF28701F95A57E00F1B8C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = www.creactism.com;
+				TargetAttributes = {
+					E0DF28771F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+					E0DF288F1F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = E0DF28771F95A57E00F1B8C8;
+					};
+					E0DF289A1F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = E0DF28771F95A57E00F1B8C8;
+					};
+				};
+			};
+			buildConfigurationList = E0DF28731F95A57E00F1B8C8 /* Build configuration list for PBXProject "QuickTalk" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E0DF286F1F95A57E00F1B8C8;
+			productRefGroup = E0DF28791F95A57E00F1B8C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0DF28771F95A57E00F1B8C8 /* QuickTalk */,
+				E0DF288F1F95A57E00F1B8C8 /* QuickTalkTests */,
+				E0DF289A1F95A57E00F1B8C8 /* QuickTalkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E0DF28761F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288E1F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28991F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0753BB94833051CF00FD90B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1956FFA4858F18887182680D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28582B0CA28F5783D2C6DC76 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5893D1BB51CB940A19BFBBB1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundError.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundError@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundErrorIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundErrorIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundMessage.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundMessage@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccess.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccess@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccessIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccessIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarning.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarning@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarningIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarningIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationButtonBackground.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationButtonBackground@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/TSMessagesDefaultDesign.json",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68A88FA2C52B75772F63AB58 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalkUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A7C01223ABD3F2EC0143786 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		888E4949E0DCB3DD03E7AC28 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4D5608BCA47BFB93792F00D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD36522A41DC14EDE2BB8811 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E0DF28741F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
+				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
+				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,
+				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
+				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
+				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
+				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
+				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,
+				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
+				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
+				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
+				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
+				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
+				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
+				E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */,
+				E0DF28F81F95A81000F1B8C8 /* QTMainViewController.m in Sources */,
+				E0DF28F91F95A81000F1B8C8 /* QTTopicController.m in Sources */,
+				E0DF28FA1F95A81000F1B8C8 /* main.m in Sources */,
+				E0DF28FB1F95A81000F1B8C8 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288C1F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28971F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E0DF28921F95A57E00F1B8C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0DF28771F95A57E00F1B8C8 /* QuickTalk */;
+			targetProxy = E0DF28911F95A57E00F1B8C8 /* PBXContainerItemProxy */;
+		};
+		E0DF289D1F95A57E00F1B8C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0DF28771F95A57E00F1B8C8 /* QuickTalk */;
+			targetProxy = E0DF289C1F95A57E00F1B8C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E0DF28A21F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E0DF28A31F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E0DF28A51F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S8VUN65RG9;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/QuickTalk/SupportingFiles/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E0DF28A61F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S8VUN65RG9;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/QuickTalk/SupportingFiles/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E0DF28A81F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTalk.app/QuickTalk";
+			};
+			name = Debug;
+		};
+		E0DF28A91F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTalk.app/QuickTalk";
+			};
+			name = Release;
+		};
+		E0DF28AB1F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuickTalk;
+			};
+			name = Debug;
+		};
+		E0DF28AC1F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuickTalk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E0DF28731F95A57E00F1B8C8 /* Build configuration list for PBXProject "QuickTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A21F95A57E00F1B8C8 /* Debug */,
+				E0DF28A31F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28A41F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A51F95A57E00F1B8C8 /* Debug */,
+				E0DF28A61F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28A71F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A81F95A57E00F1B8C8 /* Debug */,
+				E0DF28A91F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28AA1F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28AB1F95A57E00F1B8C8 /* Debug */,
+				E0DF28AC1F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0DF28701F95A57E00F1B8C8 /* Project object */;
+}
