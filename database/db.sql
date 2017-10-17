@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS
-    `t_quickChat_user`;
-CREATE TABLE `t_quickChat_user`(
+    `t_quickTalk_user`;
+CREATE TABLE `t_quickTalk_user`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `nickname` VARCHAR(200) NOT NULL COMMENT '昵称',
@@ -14,12 +14,12 @@ CREATE TABLE `t_quickChat_user`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_quickChat_user` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_quickTalk_user` ADD UNIQUE (`uuid`);
 
 
 DROP TABLE IF EXISTS
-    `t_quickChat_topic`;
-CREATE TABLE `t_quickChat_topic`(
+    `t_quickTalk_topic`;
+CREATE TABLE `t_quickTalk_topic`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `title` VARCHAR(200) NOT NULL COMMENT 'title',
@@ -29,12 +29,12 @@ CREATE TABLE `t_quickChat_topic`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_quickChat_topic` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_quickTalk_topic` ADD UNIQUE (`uuid`);
 
 
 DROP TABLE IF EXISTS
-    `t_quickChat_topic_comment`;
-CREATE TABLE `t_quickChat_topic_comment`(
+    `t_quickTalk_topic_comment`;
+CREATE TABLE `t_quickTalk_topic_comment`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
@@ -45,9 +45,9 @@ CREATE TABLE `t_quickChat_topic_comment`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_quickChat_topic_comment` ADD UNIQUE (`uuid`);
-ALTER TABLE `t_quickChat_topic_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
-ALTER TABLE `t_quickChat_topic_comment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
+ALTER TABLE `t_quickTalk_topic_comment` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
+ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
 
 
 

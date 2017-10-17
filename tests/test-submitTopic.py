@@ -30,7 +30,7 @@ jsondata = """
 """
 
 params = {"jsondata":jsondata}
-r = requests.post(url="http://127.0.0.1:5000/service/quickChat/submitTopic", params=params)    
+r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/submitTopic", params=params)    
 print(r.text)
 
 

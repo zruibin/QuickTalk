@@ -11,7 +11,7 @@
 话题列表
 """
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit
 
 
-@quickChat.route('/topicList', methods=["GET", "POST"])
+@quickTalk.route('/topicList', methods=["GET", "POST"])
 def topicList():
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
@@ -33,7 +33,7 @@ def __getTopicFromStorage(index, size):
     if size is not None: limitSQL = limit(index, int(size))
         
     querySQL = """
-        SELECT id, uuid, title, detail, href, time FROM t_quickChat_topic %s
+        SELECT id, uuid, title, detail, href, time FROM t_quickTalk_topic %s
     """ % limitSQL
 
     dbManager = DB.DBManager.shareInstanced()

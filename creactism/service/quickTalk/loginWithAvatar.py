@@ -11,7 +11,7 @@
 登录
 """
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 from common.file import FileTypeException, uploadPicture
 
 
-@quickChat.route('/loginWithAvatar', methods=["GET", "POST"])
+@quickTalk.route('/loginWithAvatar', methods=["GET", "POST"])
 def loginWithAvatar():
     openId = getValueFromRequestByKey("openId")
     typeStr = getValueFromRequestByKey("type")
@@ -35,7 +35,7 @@ def __loginAction(openId, typeStr):
     typeData = __typeData(typeStr)
     
     querySQL = """
-        SELECT uuid, avatar FROM t_quickChat_user WHERE %s=%s; 
+        SELECT uuid, avatar FROM t_quickTalk_user WHERE %s=%s; 
     """ % (typeData, openId)
        
     dbManager = DB.DBManager.shareInstanced()
@@ -91,7 +91,7 @@ def __registerUserInStorage(userUUID, openId, typeStr, nameList):
     typeData = __typeData(typeStr)
 
     insertSQL = """
-        INSERT INTO t_quickChat_user (uuid, avatar, time, %s) VALUES ('%s', '%s', '%s', '%s')
+        INSERT INTO t_quickTalk_user (uuid, avatar, time, %s) VALUES ('%s', '%s', '%s', '%s')
     """ % (typeData, userUUID, nameList[0], time, openId)
 
     dbManager = DB.DBManager.shareInstanced()

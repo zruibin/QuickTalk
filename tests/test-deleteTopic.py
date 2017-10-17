@@ -15,7 +15,7 @@ import requests
 
 
 params = {"uuid":"3d24c4e70a35b0c64545197114dfc0fa"}
-r = requests.post(url="http://127.0.0.1:5000/service/quickChat/deleteTopic", params=params)    
+r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/deleteTopic", params=params)    
 print(r.text)
 
 

@@ -12,7 +12,7 @@
 """
 
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
-@quickChat.route('/like', methods=["GET", "POST"])
+@quickTalk.route('/like', methods=["GET", "POST"])
 def likeAction():
     commentUUID = getValueFromRequestByKey("comment_uuid")
 
@@ -32,7 +32,7 @@ def likeAction():
 
 def __likeActionInStorage(commentUUID):
     updateSQL = """
-        UPDATE t_quickChat_topic_comment SET `like`=`like`+1 WHERE uuid='%s';
+        UPDATE t_quickTalk_topic_comment SET `like`=`like`+1 WHERE uuid='%s';
     """ % commentUUID
             
     dbManager = DB.DBManager.shareInstanced()

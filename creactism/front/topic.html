@@ -69,7 +69,7 @@ function submit() {
 	var text = document.getElementById("textarea").value;
 	if (text.length > 0) {
 		console.log("fdd");
-		var url = "/service/quickChat/submitTopic?jsondata=" + text;
+		var url = "/service/quickTalk/submitTopic?jsondata=" + text;
 		reqwest({
 			url: url, 
 			type: 'json', 
@@ -87,7 +87,7 @@ function submit() {
 }
 
 function getTopic() {
-	var url = "/service/quickChat/topicList?size=50";
+	var url = "/service/quickTalk/topicList?size=50";
 	reqwest({
 		url: url, 
 		type: 'json', 
@@ -126,7 +126,7 @@ function showTopicList(dataList) {
 }
 
 function deleteTopic(uuid) {
-	var url = "/service/quickChat/deleteTopic?uuid=" + uuid;
+	var url = "/service/quickTalk/deleteTopic?uuid=" + uuid;
 	reqwest({
 		url: url, 
 		type: 'json', 

@@ -11,7 +11,7 @@
 评论列表
 """
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit
 
 
-@quickChat.route('/commentList', methods=["GET", "POST"])
+@quickTalk.route('/commentList', methods=["GET", "POST"])
 def commentList():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     index = getValueFromRequestByKey("index")
@@ -35,7 +35,7 @@ def __getCommentListFromStorage(topicUUID, index):
     limitSQL = limit(index)
     querySQL = """
         SELECT id, uuid, user_uuid AS userUUID, topic_uuid AS topicUUID, 
-        content, time, `like` FROM t_quickChat_topic_comment WHERE topic_uuid='%s' ORDER BY time %s
+        content, time, `like` FROM t_quickTalk_topic_comment WHERE topic_uuid='%s' ORDER BY time %s
     """ % (topicUUID, limitSQL)
     print querySQL
 

@@ -13,14 +13,14 @@
 
 from service.api import api
 from service.admin import admin
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 
 
 def registerBlueprint(app):
     """ 注册蓝图，并指定前缀""" 
     app.register_blueprint(api, url_prefix="/service/api")
     app.register_blueprint(admin, url_prefix='/admin')
-    app.register_blueprint(quickChat, url_prefix="/service/quickChat") # 发现
+    app.register_blueprint(quickTalk, url_prefix="/service/quickTalk") # 发现
     
 
 if __name__ == '__main__':

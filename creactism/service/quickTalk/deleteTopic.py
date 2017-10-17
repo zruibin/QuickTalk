@@ -11,7 +11,7 @@
 
 """
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,16 +19,16 @@ from common.code import *
 from common.tools import getValueFromRequestByKey
 
 
-@quickChat.route('/deleteTopic', methods=["GET", "POST"])
+@quickTalk.route('/deleteTopic', methods=["GET", "POST"])
 def deleteTopic():
     uuid = getValueFromRequestByKey("uuid")
     return __deleteAction(uuid)
     
 
 def __deleteAction(uuid):
-    deleteTopicSQL = """DELETE FROM t_quickChat_topic WHERE uuid='%s';""" % (uuid)
+    deleteTopicSQL = """DELETE FROM t_quickTalk_topic WHERE uuid='%s';""" % (uuid)
 
-    deleteCommentSQL = """DELETE FROM t_quickChat_topic_comment WHERE topic_uuid='%s';""" % (uuid)
+    deleteCommentSQL = """DELETE FROM t_quickTalk_topic_comment WHERE topic_uuid='%s';""" % (uuid)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

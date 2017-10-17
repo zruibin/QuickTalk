@@ -11,7 +11,7 @@
 评论
 """
 
-from service.quickChat import quickChat
+from service.quickTalk import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
-@quickChat.route('/comment', methods=["GET", "POST"])
+@quickTalk.route('/comment', methods=["GET", "POST"])
 def comment():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     userUUID = getValueFromRequestByKey("user_uuid")
@@ -36,7 +36,7 @@ def __insertCommentIntoStorage(topicUUID, content, userUUID):
     time = generateCurrentTime()
 
     insertSQL = """
-        INSERT INTO t_quickChat_topic_comment(uuid, user_uuid, topic_uuid, content, time, `like`) VALUES (%s, %s, %s, %s, %s, 0)
+        INSERT INTO t_quickTalk_topic_comment(uuid, user_uuid, topic_uuid, content, time, `like`) VALUES (%s, %s, %s, %s, %s, 0)
     """
     args = [uuid, userUUID, topicUUID, content, time]
             
