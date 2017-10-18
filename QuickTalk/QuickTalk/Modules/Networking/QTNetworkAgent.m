@@ -33,7 +33,7 @@ NSString * const SERVICE_REQUEST_POST = @"POST";
                               params:(NSDictionary *_Nullable)params
                    completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
 {
-    NSString *subURL = [NSString stringWithFormat:@"/QuickTalk%@", serviceURL];
+    NSString *subURL = [NSString stringWithFormat:@"/quickTalk%@", serviceURL];
     NSString *fullURL = [self appendHostURL:subURL];
     [QTNetworking handleRequest:fullURL method:method params:params success:^(id responseObject) {
         if (completionHandler) {

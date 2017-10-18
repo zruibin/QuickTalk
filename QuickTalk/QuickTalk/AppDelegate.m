@@ -20,6 +20,7 @@
 {
 //    [Bugly startWithAppId:@"a149a6f083"];
     [[RBScheduler sharedInstance] run];
+
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];

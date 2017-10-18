@@ -8,6 +8,10 @@
 
 #import "QTViewController.h"
 
+@class QTTopicModel;
+
 @interface QTTopicController : QTViewController
+
+@property (nonatomic, strong) QTTopicModel *model;
 
 @end
