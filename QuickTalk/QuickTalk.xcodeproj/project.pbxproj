@@ -11,6 +11,9 @@
 		31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */; };
 		DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
+		E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */; };
+		E0A4FC821F98431B002ED580 /* QTTopicRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */; };
+		E0A4FC841F98899D002ED580 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = E0A4FC831F98899D002ED580 /* Podfile */; };
 		E0BB50441F96F742002C0E50 /* QTTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BB50431F96F742002C0E50 /* QTTopicModel.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
 		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
@@ -63,6 +66,11 @@
 		AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E094BB5A1F95F76B00375AD8 /* QTPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTPopoverView.h; sourceTree = "<group>"; };
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
+		E0A4FC7D1F984261002ED580 /* QTTopicLeftCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicLeftCell.h; sourceTree = "<group>"; };
+		E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicLeftCell.m; sourceTree = "<group>"; };
+		E0A4FC801F98431B002ED580 /* QTTopicRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicRightCell.h; sourceTree = "<group>"; };
+		E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicRightCell.m; sourceTree = "<group>"; };
+		E0A4FC831F98899D002ED580 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Podfile; sourceTree = "<group>"; };
 		E0BB50421F96F742002C0E50 /* QTTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicModel.h; sourceTree = "<group>"; };
 		E0BB50431F96F742002C0E50 /* QTTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicModel.m; sourceTree = "<group>"; };
 		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +221,7 @@
 				E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */,
 				E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */,
 				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
+				E0A4FC831F98899D002ED580 /* Podfile */,
 			);
 			path = QuickTalk;
 			sourceTree = "<group>";
@@ -285,6 +294,10 @@
 		E0DF28C01F95A7CE00F1B8C8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E0A4FC7D1F984261002ED580 /* QTTopicLeftCell.h */,
+				E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */,
+				E0A4FC801F98431B002ED580 /* QTTopicRightCell.h */,
+				E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -516,6 +529,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0A4FC841F98899D002ED580 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,11 +724,13 @@
 			files = (
 				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
+				E0A4FC821F98431B002ED580 /* QTTopicRightCell.m in Sources */,
 				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
 				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,
 				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
 				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
+				E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */,
 				E0BB50441F96F742002C0E50 /* QTTopicModel.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
 				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,

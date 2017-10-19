@@ -8,8 +8,15 @@
 
 #import "QTTopicController.h"
 #import "QTTopicModel.h"
+#import "QTTopicLeftCell.h"
+#import "QTTopicRightCell.h"
+#import "QBPopupMenu.h"
 
-@interface QTTopicController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface QTTopicController ()
+<
+UITableViewDataSource, UITableViewDelegate,
+UITextFieldDelegate, QBPopupMenuDelegate
+>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *fieldView;
@@ -87,18 +94,21 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.dataList.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 10;//self.dataList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
-
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
+    if (indexPath.row % 2 == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
+    }
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -112,7 +122,33 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    CGRect frame = cell.frame;
+    CGPoint point = [self.tableView contentOffset];//在内容视图的起源到滚动视图的原点偏移。
+    frame.origin.y = cell.frame.origin.y - point.y;
+    
+    QBPopupMenuItem *item = [QBPopupMenuItem itemWithTitle:@"  赞同(100)" target:self
+                                                    action:@selector(popupArgeeAction)];
+    QBPopupMenuItem *item2 = [QBPopupMenuItem itemWithTitle:@"不赞同(20)" target:self
+                                                     action:@selector(popupDisargeeAction)];
+    QBPopupMenu *popupMenu = [[QBPopupMenu alloc] initWithItems:@[item, item2]];
+    popupMenu.cornerRadius = 6;
+    popupMenu.height = 36;
+    popupMenu.highlightedColor = [[UIColor colorWithRed:0 green:0.478 blue:1.0 alpha:1.0] colorWithAlphaComponent:0.8];
+    [popupMenu showInView:self.tableView targetRect:frame animated:YES];
 }
+
+- (void)popupArgeeAction
+{
+    
+}
+
+- (void)popupDisargeeAction
+{
+    
+}
+
 
 #pragma mark - Touches Event
 
@@ -145,9 +181,10 @@
             tableView.showsVerticalScrollIndicator = NO;
             tableView.exclusiveTouch = YES;
             tableView.backgroundColor = [UIColor clearColor];
-            tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
+//            tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+            [tableView registerClass:[QTTopicLeftCell class] forCellReuseIdentifier:NSStringFromClass([QTTopicLeftCell class])];
+            [tableView registerClass:[QTTopicRightCell class] forCellReuseIdentifier:NSStringFromClass([QTTopicRightCell class])];
             tableView;
         });
     }
@@ -172,7 +209,7 @@
         _textField = ({
             UITextField *textField = [[UITextField alloc] init];
             textField.clearButtonMode = UITextFieldViewModeAlways;
-            textField.returnKeyType =UIReturnKeyDone;
+            textField.returnKeyType = UIReturnKeySend;
             textField.delegate = self;
             textField.textColor = [UIColor blackColor];
             textField.font = [UIFont systemFontOfSize:14];
