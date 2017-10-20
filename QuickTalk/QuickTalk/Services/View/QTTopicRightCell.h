@@ -10,4 +10,7 @@
 
 @interface QTTopicRightCell : UITableViewCell
 
+- (void)loadData:(NSString *)detail avatar:(NSString *)avatar;
+- (CGFloat)heightForCell:(NSString *)detail;
+
 @end

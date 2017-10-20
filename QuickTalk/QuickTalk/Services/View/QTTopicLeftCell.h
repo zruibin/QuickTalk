@@ -12,4 +12,7 @@
 
 @property (nonatomic, strong, readonly) UIButton *avatarButton;
 
+- (void)loadData:(NSString *)detail avatar:(NSString *)avatar;
+- (CGFloat)heightForCell:(NSString *)detail;
+
 @end

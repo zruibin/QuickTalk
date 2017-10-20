@@ -11,6 +11,7 @@
 #import "QTTopicLeftCell.h"
 #import "QTTopicRightCell.h"
 #import "QBPopupMenu.h"
+#import "QTCommentModel.h"
 
 @interface QTTopicController ()
 <
@@ -24,8 +25,11 @@ UITextFieldDelegate, QBPopupMenuDelegate
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
+@property (nonatomic, assign) NSUInteger page;
 
 - (void)initViews;
+- (void)loadData;
+- (void)loadMoreData;
 
 @end
 
@@ -46,6 +50,18 @@ UITextFieldDelegate, QBPopupMenuDelegate
                                                  name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardAction:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    
+    __weak typeof(self) weakSelf = self;
+    [self.tableView footerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        [weakSelf loadData];
+    }];
+    [self.tableView beginFooterRefreshing];
+    self.page = 1;
+    [self.tableView headerWithRefreshingBlock:^{
+        weakSelf.page +=1;
+        [weakSelf loadMoreData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +75,7 @@ UITextFieldDelegate, QBPopupMenuDelegate
     self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0, 0, self.viewWidth,
-                                      self.viewHeight-64-50);
+                                      self.viewHeight-64-50-6);
     
     [self.view addSubview:self.fieldView];
     self.fieldView.frame = CGRectMake(0, self.viewHeight-64-50, self.viewWidth, 50);
@@ -76,6 +92,44 @@ UITextFieldDelegate, QBPopupMenuDelegate
     self.textField.leftView = leftview;
 }
 
+- (void)loadData
+{
+    [QTCommentModel requestTopicCommentData:self.model.uuid page:1 completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE]  view:self.view];
+        } else {
+            [self.tableView endFooterRefreshing];
+            if (list.count > 0) {
+                self.dataList = [[[list reverseObjectEnumerator] allObjects] mutableCopy];
+                [self.tableView reloadData];
+                if (self.tableView.contentSize.height > self.tableView.frame.size.height) {
+                    CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+                    [self.tableView setContentOffset:offset animated:YES];
+                }
+            }
+        }
+    }];
+}
+
+- (void)loadMoreData
+{
+    [QTCommentModel requestTopicCommentData:self.model.uuid page:self.page completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE]  view:self.view];
+        } else {
+            [self.tableView endHeaderRefreshing];
+            if (list.count > 0) {
+                NSArray *array = [[list reverseObjectEnumerator] allObjects];
+                [self.dataList insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                [self.tableView reloadData];
+            } else {
+                self.page -= 1;
+            }
+        }
+    }];
+}
+
+#pragma mark -
 
 - (void)keyboardAction:(NSNotification*)notification
 {
@@ -99,15 +153,24 @@ UITextFieldDelegate, QBPopupMenuDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;//self.dataList.count;
+    return self.dataList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
-    if (indexPath.row % 2 == 1) {
-        cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
+    UITableViewCell *cell = nil;
+    QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
+    if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
+        [rightCell loadData:model.content avatar:model.avatar];
+        cell = rightCell;
+    } else {
+        QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
+        
+        [leftCell loadData:model.content avatar:model.avatar];
+        cell = leftCell;
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
@@ -115,6 +178,15 @@ UITextFieldDelegate, QBPopupMenuDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 100.0f;
+    
+    QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
+    if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
+        height = [rightCell heightForCell:model.content];
+    } else {
+        QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
+        height = [leftCell heightForCell:model.content];
+    }
 
     return height;
 }
@@ -147,6 +219,17 @@ UITextFieldDelegate, QBPopupMenuDelegate
 - (void)popupDisargeeAction
 {
     
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
+        
+    }
+    return YES;
 }
 
 

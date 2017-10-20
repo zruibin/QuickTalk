@@ -10,6 +10,8 @@
 #import "QTTopicController.h"
 #import "QTTopicModel.h"
 #import "QTPopoverView.h"
+#import "QTInfoController.h"
+#import <SafariServices/SafariServices.h>
 
 @interface QTMainViewController () <UIScrollViewDelegate>
 
@@ -35,14 +37,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initViews];
-//    [self loadData];
+    [self loadData];
     
     
-    QTTopicController *topicController = [QTTopicController new];
-    [self addChildViewController:topicController];
-    self.scrollView.contentSize = CGSizeMake(self.viewWidth, self.viewHeight);
-    topicController.view.frame = CGRectMake(0, 0, self.viewWidth, self.viewHeight);
-    [self.scrollView addSubview:topicController.view];
+//    QTTopicController *topicController = [QTTopicController new];
+//    [self addChildViewController:topicController];
+//    self.scrollView.contentSize = CGSizeMake(self.viewWidth, self.viewHeight);
+//    topicController.view.frame = CGRectMake(0, 0, self.viewWidth, self.viewHeight);
+//    [self.scrollView addSubview:topicController.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,6 +59,10 @@
     [self.view addSubview:self.scrollView];
     self.scrollView.frame = CGRectMake(0, 0, self.viewWidth, self.viewHeight);
     self.navigationItem.titleView = self.titleButton;
+    
+    UIBarButtonItem *moreItem = [[UIBarButtonItem alloc]
+                                       initWithTitle:@"…" style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
+    self.navigationItem.rightBarButtonItem = moreItem;
 }
 
 - (void)loadData
@@ -66,16 +72,24 @@
         if (error) {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
         } else {
+            [QTProgressHUD hide];
             self.dataList = [list copy];
-            
-            self.scrollView.contentSize = CGSizeMake(self.viewWidth*10, self.viewHeight);
-            for (NSInteger i=0; i<self.dataList.count; ++i) {
-                QTTopicController *topicController = [QTTopicController new];
-                [self.childControllers addObject:topicController];
+            if (self.dataList.count > 0) {
+                self.scrollView.contentSize = CGSizeMake(self.viewWidth*10, self.viewHeight);
+                for (NSInteger i=0; i<self.dataList.count; ++i) {
+                    QTTopicController *topicController = [QTTopicController new];
+                    [self.childControllers addObject:topicController];
+                }
+                [self selectedSubController:self.index];
             }
-            [self selectedSubController:self.index];
         }
     }];
+}
+
+- (void)moreAction
+{
+    QTInfoController *infoController = [[QTInfoController alloc] init];
+    [self.navigationController pushViewController:infoController animated:YES];
 }
 
 #pragma mark - Private
@@ -111,9 +125,12 @@
         self.popoverView.items = @[model.detail];
         self.popoverView.multilineText = YES;
         self.popoverView.animationTime = .4;
-//        __weak typeof(self) weakSelf = self;
+        __weak typeof(self) weakSelf = self;
         [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
-            
+            QTTopicModel *model = (QTTopicModel *)[weakSelf.dataList objectAtIndex:weakSelf.index];
+            NSString *url = model.href;
+            SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+            [weakSelf presentViewController:safariController animated:YES completion:nil];
         }];
     }
     if (self.popoverView.hidden) {
@@ -123,7 +140,6 @@
     }
 }
 
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -131,7 +147,7 @@
     if (scrollView == self.scrollView) {
         CGFloat pageWidth = scrollView.frame.size.width;
         NSInteger index = scrollView.contentOffset.x / pageWidth;
-//        [self selectedSubController:index];
+        [self selectedSubController:index];
     }
 }
 
@@ -173,11 +189,11 @@
 {
     if (_titleButton == nil) {
         _titleButton = ({
-            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 44)];
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
             [button addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//            [button setTitleColor:CREACTION_MAIN_COLOR forState:UIControlStateHighlighted];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:17.5];
+            button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
             button;
         });
     }

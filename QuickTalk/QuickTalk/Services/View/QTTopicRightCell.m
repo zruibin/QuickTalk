@@ -11,6 +11,7 @@
 @interface QTTopicRightCell ()
 
 @property (nonatomic, strong, readwrite) UIButton *avatarButton;
+@property (nonatomic, strong) UIImageView *bgView;
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, copy) NSDictionary *detailAttributes;
 
@@ -57,24 +58,49 @@
     [self.avatarButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.contentView).offset(-10);
         make.top.equalTo(self.contentView).offset(10);
-        make.width.and.height.mas_equalTo(45);
+        make.width.and.height.mas_equalTo(40);
     }];
-    
+    [self.contentView addSubview:self.bgView];
     [self.contentView addSubview:self.detailLabel];
     [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.avatarButton.mas_left).offset(-10);
-        make.left.equalTo(self.contentView).offset(20);
-        make.bottom.equalTo(self.contentView).offset(-10);
+        make.top.equalTo(self.contentView).offset(14);
+        make.right.equalTo(self.avatarButton.mas_left).offset(-30);
+        make.left.greaterThanOrEqualTo(self.contentView).offset(30);
+        make.height.mas_greaterThanOrEqualTo(30);
+    }];
+    [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.detailLabel.mas_top).offset(-10);
+        make.left.equalTo(self.detailLabel.mas_left).offset(-14);
+        make.right.equalTo(self.detailLabel.mas_right).offset(14);
+        make.bottom.equalTo(self.detailLabel.mas_bottom).offset(10);
     }];
 }
 
+#pragma mark - Public
+
+- (void)loadData:(NSString *)detail avatar:(NSString *)avatar
+{
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:detail attributes:self.detailAttributes];
+    self.detailLabel.attributedText = attributedText;
+    [self.imageView cra_setImage:avatar];
+}
+
+- (CGFloat)heightForCell:(NSString *)detail
+{
+    CGSize size = [self sizeForString:detail attributes:self.detailAttributes];
+    CGFloat height = 14 + size.height + 14;
+    height = ceil(height);
+    if (height < 50) {
+        height = 50;
+    }
+    return  height;
+}
 
 #pragma mark - Private
 
 - (CGSize)sizeForString:(NSString *)string attributes:(NSDictionary *)attributes
 {
-    CGFloat w = CGRectGetWidth([[UIScreen mainScreen] bounds]) - 20;
+    CGFloat w = CGRectGetWidth([[UIScreen mainScreen] bounds]) - 20 - 45 - 40;
     CGSize size = [string boundingRectWithSize:CGSizeMake(w, MAXFLOAT)
                                        options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics
                                     attributes:attributes context:nil].size;
@@ -97,6 +123,18 @@
     return _avatarButton;
 }
 
+- (UIImageView *)bgView
+{
+    if (_bgView == nil) {
+        _bgView = ({
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.image = [[UIImage imageNamed:@"message_sender_background_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(30, 20, 10, 20)];
+            imageView;
+        });
+    }
+    return _bgView;
+}
+
 - (UILabel *)detailLabel
 {
     if (_detailLabel == nil) {
@@ -107,11 +145,6 @@
             label.lineBreakMode = NSLineBreakByCharWrapping;
             label.textAlignment = NSTextAlignmentLeft;
             label.numberOfLines = 0;
-            label.backgroundColor = [UIColor yellowColor];
-            
-            NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:@"上半年的时间" attributes:self.detailAttributes];
-            label.attributedText = attributedText;
-            
             label;
         });
     }
@@ -123,12 +156,12 @@
     if (_detailAttributes == nil) {
         _detailAttributes = ({
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-            paragraphStyle.lineSpacing = 6.0f;//增加行高
+            paragraphStyle.lineSpacing = 4.0f;//增加行高
             paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
             paragraphStyle.alignment = NSTextAlignmentLeft;
             NSDictionary *attributes = @{
                                          NSFontAttributeName: [UIFont systemFontOfSize:17],
-                                         NSForegroundColorAttributeName: [UIColor colorFromHexValue:0x585858],
+                                         NSForegroundColorAttributeName: [UIColor blackColor],
                                          NSParagraphStyleAttributeName: paragraphStyle
                                          };
             attributes;
