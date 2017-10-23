@@ -13,6 +13,8 @@
 #import "QBPopupMenu.h"
 #import "QTCommentModel.h"
 
+NSString * const kTopicHiddenPopupMenuNotification = @"kTopicHiddenPopupMenuNotification";
+
 @interface QTTopicController ()
 <
 UITableViewDataSource, UITableViewDelegate,
@@ -26,10 +28,14 @@ UITextFieldDelegate, QBPopupMenuDelegate
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
 @property (nonatomic, assign) NSUInteger page;
+@property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, strong) QBPopupMenu *popupMenu;
 
 - (void)initViews;
 - (void)loadData;
 - (void)loadMoreData;
+- (void)sendComment;
+- (void)sendAgreeOrDisAgree:(QTCommentModel *)model action:(NSString *)actionStr;
 
 @end
 
@@ -39,6 +45,7 @@ UITextFieldDelegate, QBPopupMenuDelegate
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTopicHiddenPopupMenuNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -61,6 +68,10 @@ UITextFieldDelegate, QBPopupMenuDelegate
     [self.tableView headerWithRefreshingBlock:^{
         weakSelf.page +=1;
         [weakSelf loadMoreData];
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kTopicHiddenPopupMenuNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf.popupMenu dismissAnimated:YES];
     }];
 }
 
@@ -129,10 +140,45 @@ UITextFieldDelegate, QBPopupMenuDelegate
     }];
 }
 
+- (void)sendComment
+{
+    if (self.textField.text.length <= 0) {
+        return;
+    }
+    NSString *topicUUID = self.model.uuid;
+    NSString *userUUID = [QTUserInfo sharedInstance].uuid;
+    [QTProgressHUD showHUD:self.view];
+    [QTCommentModel requestForSendComment:topicUUID content:self.textField.text userUUID:userUUID completionHandler:^(BOOL action, NSError *error) {
+        if (action) {
+            [QTProgressHUD showHUDSuccess];
+            self.textField.text = @"";
+            [self loadData];
+        } else {
+            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+        }
+    }];
+}
+
+- (void)sendAgreeOrDisAgree:(QTCommentModel *)model action:(NSString *)actionStr
+{
+    [QTCommentModel requestForAgreeOrDisAgreeComment:model.uuid action:actionStr completionHandler:^(BOOL action, NSError *error) {
+        if (action) {
+            if ([actionStr isEqualToString:@"1"]) {
+                model.like += 1;
+            } else {
+                model.dislike += 1;
+            }
+        } else {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
+        }
+    }];
+}
+
 #pragma mark -
 
 - (void)keyboardAction:(NSNotification*)notification
 {
+    [self.popupMenu dismissAnimated:YES];
     NSDictionary *info = [notification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     
@@ -194,31 +240,36 @@ UITextFieldDelegate, QBPopupMenuDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    self.selectedIndex = indexPath.row;
+    QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     CGRect frame = cell.frame;
     CGPoint point = [self.tableView contentOffset];//在内容视图的起源到滚动视图的原点偏移。
     frame.origin.y = cell.frame.origin.y - point.y;
     
-    QBPopupMenuItem *item = [QBPopupMenuItem itemWithTitle:@"  赞同(100)" target:self
-                                                    action:@selector(popupArgeeAction)];
-    QBPopupMenuItem *item2 = [QBPopupMenuItem itemWithTitle:@"不赞同(20)" target:self
-                                                     action:@selector(popupDisargeeAction)];
-    QBPopupMenu *popupMenu = [[QBPopupMenu alloc] initWithItems:@[item, item2]];
-    popupMenu.cornerRadius = 6;
-    popupMenu.height = 36;
-    popupMenu.highlightedColor = [[UIColor colorWithRed:0 green:0.478 blue:1.0 alpha:1.0] colorWithAlphaComponent:0.8];
-    [popupMenu showInView:self.tableView targetRect:frame animated:YES];
+    NSString *likeStr = [NSString stringWithFormat:@"  赞同(%@)", [Tools countTransition:model.like]];
+    QBPopupMenuItem *item = [QBPopupMenuItem itemWithTitle:likeStr target:self
+                                                    action:@selector(popupAgreeAction)];
+    NSString *dislikeStr = [NSString stringWithFormat:@"不赞同(%@)", [Tools countTransition:model.dislike]];
+    QBPopupMenuItem *item2 = [QBPopupMenuItem itemWithTitle:dislikeStr target:self
+                                                     action:@selector(popupDisagreeAction)];
+    self.popupMenu = [[QBPopupMenu alloc] initWithItems:@[item, item2]];
+    self.popupMenu.cornerRadius = 6;
+    self.popupMenu.height = 36;
+    self.popupMenu.highlightedColor = [[UIColor colorWithRed:0 green:0.478 blue:1.0 alpha:1.0] colorWithAlphaComponent:0.8];
+    [self.popupMenu showInView:self.tableView targetRect:frame animated:YES];
 }
 
-- (void)popupArgeeAction
+- (void)popupAgreeAction
 {
-    
+    QTCommentModel *model = [self.dataList objectAtIndex:self.selectedIndex];
+    [self sendAgreeOrDisAgree:model action:@"1"];
 }
 
-- (void)popupDisargeeAction
+- (void)popupDisagreeAction
 {
-    
+    QTCommentModel *model = [self.dataList objectAtIndex:self.selectedIndex];
+    [self sendAgreeOrDisAgree:model action:@"2"];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -227,17 +278,17 @@ UITextFieldDelegate, QBPopupMenuDelegate
 {
     [textField resignFirstResponder];
     if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
-        
+        [self sendComment];
     }
     return YES;
 }
-
 
 #pragma mark - Touches Event
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.textField resignFirstResponder];
+    [self.popupMenu dismissAnimated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -245,6 +296,7 @@ UITextFieldDelegate, QBPopupMenuDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self.textField resignFirstResponder];
+    [self.popupMenu dismissAnimated:YES];
 }
 
 

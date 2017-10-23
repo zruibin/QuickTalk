@@ -23,5 +23,13 @@
 + (void)requestTopicCommentData:(NSString *)topicUUID page:(NSUInteger)page
               completionHandler:(void (^)(NSArray<QTCommentModel *> *list, NSError * error))completionHandler;
 
++ (void)requestForSendComment:(NSString *)topicUUID
+                      content:(NSString *)content
+                     userUUID:(NSString *)userUUID
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestForAgreeOrDisAgreeComment:(NSString *)uuid
+                                   action:(NSString *)action
+                        completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
 @end

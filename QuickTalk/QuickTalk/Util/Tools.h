@@ -59,7 +59,7 @@
 
 + (NSString *)timeForOnlyYearMonthDay:(NSString *)dataString;
 
-+ (NSString *)countTransition:(NSUInteger)count;
++ (NSString *)countTransition:(NSInteger)count;
 
 
 + (NSAttributedString *)titleForEmpty:(NSString *)title;

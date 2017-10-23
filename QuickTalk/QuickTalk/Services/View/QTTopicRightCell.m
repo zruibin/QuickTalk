@@ -82,7 +82,7 @@
 {
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:detail attributes:self.detailAttributes];
     self.detailLabel.attributedText = attributedText;
-    [self.imageView cra_setImage:avatar];
+    [self.avatarButton cra_setBackgroundImage:avatar];
 }
 
 - (CGFloat)heightForCell:(NSString *)detail
@@ -115,7 +115,7 @@
     if (_avatarButton == nil) {
         _avatarButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.backgroundColor = [UIColor redColor];
+            button.backgroundColor = [UIColor clearColor];
             button.translatesAutoresizingMaskIntoConstraints = NO;
             button;
         });

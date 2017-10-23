@@ -38,13 +38,6 @@
     // Do any additional setup after loading the view.
     [self initViews];
     [self loadData];
-    
-    
-//    QTTopicController *topicController = [QTTopicController new];
-//    [self addChildViewController:topicController];
-//    self.scrollView.contentSize = CGSizeMake(self.viewWidth, self.viewHeight);
-//    topicController.view.frame = CGRectMake(0, 0, self.viewWidth, self.viewHeight);
-//    [self.scrollView addSubview:topicController.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,7 +54,7 @@
     self.navigationItem.titleView = self.titleButton;
     
     UIBarButtonItem *moreItem = [[UIBarButtonItem alloc]
-                                       initWithTitle:@"…" style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
+                                 initWithImage:[UIImage imageNamed:@"more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
     self.navigationItem.rightBarButtonItem = moreItem;
 }
 
@@ -138,6 +131,7 @@
     } else {
         [self.popoverView hide];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTopicHiddenPopupMenuNotification object:nil];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -194,6 +188,7 @@
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont boldSystemFontOfSize:17.5];
             button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+            [button setTitleColor:[UIColor colorFromHexValue:0x999999] forState:UIControlStateHighlighted];
             button;
         });
     }

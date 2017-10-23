@@ -219,8 +219,11 @@
     return [formatter stringFromDate:date];
 }
 
-+ (NSString *)countTransition:(NSUInteger)count
++ (NSString *)countTransition:(NSInteger)count
 {
+    if (count < 0) {
+        return @"0";
+    }
     if (count < 10000) {
         return [NSString stringWithFormat:@"%ld", count];
     } else {

@@ -17,6 +17,7 @@
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E08181391F99B07F0035DEF4 /* QTCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181381F99B07F0035DEF4 /* QTCommentModel.m */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
+		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
 		E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */; };
 		E0A4FC821F98431B002ED580 /* QTTopicRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */; };
 		E0A4FC841F98899D002ED580 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = E0A4FC831F98899D002ED580 /* Podfile */; };
@@ -81,6 +82,8 @@
 		E08181381F99B07F0035DEF4 /* QTCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCommentModel.m; sourceTree = "<group>"; };
 		E094BB5A1F95F76B00375AD8 /* QTPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTPopoverView.h; sourceTree = "<group>"; };
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
+		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
+		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
 		E0A4FC7D1F984261002ED580 /* QTTopicLeftCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicLeftCell.h; sourceTree = "<group>"; };
 		E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicLeftCell.m; sourceTree = "<group>"; };
 		E0A4FC801F98431B002ED580 /* QTTopicRightCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicRightCell.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */,
 				E0DF28B71F95A7CE00F1B8C8 /* UIImageView+NetworkImage.h */,
 				E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */,
+				E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */,
+				E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -744,6 +749,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
+				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
 				E08181391F99B07F0035DEF4 /* QTCommentModel.m in Sources */,
 				E08181271F9992540035DEF4 /* QTInfoController.m in Sources */,
