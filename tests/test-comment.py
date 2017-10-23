@@ -13,8 +13,9 @@
 import requests
 
 params = {
-    "topic_uuid":"dc506162825620e0517426001fce8615",
-    "content": "An architectural pattern is a general, reusable solution to a commonly occurring problem in software architecture within a given context. Architectural patterns are similar to software design pattern but have a broader scope. The architectural patterns address various issues in software engineering, such as computer hardware performance limitations, high availability and minimization of a business risk. Some architectural patterns have been implemented within software frameworks."
+    "user_uuid": "22908c712545dca68ae6a09383f47bc3",
+    "topic_uuid":"26dd884ce5f45f1651750e937484156e",
+    "content": "Android 3.0系"
 }
 r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/comment", params=params)    
 print(r.text)

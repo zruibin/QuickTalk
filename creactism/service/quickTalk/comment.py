@@ -28,7 +28,7 @@ def comment():
     if topicUUID == None or  content == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __insertCommentIntoStorage(topicUUID, content)
+    return __insertCommentIntoStorage(topicUUID, content, userUUID)
     
 
 def __insertCommentIntoStorage(topicUUID, content, userUUID):

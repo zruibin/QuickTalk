@@ -14,11 +14,11 @@
 
 import requests
 
-files = {'1': open("./pic/aaa.gif", 'rb')}
+files = {'1': open("./pic/default.png", 'rb')}
 
 
-url = "http://127.0.0.1:5000/service/quickTalk/login"
-data = {"openId": "1234567", "type": "8"}
+url = "http://127.0.0.1:5000/service/quickTalk/loginWithAvatar"
+data = {"openId": "100001", "type": "8"}
 
 # response = requests.post(url=url, params=params, files=files)
 

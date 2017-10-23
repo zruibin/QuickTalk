@@ -14,6 +14,7 @@ CREATE TABLE `t_quickTalk_user`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+ALTER TABLE `t_quickTalk_user` AUTO_INCREMENT=10000;
 ALTER TABLE `t_quickTalk_user` ADD UNIQUE (`uuid`);
 
 
@@ -40,8 +41,10 @@ CREATE TABLE `t_quickTalk_topic_comment`(
     `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `topic_uuid` VARCHAR(100) NOT NULL COMMENT 'topic uuid',
     `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '评论时间戳',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '评论产生时间戳',
+    `update_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '评论更新时间戳',
     `like` INT(11) NOT NULL COMMENT '点赞数量',
+    `dislike` INT(11) NOT NULL COMMENT '不赞同数量',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -52,4 +55,8 @@ ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_topic_uuid ( `topic_
 
 
 
+INSERT INTO `t_quickTalk_user` (`id`, `uuid`, `nickname`, `phone`, `email`, `avatar`, `wechat`, `qq`, `weibo`, `time`) VALUES
+(10000, 'cea8b1c3aebe31823fa86e069de496b9', '', '', '', '2017102011013512hgLe.png', '1234567', '', '', '2017-10-20 03:01:35'),
+(10001, '22908c712545dca68ae6a09383f47bc3', '', '', '', '201710201102566Ieb5r.png', '100000', '', '', '2017-10-20 03:02:56'),
+(10002, 'deb98a5555f6d5780467f7bebf61eb5b', '', '', '', '20171020110322gEJKj6.png', '100001', '', '', '2017-10-20 03:03:22');
 

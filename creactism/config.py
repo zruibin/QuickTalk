@@ -72,6 +72,9 @@ class Config(object):
     UPLOAD_FILE_FOR_USER = "u"
     UPLOAD_FILE_FOR_PROJECT = "p"
 
+    LIKE_ACTION_AGREE = "1"
+    LIKE_ACTION_DISAGREE = "2"
+
     pass
 
 

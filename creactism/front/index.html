@@ -7,12 +7,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-<meta name="keywords" content="creaction, 可行, creactism" />
-<meta name="description" content="CreAction可行 一个创造和行动的平台" />
+<meta name="keywords" content="quicktalk, 快言, creactism" />
+<meta name="description" content="QuickTlk每天读一两条新闻" />
 <meta name="COPYRIGHT" content="版权所有2017,http://www.creactism.com">
 
 
-<title>Creation</title>
+<title>快言</title>
 
 <script src="js/toast.js"></script>
 
@@ -36,87 +36,7 @@ a:visited{text-decoration:none;}
 a:hover{text-decoration:underline;}
 a:active{text-decoration:none;}
 
-.wrap{
-  overflow:hidden;
-  background-color: #efefef;
-  background:url(images/bg.png); background-size:100% 100%;
-  display:none;
-}
-.left,.right{
-  float: left;
-  width: 50%;
-  padding: 2px;
-}
-.left{
-  padding-left: 5px;
-  /* background-color: rebeccapurple; */
-}
-.right{
-  padding-right: 5px;
-  /* background-color: yellowgreen; */
-}
-.inner{
-  padding-top: 100%;
-  position:relative;  
-}
-.left-top img, .right img {
-  width: 100%;
-  vertical-align: middle;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-}
 
-.right img {
-  padding: 30px 30px;
-}
-
-.left-top{
-  height:70%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* background-color: gray; */
-}
-.left-bottom{
-  height:30%;
-  position: absolute;
-  top: 70%;
-  width: 100%;
-  padding-top: 1px;
-}
-.bottom-inner{
-  height:100%;
-  position:relative;
-}
-
-.left-bottom-inner {
-  float: left;
-  /* position: absolute; */
-  width: 50%;
-  height: 100%;
-  /* background-color: red; */
-  padding: 10px;
-}
-
-.left-bottom-inner img {
-   width: 100%;
-   height: 100%;
-   /* padding: 20px; */
-   padding: 15% 10%;
-}
-
-.left-bottom-inner-left{
-  padding-left: 5px;
-  /* background-color: yellow; */
-}
-
-.left-bottom-inner-right{
-  padding-right: 5px;
-  /* background-color: purple; */
-}
 
 
 #copyright {
@@ -186,9 +106,28 @@ a:active{text-decoration:none;}
 }
 
 .phone-footer img {
-  margin-top: 5px;
-  width: 205px;
-  height: 44px;
+  margin-top: 50px;
+  width: 250px;
+  height: 50px;
+}
+
+#pc img {
+  width: 100%;
+  vertical-align:bottom;
+  vertical-align:middle;
+  vertical-align:top;
+}
+
+#pc div {
+  width: 100%;
+  height: 140px;
+  background-color: white;
+  text-align: center
+}
+
+#pc div img {
+  width: 200px;
+  height: 84px;
 }
 
 </style>
@@ -196,36 +135,22 @@ a:active{text-decoration:none;}
 </head>
 <body id="body">
 
-<div class="wrap" id="pc">
+<div id="pc">
 
-    <div class="left">
-        <div class="inner">
-          <div class="left-top"><img src="/images/logo.png" alt=""></div>
-          <div class="left-bottom">
-            <div class="bottom-inner">
-                <div class="left-bottom-inner left-bottom-inner-left">
-                    <img src="/images/ios_btn.png"  onclick="pcMaskAction(1);">
-                </div>
-                <div class="left-bottom-inner left-bottom-inner-right">
-                    <img src="/images/android_btn.png" onclick="pcMaskAction(2);"> 
-                </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-  <div class="right">
-    <div class="inner">
-      <img src="/images/pc_side.png" alt="">
-    </div>  
+  <img src="/images/pc_main.png" alt="">
+  <div id="bg">
+    <a href="#" onclick="pcMaskAction(1);"><img src="/images/ios_btn.png" alt=""></a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="#" onclick="pcMaskAction(2);"><img src="/images/android_btn.png" alt=""></a>
   </div>
   
 </div>
 
 <div id="copyright" >
   &copy; 2017
-  <a href="http://www.creactism.com">可行 www.creactism.com</a> | 
+  <a href="http://www.creactism.com">快言 www.creactism.com</a> | 
   <a href="#">粤ICP备17104783号</a> | 思集科技（深圳）有限公司
 &nbsp;   
 </div>
@@ -238,7 +163,7 @@ a:active{text-decoration:none;}
 
 <div id="phone">
     <div class="phone-header">
-      <img src="/images/phone.png" alt="">
+      <img src="/images/phone_main.png" alt="">
     </div>
     <div class="phone-footer">
       <img src="/images/phone_btn.png" onclick="phoneClickAction();">
@@ -276,7 +201,7 @@ function show() {
         pc.style.cssText = "display:none;"
         copyright.style.cssText = "display:none;"
         phone.style.cssText = "display:block; ";
-        body.style.cssText = "background:url(images/bg.png) repeat; ";
+        body.style.cssText = "background-color: white;";
     } else {
         pc.style.cssText = "display:block;"
         copyright.style.cssText = "display:block;"
