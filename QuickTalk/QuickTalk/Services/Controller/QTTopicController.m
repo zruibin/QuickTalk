@@ -12,30 +12,32 @@
 #import "QTTopicRightCell.h"
 #import "QBPopupMenu.h"
 #import "QTCommentModel.h"
+#import "EwenTextView.h"
 
 NSString * const kTopicHiddenPopupMenuNotification = @"kTopicHiddenPopupMenuNotification";
 
 @interface QTTopicController ()
 <
-UITableViewDataSource, UITableViewDelegate,
-UITextFieldDelegate, QBPopupMenuDelegate
+UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
 >
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UIView *fieldView;
-@property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) EwenTextView *inputView;
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
 @property (nonatomic, assign) NSUInteger page;
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, strong) QBPopupMenu *popupMenu;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) UIButton *updataButton;
 
 - (void)initViews;
 - (void)loadData;
 - (void)loadMoreData;
-- (void)sendComment;
+- (void)sendComment:(NSString *)text;
 - (void)sendAgreeOrDisAgree:(QTCommentModel *)model action:(NSString *)actionStr;
+- (void)checkNewData;
 
 @end
 
@@ -43,8 +45,6 @@ UITextFieldDelegate, QBPopupMenuDelegate
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kTopicHiddenPopupMenuNotification object:nil];
 }
 
@@ -52,18 +52,14 @@ UITextFieldDelegate, QBPopupMenuDelegate
 {
     [super viewDidLoad];
     [self initViews];
-    DLog(@"QTTopicController viewDidLoad...");
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardAction:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardAction:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
+    self.dataList = [NSMutableArray array];
     
     __weak typeof(self) weakSelf = self;
-    [self.tableView footerWithRefreshingBlock:^{
-        weakSelf.page = 1;
-        [weakSelf loadData];
-    }];
-    [self.tableView beginFooterRefreshing];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self loadData];
+    });
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:120 target:self selector:@selector(checkNewData) userInfo:nil repeats:YES];
+    
     self.page = 1;
     [self.tableView headerWithRefreshingBlock:^{
         weakSelf.page +=1;
@@ -73,6 +69,12 @@ UITextFieldDelegate, QBPopupMenuDelegate
     [[NSNotificationCenter defaultCenter] addObserverForName:kTopicHiddenPopupMenuNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         [weakSelf.popupMenu dismissAnimated:YES];
     }];
+    
+    self.inputView.EwenTextViewBlock = ^(NSString *text){
+        if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]) {
+            [weakSelf sendComment:text];
+        }
+    };
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,21 +88,14 @@ UITextFieldDelegate, QBPopupMenuDelegate
     self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0, 0, self.viewWidth,
-                                      self.viewHeight-64-50-6);
+                                      self.viewHeight-64-50);
     
-    [self.view addSubview:self.fieldView];
-    self.fieldView.frame = CGRectMake(0, self.viewHeight-64-50, self.viewWidth, 50);
+    [self.view addSubview:self.inputView];
+    self.inputView.frame = CGRectMake(0, self.viewHeight-49-64, self.viewWidth, 49);
     
-    [self.fieldView addSubview:self.textField];
-    [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.fieldView).with.insets(UIEdgeInsetsMake(8, 10, 8, 10));
-    }];
-
-    CGRect frame = [self.textField frame];
-    frame.size.width = 7.0f;
-    UIView *leftview = [[UIView alloc] initWithFrame:frame];
-    self.textField.leftViewMode = UITextFieldViewModeAlways;
-    self.textField.leftView = leftview;
+    [self.view addSubview:self.updataButton];
+    self.updataButton.frame = CGRectMake(0, CGRectGetMaxY(self.tableView.frame)-35, self.viewWidth, 35);
+    self.updataButton.hidden = YES;
 }
 
 - (void)loadData
@@ -109,14 +104,16 @@ UITextFieldDelegate, QBPopupMenuDelegate
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE]  view:self.view];
         } else {
-            [self.tableView endFooterRefreshing];
             if (list.count > 0) {
-                self.dataList = [[[list reverseObjectEnumerator] allObjects] mutableCopy];
+                NSArray *dataArray = [[list reverseObjectEnumerator] allObjects];
+                self.dataList = [NSMutableArray arrayWithArray:dataArray];
                 [self.tableView reloadData];
                 if (self.tableView.contentSize.height > self.tableView.frame.size.height) {
                     CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
                     [self.tableView setContentOffset:offset animated:YES];
                 }
+                self.page = 1;
+                self.updataButton.hidden = YES;
             }
         }
     }];
@@ -133,6 +130,9 @@ UITextFieldDelegate, QBPopupMenuDelegate
                 NSArray *array = [[list reverseObjectEnumerator] allObjects];
                 [self.dataList insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
                 [self.tableView reloadData];
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:array.count inSection:0];
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
             } else {
                 self.page -= 1;
             }
@@ -140,18 +140,18 @@ UITextFieldDelegate, QBPopupMenuDelegate
     }];
 }
 
-- (void)sendComment
+- (void)sendComment:(NSString *)text
 {
-    if (self.textField.text.length <= 0) {
+    if (text.length <= 0) {
         return;
     }
     NSString *topicUUID = self.model.uuid;
     NSString *userUUID = [QTUserInfo sharedInstance].uuid;
     [QTProgressHUD showHUD:self.view];
-    [QTCommentModel requestForSendComment:topicUUID content:self.textField.text userUUID:userUUID completionHandler:^(BOOL action, NSError *error) {
+    [QTCommentModel requestForSendComment:topicUUID content:text userUUID:userUUID completionHandler:^(BOOL action, NSError *error) {
         if (action) {
             [QTProgressHUD showHUDSuccess];
-            self.textField.text = @"";
+            [self.inputView setOriginStatus];
             [self loadData];
         } else {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
@@ -174,20 +174,24 @@ UITextFieldDelegate, QBPopupMenuDelegate
     }];
 }
 
-#pragma mark -
-
-- (void)keyboardAction:(NSNotification*)notification
+- (void)checkNewData
 {
-    [self.popupMenu dismissAnimated:YES];
-    NSDictionary *info = [notification userInfo];
-    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    
-    if ([notification.name isEqualToString:UIKeyboardWillShowNotification]) {
-        self.fieldView.frame = CGRectMake(0, self.viewHeight-64-50-keyboardSize.height,
-                                          self.viewWidth, 50);
-    } else {
-        self.fieldView.frame = CGRectMake(0, self.viewHeight-64-50, self.viewWidth, 50);
-    }
+    [QTCommentModel requestTopicCommentData:self.model.uuid page:1 completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE]  view:self.view];
+        } else {
+            if (list.count > 0) {
+                NSArray *dataArray = [[list reverseObjectEnumerator] allObjects];
+                if (self.dataList.count > 0) {
+                    QTCommentModel *oldModel = self.dataList.lastObject;
+                    QTCommentModel *newModel = dataArray.lastObject;
+                    if (newModel._id > oldModel._id) {
+                        self.updataButton.hidden = NO;
+                    }
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -272,22 +276,10 @@ UITextFieldDelegate, QBPopupMenuDelegate
     [self sendAgreeOrDisAgree:model action:@"2"];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
-        [self sendComment];
-    }
-    return YES;
-}
-
 #pragma mark - Touches Event
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.textField resignFirstResponder];
     [self.popupMenu dismissAnimated:YES];
 }
 
@@ -295,10 +287,8 @@ UITextFieldDelegate, QBPopupMenuDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.textField resignFirstResponder];
     [self.popupMenu dismissAnimated:YES];
 }
-
 
 #pragma mark - setter and getter
 
@@ -326,38 +316,31 @@ UITextFieldDelegate, QBPopupMenuDelegate
     return _tableView;
 }
 
-- (UIView *)fieldView
+- (EwenTextView *)inputView
 {
-    if (_fieldView == nil) {
-        _fieldView = ({
-            UIView *view = [UIView new];
-            view.backgroundColor = [UIColor colorFromHexValue:0xF9F9F9];
-            view;
-        });
+    if (_inputView == nil) {
+        _inputView = [[EwenTextView alloc] init];
+        _inputView.backgroundColor = [UIColor clearColor];
+        [_inputView setPlaceholderText:@"写评论"];
     }
-    return _fieldView;
+    return _inputView;
 }
 
-- (UITextField *)textField
+- (UIButton *)updataButton
 {
-    if (_textField == nil) {
-        _textField = ({
-            UITextField *textField = [[UITextField alloc] init];
-            textField.clearButtonMode = UITextFieldViewModeAlways;
-            textField.returnKeyType = UIReturnKeySend;
-            textField.delegate = self;
-            textField.textColor = [UIColor blackColor];
-            textField.font = [UIFont systemFontOfSize:14];
-            textField.backgroundColor = [UIColor whiteColor];
-            textField.layer.borderColor = [[UIColor colorFromHexValue:0xE4E4E4] CGColor];
-            textField.layer.borderWidth = .5f;
-            textField.layer.cornerRadius = 5;
-            textField.translatesAutoresizingMaskIntoConstraints = NO;
-            textField.placeholder = @"写评论";
-            textField;
+    if (_updataButton == nil) {
+        _updataButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitle:@"有新消息" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0xFFFFCC withAlpha:.98f]]
+                              forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(loadData) forControlEvents:UIControlEventTouchUpInside];
+            button;
         });
     }
-    return _textField;
+    return _updataButton;
 }
 
 @end

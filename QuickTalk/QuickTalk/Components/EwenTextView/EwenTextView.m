@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #define kScreenBounds ([[UIScreen mainScreen] bounds])
 #define kScreenwidth (kScreenBounds.size.width)
-#define kScreenheight (kScreenBounds.size.height)
+#define kScreenheight (kScreenBounds.size.height-64)
 #define UIColorRGB(x,y,z) [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1.0]
 
 @interface EwenTextView()<UITextViewDelegate,UIScrollViewDelegate>
@@ -27,7 +27,8 @@
 
 @implementation EwenTextView
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         [self createUI];
@@ -63,16 +64,27 @@
     
     [self.sendButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(8);
+        make.bottom.mas_equalTo(-8);
         make.right.mas_equalTo(-5);
         make.width.mas_equalTo(50);
     }];
-    
 }
 
 //暴露的方法
 - (void)setPlaceholderText:(NSString *)text{
     placeholderText = text;
     self.placeholderLabel.text = placeholderText;
+}
+
+- (void)setOriginStatus
+{
+    //---- 发送成功之后清空 ------//
+    self.textView.text = nil;
+    self.placeholderLabel.text = placeholderText;
+    [self.sendButton setBackgroundColor:UIColorRGB(180, 180, 180)];
+    self.sendButton.userInteractionEnabled = NO;
+    self.frame = CGRectMake(0, kScreenheight-49, kScreenwidth, 49);
+    self.backGroundView.frame = CGRectMake(0, 0, kScreenwidth, 49);
 }
 
 
@@ -110,9 +122,6 @@
 - (void)centerTapClick{
     [self.textView resignFirstResponder];
 }
-
-
-
 
 #pragma mark --- UITextViewDelegate
 - (void)textViewDidChange:(UITextView *)textView{
@@ -156,24 +165,19 @@
     if (self.EwenTextViewBlock) {
         self.EwenTextViewBlock(self.textView.text);
     }
-    
-    //---- 发送成功之后清空 ------//
-    self.textView.text = nil;
-    self.placeholderLabel.text = placeholderText;
-    [self.sendButton setBackgroundColor:UIColorRGB(180, 180, 180)];
-    self.sendButton.userInteractionEnabled = NO;
-    self.frame = CGRectMake(0, kScreenheight-49, kScreenwidth, 49);
-    self.backGroundView.frame = CGRectMake(0, 0, kScreenwidth, 49);
 }
-
-
 
 #pragma mark --- 懒加载控件
 - (UIView *)backGroundView{
     if (!_backGroundView) {
         _backGroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenwidth, 49)];
-        _backGroundView.backgroundColor = UIColorRGB(230, 230, 230);
+        _backGroundView.backgroundColor = UIColorRGB(245, 245, 245);
         [self addSubview:_backGroundView];
+        
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, kScreenwidth, .5);
+        layer.backgroundColor = [UIColorRGB(200, 200, 200) CGColor];
+        [_backGroundView.layer addSublayer:layer];
     }
     return _backGroundView;
 }
@@ -201,9 +205,10 @@
 
 - (UIButton *)sendButton{
     if (!_sendButton) {
-        _sendButton = [[UIButton alloc]init];
+        _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendButton setBackgroundColor:UIColorRGB(180, 180, 180)];
         [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
+        _sendButton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_sendButton addTarget:self action:@selector(sendClick:) forControlEvents:UIControlEventTouchUpInside];
         _sendButton.layer.cornerRadius = 5;
@@ -221,12 +226,5 @@
         
     }
 }
-
-
-
-
-
-
-
 
 @end

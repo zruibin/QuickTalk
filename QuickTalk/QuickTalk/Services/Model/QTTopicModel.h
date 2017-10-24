@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *detail;
 @property (nonatomic, copy) NSString *href;
 @property (nonatomic, copy) NSString *time;
-@property (nonatomic, assign) NSInteger *_id;
+@property (nonatomic, assign) NSInteger _id;
 
 
 + (void)requestTopicData:(NSUInteger)page

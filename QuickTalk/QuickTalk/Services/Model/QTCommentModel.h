@@ -10,7 +10,7 @@
 
 @interface QTCommentModel : NSObject
 
-@property (nonatomic, assign) NSInteger *_id;
+@property (nonatomic, assign) NSInteger _id;
 @property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *userUUID;
 @property (nonatomic, copy) NSString *topicUUID;
