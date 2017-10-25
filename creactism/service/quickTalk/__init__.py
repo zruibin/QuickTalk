@@ -21,3 +21,4 @@ from service.quickTalk import submitTopic
 from service.quickTalk import deleteTopic
 from service.quickTalk import like
 from service.quickTalk import loginWithAvatar
+from service.quickTalk import hidden

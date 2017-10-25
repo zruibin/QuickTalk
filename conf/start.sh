@@ -19,6 +19,6 @@
 #service mysql start
 systemctl start mariadb
 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-#/usr/local/redis/redis-server /usr/local/redis/redis.conf
+/usr/local/redis/redis-server /usr/local/redis/redis.conf
 #ps -ef | grep supervisord | grep -v grep | cut -c 9-15 | xargs kill -s 9 
 /home/creactism/env/bin/supervisord -c /home/creactism/supervisor.conf
