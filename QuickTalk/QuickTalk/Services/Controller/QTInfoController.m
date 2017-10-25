@@ -101,6 +101,9 @@
         
         self.avatarView.hidden = NO;
         self.logoutButton.hidden = NO;
+        
+        NSString *avatar = [QTUserInfo sharedInstance].avatar;
+        [self.avatarView cra_setImage:avatar];
     } else {
         self.avatarView.hidden = YES;
         self.logoutButton.hidden = YES;
@@ -109,6 +112,10 @@
         self.wechatButton.hidden = NO;
         self.qqButton.hidden = NO;
         self.testButton.hidden = NO;
+        
+        if ([QTUserInfo sharedInstance].hiddenOneClickLogin) {
+            self.testButton.hidden = YES;
+        }
     }
 }
 

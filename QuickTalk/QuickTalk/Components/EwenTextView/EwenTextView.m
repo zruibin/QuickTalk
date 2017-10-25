@@ -104,6 +104,8 @@
         CGRect rect = CGRectMake(0, kScreenheight - self.backGroundView.frame.size.height-height, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;
     }
+    
+    DLog(@"y:%f", self.textView.frame.origin.y);
 }
 
 //当键退出时调用

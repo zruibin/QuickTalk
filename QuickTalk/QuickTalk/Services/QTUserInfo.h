@@ -13,6 +13,7 @@
 @property (nonatomic, readonly, getter=isLogin) BOOL loginStatus;
 @property (nonatomic, copy, readonly) NSString *uuid;
 @property (nonatomic, copy, readonly) NSString *avatar;
+@property (nonatomic, assign, readonly) BOOL hiddenOneClickLogin;
 
 + (instancetype)sharedInstance;
 

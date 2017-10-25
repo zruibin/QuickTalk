@@ -19,6 +19,9 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
 @property (nonatomic, readwrite, getter=isLogin) BOOL loginStatus;
 @property (nonatomic, copy, readwrite) NSString *uuid;
 @property (nonatomic, copy, readwrite) NSString *avatar;
+@property (nonatomic, assign, readwrite) BOOL hiddenOneClickLogin;
+
+- (void)checkHidden;
 
 @end
 
@@ -63,6 +66,8 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
     self.loginStatus = NO;
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginUUID];
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginAvatar];
+    self.uuid = nil;
+    self.avatar = nil;
 }
 
 - (void)loginInBackground
@@ -72,6 +77,7 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
     if (uuid.length > 0) {
         [self login:uuid avatar:avatar];
     }
+    [self checkHidden];
 }
 
 
@@ -83,6 +89,29 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
         [viewController presentViewController:nav animated:YES completion:nil];
     }
     return self.loginStatus;
+}
+
+#pragma mark - Private
+
+- (void)checkHidden
+{
+    [QTNetworkAgent requestDataForQuickTalkService:@"/hidden" method:SERVICE_REQUEST_POST params:nil completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error == nil) {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = [responseObject[@"data"][@"hidden"] boolValue];;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                self.hiddenOneClickLogin = action;
+            }
+        }
+    }];
 }
 
 @end

@@ -24,6 +24,7 @@
 @property (nonatomic, assign) NSUInteger index;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
+@property (nonatomic, strong) UIView *errorView;
 
 - (void)initViews;
 - (void)loadData;
@@ -56,6 +57,8 @@
     UIBarButtonItem *moreItem = [[UIBarButtonItem alloc]
                                  initWithImage:[UIImage imageNamed:@"more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
     self.navigationItem.rightBarButtonItem = moreItem;
+    
+    [self.view addSubview:self.errorView];
 }
 
 - (void)loadData
@@ -64,8 +67,10 @@
     [QTTopicModel requestTopicData:1 completionHandler:^(NSArray<QTTopicModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+            self.errorView.hidden = NO;
         } else {
             [QTProgressHUD hide];
+            self.errorView.hidden = YES;
             self.dataList = [list copy];
             if (self.dataList.count > 0) {
                 self.scrollView.contentSize = CGSizeMake(self.viewWidth*10, self.viewHeight);
@@ -111,25 +116,27 @@
 
 - (void)titleButtonAction:(UIButton *)sender
 {
-    if (self.popoverView == nil) {
-        QTTopicModel *model = (QTTopicModel *)[self.dataList objectAtIndex:self.index];
-        self.popoverView = [QTPopoverView popoverInView:self.view];
-        self.popoverView.textAlignment = NSTextAlignmentCenter;
-        self.popoverView.items = @[model.detail];
-        self.popoverView.multilineText = YES;
-        self.popoverView.animationTime = .4;
-        __weak typeof(self) weakSelf = self;
-        [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
-            QTTopicModel *model = (QTTopicModel *)[weakSelf.dataList objectAtIndex:weakSelf.index];
-            NSString *url = model.href;
-            SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-            [weakSelf presentViewController:safariController animated:YES completion:nil];
-        }];
-    }
-    if (self.popoverView.hidden) {
-        [self.popoverView show];
-    } else {
-        [self.popoverView hide];
+    if (self.dataList.count > 0) {
+        if (self.popoverView == nil) {
+            QTTopicModel *model = (QTTopicModel *)[self.dataList objectAtIndex:self.index];
+            self.popoverView = [QTPopoverView popoverInView:self.view];
+            self.popoverView.textAlignment = NSTextAlignmentCenter;
+            self.popoverView.items = @[model.detail];
+            self.popoverView.multilineText = YES;
+            self.popoverView.animationTime = .4;
+            __weak typeof(self) weakSelf = self;
+            [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
+                QTTopicModel *model = (QTTopicModel *)[weakSelf.dataList objectAtIndex:weakSelf.index];
+                NSString *url = model.href;
+                SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+                [weakSelf presentViewController:safariController animated:YES completion:nil];
+            }];
+        }
+        if (self.popoverView.hidden) {
+            [self.popoverView show];
+        } else {
+            [self.popoverView hide];
+        }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kTopicHiddenPopupMenuNotification object:nil];
 }
@@ -193,6 +200,34 @@
         });
     }
     return _titleButton;
+}
+
+- (UIView *)errorView
+{
+    if (_errorView == nil) {
+        _errorView = ({
+            UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
+            view.backgroundColor = [UIColor whiteColor];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:@selector(loadData) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+            [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+            [button setTitle:@"重新加载" forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0xEFEFEF]]
+                              forState:UIControlStateNormal];
+            [view addSubview:button];
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.and.centerY.equalTo(view);
+                make.width.mas_equalTo(140);
+                make.height.mas_equalTo(40);
+            }];
+            
+            view;
+        });
+    }
+    return _errorView;
 }
 
 @end
