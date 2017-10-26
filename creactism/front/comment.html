@@ -57,7 +57,7 @@ function getTopicComment() {
 	var input = document.getElementById("input");
 	var index = input.value;
 
-	var url = "/service/quickTalk/commentList?topic_uuid=" + uuid + "&index=" + index + "&size=50";
+	var url = "/service/quickTalk/commentList?topic_uuid=" + uuid + "&index=" + index + "&size=100";
 	reqwest({
 		url: url, 
 		type: 'json', 
