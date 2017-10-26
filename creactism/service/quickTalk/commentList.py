@@ -24,15 +24,17 @@ def commentList():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
+    size = getValueFromRequestByKey("size")
 
     if topicUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
 
-    return __getCommentListFromStorage(topicUUID, index)
+    return __getCommentListFromStorage(topicUUID, index, size)
 
 
-def __getCommentListFromStorage(topicUUID, index):
+def __getCommentListFromStorage(topicUUID, index, size):
     limitSQL = limit(index)
+    if size is not None: limitSQL = limit(index, int(size))
     querySQL = """
         SELECT id, uuid, user_uuid AS userUUID, topic_uuid AS topicUUID, 
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=user_uuid) AS avatar,
