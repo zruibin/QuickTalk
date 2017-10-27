@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 
 
 
-@quickTalk.route('/loginWithAvatar', methods=["GET", "POST"])
+@quickTalk.route('/login', methods=["GET", "POST"])
 def loginWithAvatar():
     openId = getValueFromRequestByKey("openId")
     avatar = getValueFromRequestByKey("avatar")
@@ -34,11 +34,11 @@ def loginWithAvatar():
 
 def __loginAction(openId, typeStr, avatar):
     typeData = __typeData(typeStr)
-    
+
     querySQL = """
-        SELECT uuid, avatar FROM t_quickTalk_user WHERE %s=%s; 
+        SELECT uuid, avatar FROM t_quickTalk_user WHERE %s='%s'; 
     """ % (typeData, openId)
-       
+
     dbManager = DB.DBManager.shareInstanced()
     try: 
         result = dbManager.executeSingleQuery(querySQL)
