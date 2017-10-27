@@ -104,8 +104,6 @@
         CGRect rect = CGRectMake(0, kScreenheight - self.backGroundView.frame.size.height-height, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;
     }
-    
-    DLog(@"y:%f", self.textView.frame.origin.y);
 }
 
 //当键退出时调用
@@ -167,6 +165,12 @@
     if (self.EwenTextViewBlock) {
         self.EwenTextViewBlock(self.textView.text);
     }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event
+{
+    [super touchesMoved:touches withEvent:event];
+    [self.textView resignFirstResponder];
 }
 
 #pragma mark --- 懒加载控件

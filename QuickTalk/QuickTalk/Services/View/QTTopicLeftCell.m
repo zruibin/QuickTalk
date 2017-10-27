@@ -74,6 +74,10 @@
         make.right.equalTo(self.detailLabel.mas_right).offset(14);
         make.bottom.equalTo(self.detailLabel.mas_bottom).offset(10);
     }];
+    
+    self.detailLabel.userInteractionEnabled = YES;
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    [self.detailLabel addGestureRecognizer:gesture];
 }
 
 
@@ -101,12 +105,21 @@
 - (CGFloat)heightForCell:(NSString *)detail
 {
     CGSize size = [self sizeForString:detail attributes:self.detailAttributes];
-    CGFloat height = 14 + size.height + 14;
+    CGFloat height = 14 + size.height + 14 + 6;
     height = ceil(height);
     if (height < 55) {
         height = 55;
     }
     return  height;
+}
+
+#pragma mark - Action
+
+- (void)tapAction
+{
+    if (self.onTapHandler) {
+        self.onTapHandler(self.tag);
+    }
 }
 
 #pragma mark - setter and getter

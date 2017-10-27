@@ -33,12 +33,18 @@
 
 @implementation QTMainViewController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTRefreshDataNotification object:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initViews];
     [self loadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:QTRefreshDataNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +79,7 @@
             self.errorView.hidden = YES;
             self.dataList = [list copy];
             if (self.dataList.count > 0) {
-                self.scrollView.contentSize = CGSizeMake(self.viewWidth*10, self.viewHeight);
+                self.scrollView.contentSize = CGSizeMake(self.viewWidth*self.dataList.count, self.viewHeight);
                 for (NSInteger i=0; i<self.dataList.count; ++i) {
                     QTTopicController *topicController = [QTTopicController new];
                     [self.childControllers addObject:topicController];
@@ -95,20 +101,22 @@
 - (void)selectedSubController:(NSUInteger)index
 {
     DLog(@"index: %ld", index);
-    self.index = index;
-    QTTopicModel *model = (QTTopicModel *)[self.dataList objectAtIndex:index];
-    [self.titleButton setTitle:model.title forState:UIControlStateNormal];
-    BOOL action = [[self.actionDict objectForKey:[NSNumber numberWithInteger:index]] boolValue];
-    if (action == NO) {
-        QTTopicController *topicController = (QTTopicController *)self.childControllers[index];
-        topicController.view.frame = CGRectMake(self.viewWidth*index, 0,
-                                                self.viewWidth, self.viewHeight);
-        [self.scrollView addSubview:topicController.view];
-        [self addChildViewController:topicController];
-        [self.actionDict setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInteger:index]];
-        topicController.model = model;
+    if (index < self.dataList.count) {
+        self.index = index;
+        QTTopicModel *model = (QTTopicModel *)[self.dataList objectAtIndex:index];
+        [self.titleButton setTitle:model.title forState:UIControlStateNormal];
+        BOOL action = [[self.actionDict objectForKey:[NSNumber numberWithInteger:index]] boolValue];
+        if (action == NO) {
+            QTTopicController *topicController = (QTTopicController *)self.childControllers[index];
+            topicController.view.frame = CGRectMake(self.viewWidth*index, 0,
+                                                    self.viewWidth, self.viewHeight);
+            [self.scrollView addSubview:topicController.view];
+            [self addChildViewController:topicController];
+            [self.actionDict setObject:[NSNumber numberWithBool:YES] forKey:[NSNumber numberWithInteger:index]];
+            topicController.model = model;
+        }
+        self.popoverView = nil;
     }
-    self.popoverView = nil;
 }
 
 
@@ -150,6 +158,7 @@
         NSInteger index = scrollView.contentOffset.x / pageWidth;
         [self selectedSubController:index];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTopicHiddenPopupMenuNotification object:nil];
 }
 
 #pragma mark - getter and setter

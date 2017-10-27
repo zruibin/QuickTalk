@@ -13,6 +13,14 @@
 
 #pragma mark - Private
 
++ (NSString *)encodeParameter:(NSString *)originalPara
+{
+    CFStringRef encodeParaCf = CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)originalPara, NULL, CFSTR("!*'();:@&=+$,/?%#[]"), kCFStringEncodingUTF8);
+    NSString *encodePara = (__bridge NSString *)(encodeParaCf);
+    CFRelease(encodeParaCf);
+    return encodePara;
+}
+
 
 #pragma mark - Public
 
@@ -21,7 +29,11 @@
     NSMutableString *queryString = [NSMutableString string];
     
     [params enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-        [queryString appendFormat:@"%@=%@&", key, obj];
+        id value = obj;
+        if ([obj isKindOfClass:[NSString class]] && [obj containsString:@"&"]) {
+            value = [self encodeParameter:value];
+        }
+        [queryString appendFormat:@"%@=%@&", key, value];
     }];
     if (params.count > 0) {
         NSRange deleteRange = {[queryString length] - 1, 1};

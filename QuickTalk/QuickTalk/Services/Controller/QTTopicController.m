@@ -10,15 +10,15 @@
 #import "QTTopicModel.h"
 #import "QTTopicLeftCell.h"
 #import "QTTopicRightCell.h"
-#import "QBPopupMenu.h"
 #import "QTCommentModel.h"
 #import "EwenTextView.h"
+#import "QTTipView.h"
 
 NSString * const kTopicHiddenPopupMenuNotification = @"kTopicHiddenPopupMenuNotification";
 
 @interface QTTopicController ()
 <
-UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
+UITableViewDataSource, UITableViewDelegate
 >
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -27,10 +27,9 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
 @property (nonatomic, assign) NSUInteger page;
-@property (nonatomic, assign) NSInteger selectedIndex;
-@property (nonatomic, strong) QBPopupMenu *popupMenu;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UIButton *updataButton;
+@property (nonatomic, strong) QTTipView *tipView;
 
 - (void)initViews;
 - (void)loadData;
@@ -38,6 +37,7 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
 - (void)sendComment:(NSString *)text;
 - (void)sendAgreeOrDisAgree:(QTCommentModel *)model action:(NSString *)actionStr;
 - (void)checkNewData;
+- (void)showTipView:(NSInteger)index;
 
 @end
 
@@ -66,15 +66,15 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
         [weakSelf loadMoreData];
     }];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:kTopicHiddenPopupMenuNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        [weakSelf.popupMenu dismissAnimated:YES];
-    }];
-    
     self.inputView.EwenTextViewBlock = ^(NSString *text){
         if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]) {
             [weakSelf sendComment:text];
         }
     };
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kTopicHiddenPopupMenuNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf.tipView hide];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,6 +145,10 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
     if (text.length <= 0) {
         return;
     }
+    if (text.length > 300) {
+        [QTMessage showWarningNotification:@"评论内容不能超过300个字!"];
+        return;
+    }
     NSString *topicUUID = self.model.uuid;
     NSString *userUUID = [QTUserInfo sharedInstance].uuid;
     [QTProgressHUD showHUD:self.view];
@@ -194,6 +198,27 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
     }];
 }
 
+- (void)showTipView:(NSInteger)index
+{
+    QTCommentModel *model = [self.dataList objectAtIndex:index];
+    QTTipView *tipView = [QTTipView tipInView:self.view];
+    NSString *agreeStr = [NSString stringWithFormat:@"赞同(%@)", [Tools countTransition:model.like]];
+    NSString *disAgreeStr = [NSString stringWithFormat:@"不赞同(%@)", [Tools countTransition:model.dislike]];
+    tipView.agreeString = agreeStr;
+    tipView.disAgreeString = disAgreeStr;
+    __weak typeof(self) weakSelf = self;
+    [tipView setOnAgreeActionBlock:^{
+        QTCommentModel *model = [weakSelf.dataList objectAtIndex:index];
+        [weakSelf sendAgreeOrDisAgree:model action:@"1"];
+    }];
+    [tipView setOnDisagreeActionBlock:^{
+        QTCommentModel *model = [weakSelf.dataList objectAtIndex:index];
+        [weakSelf sendAgreeOrDisAgree:model action:@"2"];
+    }];
+    [tipView show];
+    self.tipView = tipView;
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -208,18 +233,25 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    __weak typeof(self) weakSelf = self;
     UITableViewCell *cell = nil;
     QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
         [rightCell loadData:model.content avatar:model.avatar];
+        [rightCell setOnTapHandler:^(NSInteger index) {
+            [weakSelf showTipView:index];
+        }];
         cell = rightCell;
     } else {
         QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
-        
         [leftCell loadData:model.content avatar:model.avatar];
+        [leftCell setOnTapHandler:^(NSInteger index) {
+            [weakSelf showTipView:index];
+        }];
         cell = leftCell;
     }
+    cell.tag = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     return cell;
@@ -244,50 +276,6 @@ UITableViewDataSource, UITableViewDelegate, QBPopupMenuDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    self.selectedIndex = indexPath.row;
-    QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    CGRect frame = cell.frame;
-    CGPoint point = [self.tableView contentOffset];//在内容视图的起源到滚动视图的原点偏移。
-    frame.origin.y = cell.frame.origin.y - point.y;
-    
-    NSString *likeStr = [NSString stringWithFormat:@"  赞同(%@)", [Tools countTransition:model.like]];
-    QBPopupMenuItem *item = [QBPopupMenuItem itemWithTitle:likeStr target:self
-                                                    action:@selector(popupAgreeAction)];
-    NSString *dislikeStr = [NSString stringWithFormat:@"不赞同(%@)", [Tools countTransition:model.dislike]];
-    QBPopupMenuItem *item2 = [QBPopupMenuItem itemWithTitle:dislikeStr target:self
-                                                     action:@selector(popupDisagreeAction)];
-    self.popupMenu = [[QBPopupMenu alloc] initWithItems:@[item, item2]];
-    self.popupMenu.cornerRadius = 6;
-    self.popupMenu.height = 36;
-    self.popupMenu.highlightedColor = [[UIColor colorWithRed:0 green:0.478 blue:1.0 alpha:1.0] colorWithAlphaComponent:0.8];
-    [self.popupMenu showInView:self.tableView targetRect:frame animated:YES];
-}
-
-- (void)popupAgreeAction
-{
-    QTCommentModel *model = [self.dataList objectAtIndex:self.selectedIndex];
-    [self sendAgreeOrDisAgree:model action:@"1"];
-}
-
-- (void)popupDisagreeAction
-{
-    QTCommentModel *model = [self.dataList objectAtIndex:self.selectedIndex];
-    [self sendAgreeOrDisAgree:model action:@"2"];
-}
-
-#pragma mark - Touches Event
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.popupMenu dismissAnimated:YES];
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [self.popupMenu dismissAnimated:YES];
 }
 
 #pragma mark - setter and getter

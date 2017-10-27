@@ -11,6 +11,7 @@
 @interface QTTopicLeftCell : UITableViewCell
 
 @property (nonatomic, strong, readonly) UIButton *avatarButton;
+@property (nonatomic, copy) void (^onTapHandler)(NSInteger index);
 
 - (void)loadData:(NSString *)detail avatar:(NSString *)avatar;
 - (CGFloat)heightForCell:(NSString *)detail;

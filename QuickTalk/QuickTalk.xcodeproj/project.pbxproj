@@ -11,6 +11,7 @@
 		31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */; };
 		DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
+		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
 		E08181271F9992540035DEF4 /* QTInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181261F9992540035DEF4 /* QTInfoController.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
@@ -74,6 +75,8 @@
 		AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
 		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
+		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
+		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
 		E08181251F9992540035DEF4 /* QTInfoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTInfoController.h; sourceTree = "<group>"; };
 		E08181261F9992540035DEF4 /* QTInfoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTInfoController.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,6 +206,15 @@
 				E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */,
 			);
 			path = EwenTextView;
+			sourceTree = "<group>";
+		};
+		E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */ = {
+			isa = PBXGroup;
+			children = (
+				E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */,
+				E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */,
+			);
+			path = QTTipView;
 			sourceTree = "<group>";
 		};
 		E08181281F9995AD0035DEF4 /* Resources */ = {
@@ -389,6 +401,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */,
 				E04DF4181F9EEEA000EFD1C6 /* EwenTextView */,
 				E094BB591F95F76B00375AD8 /* QTPopoverView */,
 				E0DF28D51F95A7CE00F1B8C8 /* QTMessage */,
@@ -771,6 +784,7 @@
 				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,
 				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
 				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
+				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */,

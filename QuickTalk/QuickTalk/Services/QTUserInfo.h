@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const QTRefreshDataNotification;
+
 @interface QTUserInfo : NSObject
 
 @property (nonatomic, readonly, getter=isLogin) BOOL loginStatus;
@@ -21,5 +23,7 @@
 - (void)logout;
 - (void)loginInBackground;
 - (BOOL)checkLoginStatus:(UIViewController *)viewController;
+
+- (void)checkingObsolescence;
 
 @end

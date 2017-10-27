@@ -10,6 +10,8 @@
 
 @interface QTTopicRightCell : UITableViewCell
 
+@property (nonatomic, copy) void (^onTapHandler)(NSInteger index);
+
 - (void)loadData:(NSString *)detail avatar:(NSString *)avatar;
 - (CGFloat)heightForCell:(NSString *)detail;
 

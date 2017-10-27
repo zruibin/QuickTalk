@@ -13,6 +13,9 @@
 static NSString * const kQTLoginServiceName = @"com.creactism.QuickTalk/LoginService";
 static NSString * const kQTLoginUUID = @"QTLoginUUID";
 static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
+NSString * const QTRefreshDataNotification = @"kkQTRefreshDataNotification";
+
+static NSDate *refreshDate = nil;
 
 @interface QTUserInfo ()
 
@@ -72,6 +75,7 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
 
 - (void)loginInBackground
 {
+    refreshDate = [NSDate date];
     NSString *uuid = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginUUID];
     NSString *avatar = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginAvatar];
     if (uuid.length > 0) {
@@ -79,7 +83,6 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
     }
     [self checkHidden];
 }
-
 
 - (BOOL)checkLoginStatus:(UIViewController *)viewController
 {
@@ -89,6 +92,16 @@ static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
         [viewController presentViewController:nav animated:YES completion:nil];
     }
     return self.loginStatus;
+}
+
+- (void)checkingObsolescence
+{
+    NSDate *nowDate = [NSDate date];
+    NSTimeInterval interval = [nowDate timeIntervalSinceDate:refreshDate];//获取某一时间与当前时间的间隔
+    if (interval > 300) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:QTRefreshDataNotification object:nil];
+        refreshDate = [NSDate date];
+    }
 }
 
 #pragma mark - Private
