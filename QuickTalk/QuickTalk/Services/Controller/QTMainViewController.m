@@ -12,6 +12,7 @@
 #import "QTPopoverView.h"
 #import "QTInfoController.h"
 #import <SafariServices/SafariServices.h>
+#import "QTIntroController.h"
 
 @interface QTMainViewController () <UIScrollViewDelegate>
 
@@ -65,6 +66,16 @@
     self.navigationItem.rightBarButtonItem = moreItem;
     
     [self.view addSubview:self.errorView];
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
+        QTIntroController *introController = [[QTIntroController alloc] init];
+        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:introController];
+        nav.view.backgroundColor = [UIColor clearColor];
+        [self presentViewController:nav animated:NO completion:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)loadData

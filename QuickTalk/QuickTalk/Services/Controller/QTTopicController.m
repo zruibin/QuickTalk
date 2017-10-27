@@ -146,7 +146,7 @@ UITableViewDataSource, UITableViewDelegate
         return;
     }
     if (text.length > 300) {
-        [QTMessage showWarningNotification:@"评论内容不能超过300个字!"];
+        [QTMessage showErrorNotification:@"评论内容不能超过300个字!"];
         return;
     }
     NSString *topicUUID = self.model.uuid;

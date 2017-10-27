@@ -18,6 +18,7 @@
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E08181391F99B07F0035DEF4 /* QTCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181381F99B07F0035DEF4 /* QTCommentModel.m */; };
+		E09351561FA2D8EA000687BC /* QTIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = E09351551FA2D8EA000687BC /* QTIntroController.m */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
 		E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */; };
@@ -86,6 +87,8 @@
 		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
 		E08181371F99B07F0035DEF4 /* QTCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCommentModel.h; sourceTree = "<group>"; };
 		E08181381F99B07F0035DEF4 /* QTCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCommentModel.m; sourceTree = "<group>"; };
+		E09351541FA2D8EA000687BC /* QTIntroController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTIntroController.h; sourceTree = "<group>"; };
+		E09351551FA2D8EA000687BC /* QTIntroController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTIntroController.m; sourceTree = "<group>"; };
 		E094BB5A1F95F76B00375AD8 /* QTPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTPopoverView.h; sourceTree = "<group>"; };
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
 		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
@@ -333,6 +336,8 @@
 				E0DF28BE1F95A7CE00F1B8C8 /* QTTopicController.m */,
 				E08181251F9992540035DEF4 /* QTInfoController.h */,
 				E08181261F9992540035DEF4 /* QTInfoController.m */,
+				E09351541FA2D8EA000687BC /* QTIntroController.h */,
+				E09351551FA2D8EA000687BC /* QTIntroController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -795,6 +800,7 @@
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
+				E09351561FA2D8EA000687BC /* QTIntroController.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
