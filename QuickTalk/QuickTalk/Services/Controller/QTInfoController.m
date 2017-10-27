@@ -19,6 +19,7 @@
 
 - (void)initViews;
 - (void)configureData;
+- (void)loginWithPlatform:(SSDKPlatformType)platformType;
 
 @end
 
@@ -119,7 +120,61 @@
     }
 }
 
+- (void)loginWithPlatform:(SSDKPlatformType)platformType
+{
+    NSString *type = @"8";
+    if (platformType == SSDKPlatformTypeQQ) {
+        type = @"9";
+    }
+    if (platformType == SSDKPlatformTypeSinaWeibo) {
+        type = @"10";
+    }
+    /*
+     TYPE_FOR_AUTH_WECHAT = “8”
+     TYPE_FOR_AUTH_QQ = “9”
+     TYPE_FOR_AUTH_WEIBO = “10”
+     */
+    [ShareSDK getUserInfo:platformType
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
+     {
+         if (state == SSDKResponseStateSuccess) {
+             DLog(@"dd%@",user.rawData);
+             DLog(@"dd%@",user.credential);
+             DLog(@"uid=%@",user.uid);
+             DLog(@"icon: %@", user.icon);
+             DLog(@"nickname=%@",user.nickname);
+             [QTProgressHUD showHUD:self.view];
+             [QTUserInfo requestLogin:user.uid type:type avatar:user.icon completionHandler:^(QTUserInfo *userInfo, NSError *error) {
+                 if (error) {
+                     [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+                 } else {
+                     [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar];
+                     [self configureData];
+                     [QTProgressHUD hide];
+                 }
+             }];
+         } else {
+             [QTMessage showErrorNotification:@"登录失败!"];
+         }
+     }];
+}
+
 #pragma mark - Action
+
+- (void)weiboLoginAction
+{
+    [self loginWithPlatform:SSDKPlatformTypeSinaWeibo];
+}
+
+- (void)wechatLoginAction
+{
+    [self loginWithPlatform:SSDKPlatformTypeWechat];
+}
+
+- (void)qqLoginAction
+{
+    [self loginWithPlatform:SSDKPlatformTypeQQ];
+}
 
 - (void)testButtonAction
 {
@@ -169,6 +224,7 @@
             button.layer.masksToBounds = YES;
             button.translatesAutoresizingMaskIntoConstraints = YES;
             [button setContentMode:UIViewContentModeScaleAspectFit];
+            [button addTarget:self action:@selector(weiboLoginAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
@@ -191,6 +247,7 @@
             button.layer.masksToBounds = YES;
             button.translatesAutoresizingMaskIntoConstraints = YES;
             [button setContentMode:UIViewContentModeScaleAspectFit];
+            [button addTarget:self action:@selector(wechatLoginAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
@@ -213,6 +270,7 @@
             button.layer.masksToBounds = YES;
             button.translatesAutoresizingMaskIntoConstraints = YES;
             [button setContentMode:UIViewContentModeScaleAspectFit];
+            [button addTarget:self action:@selector(qqLoginAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }

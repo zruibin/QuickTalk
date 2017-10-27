@@ -11,6 +11,8 @@
 
 @interface AppDelegate ()
 
+- (void)registerService;
+
 @end
 
 @implementation AppDelegate
@@ -18,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [Bugly startWithAppId:@"a149a6f083"];
+    [self registerService];
     [[RBScheduler sharedInstance] run];
     [[QTUserInfo sharedInstance] loginInBackground];
     
@@ -57,6 +59,51 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)registerService
+{
+    [Bugly startWithAppId:@"f2e0562976"];
+    [ShareSDK registerActivePlatforms:@[
+                                        @(SSDKPlatformTypeSinaWeibo),
+                                        @(SSDKPlatformTypeWechat),
+                                        @(SSDKPlatformTypeQQ)
+                                        ]
+                             onImport:^(SSDKPlatformType platformType) {
+                                 switch (platformType) {
+                                     case SSDKPlatformTypeWechat:
+                                         [ShareSDKConnector connectWeChat:[WXApi class]];
+                                         break;
+                                     case SSDKPlatformTypeQQ:
+                                         [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                                         break;
+                                     case SSDKPlatformTypeSinaWeibo:
+                                         [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                                     default:
+                                         break;
+                                 }
+                             } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+                                 switch (platformType) {
+                                     case SSDKPlatformTypeSinaWeibo:
+                                         //设置新浪微博应用信息,其中authType设置为使用SSO＋Web形式授权
+                                         [appInfo SSDKSetupSinaWeiboByAppKey:@"3709932233"
+                                                                   appSecret:@"d83172702a0265c73023e8a784990055"
+                                                                 redirectUri:@"http://www.weibo.com"
+                                                                    authType:SSDKAuthTypeBoth];
+                                         break;
+                                     case SSDKPlatformTypeWechat:
+                                         [appInfo SSDKSetupWeChatByAppId:@"wx1494d37a482793b0"
+                                                               appSecret:@"6e1932bca93d26a8cbfd069a57395c43"];
+                                         break;
+                                     case SSDKPlatformTypeQQ:
+                                         [appInfo SSDKSetupQQByAppId:@"1106426421"
+                                                              appKey:@"cHVFNyHxCyCyNEur"
+                                                            authType:SSDKAuthTypeBoth];
+                                         break;
+                                     default:
+                                           break;
+                                 }
+                             }];
 }
 
 

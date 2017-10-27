@@ -104,6 +104,34 @@ static NSDate *refreshDate = nil;
     }
 }
 
++ (void)requestLogin:(NSString *)openId type:(NSString *)type avatar:(NSString *)avatar
+       completionHandler:(void (^)(QTUserInfo *userInfo, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"openId": [openId md5], @"type": type, @"avatar": avatar};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/login" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserInfo *userInfo = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    userInfo = [QTUserInfo yy_modelWithJSON:responseObject[@"data"]];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(userInfo, error);
+            }
+        }
+    }];
+}
+
 #pragma mark - Private
 
 - (void)checkHidden

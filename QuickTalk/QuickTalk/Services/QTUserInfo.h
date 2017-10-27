@@ -26,4 +26,7 @@ extern NSString * const QTRefreshDataNotification;
 
 - (void)checkingObsolescence;
 
++ (void)requestLogin:(NSString *)openId type:(NSString *)type avatar:(NSString *)avatar
+       completionHandler:(void (^)(QTUserInfo *userInfo, NSError * error))completionHandler;
+
 @end
