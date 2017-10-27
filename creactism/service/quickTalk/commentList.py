@@ -47,7 +47,6 @@ def __getCommentListFromStorage(topicUUID, index, size):
         dataList = dbManager.executeSingleQuery(querySQL)
         for data in dataList:
             data["time"] = str(data["time"])
-            data["avatar"] = fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, data["userUUID"], data["avatar"])
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
