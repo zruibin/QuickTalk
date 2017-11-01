@@ -14,6 +14,10 @@
 @property (nonatomic, copy) NSString *disAgreeString;
 @property (nonatomic, copy) void (^onAgreeActionBlock)(void);
 @property (nonatomic, copy) void (^onDisagreeActionBlock)(void);
+@property (nonatomic, copy) void (^onReportActionBlock)(void);
+@property (nonatomic, copy) void (^onShowBlock)(void);
+@property (nonatomic, copy) void (^onHideBlock)(void);
+@property (nonatomic, copy) NSString *content;
 
 + (instancetype)tipInView:(UIView *)view;
 - (void)show;

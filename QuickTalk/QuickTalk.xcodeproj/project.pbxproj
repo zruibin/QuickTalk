@@ -18,6 +18,11 @@
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E08181391F99B07F0035DEF4 /* QTCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181381F99B07F0035DEF4 /* QTCommentModel.m */; };
+		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
+		E08A645B1FA98B2B00317CE2 /* QTMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A645A1FA98B2B00317CE2 /* QTMainCell.m */; };
+		E08A645E1FA9C35500317CE2 /* QTAvatarEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A645D1FA9C35500317CE2 /* QTAvatarEditController.m */; };
+		E08A64611FA9C9C700317CE2 /* QTInfoEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64601FA9C9C700317CE2 /* QTInfoEditController.m */; };
+		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
 		E09351561FA2D8EA000687BC /* QTIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = E09351551FA2D8EA000687BC /* QTIntroController.m */; };
 		E09351781FA30EBE000687BC /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351581FA30EBE000687BC /* MOBFoundation.framework */; };
 		E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351591FA30EBE000687BC /* ShareSDK.framework */; };
@@ -111,6 +116,16 @@
 		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
 		E08181371F99B07F0035DEF4 /* QTCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCommentModel.h; sourceTree = "<group>"; };
 		E08181381F99B07F0035DEF4 /* QTCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCommentModel.m; sourceTree = "<group>"; };
+		E08A64561FA97C5800317CE2 /* QTTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTabBarController.h; sourceTree = "<group>"; };
+		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
+		E08A64591FA98B2B00317CE2 /* QTMainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMainCell.h; sourceTree = "<group>"; };
+		E08A645A1FA98B2B00317CE2 /* QTMainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMainCell.m; sourceTree = "<group>"; };
+		E08A645C1FA9C35500317CE2 /* QTAvatarEditController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAvatarEditController.h; sourceTree = "<group>"; };
+		E08A645D1FA9C35500317CE2 /* QTAvatarEditController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAvatarEditController.m; sourceTree = "<group>"; };
+		E08A645F1FA9C9C700317CE2 /* QTInfoEditController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTInfoEditController.h; sourceTree = "<group>"; };
+		E08A64601FA9C9C700317CE2 /* QTInfoEditController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTInfoEditController.m; sourceTree = "<group>"; };
+		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
+		E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
 		E09351541FA2D8EA000687BC /* QTIntroController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTIntroController.h; sourceTree = "<group>"; };
 		E09351551FA2D8EA000687BC /* QTIntroController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTIntroController.m; sourceTree = "<group>"; };
 		E09351581FA30EBE000687BC /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
@@ -448,6 +463,8 @@
 				E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */,
 				E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */,
 				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
+				E08A64561FA97C5800317CE2 /* QTTabBarController.h */,
+				E08A64571FA97C5800317CE2 /* QTTabBarController.m */,
 				E0A4FC831F98899D002ED580 /* Podfile */,
 			);
 			path = QuickTalk;
@@ -486,6 +503,8 @@
 				E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */,
 				E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */,
 				E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */,
+				E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */,
+				E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */,
 				E093519B1FA32DDC000687BC /* NSString+QuickTalk.h */,
 				E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */,
 			);
@@ -511,10 +530,14 @@
 				E0DF28BC1F95A7CE00F1B8C8 /* QTMainViewController.m */,
 				E0DF28BD1F95A7CE00F1B8C8 /* QTTopicController.h */,
 				E0DF28BE1F95A7CE00F1B8C8 /* QTTopicController.m */,
-				E08181251F9992540035DEF4 /* QTInfoController.h */,
-				E08181261F9992540035DEF4 /* QTInfoController.m */,
 				E09351541FA2D8EA000687BC /* QTIntroController.h */,
 				E09351551FA2D8EA000687BC /* QTIntroController.m */,
+				E08181251F9992540035DEF4 /* QTInfoController.h */,
+				E08181261F9992540035DEF4 /* QTInfoController.m */,
+				E08A645C1FA9C35500317CE2 /* QTAvatarEditController.h */,
+				E08A645D1FA9C35500317CE2 /* QTAvatarEditController.m */,
+				E08A645F1FA9C9C700317CE2 /* QTInfoEditController.h */,
+				E08A64601FA9C9C700317CE2 /* QTInfoEditController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -537,6 +560,8 @@
 				E0A4FC7E1F984261002ED580 /* QTTopicLeftCell.m */,
 				E0A4FC801F98431B002ED580 /* QTTopicRightCell.h */,
 				E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */,
+				E08A64591FA98B2B00317CE2 /* QTMainCell.h */,
+				E08A645A1FA98B2B00317CE2 /* QTMainCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -966,6 +991,7 @@
 				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
 				E08181391F99B07F0035DEF4 /* QTCommentModel.m in Sources */,
+				E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */,
 				E08181271F9992540035DEF4 /* QTInfoController.m in Sources */,
 				E0A4FC821F98431B002ED580 /* QTTopicRightCell.m in Sources */,
 				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
@@ -979,13 +1005,17 @@
 				E0A4FC7F1F984261002ED580 /* QTTopicLeftCell.m in Sources */,
 				E0BB50441F96F742002C0E50 /* QTTopicModel.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
+				E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */,
 				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,
+				E08A645E1FA9C35500317CE2 /* QTAvatarEditController.m in Sources */,
 				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
+				E08A64611FA9C9C700317CE2 /* QTInfoEditController.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
 				E09351561FA2D8EA000687BC /* QTIntroController.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
+				E08A645B1FA98B2B00317CE2 /* QTMainCell.m in Sources */,
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
@@ -1137,8 +1167,10 @@
 			baseConfigurationReference = 9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S8VUN65RG9;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK",
@@ -1159,7 +1191,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1168,8 +1202,10 @@
 			baseConfigurationReference = 0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S8VUN65RG9;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK",
@@ -1190,7 +1226,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

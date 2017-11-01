@@ -8,8 +8,6 @@
 
 #import "QTViewController.h"
 
-extern NSString * const kTopicHiddenPopupMenuNotification;
-
 @class QTTopicModel;
 
 @interface QTTopicController : QTViewController

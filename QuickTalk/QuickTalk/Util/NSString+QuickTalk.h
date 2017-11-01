@@ -12,4 +12,11 @@
 
 - (NSString *)md5;
 
+/*获得中英混合长度*/
+- (NSInteger)getStringLenthOfBytes;
+
+/*截取中英混合字符*/
+- (NSString *)subBytesOfstringToIndex:(NSInteger)index;
+
+
 @end

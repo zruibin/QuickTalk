@@ -7,6 +7,8 @@
 //
 
 #import "QTInfoController.h"
+#import "QTAvatarEditController.h"
+#import "QTInfoEditController.h"
 
 @interface QTInfoController ()
 
@@ -14,7 +16,8 @@
 @property (nonatomic, strong) UIButton *wechatButton;
 @property (nonatomic, strong) UIButton *qqButton;
 @property (nonatomic, strong) UIButton *testButton;
-@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UIButton *avatarView;
+@property (nonatomic, strong) UIButton *nicknameButton;
 @property (nonatomic, strong) UIButton *logoutButton;
 
 - (void)initViews;
@@ -82,9 +85,17 @@
         make.centerX.equalTo(self.view);
         make.top.equalTo(self.view).offset(100);
     }];
+    [self.view addSubview:self.nicknameButton];
+    [self.nicknameButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.avatarView.mas_bottom).offset(20);
+        make.centerX.equalTo(self.view);
+        make.left.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-20);
+        make.height.mas_equalTo(40);
+    }];
     [self.view addSubview:self.logoutButton];
     [self.logoutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.avatarView.mas_bottom).offset(60);
+        make.top.equalTo(self.nicknameButton.mas_bottom).offset(60);
         make.centerX.equalTo(self.view);
         make.left.equalTo(self.view).offset(20);
         make.right.equalTo(self.view).offset(-20);
@@ -101,12 +112,15 @@
         self.testButton.hidden = YES;
         
         self.avatarView.hidden = NO;
+        self.nicknameButton.hidden = NO;
         self.logoutButton.hidden = NO;
         
         NSString *avatar = [QTUserInfo sharedInstance].avatar;
-        [self.avatarView cra_setImage:avatar];
+        [self.avatarView cra_setBackgroundImage:avatar];
+        [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
     } else {
         self.avatarView.hidden = YES;
+        self.nicknameButton.hidden = YES;
         self.logoutButton.hidden = YES;
         
         self.weiboButton.hidden = NO;
@@ -138,17 +152,17 @@
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
      {
          if (state == SSDKResponseStateSuccess) {
-             DLog(@"dd%@",user.rawData);
-             DLog(@"dd%@",user.credential);
-             DLog(@"uid=%@",user.uid);
-             DLog(@"icon: %@", user.icon);
-             DLog(@"nickname=%@",user.nickname);
+//             DLog(@"dd%@",user.rawData);
+//             DLog(@"dd%@",user.credential);
+//             DLog(@"uid=%@",user.uid);
+//             DLog(@"icon: %@", user.icon);
+//             DLog(@"nickname=%@",user.nickname);
              [QTProgressHUD showHUD:self.view];
-             [QTUserInfo requestLogin:user.uid type:type avatar:user.icon completionHandler:^(QTUserInfo *userInfo, NSError *error) {
+             [QTUserInfo requestLogin:user.uid type:type avatar:user.icon nickName:user.nickname completionHandler:^(QTUserInfo *userInfo, NSError *error) {
                  if (error) {
                      [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
                  } else {
-                     [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar];
+                     [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar nickname:userInfo.nickname];
                      [self configureData];
                      [QTProgressHUD hide];
                  }
@@ -189,10 +203,17 @@
      "avatar":"http://creactism.com/medias/u/deb98a5555f6d5780467f7bebf61eb5b/20171020110322gEJKj6.png"
      */
     NSString *uuid = @"cea8b1c3aebe31823fa86e069de496b9";
-    NSString *avatar = @"http://creactism.com/medias/u/cea8b1c3aebe31823fa86e069de496b9/2017102011013512hgLe.png";
-    [[QTUserInfo sharedInstance] login:uuid avatar:avatar];
+    NSString *avatar = [[NSUserDefaults standardUserDefaults] objectForKey:@"test_avatar"];
+    if (avatar.length == 0) {
+        avatar = @"http://creactism.com/medias/u/cea8b1c3aebe31823fa86e069de496b9/2017102011013512hgLe.png";
+    }
+    NSString *nickname = [[NSUserDefaults standardUserDefaults] objectForKey:@"test_nickname"];
+    if (nickname.length == 0) {
+        nickname = @"用户1234444";
+    }
+    [[QTUserInfo sharedInstance] login:uuid avatar:avatar nickname:nickname];
     [self configureData];
-    [self.avatarView cra_setImage:avatar];
+    [self.avatarView cra_setBackgroundImage:avatar];
     
     if (self.presentingViewController) {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -205,6 +226,33 @@
     [self configureData];
 }
 
+- (void)avatarAction
+{
+    QTAvatarEditController *avatarEditController = [QTAvatarEditController new];
+    __weak typeof(self) weakSelf = self;
+    [avatarEditController setOnAvatarChangeHandler:^{
+        [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
+        if ([@"cea8b1c3aebe31823fa86e069de496b9" isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+            [[NSUserDefaults standardUserDefaults] setObject:[QTUserInfo sharedInstance].avatar forKey:@"test_avatar"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
+    [self.navigationController pushViewController:avatarEditController animated:YES];
+}
+
+- (void)infoEditAction
+{
+    QTInfoEditController *infoEditController = [QTInfoEditController new];
+    __weak typeof(self) weakSelf = self;
+    [infoEditController setOnChangeBlock:^(NSString *text) {
+        [weakSelf.nicknameButton setTitle:text forState:UIControlStateNormal];
+        if ([@"cea8b1c3aebe31823fa86e069de496b9" isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+            [[NSUserDefaults standardUserDefaults] setObject:text forKey:@"test_nickname"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }];
+    [self.navigationController pushViewController:infoEditController animated:YES];
+}
 
 #pragma mark - setter and getter
 
@@ -298,18 +346,33 @@
     return _testButton;
 }
 
-- (UIImageView *)avatarView
+- (UIButton *)avatarView
 {
     if (_avatarView == nil) {
         _avatarView = ({
-            UIImageView *imageView = [UIImageView new];
-            imageView.backgroundColor = [UIColor whiteColor];
-            imageView.layer.cornerRadius = 50;
-            imageView.layer.masksToBounds = YES;
-            imageView;
+            UIButton *button = [UIButton new];
+            button.layer.cornerRadius = 50;
+            button.layer.masksToBounds = YES;
+            [button addTarget:self action:@selector(avatarAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
         });
     }
     return _avatarView;
+}
+
+- (UIButton *)nicknameButton
+{
+    if (_nicknameButton == nil) {
+        _nicknameButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.titleLabel.font = [UIFont systemFontOfSize:16];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+            [button addTarget:self action:@selector(infoEditAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _nicknameButton;
 }
 
 - (UIButton *)logoutButton

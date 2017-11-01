@@ -16,5 +16,6 @@
 - (void)setPlaceholderText:(NSString *)text;
 
 - (void)setOriginStatus;
+- (void)hide;
 
 @end

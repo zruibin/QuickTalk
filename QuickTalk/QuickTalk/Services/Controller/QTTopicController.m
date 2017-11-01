@@ -7,6 +7,8 @@
 //
 
 #import "QTTopicController.h"
+#import "QTPopoverView.h"
+#import <SafariServices/SafariServices.h>
 #import "QTTopicModel.h"
 #import "QTTopicLeftCell.h"
 #import "QTTopicRightCell.h"
@@ -14,13 +16,14 @@
 #import "EwenTextView.h"
 #import "QTTipView.h"
 
-NSString * const kTopicHiddenPopupMenuNotification = @"kTopicHiddenPopupMenuNotification";
 
 @interface QTTopicController ()
 <
 UITableViewDataSource, UITableViewDelegate
 >
 
+@property (nonatomic, strong) UIButton *titleButton;
+@property (nonatomic, strong) QTPopoverView *popoverView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) EwenTextView *inputView;
 @property (nonatomic, strong) NSMutableArray *dataList;
@@ -45,7 +48,7 @@ UITableViewDataSource, UITableViewDelegate
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTopicHiddenPopupMenuNotification object:nil];
+
 }
 
 - (void)viewDidLoad
@@ -56,7 +59,7 @@ UITableViewDataSource, UITableViewDelegate
     
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self loadData];
+        [weakSelf loadData];
     });
     self.timer = [NSTimer scheduledTimerWithTimeInterval:120 target:self selector:@selector(checkNewData) userInfo:nil repeats:YES];
     
@@ -72,9 +75,30 @@ UITableViewDataSource, UITableViewDelegate
         }
     };
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:kTopicHiddenPopupMenuNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        [weakSelf.tipView hide];
+    self.popoverView = [QTPopoverView popoverInView:self.view];
+    self.popoverView.textAlignment = NSTextAlignmentCenter;
+    self.popoverView.items = @[self.model.detail];
+    self.popoverView.multilineText = YES;
+    self.popoverView.animationTime = .4;
+    self.popoverView.fontSize = 18;
+    [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
+        NSString *url = weakSelf.model.href;
+        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+        [weakSelf presentViewController:safariController animated:YES completion:nil];
     }];
+    [self.popoverView show];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+//    [self.timer fireDate];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.timer invalidate];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,6 +108,9 @@ UITableViewDataSource, UITableViewDelegate
 
 - (void)initViews
 {
+    self.navigationItem.titleView = self.titleButton;
+    [self.titleButton setTitle:self.model.title forState:UIControlStateNormal];
+    
     self.viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     [self.view addSubview:self.tableView];
@@ -201,11 +228,12 @@ UITableViewDataSource, UITableViewDelegate
 - (void)showTipView:(NSInteger)index
 {
     QTCommentModel *model = [self.dataList objectAtIndex:index];
-    QTTipView *tipView = [QTTipView tipInView:self.view];
+    QTTipView *tipView = [QTTipView tipInView:self.navigationController.view];
     NSString *agreeStr = [NSString stringWithFormat:@"赞同(%@)", [Tools countTransition:model.like]];
     NSString *disAgreeStr = [NSString stringWithFormat:@"不赞同(%@)", [Tools countTransition:model.dislike]];
     tipView.agreeString = agreeStr;
     tipView.disAgreeString = disAgreeStr;
+    tipView.content = model.content;
     __weak typeof(self) weakSelf = self;
     [tipView setOnAgreeActionBlock:^{
         QTCommentModel *model = [weakSelf.dataList objectAtIndex:index];
@@ -214,6 +242,15 @@ UITableViewDataSource, UITableViewDelegate
     [tipView setOnDisagreeActionBlock:^{
         QTCommentModel *model = [weakSelf.dataList objectAtIndex:index];
         [weakSelf sendAgreeOrDisAgree:model action:@"2"];
+    }];
+    [tipView setOnReportActionBlock:^{
+         [QTProgressHUD showHUDText:@"举报成功"  view:weakSelf.view];
+    }];
+    [tipView setOnShowBlock:^{
+        weakSelf.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }];
+    [tipView setOnHideBlock:^{
+        weakSelf.navigationController.interactivePopGestureRecognizer.enabled = YES;
     }];
     [tipView show];
     self.tipView = tipView;
@@ -278,7 +315,36 @@ UITableViewDataSource, UITableViewDelegate
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+
+#pragma mark - Action
+
+- (void)titleButtonAction:(UIButton *)sender
+{
+    if (self.popoverView.hidden) {
+        [self.popoverView show];
+    } else {
+        [self.popoverView hide];
+    }
+}
+
 #pragma mark - setter and getter
+
+- (UIButton *)titleButton
+{
+    if (_titleButton == nil) {
+        _titleButton = ({
+            UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+            [button addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:17.5];
+            button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+            [button setTitleColor:[UIColor colorFromHexValue:0x999999] forState:UIControlStateHighlighted];
+            button;
+        });
+    }
+    return _titleButton;
+}
 
 - (UITableView *)tableView
 {

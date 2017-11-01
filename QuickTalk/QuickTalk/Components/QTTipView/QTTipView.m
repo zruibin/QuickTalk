@@ -10,10 +10,13 @@
 
 @interface QTTipView ()
 
+@property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIButton *agreeButton;
 @property (nonatomic, strong) UIButton *disAgreeButton;
+@property (nonatomic, strong) UIButton *reportButton;
 @property (nonatomic, weak) UIView *superView;
 @property (nonatomic, assign) CGFloat viewWidth;
+@property (nonatomic, copy) NSDictionary *attributes;
 
 @end
 
@@ -51,23 +54,46 @@
 
 - (void)initSubViews
 {
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:.6f];
+    self.backgroundColor = [UIColor whiteColor];//[UIColor colorWithWhite:0 alpha:.6f];
+    
+    [self addSubview:self.reportButton];
+    [self.reportButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(40);
+        make.top.equalTo(self).offset(20);
+        make.right.equalTo(self);
+    }];
+    
+    [self addSubview:self.textView];
+    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(140);
+        make.left.equalTo(self).offset(10);
+        make.right.equalTo(self).offset(-10);
+        make.height.mas_equalTo(260);
+    }];
+    
     [self addSubview:self.agreeButton];
     [self.agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(180);
+        make.width.mas_equalTo(140);
         make.height.mas_equalTo(40);
-        make.centerX.equalTo(self);
-        make.centerY.equalTo(self).offset(-60);
+        make.centerX.equalTo(self).offset(-100);
+        make.top.equalTo(self.textView.mas_bottom).offset(30);
     }];
     [self addSubview:self.disAgreeButton];
     [self.disAgreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.and.height.equalTo(self.agreeButton);
-        make.centerX.equalTo(self);
-        make.centerY.equalTo(self);
+        make.centerX.equalTo(self).offset(100);
+        make.top.equalTo(self.agreeButton);
     }];
     
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
     [self addGestureRecognizer:gesture];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self.textView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 #pragma mark - Public
@@ -84,6 +110,9 @@
     [UIView animateWithDuration:.25f animations:^{
         self.alpha = 1;
     }];
+    if (self.onShowBlock) {
+        self.onShowBlock();
+    }
 }
 
 - (void)hide
@@ -94,6 +123,9 @@
         self.hidden = YES;
         [self removeFromSuperview];
     }];
+    if (self.onHideBlock) {
+        self.onHideBlock();
+    }
 }
 
 #pragma mark - Action
@@ -114,7 +146,30 @@
     [self hide];
 }
 
+- (void)reportAction
+{
+    [self hide];
+    if (self.onReportActionBlock) {
+        self.onReportActionBlock();
+    }
+}
+
 #pragma mark - setter and getter
+
+- (UITextView *)textView
+{
+    if (_textView == nil) {
+        _textView = ({
+            UITextView *textView = [[UITextView alloc] init];
+            textView.font = [UIFont systemFontOfSize:19];
+            textView.editable = NO;
+            textView.showsVerticalScrollIndicator = YES;
+            textView.textContainerInset = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+            textView;
+        });
+    }
+    return _textView;
+}
 
 - (UIButton *)agreeButton
 {
@@ -128,6 +183,8 @@
             button.titleLabel.font = [UIFont systemFontOfSize:14];
             button.layer.cornerRadius = 4;
             button.layer.masksToBounds = YES;
+            button.layer.borderColor = [[UIColor grayColor] CGColor];
+            button.layer.borderWidth = .5f;
             [button addTarget:self action:@selector(agreeAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
@@ -147,11 +204,49 @@
             button.titleLabel.font = [UIFont systemFontOfSize:14];
             button.layer.cornerRadius = 4;
             button.layer.masksToBounds = YES;
+            button.layer.borderColor = [[UIColor grayColor] CGColor];
+            button.layer.borderWidth = .5f;
             [button addTarget:self action:@selector(disagreeAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
     return _disAgreeButton;
+}
+
+- (UIButton *)reportButton
+{
+    if (_reportButton == nil) {
+        _reportButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.translatesAutoresizingMaskIntoConstraints = NO;
+            [button setTitle:@"举报" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
+            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            [button addTarget:self action:@selector(reportAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _reportButton;
+}
+
+- (NSDictionary *)attributes
+{
+    if (_attributes == nil) {
+        _attributes = ({
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineSpacing = 5.0f;//增加行高
+            paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
+            paragraphStyle.alignment = NSTextAlignmentLeft;
+            NSDictionary *attributes = @{
+                                         NSFontAttributeName: [UIFont systemFontOfSize:20],
+                                         NSForegroundColorAttributeName: [UIColor colorFromHexValue:0x585858],
+                                         NSParagraphStyleAttributeName: paragraphStyle
+                                         };
+            attributes;
+        });
+    }
+    return _attributes;
 }
 
 - (void)setAgreeString:(NSString *)agreeString
@@ -164,6 +259,12 @@
 {
     _disAgreeString = disAgreeString;
     [self.disAgreeButton setTitle:disAgreeString forState:UIControlStateNormal];
+}
+
+- (void)setContent:(NSString *)content
+{
+    _content = content;
+    self.textView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:self.attributes];
 }
 
 @end

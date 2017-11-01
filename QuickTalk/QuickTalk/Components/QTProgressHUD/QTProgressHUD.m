@@ -54,7 +54,7 @@ static MBProgressHUD *hud = nil;
 + (void)hide
 {
 //    [hud hideAnimated:YES];
-    [hud hideAnimated:YES afterDelay:1.5f];
+    [hud hideAnimated:YES afterDelay:.5f];
     [self releaseHUD];
 }
 

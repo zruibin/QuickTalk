@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "QTMainViewController.h"
+#import "QTTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -26,9 +26,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    QTMainViewController *mainController = [[QTMainViewController alloc] init];
-    QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:mainController];
-    self.window.rootViewController = nav;
+    QTTabBarController *tabBarController = [[QTTabBarController alloc] init];
+    self.window.rootViewController = tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
 }
