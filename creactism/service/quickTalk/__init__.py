@@ -23,3 +23,5 @@ from service.quickTalk import like
 from service.quickTalk import login
 from service.quickTalk import hidden
 from service.quickTalk import deleteComment
+from service.quickTalk import changeAvatar
+from service.quickTalk import changeInfo

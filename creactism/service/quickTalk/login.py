@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime, fullPathForMediasFile
 
 
 
@@ -25,18 +25,19 @@ def loginWithAvatar():
     openId = getValueFromRequestByKey("openId")
     avatar = getValueFromRequestByKey("avatar")
     typeStr = getValueFromRequestByKey("type")
+    nickname = getValueFromRequestByKey("nickname")
 
     if openId == None or typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __loginAction(openId, typeStr, avatar)
+    return __loginAction(openId, typeStr, avatar, nickname)
 
 
-def __loginAction(openId, typeStr, avatar):
+def __loginAction(openId, typeStr, avatar, nickname):
     typeData = __typeData(typeStr)
 
     querySQL = """
-        SELECT uuid, avatar FROM t_quickTalk_user WHERE %s='%s'; 
+        SELECT id, uuid, avatar, nickname FROM t_quickTalk_user WHERE %s='%s'; 
     """ % (typeData, openId)
 
     dbManager = DB.DBManager.shareInstanced()
@@ -44,24 +45,26 @@ def __loginAction(openId, typeStr, avatar):
         result = dbManager.executeSingleQuery(querySQL)
         if len(result) > 0:
             data = result[0]
-            data["avatar"] = avatar
+            uuid = data["uuid"]
+            avatar = data["avatar"]
+            data["avatar"] = __avatarURL(uuid, avatar)
             return RESPONSE_JSON(CODE_SUCCESS, data)
         else:
-            return __registerUser(openId, typeStr, avatar)
+            return __registerUser(openId, typeStr, avatar, nickname)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def __registerUser(openId, typeStr, avatar):
+def __registerUser(openId, typeStr, avatar, nickname):
     uuid = generateUUID()
     time = generateCurrentTime()
 
     typeData = __typeData(typeStr)
 
     insertSQL = """
-        INSERT INTO t_quickTalk_user (uuid, avatar, time, %s) VALUES ('%s', '%s', '%s', '%s')
-    """ % (typeData, uuid, avatar, time, openId)
+        INSERT INTO t_quickTalk_user (uuid, nickname, avatar, time, %s) VALUES ('%s','%s', '%s', '%s', '%s')
+    """ % (typeData, uuid, nickname, avatar, time, openId)
 
     dbManager = DB.DBManager.shareInstanced()
     try:
@@ -69,7 +72,8 @@ def __registerUser(openId, typeStr, avatar):
         if result:
             data = {}
             data["uuid"] = uuid
-            data["avatar"] = avatar
+            data["avatar"] = __avatarURL(uuid, avatar)
+            data["nickname"] = nickname
             return RESPONSE_JSON(CODE_SUCCESS, data)
         else:
             return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -86,6 +90,12 @@ def __typeData(typeStr):
     }
     return typeDict[typeStr]
 
+
+def __avatarURL(uuid, avatar):
+    if "http://" in avatar or "https://" in avatar:
+        return avatar
+    else:
+        return fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, uuid, avatar)
 
 
 if __name__ == '__main__':
