@@ -142,6 +142,14 @@ def makeCookie(response, key, value):
     response.set_cookie(key, value, expires=outdate)
     return response
 
+def userAvatarURL(uuid, avatar):
+    if "http://" in avatar or "https://" in avatar:
+        return avatar
+    else:
+        return fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, uuid, avatar)
+
+
+
 
 if __name__ == '__main__':
     pass

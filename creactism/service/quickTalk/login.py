@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime, fullPathForMediasFile, userAvatarURL
 
 
 
@@ -47,7 +47,7 @@ def __loginAction(openId, typeStr, avatar, nickname):
             data = result[0]
             uuid = data["uuid"]
             avatar = data["avatar"]
-            data["avatar"] = __avatarURL(uuid, avatar)
+            data["avatar"] = userAvatarURL(uuid, avatar)
             return RESPONSE_JSON(CODE_SUCCESS, data)
         else:
             return __registerUser(openId, typeStr, avatar, nickname)
@@ -72,7 +72,7 @@ def __registerUser(openId, typeStr, avatar, nickname):
         if result:
             data = {}
             data["uuid"] = uuid
-            data["avatar"] = __avatarURL(uuid, avatar)
+            data["avatar"] = userAvatarURL(uuid, avatar)
             data["nickname"] = nickname
             return RESPONSE_JSON(CODE_SUCCESS, data)
         else:
@@ -89,13 +89,6 @@ def __typeData(typeStr):
         Config.TYPE_FOR_AUTH_WEIBO : "weibo",
     }
     return typeDict[typeStr]
-
-
-def __avatarURL(uuid, avatar):
-    if "http://" in avatar or "https://" in avatar:
-        return avatar
-    else:
-        return fullPathForMediasFile(Config.UPLOAD_FILE_FOR_USER, uuid, avatar)
 
 
 if __name__ == '__main__':

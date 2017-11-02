@@ -16,7 +16,7 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
-from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile
+from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
 
 
 @quickTalk.route('/commentList', methods=["GET", "POST"])
@@ -46,7 +46,9 @@ def __getCommentListFromStorage(topicUUID, index, size):
     try: 
         dataList = dbManager.executeSingleQuery(querySQL)
         for data in dataList:
+            userUUID = data["userUUID"]
             data["time"] = str(data["time"])
+            data["avatar"] = userAvatarURL(userUUID, data["avatar"])
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
