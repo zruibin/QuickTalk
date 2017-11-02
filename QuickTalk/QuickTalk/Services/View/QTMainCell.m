@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, copy) NSDictionary *detailAttributes;
+@property (nonatomic, strong) UILabel *timeLabel;
 
 - (void)initSubviews;
 
@@ -52,7 +53,14 @@
 {
     [self.contentView addSubview:self.detailLabel];
     [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.contentView).with.insets(UIEdgeInsetsMake(10, 10, 10, 10));
+        make.edges.equalTo(self.contentView).with.insets(UIEdgeInsetsMake(10, 10, 35, 10));
+    }];
+    [self.contentView addSubview:self.timeLabel];
+    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(10);
+        make.right.equalTo(self.contentView).offset(-10);
+        make.bottom.equalTo(self.contentView).offset(-5);
+        make.height.mas_equalTo(30);
     }];
 }
 
@@ -70,19 +78,18 @@
 
 #pragma mark - Public
 
-- (void)loadData:(NSString *)text
+- (void)loadData:(NSString *)text time:(NSString *)time
 {
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:self.detailAttributes];
     self.detailLabel.attributedText = attributedText;
+    self.timeLabel.text = [Tools getDateStringFromTimeString:time andNeedTime:YES];
 }
 
 - (CGFloat)heightForCell:(NSString *)text
 {
     CGSize size = [self sizeForString:text attributes:self.detailAttributes];
-    CGFloat height = 10 + size.height + 10;
-    if (height < 60) {
-        height = 60;
-    }
+    CGFloat height = 10 + size.height;
+    height = height + 40;
     return height;
 }
 
@@ -123,6 +130,21 @@
     return _detailAttributes;
 }
 
+- (UILabel *)timeLabel
+{
+    if (_timeLabel == nil) {
+        _timeLabel = ({
+            UILabel *label = [[UILabel alloc] init];
+            label.font = [UIFont systemFontOfSize:12];
+            label.translatesAutoresizingMaskIntoConstraints = NO;
+            label.lineBreakMode = NSLineBreakByTruncatingTail;
+            label.textAlignment = NSTextAlignmentLeft;
+            label.textColor = [UIColor colorFromHexValue:0x999999];
+            label;
+        });
+    }
+    return _timeLabel;
+}
 
 
 @end

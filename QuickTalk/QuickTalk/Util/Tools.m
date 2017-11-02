@@ -61,7 +61,7 @@
     NSDateFormatter *formatter = [self getDateFormatter];
     [formatter setLocale:[NSLocale systemLocale]];
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
-    [formatter setDateFormat:@"YY/MM/dd"];
+    [formatter setDateFormat:@"MM月dd日"];
     
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDateComponents *components = [cal components:NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:messageDate];
@@ -112,7 +112,7 @@
         NSDate *nowdate = [cal dateFromComponents:components];
         if ([nowdate isEqualToDate:msgDate]) {
             if (!needTime) {
-                [formatter setDateFormat:@"YY/MM/dd"];
+                [formatter setDateFormat:@"MM月dd日"];
             }
             return [formatter stringFromDate:messageDate];
             break;
@@ -215,7 +215,7 @@
     NSDateFormatter *formatter = [self getDateFormatter];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date = [formatter dateFromString:dataString];
-    [formatter setDateFormat:@"YY/MM/dd"];
+    [formatter setDateFormat:@"MM月dd日"];
     return [formatter stringFromDate:date];
 }
 

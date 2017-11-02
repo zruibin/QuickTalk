@@ -11,13 +11,14 @@
 static const CGFloat default_line_height = 44.0f;
 static const NSUInteger TITLE_TAG = 121212;
 
-@interface QTPopoverView () <UITableViewDataSource, UITableViewDelegate>
+@interface QTPopoverView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) UIView *superView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSDictionary *attributes;
 @property (nonatomic, copy) NSArray *textList;
 @property (nonatomic, assign) CGFloat viewWidth;
+@property (nonatomic, strong) UIView *footView;
 
 - (CGFloat)textHeight:(NSString *)text;
 
@@ -25,7 +26,7 @@ static const NSUInteger TITLE_TAG = 121212;
 
 @implementation QTPopoverView
 
-- (instancetype) init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -72,6 +73,7 @@ static const NSUInteger TITLE_TAG = 121212;
     _animationTime = .4;
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
     [gesture setCancelsTouchesInView:NO];
+    gesture.delegate = self;
     [self addGestureRecognizer:gesture];
 }
 
@@ -93,6 +95,11 @@ static const NSUInteger TITLE_TAG = 121212;
     [self.superView addSubview:self];
     self.hidden = NO;
     [self.tableView reloadData];
+    if (self.showAction) {
+        self.tableView.tableFooterView = self.footView;
+    } else {
+        self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
     [UIView animateWithDuration:self.animationTime animations:^{
         self.alpha = 1;
         self.tableView.frame = self.bounds;
@@ -123,6 +130,20 @@ static const NSUInteger TITLE_TAG = 121212;
                                         options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading | NSStringDrawingUsesDeviceMetrics
                                      attributes:self.attributes context:nil].size;
     return size.height + 10;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer* )gestureRecognizer shouldReceiveTouch:(UITouch* )touch
+{
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"PKProductMainListTableViewCellContentView"]) {
+        return NO;
+    }
+    if ([touch.view isKindOfClass:[UIButton class]]) {
+        return NO;
+    }
+    if ([touch.view isKindOfClass:[UITableViewCell class]]) {
+        return YES;
+    }
+    return YES;
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -193,6 +214,17 @@ static const NSUInteger TITLE_TAG = 121212;
     }
 }
 
+#pragma mark - Action
+
+- (void)footViewButtonAction
+{
+    if (self.textList.count > 0) {
+        if (self.onSelectedHandler) {
+            self.onSelectedHandler(0, self.textList[0]);
+        }
+    }
+}
+
 #pragma mark - setter and getter
 
 - (UITableView *)tableView
@@ -213,8 +245,6 @@ static const NSUInteger TITLE_TAG = 121212;
 //            tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
             [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
-            tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-            
             tableView;
         });
     }
@@ -238,6 +268,33 @@ static const NSUInteger TITLE_TAG = 121212;
         });
     }
     return _attributes;
+}
+
+- (UIView *)footView
+{
+    if (_footView == nil) {
+        _footView = ({
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewWidth, 50)];
+            view.backgroundColor = [UIColor whiteColor];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitle:@"阅读新闻" forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x00a0e9]] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            button.layer.cornerRadius = 4;
+            button.layer.masksToBounds = YES;
+            [button addTarget:self action:@selector(footViewButtonAction) forControlEvents:UIControlEventTouchUpInside];
+            [view addSubview:button];
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.and.centerY.equalTo(view);
+                make.width.mas_equalTo(100);
+                make.height.mas_equalTo(30);
+            }];
+            
+            view;
+        });
+    }
+    return _footView;
 }
 
 - (void)setItems:(NSArray<NSString *> *)items

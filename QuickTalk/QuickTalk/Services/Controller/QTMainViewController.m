@@ -32,7 +32,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTRefreshDataNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTRefreshDataNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -40,7 +40,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initViews];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:QTRefreshDataNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:QTRefreshDataNotification object:nil];
 
     __weak typeof(self) weakSelf = self;
     [self.tableView headerWithRefreshingBlock:^{
@@ -135,7 +135,7 @@
     QTMainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMainCell class])];
     
     QTTopicModel *model = self.dataList[indexPath.section];
-    [cell loadData:model.title];
+    [cell loadData:model.title time:model.time];
     
     return cell;
 }

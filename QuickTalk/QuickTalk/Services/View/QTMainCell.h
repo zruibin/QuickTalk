@@ -10,7 +10,7 @@
 
 @interface QTMainCell : UITableViewCell
 
-- (void)loadData:(NSString *)text;
+- (void)loadData:(NSString *)text time:(NSString *)time;
 - (CGFloat)heightForCell:(NSString *)text;
 
 @end

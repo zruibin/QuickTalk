@@ -163,7 +163,7 @@
             UITextView *textView = [[UITextView alloc] init];
             textView.font = [UIFont systemFontOfSize:19];
             textView.editable = NO;
-            textView.showsVerticalScrollIndicator = YES;
+            textView.showsVerticalScrollIndicator = NO;
             textView.textContainerInset = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
             textView;
         });
@@ -263,8 +263,8 @@
 
 - (void)setContent:(NSString *)content
 {
-    _content = content;
-    self.textView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:self.attributes];
+    _content = [NSString stringWithFormat:@"\n%@", content];
+    self.textView.attributedText = [[NSAttributedString alloc] initWithString:_content attributes:self.attributes];
 }
 
 @end

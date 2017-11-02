@@ -9,6 +9,8 @@
 #import "QTInfoController.h"
 #import "QTAvatarEditController.h"
 #import "QTInfoEditController.h"
+#import "QTUserAgreementController.h"
+#import "QTFeedbackController.h"
 
 @interface QTInfoController ()
 
@@ -19,6 +21,8 @@
 @property (nonatomic, strong) UIButton *avatarView;
 @property (nonatomic, strong) UIButton *nicknameButton;
 @property (nonatomic, strong) UIButton *logoutButton;
+@property (nonatomic, strong) UIButton *userAgreementButton;
+@property (nonatomic, strong) UIButton *feedbackButton;
 
 - (void)initViews;
 - (void)configureData;
@@ -47,7 +51,7 @@
 
 - (void)initViews
 {
-    self.title = @"更多";
+    self.title = @"我";
     
     [self.view addSubview:self.weiboButton];
     [self.weiboButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -100,6 +104,20 @@
         make.left.equalTo(self.view).offset(20);
         make.right.equalTo(self.view).offset(-20);
         make.height.mas_equalTo(50);
+    }];
+    [self.view addSubview:self.userAgreementButton];
+    [self.userAgreementButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-20);
+        make.height.mas_equalTo(30);
+        make.bottom.equalTo(self.view);
+    }];
+    [self.view addSubview:self.feedbackButton];
+    [self.feedbackButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-20);
+        make.height.equalTo(self.userAgreementButton);
+        make.bottom.equalTo(self.userAgreementButton.mas_top);
     }];
 }
 
@@ -254,6 +272,18 @@
     [self.navigationController pushViewController:infoEditController animated:YES];
 }
 
+- (void)userAgreementAction
+{
+    QTUserAgreementController *userAgreementController = [QTUserAgreementController new];
+    [self.navigationController pushViewController:userAgreementController animated:YES];
+}
+
+- (void)feedbackAction
+{
+    QTFeedbackController *feedbackController = [QTFeedbackController new];
+    [self.navigationController pushViewController:feedbackController animated:YES];
+}
+
 #pragma mark - setter and getter
 
 - (UIButton *)weiboButton
@@ -394,6 +424,40 @@
         });
     }
     return _logoutButton;
+}
+
+- (UIButton *)userAgreementButton
+{
+    if (_userAgreementButton == nil) {
+        _userAgreementButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitle:@"用户注册及使用APP隐私协议" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorFromHexValue:0x5d97d5] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+            button.titleLabel.font = [UIFont systemFontOfSize:11];
+            button.translatesAutoresizingMaskIntoConstraints = YES;
+            [button addTarget:self action:@selector(userAgreementAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _userAgreementButton;
+}
+
+- (UIButton *)feedbackButton
+{
+    if (_feedbackButton == nil) {
+        _feedbackButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setTitle:@"意见与反馈" forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorFromHexValue:0x5d97d5] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+            button.titleLabel.font = [UIFont systemFontOfSize:11];
+            button.translatesAutoresizingMaskIntoConstraints = YES;
+            [button addTarget:self action:@selector(feedbackAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _feedbackButton;
 }
 
 @end

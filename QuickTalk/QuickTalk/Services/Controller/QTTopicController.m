@@ -81,8 +81,10 @@ UITableViewDataSource, UITableViewDelegate
     self.popoverView.multilineText = YES;
     self.popoverView.animationTime = .4;
     self.popoverView.fontSize = 18;
+    self.popoverView.showAction = YES;
     [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
         NSString *url = weakSelf.model.href;
+        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
         SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
         [weakSelf presentViewController:safariController animated:YES completion:nil];
     }];
@@ -244,7 +246,9 @@ UITableViewDataSource, UITableViewDelegate
         [weakSelf sendAgreeOrDisAgree:model action:@"2"];
     }];
     [tipView setOnReportActionBlock:^{
-         [QTProgressHUD showHUDText:@"举报成功"  view:weakSelf.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [QTProgressHUD showHUDText:@"举报成功"  view:weakSelf.view];
+        });
     }];
     [tipView setOnShowBlock:^{
         weakSelf.navigationController.interactivePopGestureRecognizer.enabled = NO;

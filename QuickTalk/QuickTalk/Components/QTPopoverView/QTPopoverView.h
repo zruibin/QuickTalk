@@ -20,6 +20,7 @@
 @property (nonatomic, strong) UIColor *fontColor;
 @property (nonatomic, assign) BOOL scrollEnabled;
 @property (nonatomic, assign) NSTimeInterval animationTime;
+@property (nonatomic, assign) BOOL showAction;
 
 + (instancetype)popoverInView:(UIView *)view;
 
