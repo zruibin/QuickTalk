@@ -57,6 +57,7 @@
 		E0A4FC821F98431B002ED580 /* QTTopicRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A4FC811F98431B002ED580 /* QTTopicRightCell.m */; };
 		E0A4FC841F98899D002ED580 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = E0A4FC831F98899D002ED580 /* Podfile */; };
 		E0BB50441F96F742002C0E50 /* QTTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BB50431F96F742002C0E50 /* QTTopicModel.m */; };
+		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
 		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
 		E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B01F95A7CE00F1B8C8 /* Tools.m */; };
@@ -179,6 +180,8 @@
 		E0A4FC831F98899D002ED580 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E0BB50421F96F742002C0E50 /* QTTopicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicModel.h; sourceTree = "<group>"; };
 		E0BB50431F96F742002C0E50 /* QTTopicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicModel.m; sourceTree = "<group>"; };
+		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickTalkTests.m; sourceTree = "<group>"; };
@@ -438,6 +441,15 @@
 			path = QTPopoverView;
 			sourceTree = "<group>";
 		};
+		E0DBAD1C1FAC13F2005B22A9 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */,
+				E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		E0DF286F1F95A57E00F1B8C8 = {
 			isa = PBXGroup;
 			children = (
@@ -590,6 +602,7 @@
 		E0DF28C21F95A7CE00F1B8C8 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E0DBAD1C1FAC13F2005B22A9 /* Reachability */,
 				E0DF28C31F95A7CE00F1B8C8 /* Networking */,
 				E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */,
 				E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */,
@@ -1014,6 +1027,7 @@
 				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
 				E0463BB71FAAC19500849101 /* QTFeedbackController.m in Sources */,
 				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
+				E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */,
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
@@ -1218,8 +1232,8 @@
 			baseConfigurationReference = 0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = S8VUN65RG9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1242,8 +1256,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "5a810fd8-f6bb-4340-bd8b-5affb4f4f454";
+				PROVISIONING_PROFILE_SPECIFIER = "快言_Distribution";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

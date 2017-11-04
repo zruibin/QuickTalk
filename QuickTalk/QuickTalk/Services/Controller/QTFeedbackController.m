@@ -51,6 +51,10 @@
 - (void)sendAction
 {
     [self.textView resignFirstResponder];
+    if (self.textView.text.length == 0) {
+        [QTMessage showWarningNotification:@"内容不可为空"];
+        return;
+    }
     [QTProgressHUD showHUD:self.view];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [QTProgressHUD showHUDSuccess];
