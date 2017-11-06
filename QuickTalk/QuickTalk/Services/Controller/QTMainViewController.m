@@ -104,6 +104,7 @@
                 if (list.count < 10) {
                     [self.tableView hiddenFooter];
                 }
+                [self.tableView endFooterRefreshing];
             } else {
                 if (list.count < 10) {
                     [self.tableView endRefreshingWithNoMoreData];
