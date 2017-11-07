@@ -40,7 +40,7 @@
 
 - (void)initViews
 {
-    self.title = @"服务协议";
+    self.title = @"声明及用户协议";
     [self.view addSubview:self.textView];
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);

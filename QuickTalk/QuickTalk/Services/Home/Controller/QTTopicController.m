@@ -246,8 +246,9 @@ UITableViewDataSource, UITableViewDelegate
         [weakSelf sendAgreeOrDisAgree:model action:@"2"];
     }];
     [tipView setOnReportActionBlock:^{
+        [QTProgressHUD showHUD:weakSelf.view];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [QTProgressHUD showHUDText:@"举报成功"  view:weakSelf.view];
+            [QTProgressHUD showHUDWithText:@"举报成功"];
         });
     }];
     [tipView setOnShowBlock:^{

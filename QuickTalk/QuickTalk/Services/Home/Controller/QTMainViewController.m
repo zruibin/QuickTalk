@@ -15,8 +15,6 @@
 @interface QTMainViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableDictionary *actionDict;
-@property (nonatomic, strong) NSMutableArray *childControllers;
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
@@ -171,7 +169,6 @@
 }
 
 #pragma mark - getter and setter
-
 
 - (UITableView *)tableView
 {

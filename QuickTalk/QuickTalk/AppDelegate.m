@@ -21,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self registerService];
+    [MMPopupWindow sharedWindow].touchWildToHide = YES;
     [[RBScheduler sharedInstance] run];
     [[QTUserInfo sharedInstance] loginInBackground];
     

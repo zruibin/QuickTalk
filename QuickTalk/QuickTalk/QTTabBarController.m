@@ -8,6 +8,7 @@
 
 #import "QTTabBarController.h"
 #import "QTMainViewController.h"
+#import "QTCircleController.h"
 #import "QTInfoController.h"
 
 @interface QTTabBarController () <UITabBarControllerDelegate>
@@ -29,10 +30,13 @@
     QTMainViewController *mainController = [[QTMainViewController alloc] init];
     QTNavigationController *mainNav = [[QTNavigationController alloc] initWithRootViewController:mainController];
     
+    QTCircleController *circleController = [[QTCircleController alloc] init];
+    QTNavigationController *circleNav = [[QTNavigationController alloc] initWithRootViewController:circleController];
+    
     QTInfoController *infoController = [[QTInfoController alloc] init];
     QTNavigationController *infoNav = [[QTNavigationController alloc] initWithRootViewController:infoController];
     
-    self.viewControllers = @[mainNav, infoNav];
+    self.viewControllers = @[mainNav, circleNav, infoNav];
     [self setTabBarItemAppearance];
     
 //    if ([[QTUserInfo sharedInstance] isLogin] == NO) {
@@ -50,7 +54,7 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
     NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
-    if (index == 1) {
+    if (index == 2) {
         return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
     } 
     return YES;
@@ -70,6 +74,13 @@
                                            @"selectedImageName":@"news_select"
                                            },
                                    @"tab1":@{
+                                           @"title":@"圈子",
+                                           @"titleColor":@"#666666",
+                                           @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
+                                           @"imageName":@"circle_unselect",
+                                           @"selectedImageName":@"circle_select"
+                                           },
+                                   @"tab2":@{
                                            @"title":@"我",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
