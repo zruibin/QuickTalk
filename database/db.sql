@@ -53,6 +53,21 @@ ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_user_uuid ( `user_uu
 ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
 
 
+DROP TABLE IF EXISTS
+    `t_quickTalk_circle`;
+CREATE TABLE `t_quickTalk_circle`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `content` TEXT NOT NULL COMMENT '内容',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生时间戳',
+    `like` INT(11) NOT NULL COMMENT '点赞数量',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_quickTalk_circle` ADD UNIQUE (`uuid`);
+ALTER TABLE `t_quickTalk_circle` ADD INDEX t_circle_user_uuid ( `user_uuid` );
+
 
 
 INSERT INTO `t_quickTalk_user` (`id`, `uuid`, `nickname`, `phone`, `email`, `avatar`, `wechat`, `qq`, `weibo`, `time`) VALUES

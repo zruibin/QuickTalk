@@ -68,12 +68,13 @@ button {
 function submit() {
 	var text = document.getElementById("textarea").value;
 	if (text.length > 0) {
-		console.log("fdd");
-		var url = "/service/quickTalk/submitTopic?jsondata=" + text;
+		//console.log("fdd");
+		var url = "/service/quickTalk/submitTopic";
 		reqwest({
 			url: url, 
 			type: 'json', 
-			method: 'get'
+			method: 'post',
+			data: { jsondata: text }
 		}).then(function (response) {
 			// response.data
 			console.log(response);

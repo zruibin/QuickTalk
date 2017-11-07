@@ -25,3 +25,9 @@ from service.quickTalk import hidden
 from service.quickTalk import deleteComment
 from service.quickTalk import changeAvatar
 from service.quickTalk import changeInfo
+
+# circle
+from service.quickTalk.circle import circleList
+from service.quickTalk.circle import submitCircle
+from service.quickTalk.circle import deleteCircle
+from service.quickTalk.circle import likeCircle
