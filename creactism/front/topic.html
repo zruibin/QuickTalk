@@ -114,7 +114,7 @@ function showTopicList(dataList) {
             html += '<tr>';
             html += '<td>'+ data.id +'</td>';
             html += '<td>'+ data.title +'</td>';
-			html += '<td><button onclick=showTopicComment("'+ data.uuid +'","' + data.title +'")>查看评论</button></td>';
+			html += '<td><button onclick=showTopicComment("'+ data.uuid +'","' + trim(data.title) +'")>查看评论</button></td>';
             html += '<td><button onclick=deleteTopic("'+ data.uuid +'")>删除</button></td>';
             html += '</tr>';
         }
@@ -146,6 +146,9 @@ function showTopicComment(uuid, title) {
 	window.location.href = encodeURI(encodeURI("/comment.html?uuid=" + uuid + "&title=" + title));
 }
 
+function trim(str) { 
+  return str.replace(/(^\s*)|(\s*$)/g, ""); 
+}
 
 </script>
 
