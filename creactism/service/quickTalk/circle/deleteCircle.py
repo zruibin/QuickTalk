@@ -22,13 +22,14 @@ from common.tools import getValueFromRequestByKey
 @quickTalk.route('/circle/deleteCircle', methods=["GET", "POST"])
 def deleteCircle():
     uuid = getValueFromRequestByKey("uuid")
-    if uuid == None :
+    userUUID = getValueFromRequestByKey("user_uuid")
+    if uuid == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
-    return __deleteAction(uuid)
+    return __deleteAction(uuid, userUUID)
     
 
-def __deleteAction(uuid):
-    deleteTopicSQL = """DELETE FROM t_quickTalk_circle WHERE uuid='%s';""" % (uuid)
+def __deleteAction(uuid, userUUID):
+    deleteTopicSQL = """DELETE FROM t_quickTalk_circle WHERE uuid='%s' AND user_uuid='%s';""" % (uuid, userUUID)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

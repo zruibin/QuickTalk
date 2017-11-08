@@ -14,6 +14,7 @@ from flask import Blueprint
   
 quickTalk = Blueprint("quickTalk", __name__)
 
+from service.quickTalk import topic
 from service.quickTalk import topicList
 from service.quickTalk import comment
 from service.quickTalk import commentList
@@ -25,6 +26,7 @@ from service.quickTalk import hidden
 from service.quickTalk import deleteComment
 from service.quickTalk import changeAvatar
 from service.quickTalk import changeInfo
+from service.quickTalk import myCommentList
 
 # circle
 from service.quickTalk.circle import circleList
