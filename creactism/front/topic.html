@@ -111,10 +111,11 @@ function showTopicList(dataList) {
         
         for (var i = 0; i < dataList.length; i++) {
             var data = dataList[i];
+			var title = encodeURI(encodeURI(trim(data.title)));
             html += '<tr>';
             html += '<td>'+ data.id +'</td>';
             html += '<td>'+ data.title +'</td>';
-			html += '<td><button onclick=showTopicComment("'+ data.uuid +'","' + trim(data.title) +'")>查看评论</button></td>';
+			html += '<td><button onclick=showTopicComment("'+ data.uuid +'","' + title +'")>查看评论</button></td>';
             html += '<td><button onclick=deleteTopic("'+ data.uuid +'")>删除</button></td>';
             html += '</tr>';
         }
@@ -143,7 +144,7 @@ function deleteTopic(uuid) {
 }
 
 function showTopicComment(uuid, title) {
-	window.location.href = encodeURI(encodeURI("/comment.html?uuid=" + uuid + "&title=" + title));
+	window.location.href = "/comment.html?uuid=" + uuid + "&title=" + title;
 }
 
 function trim(str) { 
