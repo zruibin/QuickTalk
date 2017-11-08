@@ -19,6 +19,8 @@
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, assign) NSInteger like;
 @property (nonatomic, assign) NSInteger dislike;
+@property (nonatomic, copy) NSString *title;
+
 
 + (void)requestTopicCommentData:(NSString *)topicUUID page:(NSUInteger)page
               completionHandler:(void (^)(NSArray<QTCommentModel *> *list, NSError * error))completionHandler;
@@ -32,4 +34,6 @@
                                    action:(NSString *)action
                         completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestMyCommentData:(NSString *)userUUID page:(NSUInteger)page
+              completionHandler:(void (^)(NSArray<QTCommentModel *> *list, NSError * error))completionHandler;
 @end

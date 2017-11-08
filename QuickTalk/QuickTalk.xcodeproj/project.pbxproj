@@ -64,6 +64,7 @@
 		E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */ = {isa = PBXBuildFile; fileRef = E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
+		E0A0F4A91FB2AD9E001242DF /* QTMyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A0F4A81FB2AD9E001242DF /* QTMyCell.m */; };
 		E0A4FC841F98899D002ED580 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = E0A4FC831F98899D002ED580 /* Podfile */; };
 		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
@@ -201,6 +202,8 @@
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
 		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
 		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
+		E0A0F4A71FB2AD9E001242DF /* QTMyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyCell.h; sourceTree = "<group>"; };
+		E0A0F4A81FB2AD9E001242DF /* QTMyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyCell.m; sourceTree = "<group>"; };
 		E0A4FC831F98899D002ED580 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -369,6 +372,8 @@
 		E040F68A1FB15B5900CDA6B0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E0A0F4A71FB2AD9E001242DF /* QTMyCell.h */,
+				E0A0F4A81FB2AD9E001242DF /* QTMyCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1122,6 +1127,7 @@
 				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
 				E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */,
+				E0A0F4A91FB2AD9E001242DF /* QTMyCell.m in Sources */,
 				E040F6A11FB15B5900CDA6B0 /* QTAvatarEditController.m in Sources */,
 				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
 				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,

@@ -21,4 +21,7 @@
 + (void)requestTopicData:(NSUInteger)page
        completionHandler:(void (^)(NSArray<QTTopicModel *> *list, NSError * error))completionHandler;
 
++ (void)requestTopic:(NSString *)topicUUID
+   completionHandler:(void (^)(QTTopicModel *model, NSError * error))completionHandler;
+
 @end

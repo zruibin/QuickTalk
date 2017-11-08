@@ -35,6 +35,7 @@ UITableViewDataSource, UITableViewDelegate
 @property (nonatomic, strong) QTTipView *tipView;
 
 - (void)initViews;
+- (void)setDataViews;
 - (void)loadData;
 - (void)loadMoreData;
 - (void)sendComment:(NSString *)text;
@@ -48,7 +49,7 @@ UITableViewDataSource, UITableViewDelegate
 
 - (void)dealloc
 {
-
+//    DLog(@"QTTopicController dealloc...");
 }
 
 - (void)viewDidLoad
@@ -57,10 +58,63 @@ UITableViewDataSource, UITableViewDelegate
     [self initViews];
     self.dataList = [NSMutableArray array];
     
+    if (self.topicUUID.length != 0) {
+        [QTTopicModel requestTopic:self.topicUUID completionHandler:^(QTTopicModel *model, NSError *error) {
+            if (error) {
+                [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE]  view:self.view];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                self.model = model;
+                [self loadData];
+                [self setDataViews];
+            }
+        }];
+    } else {
+        [self loadData];
+        [self setDataViews];
+    }
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+//    [self.timer fireDate];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.timer invalidate];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)initViews
+{
+    self.navigationItem.titleView = self.titleButton;
+    
+    self.viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    [self.view addSubview:self.tableView];
+    self.tableView.frame = CGRectMake(0, 0, self.viewWidth,
+                                      self.viewHeight-64-50);
+    
+    [self.view addSubview:self.inputView];
+    self.inputView.frame = CGRectMake(0, self.viewHeight-49-64, self.viewWidth, 49);
+    
+    [self.view addSubview:self.updataButton];
+    self.updataButton.frame = CGRectMake(0, CGRectGetMaxY(self.tableView.frame)-35, self.viewWidth, 35);
+    self.updataButton.hidden = YES;
+}
+
+- (void)setDataViews
+{
+    [self.titleButton setTitle:self.model.title forState:UIControlStateNormal];
     __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf loadData];
-    });
     self.timer = [NSTimer scheduledTimerWithTimeInterval:120 target:self selector:@selector(checkNewData) userInfo:nil repeats:YES];
     
     self.page = 1;
@@ -89,42 +143,6 @@ UITableViewDataSource, UITableViewDelegate
         [weakSelf presentViewController:safariController animated:YES completion:nil];
     }];
     [self.popoverView show];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-//    [self.timer fireDate];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.timer invalidate];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)initViews
-{
-    self.navigationItem.titleView = self.titleButton;
-    [self.titleButton setTitle:self.model.title forState:UIControlStateNormal];
-    
-    self.viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
-    self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-    [self.view addSubview:self.tableView];
-    self.tableView.frame = CGRectMake(0, 0, self.viewWidth,
-                                      self.viewHeight-64-50);
-    
-    [self.view addSubview:self.inputView];
-    self.inputView.frame = CGRectMake(0, self.viewHeight-49-64, self.viewWidth, 49);
-    
-    [self.view addSubview:self.updataButton];
-    self.updataButton.frame = CGRectMake(0, CGRectGetMaxY(self.tableView.frame)-35, self.viewWidth, 35);
-    self.updataButton.hidden = YES;
 }
 
 - (void)loadData
@@ -174,10 +192,10 @@ UITableViewDataSource, UITableViewDelegate
     if (text.length <= 0) {
         return;
     }
-    if (text.length > 300) {
-        [QTMessage showErrorNotification:@"评论内容不能超过300个字!"];
-        return;
-    }
+//    if (text.length > 300) {
+//        [QTMessage showErrorNotification:@"评论内容不能超过300个字!"];
+//        return;
+//    }
     NSString *topicUUID = self.model.uuid;
     NSString *userUUID = [QTUserInfo sharedInstance].uuid;
     [QTProgressHUD showHUD:self.view];

@@ -12,6 +12,7 @@
 
 @interface QTTopicController : QTViewController
 
+@property (nonatomic, copy) NSString *topicUUID;
 @property (nonatomic, strong) QTTopicModel *model;
 
 @end

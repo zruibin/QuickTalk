@@ -56,6 +56,36 @@
     }];
 }
 
-
++ (void)requestTopic:(NSString *)topicUUID
+   completionHandler:(void (^)(QTTopicModel *model, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"topic_uuid": topicUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/topic" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTTopicModel *model = nil;
+            QTTopicModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTTopicModelList yy_modelWithJSON:responseObject];
+                    if (listModel.data.count > 0) {
+                        model = listModel.data[0];
+                    }
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(model, error);
+            }
+        }
+    }];
+}
 
 @end

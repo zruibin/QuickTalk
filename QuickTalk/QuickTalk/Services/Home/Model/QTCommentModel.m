@@ -113,4 +113,32 @@
     }];
 }
 
++ (void)requestMyCommentData:(NSString *)userUUID page:(NSUInteger)page
+           completionHandler:(void (^)(NSArray<QTCommentModel *> *list, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"index": [NSNumber numberWithInteger:page], @"user_uuid": userUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/myCommentList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTCommentModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTCommentModelList yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(listModel.data, error);
+            }
+        }
+    }];
+}
+
 @end

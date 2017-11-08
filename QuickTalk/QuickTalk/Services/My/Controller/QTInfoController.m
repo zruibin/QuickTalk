@@ -175,6 +175,9 @@
                      [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar nickname:userInfo.nickname];
                      [self configureData];
                      [QTProgressHUD hide];
+                     if (self.presentingViewController) {
+                         [self dismissViewControllerAnimated:YES completion:nil];
+                     }
                  }
              }];
          } else {

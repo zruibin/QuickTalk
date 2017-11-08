@@ -7,11 +7,13 @@
 //
 
 #import "QTMyController.h"
-#import "QTCircleCell.h"
-#import "QTCircleModel.h"
+#import "QTMyCell.h"
+#import "QTCommentModel.h"
 #import "QTSettingController.h"
 #import "QTAvatarEditController.h"
 #import "QTInfoEditController.h"
+#import "QTTopicController.h"
+
 
 @interface QTMyController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -55,6 +57,8 @@
                 make.top.equalTo(weakSelf.view).offset(100);
             }];
             [weakSelf.tableView beginHeaderRefreshing];
+            [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
+            [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
         }
     }];
 
@@ -103,7 +107,7 @@
         [self.tableView endFooterRefreshing];
         return;
     }
-    [QTCircleModel requestCircleData:self.page userUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTCircleModel *> *list, NSError *error) {
+    [QTCommentModel requestMyCommentData:[QTUserInfo sharedInstance].uuid page:self.page completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         } else {
@@ -141,22 +145,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTCircleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTCircleCell class])];
+    QTMyCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMyCell class])];
     cell.tag = indexPath.section;
-    QTCircleModel *model = self.dataList[indexPath.section];
-//    __weak typeof(self) weakSelf = self;
-    [cell setOnDidTouchActionHandler:^(NSInteger index) {
-//        [weakSelf likeActionRequest:index];
-    }];
-    [cell loadData:model.content avatar:model.avatar time:model.time likeNum:model.like];
+    QTCommentModel *model = self.dataList[indexPath.section];
+    [cell loadData:model.content avatar:model.avatar time:model.time likeNum:model.like title:model.title];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 80.0f;
-    QTCircleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTCircleCell class])];
-    QTCircleModel *model = self.dataList[indexPath.section];
+    QTMyCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMyCell class])];
+    QTCommentModel *model = self.dataList[indexPath.section];
     height = [cell heightForCell:model.content];
     return height;
 }
@@ -175,27 +175,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    QTCircleModel *model = self.dataList[indexPath.section];
-    NSString *userUUID = [QTUserInfo sharedInstance].uuid;
-    if ([model.userUUID isEqualToString:userUUID]) {
-        __weak typeof(self) weakSelf = self;
-        void(^handler)(NSInteger index) = ^(NSInteger index){
-            if (index == 0) {
-                [QTCircleModel requestForDeleteCircle:model.uuid userUUID:userUUID completionHandler:^(BOOL action, NSError *error) {
-                    if (action) {
-                        [weakSelf.tableView beginHeaderRefreshing];
-                    } else {
-                        [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
-                    }
-                }];
-            }
-        };
-        NSArray *items = @[MMItemMake(@"删除圈子", MMItemTypeHighlight, handler)];
-        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
-                                                              items:items];
-        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
-        [sheetView show];
-    }
+    QTCommentModel *model = self.dataList[indexPath.section];
+    QTTopicController *topicController = [[QTTopicController alloc] init];
+    topicController.topicUUID = model.topicUUID;
+    [self.navigationController pushViewController:topicController animated:YES];
 }
 
 #pragma mark - Action
@@ -252,7 +235,7 @@
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[QTCircleCell class] forCellReuseIdentifier:NSStringFromClass([QTCircleCell class])];
+            [tableView registerClass:[QTMyCell class] forCellReuseIdentifier:NSStringFromClass([QTMyCell class])];
             tableView;
         });
     }
