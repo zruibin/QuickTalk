@@ -28,6 +28,7 @@
 		E040F6B41FB179AB00CDA6B0 /* QTCircleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B31FB179AB00CDA6B0 /* QTCircleCell.m */; };
 		E040F6B71FB1861D00CDA6B0 /* QTAddCircleController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B61FB1861D00CDA6B0 /* QTAddCircleController.m */; };
 		E040F6BA1FB19B5A00CDA6B0 /* QTCircleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B91FB19B5A00CDA6B0 /* QTCircleModel.m */; };
+		E040F6BD1FB1A9A400CDA6B0 /* QTMyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
@@ -148,6 +149,8 @@
 		E040F6B61FB1861D00CDA6B0 /* QTAddCircleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAddCircleController.m; sourceTree = "<group>"; };
 		E040F6B81FB19B5A00CDA6B0 /* QTCircleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCircleModel.h; sourceTree = "<group>"; };
 		E040F6B91FB19B5A00CDA6B0 /* QTCircleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCircleModel.m; sourceTree = "<group>"; };
+		E040F6BB1FB1A9A400CDA6B0 /* QTMyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyController.h; sourceTree = "<group>"; };
+		E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyController.m; sourceTree = "<group>"; };
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
 		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
 		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
@@ -336,18 +339,20 @@
 		E040F67A1FB15B5900CDA6B0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E040F6BB1FB1A9A400CDA6B0 /* QTMyController.h */,
+				E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */,
+				E040F67F1FB15B5900CDA6B0 /* QTInfoController.h */,
+				E040F6801FB15B5900CDA6B0 /* QTInfoController.m */,
+				E040F6851FB15B5900CDA6B0 /* QTSettingController.h */,
+				E040F6861FB15B5900CDA6B0 /* QTSettingController.m */,
 				E040F67B1FB15B5900CDA6B0 /* QTAvatarEditController.h */,
 				E040F67C1FB15B5900CDA6B0 /* QTAvatarEditController.m */,
 				E040F67D1FB15B5900CDA6B0 /* QTFeedbackController.h */,
 				E040F67E1FB15B5900CDA6B0 /* QTFeedbackController.m */,
-				E040F67F1FB15B5900CDA6B0 /* QTInfoController.h */,
-				E040F6801FB15B5900CDA6B0 /* QTInfoController.m */,
 				E040F6811FB15B5900CDA6B0 /* QTInfoEditController.h */,
 				E040F6821FB15B5900CDA6B0 /* QTInfoEditController.m */,
 				E040F6831FB15B5900CDA6B0 /* QTIntroController.h */,
 				E040F6841FB15B5900CDA6B0 /* QTIntroController.m */,
-				E040F6851FB15B5900CDA6B0 /* QTSettingController.h */,
-				E040F6861FB15B5900CDA6B0 /* QTSettingController.m */,
 				E040F6871FB15B5900CDA6B0 /* QTUserAgreementController.h */,
 				E040F6881FB15B5900CDA6B0 /* QTUserAgreementController.m */,
 			);
@@ -1151,6 +1156,7 @@
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
 				E040F6AC1FB15B5900CDA6B0 /* QTMainCell.m in Sources */,
+				E040F6BD1FB1A9A400CDA6B0 /* QTMyController.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
 				E040F6A31FB15B5900CDA6B0 /* QTInfoController.m in Sources */,
 				E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */,

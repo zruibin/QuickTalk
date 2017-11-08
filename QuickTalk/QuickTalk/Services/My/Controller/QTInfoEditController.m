@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *warningLabel;
 
 - (void)initViews;
+- (void)savaAction;
 
 @end
 
@@ -52,6 +53,31 @@
         make.right.equalTo(self.view).offset(-7);
         make.top.equalTo(self.textField.mas_bottom).offset(2);
         make.height.mas_equalTo(20);
+    }];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(savaAction)];
+    self.navigationItem.rightBarButtonItem = item;
+}
+
+- (void)savaAction
+{
+    [self.textField resignFirstResponder];
+    if (self.textField.text.length == 0) {
+        [QTMessage showWarningNotification:@"昵称不可为空"];
+        return;
+    }
+    [QTProgressHUD showHUD:self.view];
+    [QTUserInfo requestChangeNickName:[QTUserInfo sharedInstance].uuid nickname:self.textField.text completionHandler:^(BOOL action, NSError *error) {
+        if (action) {
+            [QTProgressHUD showHUDSuccess];
+            [QTUserInfo sharedInstance].nickname = self.textField.text;
+            if (self.onChangeBlock) {
+                self.onChangeBlock(self.textField.text);
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+        }
     }];
 }
 
@@ -101,19 +127,7 @@
         return YES;
     }
     
-    [QTProgressHUD showHUD:self.view];
-    [QTUserInfo requestChangeNickName:[QTUserInfo sharedInstance].uuid nickname:textField.text completionHandler:^(BOOL action, NSError *error) {
-        if (action) {
-            [QTProgressHUD showHUDSuccess];
-            [QTUserInfo sharedInstance].nickname = textField.text;
-            if (self.onChangeBlock) {
-                self.onChangeBlock(self.textField.text);
-            }
-            [self.navigationController popViewControllerAnimated:YES];
-        } else {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
-        }
-    }];
+    [self savaAction];
     return YES;
 }
 

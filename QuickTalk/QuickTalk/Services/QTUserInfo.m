@@ -15,6 +15,7 @@ static NSString * const kQTLoginUUID = @"QTLoginUUID";
 static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
 static NSString * const kQTLoginNickName = @"QTLoginNickName";
 NSString * const QTRefreshDataNotification = @"kkQTRefreshDataNotification";
+NSString * const QTLoginStatusChangeNotification = @"kQTLoginStatusChangeNotification";
 
 static NSDate *refreshDate = nil;
 
@@ -70,6 +71,7 @@ static NSDate *refreshDate = nil;
     [SAMKeychain setPassword:uuid forService:kQTLoginServiceName account:kQTLoginUUID];
     [SAMKeychain setPassword:avatar forService:kQTLoginServiceName account:kQTLoginAvatar];
     [SAMKeychain setPassword:nickname forService:kQTLoginServiceName account:kQTLoginNickName];
+    [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
 }
 
 - (void)logout
@@ -80,6 +82,7 @@ static NSDate *refreshDate = nil;
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginNickName];
     self.uuid = nil;
     self.avatar = nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
 }
 
 - (void)loginInBackground

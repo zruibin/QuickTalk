@@ -13,6 +13,7 @@
 @interface QTSettingController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIButton *logoutButton;
 
 - (void)initViews;
 
@@ -20,10 +21,24 @@
 
 @implementation QTSettingController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTLoginStatusChangeNotification object:nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self initViews];
+    
+    __weak typeof(self) weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        if ([QTUserInfo sharedInstance].isLogin) {
+            [weakSelf.logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
+        } else {
+            [weakSelf.logoutButton setTitle:@"登录" forState:UIControlStateNormal];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,16 +55,35 @@
         make.edges.equalTo(self.view);
     }];
     
-
     UIView *footView = [[UIView alloc] init];
     footView.frame =CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 54);
-//    [footView addSubview:logoutButton];
     self.tableView.tableFooterView = footView;
+    if ([QTUserInfo sharedInstance].isLogin) {
+        self.logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.logoutButton.frame = CGRectMake(0, 10, CGRectGetWidth(self.view.bounds), 44);
+        [self.logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
+        [self.logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        self.logoutButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [self.logoutButton setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView *footView = [[UIView alloc] init];
+        footView.frame =CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 54);
+        [footView addSubview:self.logoutButton];
+        self.tableView.tableFooterView = footView;
+    }
 }
 
 #pragma mark - Action
 
-
+- (void)logoutButtonAction
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [[QTUserInfo sharedInstance] logout];
+    } else {
+        [[QTUserInfo sharedInstance] checkLoginStatus:self];
+    }
+}
 
 #pragma mark - TableView Delegate And DataSource
 
@@ -60,7 +94,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,9 +122,6 @@
     }
     if (indexPath.row == 2) {
         cell.textLabel.text = @"意见反馈";
-    }
-    if (indexPath.row == 3) {
-        cell.textLabel.text = @"关于我们";
     }
     
     return cell;

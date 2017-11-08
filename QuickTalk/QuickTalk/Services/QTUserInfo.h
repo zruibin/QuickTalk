@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const QTRefreshDataNotification;
+extern NSString * const QTLoginStatusChangeNotification;
 
 @interface QTUserInfo : NSObject
 

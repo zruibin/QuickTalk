@@ -164,8 +164,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     QTCircleModel *model = self.dataList[indexPath.section];
     NSString *userUUID = [QTUserInfo sharedInstance].uuid;
+    NSArray *items = nil;
+    __weak typeof(self) weakSelf = self;
     if ([model.userUUID isEqualToString:userUUID]) {
-        __weak typeof(self) weakSelf = self;
         void(^handler)(NSInteger index) = ^(NSInteger index){
             if (index == 0) {
                 [QTCircleModel requestForDeleteCircle:model.uuid userUUID:userUUID completionHandler:^(BOOL action, NSError *error) {
@@ -177,13 +178,22 @@
                 }];
             }
         };
-        NSArray *items =
-        @[MMItemMake(@"删除", MMItemTypeHighlight, handler)];
-        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"删除圈子"
-                                                              items:items];
-        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
-        [sheetView show];
+        items = @[MMItemMake(@"删除", MMItemTypeHighlight, handler)];
+    } else {
+        void(^handler)(NSInteger index) = ^(NSInteger index){
+            if (index == 0) {
+                [QTProgressHUD showHUD:weakSelf.view];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [QTProgressHUD showHUDWithText:@"举报成功"];
+                });
+            }
+        };
+        items = @[MMItemMake(@"举报", MMItemTypeHighlight, handler)];
     }
+    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                          items:items];
+    sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+    [sheetView show];
 }
 
 #pragma mark - Action

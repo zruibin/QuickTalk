@@ -9,7 +9,6 @@
 #import "QTInfoController.h"
 #import "QTAvatarEditController.h"
 #import "QTInfoEditController.h"
-#import "QTSettingController.h"
 
 
 @interface QTInfoController ()
@@ -30,6 +29,11 @@
 
 @implementation QTInfoController
 
+- (void)dealloc
+{
+//    DLog(@"QTInfoController dealloc...");
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,7 +53,11 @@
 
 - (void)initViews
 {
-    self.title = @"我";
+    self.title = @"个人信息";
+    
+    if (self.presentingViewController) {
+        self.title = @"登录";
+    }
     
     [self.view addSubview:self.weiboButton];
     [self.weiboButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -103,10 +111,6 @@
         make.right.equalTo(self.view).offset(-20);
         make.height.mas_equalTo(50);
     }];
-
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(settingAction)];
-    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)configureData
@@ -258,12 +262,6 @@
         }
     }];
     [self.navigationController pushViewController:infoEditController animated:YES];
-}
-
-- (void)settingAction
-{
-    QTSettingController *settingControlle = [QTSettingController new];
-    [self.navigationController pushViewController:settingControlle animated:YES];
 }
 
 #pragma mark - setter and getter

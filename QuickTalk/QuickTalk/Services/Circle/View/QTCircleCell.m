@@ -74,13 +74,13 @@
         make.bottom.equalTo(self.contentView).offset(-5);
         make.height.mas_equalTo(20);
     }];
-    [self.contentView addSubview:self.likeButton];
-    [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.contentView).offset(-15);
-        make.centerY.equalTo(self.timeLabel);
-        make.height.mas_equalTo(14);
-        make.width.mas_lessThanOrEqualTo(80);
-    }];
+//    [self.contentView addSubview:self.likeButton];
+//    [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.right.equalTo(self.contentView).offset(-15);
+//        make.centerY.equalTo(self.timeLabel);
+//        make.height.mas_equalTo(14);
+//        make.width.mas_lessThanOrEqualTo(80);
+//    }];
 }
 
 

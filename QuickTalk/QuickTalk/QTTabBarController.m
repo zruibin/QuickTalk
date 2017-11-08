@@ -9,7 +9,7 @@
 #import "QTTabBarController.h"
 #import "QTMainViewController.h"
 #import "QTCircleController.h"
-#import "QTInfoController.h"
+#import "QTMyController.h"
 
 @interface QTTabBarController () <UITabBarControllerDelegate>
 
@@ -33,10 +33,10 @@
     QTCircleController *circleController = [[QTCircleController alloc] init];
     QTNavigationController *circleNav = [[QTNavigationController alloc] initWithRootViewController:circleController];
     
-    QTInfoController *infoController = [[QTInfoController alloc] init];
-    QTNavigationController *infoNav = [[QTNavigationController alloc] initWithRootViewController:infoController];
+    QTMyController *myController = [[QTMyController alloc] init];
+    QTNavigationController *myNav = [[QTNavigationController alloc] initWithRootViewController:myController];
     
-    self.viewControllers = @[mainNav, circleNav, infoNav];
+    self.viewControllers = @[mainNav, circleNav, myNav];
     [self setTabBarItemAppearance];
     
 //    if ([[QTUserInfo sharedInstance] isLogin] == NO) {
