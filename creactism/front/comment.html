@@ -82,6 +82,7 @@ function showCommentList(dataList) {
             var data = dataList[i];
             html += '<tr>';
             html += '<td>'+ data.id +'</td>';
+			html += '<td>'+ data.nickname +'</td>';
             html += '<td>'+ data.content +'</td>';
             html += '<td><button onclick=deleteComment("'+ data.uuid +'")>删除</button></td>';
             html += '</tr>';

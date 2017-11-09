@@ -34,6 +34,16 @@ ALTER TABLE `t_quickTalk_topic` ADD UNIQUE (`uuid`);
 
 
 DROP TABLE IF EXISTS
+    `t_quickTalk_topic_content`;
+CREATE TABLE `t_quickTalk_topic_content`(
+    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
+    `content` TEXT NOT NULL COMMENT '内容'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_quickTalk_topic_content` ADD UNIQUE (`uuid`);
+
+
+DROP TABLE IF EXISTS
     `t_quickTalk_topic_comment`;
 CREATE TABLE `t_quickTalk_topic_comment`(
     `id` INT UNSIGNED AUTO_INCREMENT,

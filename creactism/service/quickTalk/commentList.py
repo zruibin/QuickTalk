@@ -38,6 +38,7 @@ def __getCommentListFromStorage(topicUUID, index, size):
     querySQL = """
         SELECT id, uuid, user_uuid AS userUUID, topic_uuid AS topicUUID, 
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=user_uuid) AS avatar,
+        (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=user_uuid) AS nickname,
         content, time, `like`, dislike FROM t_quickTalk_topic_comment WHERE topic_uuid='%s' ORDER BY time DESC %s
     """ % (topicUUID, limitSQL)
     # print querySQL

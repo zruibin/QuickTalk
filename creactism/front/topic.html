@@ -19,7 +19,7 @@ textarea {
 }
 
 button {
-	width: 100px;
+	width: 80px;
 	height: 40px;
 }
 
@@ -36,13 +36,15 @@ button {
 	{
 		"title": "",
 		"detail": "",
-		"href": ""
+		"href": "",
+		"content": ""
 	},
 
 	{
 		"title": "",
 		"detail": "",
-		"href": ""
+		"href": "",
+		"content": ""
 	},
 ....
 ]
@@ -115,7 +117,11 @@ function showTopicList(dataList) {
             html += '<tr>';
             html += '<td>'+ data.id +'</td>';
             html += '<td>'+ data.title +'</td>';
+			html += '<td>'+ data.detail +'</td>';
+			html += '<td><a href="' + data.href + '" target="blank">原文地址</a></td>';
 			html += '<td><button onclick=showTopicComment("'+ data.uuid +'","' + title +'")>查看评论</button></td>';
+			
+			html += '<td><button onclick=changeTopic("'+ data.uuid +'")>修改</button></td>';
             html += '<td><button onclick=deleteTopic("'+ data.uuid +'")>删除</button></td>';
             html += '</tr>';
         }
@@ -145,6 +151,10 @@ function deleteTopic(uuid) {
 
 function showTopicComment(uuid, title) {
 	window.location.href = "/comment.html?uuid=" + uuid + "&title=" + title;
+}
+
+function changeTopic(uuid) {
+	window.location.href = "/changeTopic.html?uuid=" + uuid
 }
 
 function trim(str) { 

@@ -44,6 +44,10 @@ def __storageTopic(jsonList):
         args = [uuid, data["title"], data["detail"], data["href"], time]
         sqlList.append(insertSQL)
         argsList.append(args)
+        insertContentSQL = """INSERT INTO t_quickTalk_topic_content (uuid, content) VALUES (%s, %s)"""
+        contentArgs = [uuid, data["content"]]
+        sqlList.append(insertContentSQL)
+        argsList.append(contentArgs)
         
     dbManager = DB.DBManager.shareInstanced()
     try: 

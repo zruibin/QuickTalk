@@ -16,6 +16,8 @@ quickTalk = Blueprint("quickTalk", __name__)
 
 from service.quickTalk import topic
 from service.quickTalk import topicList
+from service.quickTalk import topicContent
+from service.quickTalk import changeTopic
 from service.quickTalk import comment
 from service.quickTalk import commentList
 from service.quickTalk import submitTopic
