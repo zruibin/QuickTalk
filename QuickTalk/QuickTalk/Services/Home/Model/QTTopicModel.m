@@ -88,4 +88,33 @@
     }];
 }
 
++ (void)requestTopicContent:(NSString *)topicUUID
+          completionHandler:(void (^)(NSString *content, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"topic_uuid": topicUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/topicContent" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            NSString *content = nil;
+        
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    content = responseObject[@"data"][@"content"];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(content, error);
+            }
+        }
+    }];
+}
+
 @end

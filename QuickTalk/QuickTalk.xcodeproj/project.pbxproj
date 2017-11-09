@@ -38,6 +38,7 @@
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
 		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
+		E09143C21FB4662F007D43D5 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E09143C11FB4662F007D43D5 /* QTTopicContentController.m */; };
 		E09351781FA30EBE000687BC /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351581FA30EBE000687BC /* MOBFoundation.framework */; };
 		E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351591FA30EBE000687BC /* ShareSDK.framework */; };
 		E093517A1FA30EBE000687BC /* ShareSDKConfigFile.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */; };
@@ -166,6 +167,8 @@
 		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
 		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		E09143C01FB4662F007D43D5 /* QTTopicContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
+		E09143C11FB4662F007D43D5 /* QTTopicContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicContentController.m; sourceTree = "<group>"; };
 		E09351581FA30EBE000687BC /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E09351591FA30EBE000687BC /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
 		E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKConfigFile.bundle; sourceTree = "<group>"; };
@@ -434,6 +437,8 @@
 				E040F6921FB15B5900CDA6B0 /* QTMainViewController.m */,
 				E040F6931FB15B5900CDA6B0 /* QTTopicController.h */,
 				E040F6941FB15B5900CDA6B0 /* QTTopicController.m */,
+				E09143C01FB4662F007D43D5 /* QTTopicContentController.h */,
+				E09143C11FB4662F007D43D5 /* QTTopicContentController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1153,6 +1158,7 @@
 				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
 				E040F6A51FB15B5900CDA6B0 /* QTIntroController.m in Sources */,
+				E09143C21FB4662F007D43D5 /* QTTopicContentController.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
 				E040F6B71FB1861D00CDA6B0 /* QTAddCircleController.m in Sources */,
 				E040F6A61FB15B5900CDA6B0 /* QTSettingController.m in Sources */,

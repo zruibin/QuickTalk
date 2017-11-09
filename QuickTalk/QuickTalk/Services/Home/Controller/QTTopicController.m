@@ -15,6 +15,7 @@
 #import "QTCommentModel.h"
 #import "EwenTextView.h"
 #import "QTTipView.h"
+#import "QTTopicContentController.h"
 
 
 @interface QTTopicController ()
@@ -105,6 +106,9 @@ UITableViewDataSource, UITableViewDelegate
     
     [self.view addSubview:self.inputView];
     self.inputView.frame = CGRectMake(0, self.viewHeight-49-64, self.viewWidth, 49);
+//    if (@available(iOS 11.0, *)) {
+//        self.inputView.frame = CGRectMake(0, self.viewHeight-49-64-34, self.viewWidth, 49);
+//    }
     
     [self.view addSubview:self.updataButton];
     self.updataButton.frame = CGRectMake(0, CGRectGetMaxY(self.tableView.frame)-35, self.viewWidth, 35);
@@ -137,10 +141,14 @@ UITableViewDataSource, UITableViewDelegate
     self.popoverView.fontSize = 18;
     self.popoverView.showAction = YES;
     [self.popoverView setOnSelectedHandler:^(NSUInteger index, NSString *title) {
-        NSString *url = weakSelf.model.href;
-        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-        [weakSelf presentViewController:safariController animated:YES completion:nil];
+        QTTopicContentController *contentController = [[QTTopicContentController alloc] init];
+        contentController.model = weakSelf.model;
+        [weakSelf.navigationController pushViewController:contentController animated:YES];
+//        NSString *url = weakSelf.model.href;
+//        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
+//        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+//        [weakSelf presentViewController:safariController animated:YES completion:nil];
+        [weakSelf.popoverView hide];
     }];
     [self.popoverView show];
 }

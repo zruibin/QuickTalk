@@ -24,4 +24,7 @@
 + (void)requestTopic:(NSString *)topicUUID
    completionHandler:(void (^)(QTTopicModel *model, NSError * error))completionHandler;
 
++ (void)requestTopicContent:(NSString *)topicUUID
+   completionHandler:(void (^)(NSString *content, NSError * error))completionHandler;
+
 @end
