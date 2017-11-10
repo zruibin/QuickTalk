@@ -8,6 +8,7 @@
 
 #import "QTTopicContentController.h"
 #import "QTTopicModel.h"
+#import "RBImagebrowse.h"
 
 @interface QTTopicContentController () <UIWebViewDelegate>
 
@@ -62,6 +63,10 @@
             self.errorView.hidden = YES;
             if (content.length > 0) {
                 [self.webView loadHTMLString:[style stringByAppendingString:content] baseURL:nil];
+                
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"js"];
+                NSString *jsString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+                [self.webView stringByEvaluatingJavaScriptFromString:jsString];
             }
         }
     }];
@@ -80,7 +85,28 @@
         [self presentViewController:safariController animated:YES completion:nil];
         return NO;
     }
+    if ([[requestURL scheme] isEqualToString: @"image"]
+        || [[requestURL scheme] isEqualToString: @"images"]) {
+        NSString *path = requestURL.absoluteString;
+//        DLog(@"path:%@", path);
+        if ([path rangeOfString:@"image://"].location == NSNotFound) {
+            path = [path stringByReplacingOccurrencesOfString:@"images://" withString:@"https://"];
+        } else {
+            path = [path stringByReplacingOccurrencesOfString:@"image://" withString:@"http://"];
+        }
+//        DLog(@"path:%@", path);
+        RBImagebrowse *browse = [RBImagebrowse createBrowseWithImages:@[path]];
+        browse.showIndex = NO;
+        [browse show];
+        return NO;
+    }
+    
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView*)webView
+{
+    [webView stringByEvaluatingJavaScriptFromString:@"setImageClickFunction()"];
 }
 
 #pragma mark - setter and getter

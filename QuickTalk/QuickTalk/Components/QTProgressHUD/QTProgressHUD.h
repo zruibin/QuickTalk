@@ -12,6 +12,7 @@
 
 + (void)showHUD:(UIView *)view;
 + (void)showHUDWithText:(NSString *)text;
++ (void)showHUDWithText:(NSString *)text delay:(NSTimeInterval)timeInterval;
 + (void)showHUDSuccess;
 + (void)hide;
 

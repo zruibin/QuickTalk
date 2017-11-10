@@ -296,7 +296,7 @@ UITableViewDataSource, UITableViewDelegate
         if (index == 0) {
             [QTProgressHUD showHUD:weakSelf.view];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理。"];
+                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理。" delay:2.0f];
             });
         }
     };

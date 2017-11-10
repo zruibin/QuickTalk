@@ -37,6 +37,8 @@
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
+		E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */; };
+		E084A9211FB5AA8500AE4AD2 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = E084A9201FB5AA8500AE4AD2 /* image.js */; };
 		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
 		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
 		E09143C21FB4662F007D43D5 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E09143C11FB4662F007D43D5 /* QTTopicContentController.m */; };
@@ -166,6 +168,9 @@
 		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
 		E084A9191FB53FA400AE4AD2 /* QTErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTErrorView.h; sourceTree = "<group>"; };
 		E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTErrorView.m; sourceTree = "<group>"; };
+		E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBImagebrowse.h; sourceTree = "<group>"; };
+		E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBImagebrowse.m; sourceTree = "<group>"; };
+		E084A9201FB5AA8500AE4AD2 /* image.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = image.js; sourceTree = "<group>"; };
 		E08A64561FA97C5800317CE2 /* QTTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTabBarController.h; sourceTree = "<group>"; };
 		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
 		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
@@ -495,6 +500,7 @@
 				E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */,
 				E08181291F9995AD0035DEF4 /* Assets.xcassets */,
 				E081812A1F9995AD0035DEF4 /* code.json */,
+				E084A9201FB5AA8500AE4AD2 /* image.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -506,6 +512,15 @@
 				E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */,
 			);
 			path = QTErrorView;
+			sourceTree = "<group>";
+		};
+		E084A91C1FB598A100AE4AD2 /* RBImagebrowse */ = {
+			isa = PBXGroup;
+			children = (
+				E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */,
+				E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */,
+			);
+			path = RBImagebrowse;
 			sourceTree = "<group>";
 		};
 		E09351571FA30EBE000687BC /* ShareSDK */ = {
@@ -759,6 +774,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E084A91C1FB598A100AE4AD2 /* RBImagebrowse */,
 				E084A9181FB53F9300AE4AD2 /* QTErrorView */,
 				E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */,
 				E04DF4181F9EEEA000EFD1C6 /* EwenTextView */,
@@ -946,6 +962,7 @@
 				E093517D1FA30EBE000687BC /* ShareSDKUI.bundle in Resources */,
 				E09351861FA30EBE000687BC /* README.txt in Resources */,
 				E09351871FA30EBE000687BC /* ShareSDK.bundle in Resources */,
+				E084A9211FB5AA8500AE4AD2 /* image.js in Resources */,
 				E0A4FC841F98899D002ED580 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1179,6 +1196,7 @@
 				E040F6BA1FB19B5A00CDA6B0 /* QTCircleModel.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
+				E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */,
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
 				E040F6AC1FB15B5900CDA6B0 /* QTMainCell.m in Sources */,

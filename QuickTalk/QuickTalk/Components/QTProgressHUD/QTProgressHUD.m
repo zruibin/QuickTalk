@@ -40,6 +40,15 @@ static MBProgressHUD *hud = nil;
     [self hide];
 }
 
++ (void)showHUDWithText:(NSString *)text delay:(NSTimeInterval)timeInterval
+{
+    hud.mode = MBProgressHUDModeText;
+    hud.label.text = text;
+    hud.label.font = [UIFont systemFontOfSize:14.5f];
+    [hud hideAnimated:YES afterDelay:timeInterval];
+    [self releaseHUD];
+}
+
 + (void)showHUDSuccess
 {
     hud.mode = MBProgressHUDModeCustomView;
