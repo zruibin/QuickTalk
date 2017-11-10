@@ -30,13 +30,13 @@
     QTMainViewController *mainController = [[QTMainViewController alloc] init];
     QTNavigationController *mainNav = [[QTNavigationController alloc] initWithRootViewController:mainController];
     
-    QTCircleController *circleController = [[QTCircleController alloc] init];
-    QTNavigationController *circleNav = [[QTNavigationController alloc] initWithRootViewController:circleController];
+//    QTCircleController *circleController = [[QTCircleController alloc] init];
+//    QTNavigationController *circleNav = [[QTNavigationController alloc] initWithRootViewController:circleController];
     
     QTMyController *myController = [[QTMyController alloc] init];
     QTNavigationController *myNav = [[QTNavigationController alloc] initWithRootViewController:myController];
     
-    self.viewControllers = @[mainNav, circleNav, myNav];
+    self.viewControllers = @[mainNav, myNav];
     [self setTabBarItemAppearance];
     
 //    if ([[QTUserInfo sharedInstance] isLogin] == NO) {
@@ -54,7 +54,7 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
     NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
-    if (index == 2) {
+    if (index == 1) {
         return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
     } 
     return YES;
@@ -73,14 +73,14 @@
                                            @"imageName":@"news_unselect",
                                            @"selectedImageName":@"news_select"
                                            },
+//                                   @"tab1":@{
+//                                           @"title":@"圈子",
+//                                           @"titleColor":@"#666666",
+//                                           @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
+//                                           @"imageName":@"circle_unselect",
+//                                           @"selectedImageName":@"circle_select"
+//                                           },
                                    @"tab1":@{
-                                           @"title":@"圈子",
-                                           @"titleColor":@"#666666",
-                                           @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
-                                           @"imageName":@"circle_unselect",
-                                           @"selectedImageName":@"circle_select"
-                                           },
-                                   @"tab2":@{
                                            @"title":@"我",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,

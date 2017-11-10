@@ -8,7 +8,6 @@
 
 #import "QTTopicController.h"
 #import "QTPopoverView.h"
-#import <SafariServices/SafariServices.h>
 #import "QTTopicModel.h"
 #import "QTTopicLeftCell.h"
 #import "QTTopicRightCell.h"
@@ -144,13 +143,16 @@ UITableViewDataSource, UITableViewDelegate
         QTTopicContentController *contentController = [[QTTopicContentController alloc] init];
         contentController.model = weakSelf.model;
         [weakSelf.navigationController pushViewController:contentController animated:YES];
-//        NSString *url = weakSelf.model.href;
-//        url = [url stringByReplacingOccurrencesOfString:@" " withString:@""];
-//        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-//        [weakSelf presentViewController:safariController animated:YES completion:nil];
         [weakSelf.popoverView hide];
     }];
-    [self.popoverView show];
+    
+    YYCache *cache=[YYCache cacheWithName:@"QTTopicDataCache"];
+    if ([cache containsObjectForKey:self.model.uuid] == NO) {
+        [self.popoverView show];
+        [cache setObject:[NSNumber numberWithBool:YES] forKey:self.model.uuid];
+    } else {
+        [self.popoverView hide];
+    }
 }
 
 - (void)loadData
@@ -287,6 +289,24 @@ UITableViewDataSource, UITableViewDelegate
     self.tipView = tipView;
 }
 
+- (void)blockUser
+{
+    __weak typeof(self) weakSelf = self;
+    void(^handler)(NSInteger index) = ^(NSInteger index){
+        if (index == 0) {
+            [QTProgressHUD showHUD:weakSelf.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理。"];
+            });
+        }
+    };
+    NSArray *items = @[MMItemMake(@"拉黑", MMItemTypeHighlight, handler)];
+    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                          items:items];
+    sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+    [sheetView show];
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -317,6 +337,12 @@ UITableViewDataSource, UITableViewDelegate
         [leftCell setOnTapHandler:^(NSInteger index) {
             [weakSelf showTipView:index];
         }];
+        [leftCell setOnAvatarHandler:^{
+            if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]
+                && [QTUserInfo sharedInstance].hiddenOneClickLogin == NO) {
+                [weakSelf blockUser];
+            }
+        }];
         cell = leftCell;
     }
     cell.tag = indexPath.row;
@@ -345,8 +371,6 @@ UITableViewDataSource, UITableViewDelegate
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
 
 #pragma mark - Action
 

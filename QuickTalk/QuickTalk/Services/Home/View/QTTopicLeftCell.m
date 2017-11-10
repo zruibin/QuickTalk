@@ -122,6 +122,13 @@
     }
 }
 
+- (void)avatarAction
+{
+    if (self.onAvatarHandler) {
+        self.onAvatarHandler();
+    }
+}
+
 #pragma mark - setter and getter
 
 - (UIButton *)avatarButton
@@ -131,6 +138,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.backgroundColor = [UIColor clearColor];
             button.translatesAutoresizingMaskIntoConstraints = NO;
+            [button addTarget:self action:@selector(avatarAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }

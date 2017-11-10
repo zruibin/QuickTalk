@@ -36,6 +36,7 @@
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
+		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
 		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
 		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
 		E09143C21FB4662F007D43D5 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E09143C11FB4662F007D43D5 /* QTTopicContentController.m */; };
@@ -163,6 +164,8 @@
 		E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E08181311F99A01E0035DEF4 /* QTUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserInfo.h; sourceTree = "<group>"; };
 		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
+		E084A9191FB53FA400AE4AD2 /* QTErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTErrorView.h; sourceTree = "<group>"; };
+		E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTErrorView.m; sourceTree = "<group>"; };
 		E08A64561FA97C5800317CE2 /* QTTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTabBarController.h; sourceTree = "<group>"; };
 		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
 		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
@@ -496,6 +499,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		E084A9181FB53F9300AE4AD2 /* QTErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				E084A9191FB53FA400AE4AD2 /* QTErrorView.h */,
+				E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */,
+			);
+			path = QTErrorView;
+			sourceTree = "<group>";
+		};
 		E09351571FA30EBE000687BC /* ShareSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -747,6 +759,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E084A9181FB53F9300AE4AD2 /* QTErrorView */,
 				E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */,
 				E04DF4181F9EEEA000EFD1C6 /* EwenTextView */,
 				E094BB591F95F76B00375AD8 /* QTPopoverView */,
@@ -1144,6 +1157,7 @@
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
+				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
 				E040F6A91FB15B5900CDA6B0 /* QTTopicController.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,

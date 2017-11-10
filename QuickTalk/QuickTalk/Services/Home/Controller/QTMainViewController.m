@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
-@property (nonatomic, strong) UIView *errorView;
+@property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
 
 - (void)initViews;
@@ -193,28 +193,15 @@
     return _tableView;
 }
 
-- (UIView *)errorView
+- (QTErrorView *)errorView
 {
     if (_errorView == nil) {
         _errorView = ({
-            UIView *view = [[UIView alloc] initWithFrame:self.view.bounds];
-            view.backgroundColor = [UIColor whiteColor];
-            
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button addTarget:self action:@selector(loadData) forControlEvents:UIControlEventTouchUpInside];
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [button setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-            [button setTitle:@"重新加载" forState:UIControlStateNormal];
-            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0xEFEFEF]]
-                              forState:UIControlStateNormal];
-            [view addSubview:button];
-            [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.centerX.and.centerY.equalTo(view);
-                make.width.mas_equalTo(140);
-                make.height.mas_equalTo(40);
+            QTErrorView *view = [[QTErrorView alloc] initWithFrame:self.view.bounds];
+            __weak typeof(self) weakSelf = self;
+            [view setOnRefreshHandler:^{
+                [weakSelf loadData];
             }];
-            
             view;
         });
     }

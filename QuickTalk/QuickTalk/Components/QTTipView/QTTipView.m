@@ -66,10 +66,10 @@
     
     [self addSubview:self.textView];
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(140);
+        make.top.equalTo(self).offset(80);
         make.left.equalTo(self).offset(10);
         make.right.equalTo(self).offset(-10);
-        make.height.mas_equalTo(260);
+        make.height.mas_equalTo(300);
     }];
     
     [self addSubview:self.agreeButton];
