@@ -34,3 +34,6 @@ Key: 6c5498f3-01f9-4d6a-b398-0a47aca7b27b
 http://push.baidu.com/console/NTURpVELzZPcSvefdeeGH3Bn/config?device_type=0
 百度推送
 等待。。。
+
+
+xcodebuild archive -workspace QuickTalk.xcworkspace -configuration Release -scheme QuickTalk -archivePath ./Release

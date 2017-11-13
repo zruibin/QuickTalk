@@ -49,6 +49,7 @@ __pycache__/
 env/*
 env/
 .vscode
+Release.xcarchive/
 
 #svn文件夹忽略
 .svn/
