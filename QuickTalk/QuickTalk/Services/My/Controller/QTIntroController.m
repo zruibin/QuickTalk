@@ -8,9 +8,10 @@
 
 #import "QTIntroController.h"
 
-@interface QTIntroController ()
+@interface QTIntroController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIButton *button;
 
 - (void)initViews;
@@ -29,6 +30,13 @@
 {
     [super viewDidAppear:animated];
     self.navigationItem.leftBarButtonItem = nil;
+    [UIApplication sharedApplication].statusBarHidden = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,23 +46,28 @@
 
 - (void)initViews
 {
-    self.title = @"欢迎来到快言";
-    UIBarButtonItem *moreItem = [[UIBarButtonItem alloc]
-                                 initWithImage:[UIImage imageNamed:@"more"] style:UIBarButtonItemStylePlain target:self action:nil];
-    self.navigationItem.rightBarButtonItem = moreItem;
-    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:.5f];
-    
-    [self.view addSubview:self.textView];
-    [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.top.and.right.equalTo(self.view);
-        make.height.mas_equalTo(200);
+    [self.view addSubview:self.scrollView];
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
     }];
-    [self.view addSubview:self.button];
-    [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(135);
-        make.height.mas_equalTo(35);
+    CGFloat viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CGFloat viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    self.scrollView.contentSize = CGSizeMake(viewWidth*3, viewHeight);
+    
+    for (NSInteger i=0; i<3; ++i) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        imageView.frame = CGRectMake(i*viewWidth, 0, viewWidth, viewHeight);
+        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%ld", (long)i+1]];
+        [self.scrollView addSubview:imageView];
+    }
+    [self.scrollView addSubview:self.button];
+    self.button.frame = CGRectMake(2*viewWidth+(viewWidth-100)/2, viewHeight-80, 100, 30);
+    
+    [self.view addSubview:self.pageControl];
+    [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.and.height.mas_equalTo(20);
         make.centerX.equalTo(self.view);
-        make.top.equalTo(self.view).offset(150);
+        make.bottom.equalTo(self.view).offset(-10);
     }];
 }
 
@@ -63,22 +76,41 @@
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
+//pagecontroll的委托方法
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    int page = scrollView.contentOffset.x / scrollView.frame.size.width;
+    self.pageControl.currentPage = page;
+}
+
 #pragma mark - setter and getter
 
-- (UITextView *)textView
+- (UIScrollView *)scrollView
 {
-    if (_textView == nil) {
-        _textView = ({
-            UITextView *textView = [UITextView new];
-            textView.selectable = NO;
-            textView.editable = NO;
-            textView.scrollEnabled = NO;
-            textView.font = [UIFont systemFontOfSize:16];
-            textView.text = @"在快言上每天读一两篇新闻，和大伙分享自己的想法。\n\n我们的系统会根据热度决定评论的存留时间，无聊和低俗的评论会很快被净化掉，所以在这样更容易看到有意思的东西。";
-            textView;
+    if (_scrollView == nil) {
+        _scrollView = ({
+            UIScrollView *scrollView = [[UIScrollView alloc] init];
+            scrollView.showsHorizontalScrollIndicator = NO;
+            scrollView.delegate = self;
+            scrollView.pagingEnabled = YES;
+            scrollView;
         });
     }
-    return _textView;
+    return _scrollView;
+}
+
+- (UIPageControl *)pageControl
+{
+    if (_pageControl == nil) {
+        _pageControl = ({
+            UIPageControl *pageControl = [[UIPageControl alloc] init];
+            pageControl.numberOfPages = 3;
+            pageControl.pageIndicatorTintColor = [UIColor grayColor];
+//            pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
+            pageControl;
+        });
+    }
+    return _pageControl;
 }
 
 - (UIButton *)button
@@ -87,9 +119,12 @@
         _button = ({
             UIButton *buttton = [UIButton buttonWithType:UIButtonTypeCustom];
             [buttton setTitle:@"进入" forState:UIControlStateNormal];
-            [buttton setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x00a0e9]] forState:UIControlStateNormal];
-            buttton.titleLabel.font = [UIFont systemFontOfSize:16];
+            [buttton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [buttton setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x00a0e9]] forState:UIControlStateHighlighted];
+            buttton.titleLabel.font = [UIFont systemFontOfSize:15];
             buttton.layer.cornerRadius = 4;
+            buttton.layer.borderColor = [[UIColor grayColor] CGColor];
+            buttton.layer.borderWidth = 0.5f;
             buttton.layer.masksToBounds = YES;
             [buttton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
             buttton;

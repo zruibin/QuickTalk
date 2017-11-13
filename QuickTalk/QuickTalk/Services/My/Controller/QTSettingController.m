@@ -9,6 +9,7 @@
 #import "QTSettingController.h"
 #import "QTUserAgreementController.h"
 #import "QTFeedbackController.h"
+#import "QTIntroController.h"
 
 @interface QTSettingController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -146,7 +147,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.row == 0) {
+        QTIntroController *introController = [[QTIntroController alloc] init];
+        [self presentViewController:introController animated:YES completion:nil];
+    }
     if (indexPath.row == 1) {
         QTUserAgreementController *userAgreementController = [QTUserAgreementController new];
         [self.navigationController pushViewController:userAgreementController animated:YES];

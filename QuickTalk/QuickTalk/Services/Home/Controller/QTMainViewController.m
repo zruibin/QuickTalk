@@ -76,9 +76,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
         QTIntroController *introController = [[QTIntroController alloc] init];
-        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:introController];
-        nav.view.backgroundColor = [UIColor clearColor];
-        [self presentViewController:nav animated:NO completion:nil];
+        [self presentViewController:introController animated:YES completion:nil];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
