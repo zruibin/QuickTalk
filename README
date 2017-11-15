@@ -37,3 +37,6 @@ http://push.baidu.com/console/NTURpVELzZPcSvefdeeGH3Bn/config?device_type=0
 
 
 xcodebuild archive -workspace QuickTalk.xcworkspace -configuration Release -scheme QuickTalk -archivePath ./Release
+
+
+xcrun -sdk iphoneos PackageApplication    -v ./Release.xcarchive/Products/Applications/QuickTalk.app -o ~/Desktop/QuickTalk.ipa

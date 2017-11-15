@@ -131,6 +131,21 @@ UITableViewDataSource, UITableViewDelegate
             [weakSelf sendComment:text];
         }
     };
+    [self.inputView setKeyboardActionBlock:^(BOOL hide, CGFloat height) {
+        if (hide) {
+            weakSelf.tableView.frame = CGRectMake(0, 0, weakSelf.viewWidth, weakSelf.viewHeight-64-50);
+            if (weakSelf.tableView.contentSize.height > weakSelf.tableView.frame.size.height) {
+                CGPoint offset = CGPointMake(0, weakSelf.tableView.contentSize.height - weakSelf.tableView.frame.size.height);
+                [weakSelf.tableView setContentOffset:offset animated:YES];
+            }
+        } else {
+            if (weakSelf.tableView.contentSize.height > weakSelf.tableView.frame.size.height) {
+                weakSelf.tableView.frame = CGRectMake(0, -(height+20), weakSelf.viewWidth, weakSelf.viewHeight);
+                CGPoint offset = CGPointMake(0, weakSelf.tableView.contentSize.height - weakSelf.tableView.frame.size.height);
+                [weakSelf.tableView setContentOffset:offset animated:YES];
+            }
+        }
+    }];
     
     self.popoverView = [QTPopoverView popoverInView:self.view];
     self.popoverView.textAlignment = NSTextAlignmentCenter;

@@ -11,7 +11,8 @@
 
 @interface EwenTextView : UIView
 //------ 发送文本 -----//
-@property (nonatomic,copy) void (^EwenTextViewBlock)(NSString *text);
+@property (nonatomic, copy) void (^EwenTextViewBlock)(NSString *text);
+@property (nonatomic, copy) void (^keyboardActionBlock)(BOOL hide, CGFloat height);
 //------  设置占位符 ------//
 - (void)setPlaceholderText:(NSString *)text;
 

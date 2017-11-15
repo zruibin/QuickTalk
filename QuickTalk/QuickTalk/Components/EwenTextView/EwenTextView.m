@@ -108,6 +108,9 @@
         CGRect rect = CGRectMake(0, kScreenheight - self.backGroundView.frame.size.height-height, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;
     }
+    if (self.keyboardActionBlock) {
+        self.keyboardActionBlock(NO, CGRectGetMaxY(self.backGroundView.frame)+49);
+    }
 }
 
 //当键退出时调用
@@ -120,6 +123,9 @@
         CGRect rect = CGRectMake(0, 0, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;
         self.frame = CGRectMake(0, kScreenheight - rect.size.height, kScreenwidth, self.backGroundView.frame.size.height);
+    }
+    if (self.keyboardActionBlock) {
+        self.keyboardActionBlock(YES, CGRectGetMaxY(self.backGroundView.frame)+49);
     }
 }
 
