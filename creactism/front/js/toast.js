@@ -9,7 +9,7 @@ function toast(message, hide=false){
     var alert = document.getElementById("toast"); 
     if (hide) {
         alert.style.opacity = 0;
-        // alert.parentNode.removeChild(alert);
+        alert.parentNode.removeChild(alert);
         return ;
     }
 
@@ -33,9 +33,8 @@ function toast(message, hide=false){
     if (alert == null){  
         var toastHTML = '<div id="toast" style="' + alertCSS + '">' + message + '</div>';  
         document.body.insertAdjacentHTML('beforeEnd', toastHTML);      
-    }    
-    else{            
-        alert.style.opacity = .9;              
+    } else{            
+        alert.style.opacity = .9;
     }
     setTimeout("toast('', true)", 1500);   
 }  

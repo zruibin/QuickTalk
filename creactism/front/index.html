@@ -139,11 +139,11 @@ a:active{text-decoration:none;}
 
   <img src="/images/pc_main.png" alt="">
   <div id="bg">
-    <a href="#" onclick="pcMaskAction(1);"><img src="/images/ios_btn.png" alt=""></a>
+    <a href="#" onclick="pcIOSAction();"><img src="/images/ios_btn.png" alt=""></a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="#" onclick="pcMaskAction(2);"><img src="/images/android_btn.png" alt=""></a>
+    <a href="#" onclick="pcAndroidAction();"><img src="/images/android_btn.png" alt=""></a>
   </div>
   
 </div>
@@ -215,11 +215,8 @@ show();
   
 var maskHidden = false;
 
-function pcMaskAction(platform) {
-    toast("敬请期待！"); return;
-
-    if (platform == 2) { toast("Android版敬请期待！"); return;}
-
+function pcIOSAction() {
+    toast("iOS版敬请期待！"); return;
     var mask = document.getElementById("mask");
     var qrcode = document.getElementById("qrcode");
     
@@ -234,6 +231,11 @@ function pcMaskAction(platform) {
     if (platform == 1) {
         qrcode.src = "/images/logo.png";
     }
+}
+
+function pcAndroidAction() {
+      // toast("Android版敬请期待！"); 
+      window.location.href = "QuickTalk_1.0.apk";
 }
   
 function checkIsAppleDevice() {
@@ -265,8 +267,7 @@ function phoneClickAction(platform) {
           // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
         }
         if (checkIsAndroidDevice()) {
-            console.log("android!");
-            // alert("敬请期待！");
+          window.location.href = "QuickTalk_1.0.apk";
         }
     } 
 }

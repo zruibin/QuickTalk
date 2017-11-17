@@ -53,6 +53,7 @@ log.txt
 build/
 medias/
 logs/
+creactism/front/QuickTalk*.apk
 
 #svn文件夹忽略
 .svn/
