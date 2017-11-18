@@ -262,8 +262,8 @@ function checkIsAndroidDevice(){
 
 function phoneClickAction(platform) {
     if (isMobile()) {
-        toast("敬请期待！");
         if (checkIsAppleDevice()) {
+          toast("敬请期待！");
           // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
         }
         if (checkIsAndroidDevice()) {

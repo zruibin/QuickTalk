@@ -12,6 +12,7 @@
 """
 
 from flask import Flask, make_response, request
+from flask_cors import CORS, cross_origin
 from config import *
 import register
 from common.tools import jsonTool
@@ -22,6 +23,7 @@ sys.setdefaultencoding('utf-8')
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
 app.config['ALLOWED_EXTENSIONS'] = Config.ALLOWED_EXTENSIONS
 app.config["JSONIFY_MIMETYPE"] = Config.JSONIFY_MIMETYPE
