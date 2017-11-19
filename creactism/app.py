@@ -23,7 +23,7 @@ sys.setdefaultencoding('utf-8')
 
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH
 app.config['ALLOWED_EXTENSIONS'] = Config.ALLOWED_EXTENSIONS
 app.config["JSONIFY_MIMETYPE"] = Config.JSONIFY_MIMETYPE

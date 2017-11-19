@@ -21,9 +21,9 @@ def jsonTool(obj):
     separators = (',', ':')
     jsonStr = json.dumps(obj, indent=indent, separators=separators)
     response = current_app.response_class((jsonStr, "\n"), mimetype=current_app.config["JSONIFY_MIMETYPE"])
-    response.headers['Access-Control-Allow-Origin'] = '*'  
-    response.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'  
-    response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type' 
+    # response.headers['Access-Control-Allow-Origin'] = '*'  
+    # response.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'  
+    # response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type' 
     print response
     return response
 
