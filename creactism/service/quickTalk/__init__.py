@@ -29,6 +29,7 @@ from service.quickTalk import deleteComment
 from service.quickTalk import changeAvatar
 from service.quickTalk import changeInfo
 from service.quickTalk import myCommentList
+from service.quickTalk import version
 
 # circle
 from service.quickTalk.circle import circleList
