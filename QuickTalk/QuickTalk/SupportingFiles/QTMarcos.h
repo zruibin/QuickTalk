@@ -79,4 +79,6 @@
 #define MAX_IMAGE_COUNT 9
 #define IMAGE_COMPRESSION_RATION 0.5f
 
+#define IFLY_PATH @"IFly"
+
 #endif /* QCMarcos_h */

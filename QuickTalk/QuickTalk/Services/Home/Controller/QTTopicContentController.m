@@ -9,11 +9,14 @@
 #import "QTTopicContentController.h"
 #import "QTTopicModel.h"
 #import "RBImagebrowse.h"
+#import "QTSpeaker.h"
 
 @interface QTTopicContentController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) QTErrorView *errorView;
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, strong) QTSpeaker *speaker;
 
 - (void)initViews;
 - (void)loadData;
@@ -22,6 +25,10 @@
 
 @implementation QTTopicContentController
 
+- (void)dealloc
+{
+    [_speaker destory];
+}
 
 - (void)viewDidLoad
 {
@@ -47,6 +54,8 @@
     [self.view addSubview:self.errorView];
     self.errorView.hidden = YES;
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"语音" style:UIBarButtonItemStylePlain target:self action:@selector(sayingAction)];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)loadData
@@ -69,7 +78,7 @@
                         content = [content substringToIndex:range.location];
                     }
                 }
-        
+                self.content = content;
                 [self.webView loadHTMLString:[style stringByAppendingString:content] baseURL:nil];
                 
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"js"];
@@ -78,6 +87,14 @@
             }
         }
     }];
+}
+
+- (void)sayingAction
+{
+    self.speaker = [QTSpeaker sharedInstance];
+    self.speaker.name = self.model.uuid;
+    self.speaker.content = [NSString flattenHTML:self.content trimWhiteSpace:NO];
+    [self.speaker startSpeaking];
 }
 
 #pragma mark - UIWebViewDelegate

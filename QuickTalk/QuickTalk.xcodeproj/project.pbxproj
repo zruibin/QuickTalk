@@ -10,6 +10,17 @@
 		0077F6E3851B0E180BB65818 /* libPods-QuickTalkUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */; };
 		31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */; };
 		DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */; };
+		E0233C5D1FC2C2290010D9DC /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */; };
+		E0233C5F1FC2C24E0010D9DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */; };
+		E0233C611FC2C2570010D9DC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C601FC2C2570010D9DC /* CoreTelephony.framework */; };
+		E0233C631FC2C2600010D9DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C621FC2C2600010D9DC /* AVFoundation.framework */; };
+		E0233C651FC2C26C0010D9DC /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C641FC2C26C0010D9DC /* AddressBook.framework */; };
+		E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C661FC2C2750010D9DC /* Contacts.framework */; };
+		E0233C691FC2C2860010D9DC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C681FC2C2860010D9DC /* AudioToolbox.framework */; };
+		E0233C6B1FC2C2910010D9DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */; };
+		E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */; };
+		E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */; };
+		E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E0233C721FC2E2770010D9DC /* QTSpeaker.m */; };
 		E040F6A11FB15B5900CDA6B0 /* QTAvatarEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F67C1FB15B5900CDA6B0 /* QTAvatarEditController.m */; };
 		E040F6A21FB15B5900CDA6B0 /* QTFeedbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F67E1FB15B5900CDA6B0 /* QTFeedbackController.m */; };
 		E040F6A31FB15B5900CDA6B0 /* QTInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6801FB15B5900CDA6B0 /* QTInfoController.m */; };
@@ -119,6 +130,18 @@
 		9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E0233C601FC2C2570010D9DC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		E0233C621FC2C2600010D9DC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E0233C641FC2C26C0010D9DC /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		E0233C661FC2C2750010D9DC /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		E0233C681FC2C2860010D9DC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E0233C711FC2E2770010D9DC /* QTSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTSpeaker.h; sourceTree = "<group>"; };
+		E0233C721FC2E2770010D9DC /* QTSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTSpeaker.m; sourceTree = "<group>"; };
 		E040F67B1FB15B5900CDA6B0 /* QTAvatarEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTAvatarEditController.h; sourceTree = "<group>"; };
 		E040F67C1FB15B5900CDA6B0 /* QTAvatarEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTAvatarEditController.m; sourceTree = "<group>"; };
 		E040F67D1FB15B5900CDA6B0 /* QTFeedbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTFeedbackController.h; sourceTree = "<group>"; };
@@ -273,6 +296,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */,
+				E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */,
+				E0233C6B1FC2C2910010D9DC /* SystemConfiguration.framework in Frameworks */,
+				E0233C691FC2C2860010D9DC /* AudioToolbox.framework in Frameworks */,
+				E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */,
+				E0233C651FC2C26C0010D9DC /* AddressBook.framework in Frameworks */,
+				E0233C631FC2C2600010D9DC /* AVFoundation.framework in Frameworks */,
+				E0233C611FC2C2570010D9DC /* CoreTelephony.framework in Frameworks */,
+				E0233C5F1FC2C24E0010D9DC /* CoreLocation.framework in Frameworks */,
 				E09351941FA30F5D000687BC /* libsqlite3.tbd in Frameworks */,
 				E09351921FA30F55000687BC /* ImageIO.framework in Frameworks */,
 				E09351901FA30F4D000687BC /* JavaScriptCore.framework in Frameworks */,
@@ -281,6 +313,7 @@
 				E093518A1FA30F2F000687BC /* libicucore.tbd in Frameworks */,
 				E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */,
 				E09351831FA30EBE000687BC /* libWeiboSDK.a in Frameworks */,
+				E0233C5D1FC2C2290010D9DC /* iflyMSC.framework in Frameworks */,
 				E09351851FA30EBE000687BC /* libWeChatSDK.a in Frameworks */,
 				E093517E1FA30EBE000687BC /* ShareSDKUI.framework in Frameworks */,
 				E09351781FA30EBE000687BC /* MOBFoundation.framework in Frameworks */,
@@ -317,6 +350,15 @@
 		1DE7D1760355DF4F24DAED83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */,
+				E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */,
+				E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */,
+				E0233C681FC2C2860010D9DC /* AudioToolbox.framework */,
+				E0233C661FC2C2750010D9DC /* Contacts.framework */,
+				E0233C641FC2C26C0010D9DC /* AddressBook.framework */,
+				E0233C621FC2C2600010D9DC /* AVFoundation.framework */,
+				E0233C601FC2C2570010D9DC /* CoreTelephony.framework */,
+				E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */,
 				E09351931FA30F5D000687BC /* libsqlite3.tbd */,
 				E09351911FA30F55000687BC /* ImageIO.framework */,
 				E093518F1FA30F4D000687BC /* JavaScriptCore.framework */,
@@ -341,6 +383,15 @@
 				6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E0233C701FC2E1D80010D9DC /* Speaker */ = {
+			isa = PBXGroup;
+			children = (
+				E0233C711FC2E2770010D9DC /* QTSpeaker.h */,
+				E0233C721FC2E2770010D9DC /* QTSpeaker.m */,
+			);
+			path = Speaker;
 			sourceTree = "<group>";
 		};
 		E040F6791FB15B5900CDA6B0 /* My */ = {
@@ -738,6 +789,7 @@
 		E0DF28C11F95A7CE00F1B8C8 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */,
 				E09351571FA30EBE000687BC /* ShareSDK */,
 			);
 			path = 3rd;
@@ -746,6 +798,7 @@
 		E0DF28C21F95A7CE00F1B8C8 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E0233C701FC2E1D80010D9DC /* Speaker */,
 				E0DBAD1C1FAC13F2005B22A9 /* Reachability */,
 				E0DF28C31F95A7CE00F1B8C8 /* Networking */,
 				E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */,
@@ -1184,6 +1237,7 @@
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,
 				E040F6A81FB15B5900CDA6B0 /* QTMainViewController.m in Sources */,
+				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
 				E068C7C71FBD29110045E930 /* QTExamineViewController.m in Sources */,
 				E040F6AB1FB15B5900CDA6B0 /* QTTopicModel.m in Sources */,
 				E040F6AD1FB15B5900CDA6B0 /* QTTopicLeftCell.m in Sources */,
@@ -1366,6 +1420,7 @@
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformConnector",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/QQSDK",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/QuickTalk/3rd",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";
@@ -1401,6 +1456,7 @@
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformConnector",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/QQSDK",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/QuickTalk/3rd",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";

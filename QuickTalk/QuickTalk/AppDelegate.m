@@ -73,6 +73,15 @@
 - (void)registerService
 {
     [Bugly startWithAppId:@"f2e0562976"];
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5a1244d8"];
+    [IFlySpeechUtility createUtility:initString];
+    [IFlySetting setLogFilePath:[NSString documentForPath:IFLY_PATH]];
+#if DEBUG
+    [IFlySetting showLogcat:NO];
+#else
+    [IFlySetting showLogcat:NO];
+#endif
+    
     [ShareSDK registerActivePlatforms:@[
                                         @(SSDKPlatformTypeSinaWeibo),
                                         @(SSDKPlatformTypeWechat),
