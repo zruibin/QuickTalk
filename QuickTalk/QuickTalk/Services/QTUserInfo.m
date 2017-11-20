@@ -87,6 +87,7 @@ static NSDate *refreshDate = nil;
 
 - (void)loginInBackground
 {
+    [self checkHidden];
     refreshDate = [NSDate date];
     NSString *uuid = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginUUID];
     NSString *avatar = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginAvatar];
@@ -94,7 +95,6 @@ static NSDate *refreshDate = nil;
     if (uuid.length > 0) {
         [self login:uuid avatar:avatar nickname:nickname];
     }
-    [self checkHidden];
 }
 
 - (BOOL)checkLoginStatus:(UIViewController *)viewController
@@ -204,6 +204,12 @@ static NSDate *refreshDate = nil;
                 ;
             } @finally {
                 self.hiddenOneClickLogin = action;
+                if (action) {
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"examine"];
+                } else {
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"examine"];
+                }
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
         }
     }];

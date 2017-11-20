@@ -143,8 +143,8 @@
         }
     };
     NSArray *items =
-    @[MMItemMake(@"直接拍照", MMItemTypeNormal, handler),
-      MMItemMake(@"已有照片", MMItemTypeNormal, handler)];
+    @[MMItemMake(@"拍照", MMItemTypeNormal, handler),
+      MMItemMake(@"相册", MMItemTypeNormal, handler)];
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"选取照片"
                                                           items:items];
     //    sheetView.attachedView = self.view;

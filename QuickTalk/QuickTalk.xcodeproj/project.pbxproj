@@ -31,6 +31,7 @@
 		E040F6BD1FB1A9A400CDA6B0 /* QTMyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
+		E068C7C71FBD29110045E930 /* QTExamineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E068C7C61FBD29110045E930 /* QTExamineViewController.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
@@ -159,6 +160,8 @@
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
 		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
 		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
+		E068C7C51FBD29110045E930 /* QTExamineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QTExamineViewController.h; path = QuickTalk/QTExamineViewController.h; sourceTree = SOURCE_ROOT; };
+		E068C7C61FBD29110045E930 /* QTExamineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = QTExamineViewController.m; path = QuickTalk/QTExamineViewController.m; sourceTree = SOURCE_ROOT; };
 		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
 		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -672,6 +675,8 @@
 				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
 				E08A64561FA97C5800317CE2 /* QTTabBarController.h */,
 				E08A64571FA97C5800317CE2 /* QTTabBarController.m */,
+				E068C7C51FBD29110045E930 /* QTExamineViewController.h */,
+				E068C7C61FBD29110045E930 /* QTExamineViewController.m */,
 				E0A4FC831F98899D002ED580 /* Podfile */,
 			);
 			path = QuickTalk;
@@ -1179,6 +1184,7 @@
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,
 				E040F6A81FB15B5900CDA6B0 /* QTMainViewController.m in Sources */,
+				E068C7C71FBD29110045E930 /* QTExamineViewController.m in Sources */,
 				E040F6AB1FB15B5900CDA6B0 /* QTTopicModel.m in Sources */,
 				E040F6AD1FB15B5900CDA6B0 /* QTTopicLeftCell.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,

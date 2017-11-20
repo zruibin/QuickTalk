@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "QTTabBarController.h"
+#import "QTExamineViewController.h"
 
 @interface AppDelegate ()
 
@@ -27,8 +28,16 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+    
     QTTabBarController *tabBarController = [[QTTabBarController alloc] init];
-    self.window.rootViewController = tabBarController;
+    QTExamineViewController *examineController = [[QTExamineViewController alloc] init];
+    
+    BOOL isNormal = [[[NSUserDefaults standardUserDefaults] objectForKey:@"examine"] boolValue];
+    if (isNormal) {
+        self.window.rootViewController = tabBarController;
+    } else {
+        self.window.rootViewController = examineController;
+    }
     [self.window makeKeyAndVisible];
     return YES;
 }

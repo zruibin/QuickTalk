@@ -62,6 +62,14 @@
             [QTProgressHUD hide];
             self.errorView.hidden = YES;
             if (content.length > 0) {
+                
+                if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+                    NSRange range = [content rangeOfString:@"新闻来源：<strong>"];
+                    if (range.location != NSNotFound) {
+                        content = [content substringToIndex:range.location];
+                    }
+                }
+        
                 [self.webView loadHTMLString:[style stringByAppendingString:content] baseURL:nil];
                 
                 NSString *path = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"js"];

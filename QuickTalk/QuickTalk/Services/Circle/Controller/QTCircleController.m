@@ -32,18 +32,20 @@
     // Do any additional setup after loading the view.
     [self initViews];
 
-    __weak typeof(self) weakSelf = self;
-    [self.tableView headerWithRefreshingBlock:^{
-        weakSelf.page = 1;
-        weakSelf.dataList = [NSMutableArray array];
-        [weakSelf loadData];
-    }];
-    [self.tableView beginHeaderRefreshing];
-    
-    [self.tableView footerWithRefreshingBlock:^{
-        weakSelf.page += 1;
-        [weakSelf loadData];
-    }];
+    if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+        __weak typeof(self) weakSelf = self;
+        [self.tableView headerWithRefreshingBlock:^{
+            weakSelf.page = 1;
+            weakSelf.dataList = [NSMutableArray array];
+            [weakSelf loadData];
+        }];
+        [self.tableView beginHeaderRefreshing];
+        
+        [self.tableView footerWithRefreshingBlock:^{
+            weakSelf.page += 1;
+            [weakSelf loadData];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,18 +57,30 @@
 {
     self.title = @"圈子";
     
-    [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-    [self.view addSubview:self.errorView];
-    self.errorView.hidden = YES;
-    
-    UIBarButtonItem *addProjectItem = [[UIBarButtonItem alloc]
-                                       initWithImage:[UIImage imageNamed:@"circle_add"]
-                                       style:UIBarButtonItemStylePlain target:self action:@selector(addCircleAction)];
-    self.navigationItem.rightBarButtonItem = addProjectItem;
+    if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+        [self.view addSubview:self.tableView];
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self.view);
+        }];
+        
+        [self.view addSubview:self.errorView];
+        self.errorView.hidden = YES;
+        UIBarButtonItem *addProjectItem = [[UIBarButtonItem alloc]
+                                           initWithImage:[UIImage imageNamed:@"circle_add"]
+                                           style:UIBarButtonItemStylePlain target:self action:@selector(addCircleAction)];
+        self.navigationItem.rightBarButtonItem = addProjectItem;
+    } else {
+        UILabel *label = [UILabel new];
+        label.text = @"即将开放";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor blackColor];
+        [self.view addSubview:label];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.view);
+            make.height.mas_equalTo(40);
+            make.left.and.right.equalTo(self.view);
+        }];
+    }
 }
 
 - (void)loadData

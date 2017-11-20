@@ -35,6 +35,7 @@
     __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         if ([QTUserInfo sharedInstance].isLogin) {
+            [QTProgressHUD showHUDText:@"登录成功" view:weakSelf.view];
             [weakSelf.logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
         } else {
             [weakSelf.logoutButton setTitle:@"登录" forState:UIControlStateNormal];
