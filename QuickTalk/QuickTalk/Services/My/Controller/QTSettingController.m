@@ -81,7 +81,17 @@
 - (void)logoutButtonAction
 {
     if ([QTUserInfo sharedInstance].isLogin) {
-        [[QTUserInfo sharedInstance] logout];
+        void(^handler)(NSInteger index) = ^(NSInteger index){
+            if (index == 0) {
+                [[QTUserInfo sharedInstance] logout];
+            }
+        };
+        NSArray *items =
+        @[MMItemMake(@"退出", MMItemTypeHighlight, handler)];
+        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                              items:items];
+        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+        [sheetView show];
     } else {
         [[QTUserInfo sharedInstance] checkLoginStatus:self];
     }
@@ -96,7 +106,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,6 +134,10 @@
     }
     if (indexPath.row == 2) {
         cell.textLabel.text = @"意见反馈";
+    }
+    if (indexPath.row == 3) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.textLabel.text = @"清除缓存";
     }
     
     return cell;
@@ -160,7 +174,31 @@
         QTFeedbackController *feedbackController = [QTFeedbackController new];
         [self.navigationController pushViewController:feedbackController animated:YES];
     }
-    
+    if (indexPath.row == 3) {
+        void(^handler)(NSInteger index) = ^(NSInteger index){
+            if (index == 0) {
+                [[QTCleaner sharedInstance] asynchronousCleanUpCache:IFLY_PATH];
+            }
+        };
+        NSString *sizeStr = [IFLY_PATH fileSizeString];
+        if (sizeStr != nil) {
+            sizeStr = [NSString stringWithFormat:@"共%@", [IFLY_PATH fileSizeString]];
+            NSArray *items =
+            @[MMItemMake(@"清除", MMItemTypeHighlight, handler)];
+            MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:sizeStr
+                                                                  items:items];
+            sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+            [sheetView show];
+        } else {
+            NSArray *items =
+            @[MMItemMake(@"确定", MMItemTypeNormal, handler)];
+            MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@"暂无缓存"
+                                                                  items:items];
+            sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+            [sheetView show];
+        }
+        
+    }
 }
 
 #pragma mark - setter and getter

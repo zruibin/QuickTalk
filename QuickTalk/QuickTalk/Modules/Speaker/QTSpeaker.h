@@ -8,10 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, QTSpeakerStatus) {
+    QTSpeakerNone,
+    QTSpeakerStarting,
+    QTSpeakerPause,
+    QTSpeakerStop,
+    QTSpeakerDestory
+};
+
 @interface QTSpeaker : NSObject
 
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *name; //must
+@property (nonatomic, copy) NSString *content; //must
+@property (nonatomic, assign, readonly) QTSpeakerStatus status;
+@property (nonatomic, copy) void (^onErrorHandler)(NSInteger code, NSString *msg);
 
 + (instancetype)sharedInstance;
 

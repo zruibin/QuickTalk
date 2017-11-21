@@ -55,7 +55,7 @@
 
 #define QuickTalk_DEFAULT_IMAGE [UIImage imageNamed:@"QuickTalk_default"]
 
-#define QuickTalk_MAIN_COLOR_HEX @"#FF6633"
+#define QuickTalk_MAIN_COLOR_HEX @"#00a0e9"
 #define QuickTalk_MAIN_COLOR [UIColor colorFromHexString:QuickTalk_MAIN_COLOR_HEX]
 
 
@@ -79,6 +79,7 @@
 #define MAX_IMAGE_COUNT 9
 #define IMAGE_COMPRESSION_RATION 0.5f
 
-#define IFLY_PATH @"IFly"
+#define IFLY_PATH [NSString documentForPath:@"IFly"]
+#define QTDataCache @"QTDataCache"
 
 #endif /* QCMarcos_h */

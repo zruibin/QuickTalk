@@ -11,6 +11,7 @@
 #import "QTTopicModel.h"
 #import "QTIntroController.h"
 #import "QTMainCell.h"
+#import "QTTopicSpeaker.h"
 
 @interface QTMainViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -23,6 +24,7 @@
 
 - (void)initViews;
 - (void)loadData;
+- (void)speakingTopicContent:(NSString *)uuid index:(NSInteger)index;
 
 @end
 
@@ -54,6 +56,12 @@
     }];
     
     self.errorView.hidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,6 +121,42 @@
     }];
 }
 
+- (void)speakingTopicContent:(NSString *)uuid index:(NSInteger)index
+{
+    QTTopicModel *model = self.dataList[index];
+    QTMainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
+    QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
+    if ([topicSpeaker.name isEqualToString:model.uuid]) {
+        if (topicSpeaker.speaker.status == QTSpeakerNone ||
+            topicSpeaker.speaker.status == QTSpeakerDestory) {
+            topicSpeaker.name = model.uuid;
+            topicSpeaker.title = model.title;
+            [topicSpeaker speakingForRequest:model.uuid view:self.view completionHandler:^(BOOL action, NSError *error) {
+                if (action) {
+                    cell.speaking = NO;
+                }
+            }];
+        } else {
+            if (topicSpeaker.speaker.status == QTSpeakerPause) {
+                cell.speaking = YES;
+                [topicSpeaker resumeSpeaking];
+            } else {
+                cell.speaking = NO;
+                [topicSpeaker pauseSpeaking];
+            }
+        }
+    } else {
+        topicSpeaker.name = model.uuid;
+        topicSpeaker.title = model.title;
+        [topicSpeaker speakingForRequest:model.uuid view:self.view completionHandler:^(BOOL action, NSError *error) {
+            if (action) {
+                cell.speaking = NO;
+            }
+        }];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - Private
 
 #pragma mark - TableView Delegate And DataSource
@@ -130,10 +174,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     QTMainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMainCell class])];
-    
+    cell.tag = indexPath.section;
     QTTopicModel *model = self.dataList[indexPath.section];
-    [cell loadData:model.title time:model.time];
-    
+    [cell loadData:model.title time:model.time uuid:model.uuid];
+    __weak typeof(self) weakSelf = self;
+    [cell setOnPlayActionHandler:^(NSString *uuid, NSInteger index) {
+        [weakSelf speakingTopicContent:uuid index:index];
+    }];
     return cell;
 }
 

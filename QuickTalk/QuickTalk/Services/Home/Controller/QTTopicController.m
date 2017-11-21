@@ -15,7 +15,7 @@
 #import "EwenTextView.h"
 #import "QTTipView.h"
 #import "QTTopicContentController.h"
-
+#import "QTTopicSpeaker.h"
 
 @interface QTTopicController ()
 <
@@ -33,6 +33,8 @@ UITableViewDataSource, UITableViewDelegate
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UIButton *updataButton;
 @property (nonatomic, strong) QTTipView *tipView;
+@property (nonatomic, strong) QTTopicSpeaker *topicSpeaker;
+@property (nonatomic, strong) UIButton *playButton;
 
 - (void)initViews;
 - (void)setDataViews;
@@ -57,6 +59,7 @@ UITableViewDataSource, UITableViewDelegate
     [super viewDidLoad];
     [self initViews];
     self.dataList = [NSMutableArray array];
+    self.topicSpeaker = [QTTopicSpeaker sharedInstance];
     
     if (self.topicUUID.length != 0) {
         [QTTopicModel requestTopic:self.topicUUID completionHandler:^(QTTopicModel *model, NSError *error) {
@@ -70,6 +73,7 @@ UITableViewDataSource, UITableViewDelegate
             }
         }];
     } else {
+        self.topicUUID = self.model.uuid;
         [self loadData];
         [self setDataViews];
     }
@@ -79,7 +83,13 @@ UITableViewDataSource, UITableViewDelegate
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [self.timer fireDate];
+    if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        } else {
+            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -161,12 +171,26 @@ UITableViewDataSource, UITableViewDelegate
         [weakSelf.popoverView hide];
     }];
     
-    YYCache *cache=[YYCache cacheWithName:@"QTTopicDataCache"];
+    YYCache *cache = [YYCache cacheWithName:QTDataCache];
     if ([cache containsObjectForKey:self.model.uuid] == NO) {
         [self.popoverView show];
         [cache setObject:[NSNumber numberWithBool:YES] forKey:self.model.uuid];
     } else {
         [self.popoverView hide];
+    }
+    
+    self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.playButton.frame = CGRectMake(0, 0, 40, 40);
+    [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+    [self.playButton addTarget:self action:@selector(sayingAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.playButton];
+    self.navigationItem.rightBarButtonItem = item;
+    if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        } else {
+            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -396,6 +420,39 @@ UITableViewDataSource, UITableViewDelegate
     } else {
         [self.popoverView hide];
     }
+}
+
+- (void)sayingAction
+{
+    if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerNone ||
+            self.topicSpeaker.speaker.status == QTSpeakerDestory) {
+            self.topicSpeaker.name = self.topicUUID;
+            self.topicSpeaker.title = self.model.title;
+            [self.topicSpeaker speakingForRequest:self.topicUUID view:self.view completionHandler:^(BOOL action, NSError *error) {
+                if (action) {
+                    [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+                }
+            }];
+        } else {
+            if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+                [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+                [self.topicSpeaker resumeSpeaking];
+            } else {
+                [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+                [self.topicSpeaker pauseSpeaking];
+            }
+        }
+    } else {
+        self.topicSpeaker.name = self.topicUUID;
+        self.topicSpeaker.title = self.model.title;
+        [self.topicSpeaker speakingForRequest:self.topicUUID view:self.view completionHandler:^(BOOL action, NSError *error) {
+            if (action) {
+                [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+            }
+        }];
+    }
+    
 }
 
 #pragma mark - setter and getter

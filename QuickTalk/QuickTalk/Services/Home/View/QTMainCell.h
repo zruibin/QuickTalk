@@ -10,7 +10,10 @@
 
 @interface QTMainCell : UITableViewCell
 
-- (void)loadData:(NSString *)text time:(NSString *)time;
+@property (nonatomic, assign) BOOL speaking;
+@property (nonatomic, copy) void (^onPlayActionHandler)(NSString *uuid, NSInteger index);
+
+- (void)loadData:(NSString *)text time:(NSString *)time uuid:(NSString *)uuid;
 - (CGFloat)heightForCell:(NSString *)text;
 
 @end

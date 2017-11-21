@@ -8,29 +8,29 @@
 
 #import "QTSpeaker.h"
 
-static const NSInteger numberOfWords = 100;
+static const NSInteger numberOfWords = 4000;
 
 @interface QTSpeaker () <IFlySpeechSynthesizerDelegate>
 
 @property (nonatomic, strong) IFlySpeechSynthesizer *iFlySpeechSynthesizer;
 @property (nonatomic, copy) NSArray *contentList;
 @property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign, readwrite) QTSpeakerStatus status;
 
 @end
 
 @implementation QTSpeaker
 
-
 + (instancetype)sharedInstance
 {
-    static QTSpeaker *userInfo = nil;
+    static QTSpeaker *speaker = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (userInfo == nil) {
-            userInfo = [[super allocWithZone:NULL] init];
+        if (speaker == nil) {
+            speaker = [[super allocWithZone:NULL] init];
         }
     });
-    return userInfo;
+    return speaker;
 }
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone
@@ -51,14 +51,17 @@ static const NSInteger numberOfWords = 100;
         [_iFlySpeechSynthesizer stopSpeaking];
     }
     [IFlySpeechSynthesizer destroy];
+    self.status = QTSpeakerDestory;
 }
 
 - (void)startSpeaking
 {
-    [self destory];
-    if (self.contentList.count == 0) {
+    [self stopSpeaking];
+//    DLog(@"content:%@", self.content);
+    if (self.contentList.count == 0 || self.name.length == 0) {
         return ;
     }
+    self.status = QTSpeakerStarting;
     NSString *text = [self.contentList objectAtIndex:self.index];
     //获取语音合成单例
     _iFlySpeechSynthesizer = [IFlySpeechSynthesizer sharedInstance];
@@ -84,34 +87,43 @@ static const NSInteger numberOfWords = 100;
 - (void)pauseSpeaking
 {
     [self.iFlySpeechSynthesizer pauseSpeaking];
+    self.status = QTSpeakerPause;
 }
 
 - (void)resumeSpeaking
 {
     [self.iFlySpeechSynthesizer resumeSpeaking];
+    self.status = QTSpeakerStarting;
 }
 
 - (void)stopSpeaking
 {
     [self.iFlySpeechSynthesizer stopSpeaking];
+    self.status = QTSpeakerStop;
 }
 
 #pragma mark - IFlySpeechSynthesizerDelegate
 
 //合成结束
-- (void) onCompleted:(IFlySpeechError *) error
+- (void)onCompleted:(IFlySpeechError *)error
 {
     DLog(@"errorDesc:%@", [error errorDesc]);
     DLog(@"errorCode:%d", [error errorCode]);
+    if (self.onErrorHandler) {
+        self.onErrorHandler(error.errorCode, error.errorDesc);
+    }
 }
+
 //合成开始
-- (void) onSpeakBegin {}
+- (void)onSpeakBegin {}
+
 //合成缓冲进度
-- (void) onBufferProgress:(int) progress message:(NSString *)msg {}
+- (void)onBufferProgress:(int) progress message:(NSString *)msg {}
+
 //合成播放进度
-- (void) onSpeakProgress:(int) progress beginPos:(int)beginPos endPos:(int)endPos
+- (void)onSpeakProgress:(int) progress beginPos:(int)beginPos endPos:(int)endPos
 {
-    DLog(@"progress:%d", progress);
+//    DLog(@"progress:%d", progress);
     if (progress == 100 && self.contentList.count > 1) {
         ++self.index;
         [self startSpeaking];

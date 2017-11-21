@@ -130,6 +130,10 @@
 	<string>是否允许使用你的麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>是否允许访问你的媒体资料库</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

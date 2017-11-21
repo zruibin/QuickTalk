@@ -94,7 +94,7 @@
         NSDictionary *itemInfo = [self tabBarItemInfo][[NSString stringWithFormat:@"tab%ld", (long)idx]];
         item.title = itemInfo[@"title"];
         item.image = [[UIImage imageNamed:itemInfo[@"imageName"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        item.selectedImage = [[UIImage imageNamed:itemInfo[@"selectedImageName"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        item.selectedImage = [[[UIImage imageNamed:itemInfo[@"selectedImageName"]] imageWithTintColor:QuickTalk_MAIN_COLOR] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         [item setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorFromHexString:itemInfo[@"titleColor"]]} forState:UIControlStateNormal];
         [item setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorFromHexString:itemInfo[@"titleSelectedColor"]]} forState:UIControlStateSelected];
         

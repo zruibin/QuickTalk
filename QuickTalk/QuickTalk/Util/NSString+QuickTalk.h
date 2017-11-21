@@ -30,4 +30,8 @@
 
 + (NSString *)documentForPath:(NSString *)path;
 
+/*文件或文件夹大小*/
+- (NSString *)fileSizeString;
+- (unsigned long long)fileSize;
+
 @end

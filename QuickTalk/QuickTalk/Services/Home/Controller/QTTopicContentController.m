@@ -9,14 +9,15 @@
 #import "QTTopicContentController.h"
 #import "QTTopicModel.h"
 #import "RBImagebrowse.h"
-#import "QTSpeaker.h"
+#import "QTTopicSpeaker.h"
 
 @interface QTTopicContentController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, copy) NSString *content;
-@property (nonatomic, strong) QTSpeaker *speaker;
+@property (nonatomic, strong) QTTopicSpeaker *topicSpeaker;
+@property (nonatomic, strong) UIButton *playButton;
 
 - (void)initViews;
 - (void)loadData;
@@ -27,13 +28,14 @@
 
 - (void)dealloc
 {
-    [_speaker destory];
+//    [_topicSpeaker destory];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.topicSpeaker = [QTTopicSpeaker sharedInstance];
     [self initViews];
     [self loadData];
 }
@@ -54,8 +56,19 @@
     [self.view addSubview:self.errorView];
     self.errorView.hidden = YES;
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"语音" style:UIBarButtonItemStylePlain target:self action:@selector(sayingAction)];
+    self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.playButton.frame = CGRectMake(0, 0, 40, 40);
+    [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+    [self.playButton addTarget:self action:@selector(sayingAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.playButton];
     self.navigationItem.rightBarButtonItem = item;
+    if ([self.topicSpeaker.name isEqualToString:self.model.uuid]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        } else {
+            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void)loadData
@@ -91,10 +104,28 @@
 
 - (void)sayingAction
 {
-    self.speaker = [QTSpeaker sharedInstance];
-    self.speaker.name = self.model.uuid;
-    self.speaker.content = [NSString flattenHTML:self.content trimWhiteSpace:NO];
-    [self.speaker startSpeaking];
+    if ([self.topicSpeaker.name isEqualToString:self.model.uuid]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerNone ||
+            self.topicSpeaker.speaker.status == QTSpeakerDestory) {
+            self.topicSpeaker.name = self.model.uuid;
+            self.topicSpeaker.title = self.model.title;
+            [self.topicSpeaker speakingForContent:self.content];
+            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        } else {
+            if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+                [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+                [self.topicSpeaker resumeSpeaking];
+            } else {
+                [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+                [self.topicSpeaker pauseSpeaking];
+            }
+        }
+    } else {
+        self.topicSpeaker.name = self.model.uuid;
+        self.topicSpeaker.title = self.model.title;
+        [self.topicSpeaker speakingForContent:self.content];
+        [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - UIWebViewDelegate

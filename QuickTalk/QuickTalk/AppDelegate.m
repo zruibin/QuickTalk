@@ -25,6 +25,7 @@
     [MMPopupWindow sharedWindow].touchWildToHide = YES;
     [[RBScheduler sharedInstance] run];
     [[QTUserInfo sharedInstance] loginInBackground];
+    [[QTCleaner sharedInstance] checkingCache];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -75,9 +76,9 @@
     [Bugly startWithAppId:@"f2e0562976"];
     NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5a1244d8"];
     [IFlySpeechUtility createUtility:initString];
-    [IFlySetting setLogFilePath:[NSString documentForPath:IFLY_PATH]];
+    [IFlySetting setLogFilePath:IFLY_PATH];
 #if DEBUG
-    [IFlySetting showLogcat:NO];
+    [IFlySetting showLogcat:YES];
 #else
     [IFlySetting showLogcat:NO];
 #endif
