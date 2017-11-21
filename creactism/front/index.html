@@ -89,6 +89,7 @@ a:active{text-decoration:none;}
 .phone-header {
   width: 100%;
   height: 85%;
+  margin-top: 80px;
   /* background-color: red; */
 }
 
@@ -98,17 +99,23 @@ a:active{text-decoration:none;}
   /* background-color: yellow; */
 }
 
+#phone-download {
+  width: 229px;
+  height: 45px;
+}
+
 .phone-footer {
+  position: fixed;
+  bottom:  0px;
   width: 100%;
-  height: 15%;
+  height: 241px;
   /* background-color: blue; */
   text-align: center;
 }
 
 .phone-footer img {
-  margin-top: 50px;
-  width: 250px;
-  height: 50px;
+  width: 100%;
+  height: 241px;
 }
 
 #pc img {
@@ -163,10 +170,11 @@ a:active{text-decoration:none;}
 
 <div id="phone">
     <div class="phone-header">
-      <img src="/images/phone_main.png" alt="">
+      <img src="/images/phone_header.png" alt="">
+      <img id="phone-download" src="/images/phone_btn.png" onclick="phoneClickAction();">
     </div>
     <div class="phone-footer">
-      <img src="/images/phone_btn.png" onclick="phoneClickAction();">
+      <img src="/images/phone_footer.png" alt="">
     </div>
   </div>
 
