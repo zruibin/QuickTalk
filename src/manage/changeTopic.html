@@ -19,6 +19,8 @@
 <script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
 <script src="./vender/js/reqwest.min.js"></script>
 
+<script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+
 <style>
 
 textarea, input {width: 80%; font-size: 16px;}
@@ -36,7 +38,7 @@ button {
 #table td {padding: 10px 10px; word-break: break-all;}
 
 #container {
-	width: 800px;
+	width: 900px;
 	/* text-align: center; */
 	margin-right: auto;
 	margin-left: auto;
@@ -50,10 +52,10 @@ button {
 <body>
 
 <div id="container">
-title:<input id="title" class="form-control">
-href:<input id="href" class="form-control">
-detail:<textarea id="detail" class="form-control" style="height: 200px;"></textarea>
-content:<textarea id="content" class="form-control" style="height: 500px;"></textarea>
+标题:<input id="title" class="form-control">
+链接:<input id="href" class="form-control">
+简介:<textarea id="detail" class="form-control" style="height: 200px;"></textarea>
+内容:<textarea name="content" id="content" class="form-control" style="height: 500px;"></textarea>
 <br>
 
 <button onclick="submit();" class="btn btn-success">提交</button>
@@ -73,6 +75,8 @@ $(document).ready(function() {
 	getTopicContent();
 });
 
+var editor = CKEDITOR.replace("content", {height:500});
+
 function submit() {
 	var title = document.getElementById("title");
 	var titleText = title.value;
@@ -80,8 +84,8 @@ function submit() {
 	var hrefText = href.value;
 	var detail = document.getElementById("detail");
 	var detailText = detail.value;
-	var content = document.getElementById("content");
-	var contentText = content.value;
+	// var content = document.getElementById("content");
+	var contentText = editor.getData();
 	// console.log("title: " + title);
 	// console.log("href: " + href);
 	// console.log("detail: " + detail);
@@ -165,8 +169,9 @@ function getTopicContent() {
 		console.log(response);
 		var text = response.data.content;
 		if (typeof(text) != "undefined") {
-			var content = document.getElementById("content");
-			content.value = text;
+			// var content = document.getElementById("content");
+			// content.value = text;
+			editor.setData(text);
 		}
 		
 	}).fail(function (err, msg) {

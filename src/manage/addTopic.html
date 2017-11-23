@@ -19,10 +19,12 @@
 <script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
 <script src="./vender/js/reqwest.min.js"></script>
 
+<script src="https://cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+
 <style>
 
 #container {
-	width: 800px;
+	width: 900px;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
@@ -51,7 +53,7 @@ button {
 <br>
 <textarea type="text" placeholder="简介" class="form-control" id="detail" style="height: 200px;"/></textarea>
 <br>
-<textarea id="content" placeholder="内容" class="form-control" style="height: 500px;"/></textarea>
+<textarea name="content" id="content" placeholder="内容" class="form-control" style="height: 500px;"/></textarea>
 <br>
 
 
@@ -72,6 +74,8 @@ $(document).ready(function() {
 	headerAction();
 });
 
+var editor = CKEDITOR.replace("content", {height:500});
+
 function submit() {
 	var title = document.getElementById("title");
 	var titleText = title.value;
@@ -79,8 +83,8 @@ function submit() {
 	var hrefText = href.value;
 	var detail = document.getElementById("detail");
 	var detailText = detail.value;
-	var content = document.getElementById("content");
-	var contentText = content.value;
+	// var content = document.getElementById("content");
+	var contentText = editor.getData();;
 	if (titleText.length == 0) {
 		toast("title不可为空");
 		return;
