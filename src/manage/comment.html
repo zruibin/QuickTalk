@@ -19,6 +19,9 @@
 <script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
 <script src="./vender/js/reqwest.min.js"></script>
 
+<script type="text/javascript" src="./vender/js/jqueryConfirm/jquery-confirm.min.js"></script>
+<link href="./vender/js/jqueryConfirm/jquery-confirm.min.css" rel="stylesheet">
+
 <style>
 
 button {
@@ -133,7 +136,7 @@ function showCommentList(dataList) {
             html += '<td style="width:60px;">'+ data.id +'</td>';
 			html += '<td>'+ data.nickname +'</td>';
             html += '<td>'+ data.content +'</td>';
-            html += '<td><button class="btn btn-danger" onclick=deleteComment("'+ data.uuid +'")>删除</button></td>';
+            html += '<td><button class="btn btn-danger" onclick=deleteComment("'+ data.uuid +'","' + data.content +'")>删除</button></td>';
             html += '</tr>';
         }
         
@@ -145,20 +148,32 @@ function showCommentList(dataList) {
     container.innerHTML = html;
 }
 
-function deleteComment(uuid) {
-	var topic_uuid = getQueryString("uuid");
-	var url = host + "service/quickTalk/deleteComment?uuid=" + uuid + "&topic_uuid=" + topic_uuid;
-	console.log(url); 
-	reqwest({
-		url: url, 
-		type: 'json', 
-		method: 'post'
-	}).then(function (response) {
-		// console.log(response);
-		getTopicComment();
-	}).fail(function (err, msg) {
-		console.log(err);     
-		toast("请求失败，请重新刷新！");
+function deleteComment(uuid, content) {
+	console.log(content);
+	$.confirm({
+		title: '删除评论',
+		content: content,
+		confirmButton: "确定",
+		cancelButton: "取消",
+		confirm: function(){
+			var topic_uuid = getQueryString("uuid");
+			var url = host + "service/quickTalk/deleteComment?uuid=" + uuid + "&topic_uuid=" + topic_uuid;
+			console.log(url); 
+			reqwest({
+				url: url, 
+				type: 'json', 
+				method: 'post'
+			}).then(function (response) {
+				// console.log(response);
+				getTopicComment();
+			}).fail(function (err, msg) {
+				console.log(err);     
+				toast("请求失败，请重新刷新！");
+			});
+		},
+		cancel: function(){
+
+		}
 	});
 }
 
