@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>修改话题</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+
+<link href="./vender/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="./vender/css/flat-ui.min.css" rel="stylesheet">
+
+<link type="text/css" href="./vender/css/default.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="./vender/js/sha1.js"></script>
+<script type="text/javascript" src="./vender/js/default.js"></script>
+<script type="text/javascript" src="./vender/js/toast.js"></script>
+<script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
+<script src="./vender/js/reqwest.min.js"></script>
+
+<style>
+
+textarea, input {width: 80%; font-size: 16px;}
+#title {height: 40px}
+#href {height: 40px}
+#detail {height: 200px}
+#content {height: 300px}
+
+button {
+	width: 100%;
+	height: 40px;
+}
+
+#table,  #table td{border:1px solid #585858; line-height:22px;} 
+#table td {padding: 10px 10px; word-break: break-all;}
+
+#container {
+	width: 800px;
+	/* text-align: center; */
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="container">
+title:<input id="title" class="form-control">
+href:<input id="href" class="form-control">
+detail:<textarea id="detail" class="form-control"></textarea>
+content:<textarea id="content" class="form-control"></textarea>
+<br>
+
+<button onclick="submit();" class="btn btn-success">提交</button>
+<br><br><br>
+</div>
+
+
+</body>
+
+<script>
+
+
+$(document).ready(function() {
+	checkingAuth();
+	headerAction();
+	getTopic();
+	getTopicContent();
+});
+
+function submit() {
+	var title = document.getElementById("title");
+	var titleText = title.value;
+	var href = document.getElementById("href");
+	var hrefText = href.value;
+	var detail = document.getElementById("detail");
+	var detailText = detail.value;
+	var content = document.getElementById("content");
+	var contentText = content.value;
+	// console.log("title: " + title);
+	// console.log("href: " + href);
+	// console.log("detail: " + detail);
+	// console.log("content: " + content);
+	if (titleText.length == 0) {
+		toast("title不可为空");
+		return;
+	}
+	if (hrefText.length == 0) {
+		toast("href不可为空");
+		return;
+	}
+	if (detailText.length == 0) {
+		toast("detail不可为空");
+		return;
+	}
+	if (contentText.length == 0) {
+		toast("content不可为空");
+		return;
+	}
+
+	var url = host + "service/quickTalk/changeTopic";
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'post',
+		data: { 
+			uuid: getQueryString("uuid"),
+			title: titleText,
+			href: hrefText,
+			detail: detailText,
+			content: contentText
+		}
+	}).then(function (response) {
+		// response.data
+		console.log(response);
+		window.location.href = "topicList.html";
+	}).fail(function (err, msg) {
+		console.log(err);     
+		toast("请求失败，请重新刷新！");
+	});
+}
+
+function getQueryString(name) 
+{ 
+    var url = location.search; //获取url中"?"符后的字串 
+    // console.log('url: ' + url);
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+    var r = window.location.search.substr(1).match(reg); 
+    if (r != null) return unescape(r[2]); return null; 
+} 
+
+function getTopic() {
+	var url = host + "service/quickTalk/topic?topic_uuid=" + getQueryString("uuid");
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'get'
+	}).then(function (response) {
+		console.log(response);
+		var title = document.getElementById("title");
+		title.value = response.data[0].title;
+		var href = document.getElementById("href");
+		href.value = response.data[0].href;
+		var detail = document.getElementById("detail");
+		detail.value = response.data[0].detail;
+	}).fail(function (err, msg) {
+		console.log(err);     
+		toast("请求失败，请重新刷新！");
+	});
+}
+
+function getTopicContent() {
+	var url = host + "service/quickTalk/topicContent?topic_uuid=" + getQueryString("uuid");
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'get'
+	}).then(function (response) {
+		console.log(url);
+		console.log(response);
+		var text = response.data.content;
+		if (typeof(text) != "undefined") {
+			var content = document.getElementById("content");
+			content.value = text;
+		}
+		
+	}).fail(function (err, msg) {
+		console.log(err);     
+		toast("请求失败，请重新刷新！");
+	});
+}
+
+
+
+
+
+
+</script>
+
+</html>
