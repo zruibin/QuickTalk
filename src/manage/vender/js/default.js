@@ -61,12 +61,15 @@ var RBReady = (function() { //这个函数返回whenReady()函数
 // t2();
 // RBReady(t2);
 
-var pwdEncode = '3e725f21e3e5e4adfaf228515ef082f80352dbd8';
+var pwdEncode = '8f745a395b26da39fdb869508511ad0df2d3f8c3';
 var host = "http://creactism.com/";
 // var host = "http://localhost/";
 
+var cookieName = "the_cookie";
+
+
 function checkingBackup() {
-    var cookiePwd = getCookie('the_cookie'); // 读取 cookie
+    var cookiePwd = getCookie(cookieName); // 读取 cookie
     if (cookiePwd === pwdEncode) {
         return true;
     } else {
@@ -83,7 +86,7 @@ function checkingAuth() {
 
 function setCookie(name,value) { 
     var exp = new Date(); 
-    exp.setTime(exp.getTime() + 60*60*1000); 
+    exp.setTime(exp.getTime() + 60*60*1000); //一个小时
     document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString(); 
 } 
 
@@ -94,6 +97,15 @@ function getCookie(name) {
     else 
         return null; 
 } 
+
+function deleteCookie(name) {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(name);
+    if(cval != null)
+    document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    window.location.href = "index.html";
+}
 
 function getQueryString(name) { 
     var url = location.search; //获取url中"?"符后的字串 
@@ -110,6 +122,7 @@ function headerAction() {
                 <a class="navbar-brand" href="topicList.html">话题列表</a> \
                 <a class="navbar-brand" href="addTopic.html">新增话题</a> \
                 <a class="navbar-brand" href="log.html">日志</a> \
+                <a class="navbar-brand" onclick="deleteCookie(cookieName);">退出</a> \
                 </div> \
             </nav>';
     $("body:first").before(nav);//

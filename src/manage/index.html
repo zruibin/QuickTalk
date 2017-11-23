@@ -27,15 +27,13 @@ $(document).ready(function() {
     } 
 
     $("#submit").click(function() {
-        var pwd = hex_sha1($("#pwd").val());
-        console.log(pwd);
-        if (pwd === pwdEncode) {
-            setCookie('the_cookie', pwd); // 存储一个带7天期限的 cookie 
-            loadData();
-        } else {
-            toast("Error!");
-        }
+        submit();
     });
+    $('#pwd').bind('keypress',function(event){  
+        if(event.keyCode == "13") {  
+            submit();
+        }  
+    });//
 });
 
 
@@ -43,9 +41,18 @@ $(document).ready(function() {
 function loadData() 
 {
     $("#login").css({"display": "none"});
-    console.log("loadData");
-
     headerAction();
+}
+
+function submit() {
+    var pwd = hex_sha1($("#pwd").val());
+    // console.log(pwd);
+    if (pwd === pwdEncode) {
+        setCookie('the_cookie', pwd); // 存储一个带7天期限的 cookie 
+        loadData();
+    } else {
+        toast("Error!");
+    }
 }
 
 </script>
@@ -53,7 +60,7 @@ function loadData()
 
 <style type="text/css">
 
-/* body{text-align: center;} */
+body{text-align: center;}
 
 #login {
   margin-top: 140px;
@@ -70,10 +77,12 @@ function loadData()
 
 <body>
 
+<h2>Creactism 后台管理</h2>
+
 <div id="login">
     <input type="password" placeholder="进入密码" class="form-control" id="pwd"/>
     <br/>
-    <button id="submit" class="btn btn-success">Submit</button>
+    <button id="submit" class="btn btn-success">确定</button>
 </div>
 
 
