@@ -22,32 +22,33 @@ import json
 
 @quickTalk.route('/submitTopic', methods=["GET", "POST"])
 def submitTopic():
-    jsondata = getValueFromRequestByKey("jsondata")
-     
-    jsonList = None
-    try:
-        jsonList = json.loads(jsondata)
-    except Exception as e:
-        Loger.error(e, __file__)
-        return RESPONSE_JSON(CODE_ERROR_ILLEGAL_DATA_CONTENT)
 
-    return __storageTopic(jsonList)
+    title = getValueFromRequestByKey("title")
+    detail = getValueFromRequestByKey("detail")
+    href = getValueFromRequestByKey("href")
+    content = getValueFromRequestByKey("content")
+
+    if title == None or detail == None or href == None or content == None:
+        return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+
+    return __storageTopic(title, detail, href, content)
     
 
-def __storageTopic(jsonList):
+def __storageTopic(title="", detail="", href="", content=""):
     sqlList = []
     argsList = []
-    for data in jsonList:
-        uuid = generateUUID()
-        time = generateCurrentTime()
-        insertSQL = "INSERT INTO t_quickTalk_topic (uuid, title, detail, href, time) VALUES (%s, %s, %s, %s, %s)"
-        args = [uuid, data["title"], data["detail"], data["href"], time]
-        sqlList.append(insertSQL)
-        argsList.append(args)
-        insertContentSQL = """INSERT INTO t_quickTalk_topic_content (uuid, content) VALUES (%s, %s)"""
-        contentArgs = [uuid, data["content"]]
-        sqlList.append(insertContentSQL)
-        argsList.append(contentArgs)
+
+    uuid = generateUUID()
+    time = generateCurrentTime()
+    insertSQL = "INSERT INTO t_quickTalk_topic (uuid, title, detail, href, time) VALUES (%s, %s, %s, %s, %s)"
+    args = [uuid, title, detail, href, time]
+    sqlList.append(insertSQL)
+    argsList.append(args)
+    insertContentSQL = """INSERT INTO t_quickTalk_topic_content (uuid, content) VALUES (%s, %s)"""
+    contentArgs = [uuid, content]
+    sqlList.append(insertContentSQL)
+    argsList.append(contentArgs)
+        
         
     dbManager = DB.DBManager.shareInstanced()
     try: 

@@ -9,3 +9,9 @@ note: 项目部署于/home/Creactism下
 
 用户上传资源放于medias下
 front为前端静态资源，nginx直接访问
+
+
+python compile.py -rootDir=creactism/
+scp -r build/ root@39.108.174.16:/home/
+ssh root@39.108.174.16
+
