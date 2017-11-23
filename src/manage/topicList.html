@@ -19,6 +19,9 @@
 <script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
 <script src="./vender/js/reqwest.min.js"></script>
 
+<script type="text/javascript" src="./vender/js/jqueryConfirm/jquery-confirm.min.js"></script>
+<link href="./vender/js/jqueryConfirm/jquery-confirm.min.css" rel="stylesheet">
+
 <style>
 
 #table,  #table td{border:1px solid #585858; line-height:22px;} 
@@ -123,7 +126,7 @@ function showTopicList(dataList) {
 			html += '<a href="' + data.href + '" target="blank">原文地址</a>';
 			html +=	'<button class="btn btn-info" onclick=showTopicComment("'+ data.uuid +'","' + title +'")>查看评论</button>';
 			html += '<button class="btn btn-inverse" onclick=changeTopic("'+ data.uuid +'")>修改</button>';
-			html += '<button class="btn btn-danger" onclick=deleteTopic("'+ data.uuid +'")>删除</button>';
+			html += '<button class="btn btn-danger" onclick=deleteTopic("'+ data.uuid +'","' + title +'")>删除</button>';
 			html +=	'</td>';
 
             html += '</tr>';
@@ -137,19 +140,33 @@ function showTopicList(dataList) {
     container.innerHTML = html;
 }
 
-function deleteTopic(uuid) {
-	var url = host + "service/quickTalk/deleteTopic?uuid=" + uuid;
-	reqwest({
-		url: url, 
-		type: 'json', 
-		method: 'post'
-	}).then(function (response) {
-		console.log(response);
-		getTopic(1);
-	}).fail(function (err, msg) {
-		console.log(err);     
-		alert("请求失败，请重新刷新！");
+function deleteTopic(uuid, title) {
+	console.log(title);
+	$.confirm({
+		title: '删除话题',
+		content: decodeURI(decodeURI(title)),
+		confirmButton: "确定",
+		cancelButton: "取消",
+		confirm: function(){
+			var url = host + "service/quickTalk/deleteTopic?uuid=" + uuid;
+			reqwest({
+				url: url, 
+				type: 'json', 
+				method: 'post'
+			}).then(function (response) {
+				console.log(response);
+				getTopic(1);
+			}).fail(function (err, msg) {
+				console.log(err);     
+				alert("请求失败，请重新刷新！");
+			});
+		},
+		cancel: function(){
+
+		}
 	});
+
+
 }
 
 function showTopicComment(uuid, title) {
