@@ -74,7 +74,7 @@ static const NSInteger numberOfWords = 4000;
     //设置音量，取值范围 0~100
     [_iFlySpeechSynthesizer setParameter:@"50"
                                   forKey: [IFlySpeechConstant VOLUME]];
-    [_iFlySpeechSynthesizer setParameter:@"40"
+    [_iFlySpeechSynthesizer setParameter:@"60"
                                   forKey: [IFlySpeechConstant PITCH]];
     [_iFlySpeechSynthesizer setParameter:@"55"
                                   forKey: [IFlySpeechConstant SPEED]];
