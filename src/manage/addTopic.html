@@ -84,7 +84,7 @@ function submit() {
 	var detail = document.getElementById("detail");
 	var detailText = detail.value;
 	// var content = document.getElementById("content");
-	var contentText = editor.getData();;
+	var contentText = stringReplace(editor.getData());
 	if (titleText.length == 0) {
 		toast("title不可为空");
 		return;

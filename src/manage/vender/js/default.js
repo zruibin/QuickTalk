@@ -115,6 +115,16 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]); return null; 
 } 
 
+function stringReplace(text) {
+    text = text.replace(/<p>\&nbsp;<\/p>/g, "<br />");
+    text = text.replace(/&quot;/g, '"');
+    text = text.replace(/&lt;/g, '<');
+    text = text.replace(/&gt;/g, '>');
+    text = text.replace(/&rdquo;/g, '');
+    console.log(text);
+    return text;
+}
+
 
 function headerAction() {
     var nav = '<nav class="navbar navbar-default" role="navigation"> \
