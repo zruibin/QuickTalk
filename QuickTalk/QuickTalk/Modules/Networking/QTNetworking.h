@@ -11,6 +11,8 @@
 
 @interface QTNetworking : NSObject
 
++ (BOOL)checkingNetworkStatus;
+
 /**
  request 封装
  

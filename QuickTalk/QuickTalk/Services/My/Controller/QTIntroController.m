@@ -61,7 +61,7 @@
         [self.scrollView addSubview:imageView];
     }
     [self.scrollView addSubview:self.button];
-    self.button.frame = CGRectMake(2*viewWidth+(viewWidth-100)/2, viewHeight-80, 100, 30);
+    self.button.frame = CGRectMake(2*viewWidth+(viewWidth-100)/2, viewHeight-60, 100, 30);
     
     [self.view addSubview:self.pageControl];
     [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {

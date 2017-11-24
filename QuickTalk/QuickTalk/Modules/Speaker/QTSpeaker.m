@@ -72,10 +72,14 @@ static const NSInteger numberOfWords = 4000;
     [_iFlySpeechSynthesizer setParameter:[IFlySpeechConstant TYPE_CLOUD]
                                   forKey:[IFlySpeechConstant ENGINE_TYPE]];
     //设置音量，取值范围 0~100
-    [_iFlySpeechSynthesizer setParameter:@"57"
+    [_iFlySpeechSynthesizer setParameter:@"50"
                                   forKey: [IFlySpeechConstant VOLUME]];
+    [_iFlySpeechSynthesizer setParameter:@"40"
+                                  forKey: [IFlySpeechConstant PITCH]];
+    [_iFlySpeechSynthesizer setParameter:@"55"
+                                  forKey: [IFlySpeechConstant SPEED]];
     //发音人，默认为”xiaoyan”，可以设置的参数列表可参考“合成发音人列表”
-    [_iFlySpeechSynthesizer setParameter:@"xiaoyu"
+    [_iFlySpeechSynthesizer setParameter:@"vixf"
                                   forKey: [IFlySpeechConstant VOICE_NAME]];
     //保存合成文件名，如不再需要，设置为nil或者为空表示取消，默认目录位于library/cache下
     [_iFlySpeechSynthesizer setParameter:[NSString stringWithFormat:@"%@.pcm", self.name]

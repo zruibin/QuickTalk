@@ -13,6 +13,6 @@
 + (instancetype)sharedInstance;
 
 - (void)checkingCache;
-- (void)asynchronousCleanUpCache:(NSString *)path;
+- (void)asynchronousCleanUpCache;
 
 @end

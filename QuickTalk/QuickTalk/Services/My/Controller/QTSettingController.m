@@ -175,9 +175,11 @@
         [self.navigationController pushViewController:feedbackController animated:YES];
     }
     if (indexPath.row == 3) {
+        __weak typeof(self) weakSelf = self;
         void(^handler)(NSInteger index) = ^(NSInteger index){
             if (index == 0) {
-                [[QTCleaner sharedInstance] asynchronousCleanUpCache:IFLY_PATH];
+                [[QTCleaner sharedInstance] asynchronousCleanUpCache];
+                [QTProgressHUD showHUDText:@"清除成功" view:weakSelf.view];
             }
         };
         NSString *sizeStr = [IFLY_PATH fileSizeString];

@@ -104,6 +104,10 @@
 
 - (void)sayingAction
 {
+    if (![QTNetworking checkingNetworkStatus]) {
+        [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
+        return ;
+    }
     if ([self.topicSpeaker.name isEqualToString:self.model.uuid]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerNone ||
             self.topicSpeaker.speaker.status == QTSpeakerDestory) {

@@ -123,6 +123,11 @@
 
 - (void)speakingTopicContent:(NSString *)uuid index:(NSInteger)index
 {
+    if (![QTNetworking checkingNetworkStatus]) {
+        [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
+        return ;
+    }
+    
     QTTopicModel *model = self.dataList[index];
     QTMainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
@@ -134,6 +139,7 @@
             [topicSpeaker speakingForRequest:model.uuid view:self.view completionHandler:^(BOOL action, NSError *error) {
                 if (action) {
                     cell.speaking = NO;
+                    [self.tableView reloadData];
                 }
             }];
         } else {
@@ -144,6 +150,7 @@
                 cell.speaking = NO;
                 [topicSpeaker pauseSpeaking];
             }
+            [self.tableView reloadData];
         }
     } else {
         topicSpeaker.name = model.uuid;
@@ -151,10 +158,10 @@
         [topicSpeaker speakingForRequest:model.uuid view:self.view completionHandler:^(BOOL action, NSError *error) {
             if (action) {
                 cell.speaking = NO;
+                [self.tableView reloadData];
             }
         }];
     }
-    [self.tableView reloadData];
 }
 
 #pragma mark - Private

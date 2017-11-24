@@ -49,7 +49,7 @@ FOUNDATION_EXPORT const unsigned char ReachabilityVersionString[];
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
-extern NSString *const kAPReachabilityChangedNotification;
+extern NSString *const kQTReachabilityChangedNotification;
 
 typedef NS_ENUM(NSInteger, NetworkStatus) {
     // Apple NetworkStatus Compatible Names.

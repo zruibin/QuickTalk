@@ -55,14 +55,16 @@
 {
     unsigned long long size = [IFLY_PATH fileSize];
     if (size > 1000 * 1000 * 200) {
-        [self asynchronousCleanUpCache:IFLY_PATH];
+        [self asynchronousCleanUpCache];
     }
 }
 
-- (void)asynchronousCleanUpCache:(NSString *)path
+- (void)asynchronousCleanUpCache
 {
     [[RBScheduler sharedInstance] runTask:^{
-        [self cleanUpPath:path];
+        YYCache *cache = [YYCache cacheWithName:QTDataCache];
+        [cache removeAllObjects];
+        [self cleanUpPath:IFLY_PATH];
     }];
 }
 

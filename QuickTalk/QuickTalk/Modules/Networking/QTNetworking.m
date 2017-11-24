@@ -8,6 +8,7 @@
 
 #import "QTNetworking.h"
 #import <AFNetworking.h>
+#import "Reachability.h"
 
 @implementation QTNetworking
 
@@ -23,6 +24,16 @@
 
 
 #pragma mark - Public
+
++ (BOOL)checkingNetworkStatus
+{
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"http://www.qq.com"];
+    if ([reachability isReachable]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
 
 + (NSURLRequest*)requestURL:(NSString *)baseURL HTTPMethod:(NSString*)httpMethod params:(NSDictionary *)params
 {

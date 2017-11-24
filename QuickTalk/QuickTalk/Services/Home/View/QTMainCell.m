@@ -222,6 +222,7 @@
         [self.playButton setImage:[[UIImage imageNamed:@"play"] imageWithTintColor:QuickTalk_MAIN_COLOR]
                          forState:UIControlStateHighlighted];
         [self.playButton setTitle:@"播放新闻" forState:UIControlStateNormal];
+        [self.playButton setBackgroundImage:nil forState:UIControlStateNormal];
         self.playButton.layer.borderWidth = .5f;
     }
 }
