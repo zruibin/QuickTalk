@@ -39,12 +39,31 @@ def __getTopicContentFromStorage(topicUUID):
         dataList = dbManager.executeSingleQuery(querySQL)
         dic = {}
         if len(dataList) > 0:
-            dic = {"content": dataList[0]["content"]}
+            content = dataList[0]["content"]
+            content = __convertCharacter(content)
+            dic = {"content": content}
         return RESPONSE_JSON(CODE_SUCCESS, dic)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     
+
+def __convertCharacter(string):
+    """用指定的字符替换文本中指定的字符"""
+    string = string.replace("<p>&nbsp;</p>", "<br />")
+    string = string.replace("<h1>&nbsp;</h1>", "<br />")
+    string = string.replace("<h2>&nbsp;</h2>", "<br />")
+    string = string.replace("<h3>&nbsp;</h3>", "<br />")
+    string = string.replace("<h4>&nbsp;</h4>", "<br />")
+    string = string.replace("<h5>&nbsp;</h5>", "<br />")
+    string = string.replace("&nbsp;", " ")
+    string = string.replace("&quot;", '"')
+    string = string.replace("&lt;", "<")
+    string = string.replace("&gt;", ">")
+    string = string.replace("&rdquo;", "")
+    string = string.replace("&ldquo;", "")
+    return string
+
 
 
 if __name__ == '__main__':
