@@ -76,6 +76,8 @@ $(document).ready(function() {
 });
 
 var editor = CKEDITOR.replace("content", {height:500});
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_P;
+CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
 
 function submit() {
 	var title = document.getElementById("title");
