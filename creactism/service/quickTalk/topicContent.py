@@ -62,6 +62,8 @@ def __convertCharacter(string):
     string = string.replace("&gt;", ">")
     string = string.replace("&rdquo;", "")
     string = string.replace("&ldquo;", "")
+    string = string.replace("&mdash;", "—")
+    string = string.replace("&hellip;", "…")
     return string
 
 
