@@ -75,6 +75,9 @@ class Config(object):
     LIKE_ACTION_AGREE = "1"
     LIKE_ACTION_DISAGREE = "2"
 
+    TYPE_FOR_COMMENT_DEFAULT = "0"
+    TYPE_FOR_COMMENT_REPLY = "1"
+
     pass
 
 

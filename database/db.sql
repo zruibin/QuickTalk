@@ -148,6 +148,7 @@ CREATE TABLE `t_quickTalk_userPost_comment`(
     `content` TEXT NOT NULL COMMENT '内容',
     `isReply` INT NOT NULL Default 0 COMMENT '是否回复',
     `reply_uuid`  VARCHAR(100) COMMENT '被回复的评论的uuid',
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生时间戳',
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
