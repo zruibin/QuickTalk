@@ -14,6 +14,7 @@
 from service.api import api
 from service.admin import admin
 from service.quickTalk import quickTalk
+from service.quickTalk.userPost import userPost
 
 
 def registerBlueprint(app):
@@ -21,6 +22,7 @@ def registerBlueprint(app):
     app.register_blueprint(api, url_prefix="/service/api")
     app.register_blueprint(admin, url_prefix='/admin')
     app.register_blueprint(quickTalk, url_prefix="/service/quickTalk") # 发现
+    app.register_blueprint(userPost, url_prefix="/service/quickTalk/userPost") # userPost
     
 
 if __name__ == '__main__':

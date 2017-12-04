@@ -33,7 +33,7 @@ def __getTopicFromStorage(index, size):
     if size is not None: limitSQL = limit(index, int(size))
         
     querySQL = """
-        SELECT id, uuid, title, detail, href, time FROM t_quickTalk_topic ORDER BY time DESC %s
+        SELECT id, uuid, title, detail, href, read_count AS readCount, time FROM t_quickTalk_topic ORDER BY time DESC %s
     """ % limitSQL
 
     dbManager = DB.DBManager.shareInstanced()
