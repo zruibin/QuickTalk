@@ -23,19 +23,20 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 def addUserPost():
     title = getValueFromRequestByKey("title")
     content = getValueFromRequestByKey("content")
+    txt = getValueFromRequestByKey("txt")
     userUUID = getValueFromRequestByKey("user_uuid")
 
     if title == None or content == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __storageUserPost(title, content, userUUID)
+    return __storageUserPost(title, content, userUUID, txt)
     
 
-def __storageUserPost(title, content, userUUID):
+def __storageUserPost(title, content, userUUID, txt):
     uuid = generateUUID()
     time = generateCurrentTime()
-    insertSQL = "INSERT INTO t_quickTalk_like (uuid, user_uuid, title, content, time) VALUES (%s, %s, %s, %s, %s)"
-    args = [uuid, userUUID, title, content, time]
+    insertSQL = "INSERT INTO t_quickTalk_userPost (uuid, user_uuid, title, txt, content, time) VALUES (%s, %s, %s, %s, %s, %s)"
+    args = [uuid, userUUID, title, txt, content, time]
         
     dbManager = DB.DBManager.shareInstanced()
     try: 

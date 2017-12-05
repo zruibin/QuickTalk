@@ -73,7 +73,9 @@ def __packageReplyContent(dataList):
 
     inString = "'" + "','".join(inList) + "'"
     querySQL = """
-        SELECT uuid, content FROM t_quickTalk_userPost_comment WHERE uuid IN (%s)
+        SELECT uuid, content, user_uuid AS replyUserUUID,
+	        (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS replyNickname
+     FROM t_quickTalk_userPost_comment WHERE uuid IN (%s)
     """ % inString
 
     dbManager = DB.DBManager.shareInstanced()
@@ -95,6 +97,8 @@ def __packageAction(dataList, replyDataList):
             for replyData in replyDataList:
                 if replyUUID == replyData["uuid"]:
                     data["replyContent"] = replyData["content"]
+                    data["replyUserUUID"] = replyData["replyUserUUID"]
+                    data["replyNickname"] = replyData["replyNickname"]
     return dataList
 
 
