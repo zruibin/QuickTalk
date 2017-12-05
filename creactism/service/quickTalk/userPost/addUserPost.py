@@ -34,7 +34,7 @@ def addUserPost():
 def __storageUserPost(title, content, userUUID):
     uuid = generateUUID()
     time = generateCurrentTime()
-    insertSQL = "INSERT INTO t_quickTalk_userPost (uuid, user_uuid, title, content, time) VALUES (%s, %s, %s, %s, %s)"
+    insertSQL = "INSERT INTO t_quickTalk_like (uuid, user_uuid, title, content, time) VALUES (%s, %s, %s, %s, %s)"
     args = [uuid, userUUID, title, content, time]
         
     dbManager = DB.DBManager.shareInstanced()

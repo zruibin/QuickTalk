@@ -22,7 +22,6 @@ from service.quickTalk import comment
 from service.quickTalk import commentList
 from service.quickTalk import submitTopic
 from service.quickTalk import deleteTopic
-from service.quickTalk import like
 from service.quickTalk import login
 from service.quickTalk import hidden
 from service.quickTalk import deleteComment

@@ -110,9 +110,12 @@ ALTER TABLE `t_quickTalk_user_auth` ADD INDEX t_user_auth_uuid (`user_uuid`);
 DROP TABLE IF EXISTS
     `t_quickTalk_like`;
 CREATE TABLE `t_quickTalk_like`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `type` VARCHAR(20) NOT NULL COMMENT '类型',
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
     `content_uuid` VARCHAR(100) NOT NULL COMMENT '被赞的内容的uuid',
-    `type` VARCHAR(100) NOT NULL COMMENT '类型',
-    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid'
+    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生时间戳',
+    PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 ALTER TABLE `t_quickTalk_like` ADD INDEX t_like_content_uuid (`content_uuid`);
