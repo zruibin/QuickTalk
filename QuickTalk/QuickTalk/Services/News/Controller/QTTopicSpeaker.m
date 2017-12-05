@@ -111,6 +111,13 @@
     self.speaker.name = self.name;
     self.speaker.content = [NSString flattenHTML:content trimWhiteSpace:NO];
     [self.speaker startSpeaking];
+    __weak typeof(self) weakSelf = self;
+    [self.speaker setOnFinishBlock:^{
+        weakSelf.speaking = NO;
+        weakSelf.name = nil;
+        weakSelf.title = nil;
+        weakSelf.content = nil;
+    }];
 }
 
 - (void)stopSpeaking

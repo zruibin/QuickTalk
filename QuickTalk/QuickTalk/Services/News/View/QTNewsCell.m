@@ -6,10 +6,10 @@
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTMainCell.h"
+#import "QTNewsCell.h"
 #import "QTTopicSpeaker.h"
 
-@interface QTMainCell ()
+@interface QTNewsCell ()
 
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, copy) NSDictionary *detailAttributes;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation QTMainCell
+@implementation QTNewsCell
 
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

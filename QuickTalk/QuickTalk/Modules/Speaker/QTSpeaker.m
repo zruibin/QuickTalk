@@ -63,6 +63,7 @@ static const NSInteger numberOfWords = 4000;
     }
     self.status = QTSpeakerStarting;
     NSString *text = [self.contentList objectAtIndex:self.index];
+    DLog(@"count:%d -- index:%d", self.contentList.count, self.index);
     //获取语音合成单例
     _iFlySpeechSynthesizer = [IFlySpeechSynthesizer sharedInstance];
     //设置协议委托对象
@@ -113,8 +114,13 @@ static const NSInteger numberOfWords = 4000;
 {
     DLog(@"errorDesc:%@", [error errorDesc]);
     DLog(@"errorCode:%d", [error errorCode]);
-    if (self.onErrorHandler) {
+    if (error && self.onErrorHandler) {
         self.onErrorHandler(error.errorCode, error.errorDesc);
+    }
+    if (error.errorCode == 0) {
+        if (self.onFinishBlock) {
+            self.onFinishBlock();
+        }
     }
 }
 

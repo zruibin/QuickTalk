@@ -29,8 +29,8 @@
         if (self.viewControllers.count > 0) {
             UIViewController *rootController = [self.viewControllers objectAtIndex:0];
             rootController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                                               initWithTitle:@"取消"
-                                                               style:UIBarButtonItemStylePlain target:self action:@selector(actionForBackButton:)];
+                                                               initWithImage:[UIImage imageNamed:@"cancel"] style:UIBarButtonItemStylePlain
+                                                               target:self action:@selector(actionForBackButton:)];
         }
     }
 }

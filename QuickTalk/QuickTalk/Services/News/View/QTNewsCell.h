@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QTMainCell : UITableViewCell
+@interface QTNewsCell : UITableViewCell
 
 @property (nonatomic, assign) BOOL speaking;
 @property (nonatomic, copy) void (^onPlayActionHandler)(NSString *uuid, NSInteger index);

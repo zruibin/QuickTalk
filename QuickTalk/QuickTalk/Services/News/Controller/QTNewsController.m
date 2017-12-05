@@ -6,14 +6,14 @@
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTMainViewController.h"
+#import "QTNewsController.h"
 #import "QTTopicController.h"
 #import "QTTopicModel.h"
 #import "QTIntroController.h"
-#import "QTMainCell.h"
+#import "QTNewsCell.h"
 #import "QTTopicSpeaker.h"
 
-@interface QTMainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface QTNewsController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation QTMainViewController
+@implementation QTNewsController
 
 - (void)dealloc
 {
@@ -71,7 +71,7 @@
 
 - (void)initViews
 {
-    self.title = @"快言";
+    self.title = @"新闻";
     self.viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     [self.view addSubview:self.tableView];
@@ -82,12 +82,12 @@
     [self.view addSubview:self.errorView];
     
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
-        QTIntroController *introController = [[QTIntroController alloc] init];
-        [self presentViewController:introController animated:YES completion:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
+//        QTIntroController *introController = [[QTIntroController alloc] init];
+//        [self presentViewController:introController animated:YES completion:nil];
+//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }
 }
 
 - (void)loadData
@@ -129,7 +129,7 @@
     }
     
     QTTopicModel *model = self.dataList[index];
-    QTMainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
+    QTNewsCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
     if ([topicSpeaker.name isEqualToString:model.uuid]) {
         if (topicSpeaker.speaker.status == QTSpeakerNone ||
@@ -180,7 +180,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTMainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMainCell class])];
+    QTNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTNewsCell class])];
     cell.tag = indexPath.section;
     QTTopicModel *model = self.dataList[indexPath.section];
     [cell loadData:model.title time:model.time uuid:model.uuid];
@@ -194,7 +194,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 0.0f;
-    QTMainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMainCell class])];
+    QTNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTNewsCell class])];
     QTTopicModel *model = self.dataList[indexPath.section];
     height = [cell heightForCell:model.title];
     return height;
@@ -238,7 +238,7 @@
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[QTMainCell class] forCellReuseIdentifier:NSStringFromClass([QTMainCell class])];
+            [tableView registerClass:[QTNewsCell class] forCellReuseIdentifier:NSStringFromClass([QTNewsCell class])];
             tableView;
         });
     }

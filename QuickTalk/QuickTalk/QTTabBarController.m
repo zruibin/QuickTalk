@@ -7,8 +7,8 @@
 //
 
 #import "QTTabBarController.h"
-#import "QTMainViewController.h"
-#import "QTCircleController.h"
+#import "QTNewsController.h"
+#import "QTUserPostMainController.h"
 #import "QTMyController.h"
 
 @interface QTTabBarController () <UITabBarControllerDelegate>
@@ -27,16 +27,16 @@
     // Do any additional setup after loading the view.
     self.delegate = self;
     
-    QTMainViewController *mainController = [[QTMainViewController alloc] init];
-    QTNavigationController *mainNav = [[QTNavigationController alloc] initWithRootViewController:mainController];
+    QTNewsController *newsController = [[QTNewsController alloc] init];
+    QTNavigationController *newsNav = [[QTNavigationController alloc] initWithRootViewController:newsController];
     
-//    QTCircleController *circleController = [[QTCircleController alloc] init];
-//    QTNavigationController *circleNav = [[QTNavigationController alloc] initWithRootViewController:circleController];
+    QTUserPostMainController *userPostController = [[QTUserPostMainController alloc] init];
+    QTNavigationController *userPostNav = [[QTNavigationController alloc] initWithRootViewController:userPostController];
     
     QTMyController *myController = [[QTMyController alloc] init];
     QTNavigationController *myNav = [[QTNavigationController alloc] initWithRootViewController:myController];
     
-    self.viewControllers = @[mainNav, myNav];
+    self.viewControllers = @[userPostNav, newsNav, myNav];
     [self setTabBarItemAppearance];
     
 //    if ([[QTUserInfo sharedInstance] isLogin] == NO) {
@@ -53,10 +53,10 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
-    if (index == 1) {
-        return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
-    } 
+//    NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
+//    if (index == 1) {
+//        return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
+//    }
     return YES;
 }
 
@@ -73,14 +73,14 @@
                                            @"imageName":@"news_unselect",
                                            @"selectedImageName":@"news_select"
                                            },
-//                                   @"tab1":@{
-//                                           @"title":@"圈子",
-//                                           @"titleColor":@"#666666",
-//                                           @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
-//                                           @"imageName":@"circle_unselect",
-//                                           @"selectedImageName":@"circle_select"
-//                                           },
                                    @"tab1":@{
+                                           @"title":@"新闻",
+                                           @"titleColor":@"#666666",
+                                           @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
+                                           @"imageName":@"circle_unselect",
+                                           @"selectedImageName":@"circle_select"
+                                           },
+                                   @"tab2":@{
                                            @"title":@"我",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,

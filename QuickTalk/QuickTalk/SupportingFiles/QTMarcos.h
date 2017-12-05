@@ -53,7 +53,7 @@
 [[NSNotificationCenter defaultCenter] postNotificationName:@"QuickTalkTest" object:nil];
 
 
-#define QuickTalk_DEFAULT_IMAGE [UIImage imageNamed:@"QuickTalk_default"]
+#define QuickTalk_DEFAULT_IMAGE [UIImage imageNamed:@"avatar_default"]
 
 #define QuickTalk_MAIN_COLOR_HEX @"#00a0e9"
 #define QuickTalk_MAIN_COLOR [UIColor colorFromHexString:QuickTalk_MAIN_COLOR_HEX]
@@ -81,5 +81,6 @@
 
 #define IFLY_PATH [NSString documentForPath:@"IFly"]
 #define QTDataCache @"QTDataCache"
+#define QTPasteboardURL @"QTPasteboardURL"
 
 #endif /* QCMarcos_h */

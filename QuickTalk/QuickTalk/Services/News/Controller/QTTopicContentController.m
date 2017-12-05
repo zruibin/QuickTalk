@@ -63,7 +63,8 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.playButton];
     self.navigationItem.rightBarButtonItem = item;
     if ([self.topicSpeaker.name isEqualToString:self.model.uuid]) {
-        if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerPause ||
+            self.topicSpeaker.speaker.status == QTSpeakerNone) {
             [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
         } else {
             [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -73,33 +74,44 @@
 
 - (void)loadData
 {
-    NSString *style = @"<style>*{font-size:50px; padding: 5px 10px; line-height:80px; margin: 0px;} img{width:98%; padding: 5px 10px; margin: 0px;} hr {border: 0;border-top: 1px solid #eee;} a {color: #999999; font-size: 40px;} a:link, a:visited, a:active{text-decoration:none;} a:hover{text-decoration:underline;} h1{font-size:60px;}</style>";
-    
-    [QTProgressHUD showHUD:self.view];
-    [QTTopicModel requestTopicContent:self.model.uuid completionHandler:^(NSString *content, NSError *error) {
-        if (error) {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
-            self.errorView.hidden = NO;
-        } else {
-            [QTProgressHUD hide];
-            self.errorView.hidden = YES;
-            if (content.length > 0) {
-                
-                if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
-                    NSRange range = [content rangeOfString:@"新闻来源：<strong>"];
-                    if (range.location != NSNotFound) {
-                        content = [content substringToIndex:range.location];
-                    }
-                }
-                self.content = content;
-                [self.webView loadHTMLString:[style stringByAppendingString:content] baseURL:nil];
-                
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"js"];
-                NSString *jsString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-                [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    YYCache *cache = [YYCache cacheWithName:QTDataCache];
+    NSString *key = [NSString stringWithFormat:@"content_%@", self.model.uuid];
+    if ([cache containsObjectForKey:key] == NO) {
+        [QTProgressHUD showHUD:self.view];
+        [QTTopicModel requestTopicContent:self.model.uuid completionHandler:^(NSString *content, NSError *error) {
+            if (error) {
+                [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+                self.errorView.hidden = NO;
+            } else {
+                [QTProgressHUD hide];
+                self.errorView.hidden = YES;
+                [self makeContent:content];
+                [cache setObject:content forKey:key];
+            }
+        }];
+    } else {
+        NSString *content = (NSString *)[cache objectForKey:key];
+        [self makeContent:content];
+    }
+}
+
+- (void)makeContent:(NSString *)content
+{
+    if (content.length > 0) {
+       NSString *style = @"<style>*{font-size:50px; padding: 5px 10px; line-height:80px; margin: 0px;} img{width:98%; padding: 5px 10px; margin: 0px;} hr {border: 0;border-top: 1px solid #eee;} a {color: #999999; font-size: 40px;} a:link, a:visited, a:active{text-decoration:none;} a:hover{text-decoration:underline;} h1{font-size:60px;}</style>";
+        if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+            NSRange range = [content rangeOfString:@"新闻来源：<strong>"];
+            if (range.location != NSNotFound) {
+                content = [content substringToIndex:range.location];
             }
         }
-    }];
+        self.content = content;
+        [self.webView loadHTMLString:[style stringByAppendingString:content] baseURL:nil];
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"js"];
+        NSString *jsString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+        [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    }
 }
 
 - (void)sayingAction

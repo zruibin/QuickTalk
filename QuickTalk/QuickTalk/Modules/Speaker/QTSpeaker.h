@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, QTSpeakerStatus) {
 @property (nonatomic, copy) NSString *content; //must
 @property (nonatomic, assign, readonly) QTSpeakerStatus status;
 @property (nonatomic, copy) void (^onErrorHandler)(NSInteger code, NSString *msg);
+@property (nonatomic, copy) void (^onFinishBlock)(void);
 
 + (instancetype)sharedInstance;
 
