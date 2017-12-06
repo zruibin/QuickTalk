@@ -61,6 +61,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [Tools drawBorder:self.segmentedControl top:NO left:NO bottom:YES right:NO
+               borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
 }
 
 - (void)didReceiveMemoryWarning {

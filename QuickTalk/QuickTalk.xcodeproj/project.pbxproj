@@ -40,6 +40,7 @@
 		E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */; };
 		E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */; };
 		E07BA9921FD7E95E00DE8C02 /* QTMyNewsCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9911FD7E95E00DE8C02 /* QTMyNewsCommentController.m */; };
+		E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
@@ -188,6 +189,8 @@
 		E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentModel.m; sourceTree = "<group>"; };
 		E07BA9901FD7E95E00DE8C02 /* QTMyNewsCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyNewsCommentController.h; sourceTree = "<group>"; };
 		E07BA9911FD7E95E00DE8C02 /* QTMyNewsCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyNewsCommentController.m; sourceTree = "<group>"; };
+		E07BA9931FD7F6EE00DE8C02 /* QTTopicCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicCommentController.h; sourceTree = "<group>"; };
+		E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicCommentController.m; sourceTree = "<group>"; };
 		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
 		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -594,12 +597,14 @@
 			children = (
 				E088D6561FD64E0600038736 /* QTTopicSpeaker.h */,
 				E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */,
-				E088D65C1FD64E0600038736 /* QTTopicController.h */,
-				E088D6571FD64E0600038736 /* QTTopicController.m */,
 				E088D6581FD64E0600038736 /* QTNewsController.h */,
 				E088D65B1FD64E0600038736 /* QTNewsController.m */,
+				E088D65C1FD64E0600038736 /* QTTopicController.h */,
+				E088D6571FD64E0600038736 /* QTTopicController.m */,
 				E088D6551FD64E0600038736 /* QTTopicContentController.h */,
 				E088D6591FD64E0600038736 /* QTTopicContentController.m */,
+				E07BA9931FD7F6EE00DE8C02 /* QTTopicCommentController.h */,
+				E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1341,6 +1346,7 @@
 				E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
 				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
+				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,

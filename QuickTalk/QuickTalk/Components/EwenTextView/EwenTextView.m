@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #define kScreenBounds ([[UIScreen mainScreen] bounds])
 #define kScreenwidth (kScreenBounds.size.width)
-#define kScreenheight (kScreenBounds.size.height-64)
+#define kScreenheight (kScreenBounds.size.height-64-44)
 #define UIColorRGB(x,y,z) [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1.0]
 
 @interface EwenTextView()<UITextViewDelegate,UIScrollViewDelegate>
@@ -102,7 +102,6 @@
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
     if (self.textView.text.length == 0) {
-        
         self.backGroundView.frame = CGRectMake(0, kScreenheight-height-49, kScreenwidth, 49);
     }else{
         CGRect rect = CGRectMake(0, kScreenheight - self.backGroundView.frame.size.height-height, kScreenwidth, self.backGroundView.frame.size.height);

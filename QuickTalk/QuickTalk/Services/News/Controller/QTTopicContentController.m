@@ -48,28 +48,12 @@
 - (void)initViews
 {
     self.title = @"阅读新闻";
-    
     [self.view addSubview:self.webView];
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
     [self.view addSubview:self.errorView];
     self.errorView.hidden = YES;
-    
-    self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playButton.frame = CGRectMake(0, 0, 40, 40);
-    [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-    [self.playButton addTarget:self action:@selector(sayingAction) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.playButton];
-    self.navigationItem.rightBarButtonItem = item;
-    if ([self.topicSpeaker.name isEqualToString:self.model.uuid]) {
-        if (self.topicSpeaker.speaker.status == QTSpeakerPause ||
-            self.topicSpeaker.speaker.status == QTSpeakerNone) {
-            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-        } else {
-            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
-        }
-    }
 }
 
 - (void)loadData
@@ -190,6 +174,8 @@
             UIWebView *webView = [[UIWebView alloc] init];
             webView.scalesPageToFit = YES;//自动对页面进行缩放以适应屏幕
 //            webView.detectsPhoneNumbers = YES;//自动检测网页上的电话号码，单击可以拨打
+            webView.backgroundColor = [UIColor whiteColor];
+            webView.opaque = NO;
             webView.delegate = self;
             webView;
         });

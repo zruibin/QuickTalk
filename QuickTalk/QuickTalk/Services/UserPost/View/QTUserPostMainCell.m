@@ -140,6 +140,8 @@
     self.timeLabel.text = [Tools getDateStringFromTimeString:model.time andNeedTime:YES];
     if (model.txt.length > 0) {
         self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:model.txt attributes:self.detailAttributes];
+    } else {
+        self.detailLabel.attributedText = nil;
     }
     self.webLabel.text = model.title;
     self.readLabel.text = [NSString stringWithFormat:@"阅读: %@", [Tools countTransition:model.readCount]];

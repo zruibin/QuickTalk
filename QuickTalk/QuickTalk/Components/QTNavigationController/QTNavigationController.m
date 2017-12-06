@@ -55,6 +55,32 @@
         viewController.hidesBottomBarWhenPushed = YES; //viewController是将要被push的控制器
     }
     [super pushViewController:viewController animated:animated];
+    
+    //替换掉leftBarButtonItem
+//    if (viewController.navigationItem.leftBarButtonItem== nil && [self.viewControllers count] > 1) {
+//        viewController.navigationItem.leftBarButtonItem = [self customLeftBackButton];
+//    }
+}
+
+#pragma mark - 自定义返回按钮图片
+-(UIBarButtonItem*)customLeftBackButton
+{
+    UIImage *image = [UIImage imageNamed:@"left"];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, 80, 44);
+    [backButton setImage:image forState:UIControlStateNormal];
+    [backButton setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR] forState:UIControlStateHighlighted];
+    backButton.contentHorizontalAlignment =UIControlContentHorizontalAlignmentLeft;
+    [backButton addTarget:self action:@selector(popself) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    
+    return backItem;
+}
+
+#pragma mark - 返回按钮事件(pop)
+-(void)popself
+{
+    [self popViewControllerAnimated:YES];
 }
 
 
