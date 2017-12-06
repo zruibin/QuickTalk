@@ -34,11 +34,14 @@ def addUserPostComment():
     if isReply == Config.TYPE_FOR_COMMENT_REPLY:
         if replyUUID == None:
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+    else:
+        isReply= Config.TYPE_FOR_COMMENT_DEFAULT
 
     return __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID)
     
 
-def __storageUserPostComment(userPostUUID, content, userUUID, isReply= Config.TYPE_FOR_COMMENT_DEFAULT, replyUUID=""):
+def __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID=""):
+    print isReply
     uuid = generateUUID()
     time = generateCurrentTime()
     insertSQL = "INSERT INTO t_quickTalk_userPost_comment (uuid, user_uuid, userPost_uuid, content, isReply, reply_uuid, time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
