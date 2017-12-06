@@ -1,37 +1,55 @@
 //
-//  QTUserPostMainController.m
+//  QTMyNewsCommentController.m
 //  QuickTalk
 //
-//  Created by  Ruibin.Chow on 2017/12/5.
+//  Created by  Ruibin.Chow on 2017/12/6.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTUserPostMainController.h"
-#import "QTUserPostAddController.h"
-#import "QTUserPostModel.h"
-#import "QTUserPostMainCell.h"
-#import <SafariServices/SafariServices.h>
-#import "QTUserPostCommentController.h"
+#import "QTMyNewsCommentController.h"
+#import "QTMyNewsCommentCell.h"
+#import "QTCommentModel.h"
+#import "QTTopicController.h"
 
-@interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
+@interface QTMyNewsCommentController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
-@property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
 
-- (void)initViews;
 - (void)loadData;
 
 @end
 
-@implementation QTUserPostMainController
+@implementation QTMyNewsCommentController
 
-- (void)viewDidLoad {
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTLoginStatusChangeNotification object:nil];
+}
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self initViews];
     
     __weak typeof(self) weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        if ([QTUserInfo sharedInstance].isLogin == NO) {
+            [weakSelf.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.edges.equalTo(weakSelf.view);
+            }];
+            [weakSelf.dataList removeAllObjects];
+            [weakSelf.tableView reloadData];
+        } else {
+            [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.right.and.bottom.equalTo(weakSelf.view);
+                make.top.equalTo(weakSelf.view).offset(100);
+            }];
+            [weakSelf.tableView beginHeaderRefreshing];
+        }
+    }];
+    
     [self.tableView headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         weakSelf.dataList = [NSMutableArray array];
@@ -43,8 +61,11 @@
         weakSelf.page += 1;
         [weakSelf loadData];
     }];
-    
-    self.errorView.hidden = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,36 +73,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (void)initViews
-{
-    self.title = @"快言";
-    
+{    
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.left.and.right.and.bottom.equalTo(self.view);
+        make.top.equalTo(self.view);
     }];
-    
-    [self.view addSubview:self.errorView];
-    
-    UIBarButtonItem *addItem = [[UIBarButtonItem alloc]
-                                       initWithImage:[UIImage imageNamed:@"add"]
-                                       style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
-    self.navigationItem.rightBarButtonItem = addItem;
 }
 
 - (void)loadData
 {
-    [QTProgressHUD showHUD:self.view];
-    [QTUserPostModel requestUserPostData:self.page userUUID:self.userUUID completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+        [self.tableView endHeaderRefreshing];
+        [self.tableView endFooterRefreshing];
+        return;
+    }
+    [QTCommentModel requestMyCommentData:[QTUserInfo sharedInstance].uuid page:self.page completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
         if (error) {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
-            if (self.page == 1) {
-                self.errorView.hidden = NO;
-            }
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         } else {
-            [QTProgressHUD hide];
-            self.errorView.hidden = YES;
             [self.dataList addObjectsFromArray:[list copy]];
             if (self.page == 1) {
                 [self.tableView endHeaderRefreshing];
@@ -101,6 +112,7 @@
     }];
 }
 
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -115,26 +127,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTTableViewCellMake(QTUserPostMainCell, cell);
+    QTTableViewCellMake(QTMyNewsCommentCell, cell);
     cell.tag = indexPath.section;
-    QTUserPostModel *model = self.dataList[indexPath.section];
-    [cell loadData:model];
-    __weak typeof(self) weakSelf = self;
-    [cell setOnHrefHandler:^(NSInteger index) {
-        QTUserPostModel *hrefModel = weakSelf.dataList[index];
-        NSString *url = hrefModel.content;
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-        [weakSelf presentViewController:safariController animated:YES completion:nil];
-    }];
+    QTCommentModel *model = self.dataList[indexPath.section];
+    [cell loadData:model.content avatar:model.avatar time:model.time likeNum:model.like title:model.title];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 60.0f;
-    QTTableViewCellMake(QTUserPostMainCell, cell);
-    QTUserPostModel *model = self.dataList[indexPath.section];
-    height = [cell heightForCell:model];
+    CGFloat height = 80.0f;
+    QTTableViewCellMake(QTMyNewsCommentCell, cell);
+    QTCommentModel *model = self.dataList[indexPath.section];
+    height = [cell heightForCell:model.content];
     return height;
 }
 
@@ -152,22 +157,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    QTUserPostModel *model = self.dataList[indexPath.section];
-    QTUserPostCommentController *userPostCommentController = [[QTUserPostCommentController alloc] init];
-    userPostCommentController.uuid = model.uuid;
-    [self.navigationController pushViewController:userPostCommentController animated:YES];
+    QTCommentModel *model = self.dataList[indexPath.section];
+    QTTopicController *topicController = [[QTTopicController alloc] init];
+    topicController.topicUUID = model.topicUUID;
+    [self.navigationController pushViewController:topicController animated:YES];
 }
 
 #pragma mark - Action
 
-- (void)addAction
-{
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
-        QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
-        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-}
 
 #pragma mark - getter and setter
 
@@ -187,29 +184,12 @@
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            QTTableViewCellRegister(tableView, QTUserPostMainCell);
+            QTTableViewCellRegister(tableView, QTMyNewsCommentCell);
             tableView;
         });
     }
     return _tableView;
 }
 
-- (QTErrorView *)errorView
-{
-    if (_errorView == nil) {
-        _errorView = ({
-            QTErrorView *view = [[QTErrorView alloc] initWithFrame:self.view.bounds];
-            __weak typeof(self) weakSelf = self;
-            [view setOnRefreshHandler:^{
-                [weakSelf loadData];
-            }];
-            view;
-        });
-    }
-    return _errorView;
-}
-
 
 @end
-
-

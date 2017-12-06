@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QTMyCell : UITableViewCell
+@interface QTMyNewsCommentCell : UITableViewCell
 
 - (void)loadData:(NSString *)detail avatar:(NSString *)avatar time:(NSString *)time
          likeNum:(NSInteger)likeNum title:(NSString *)title;

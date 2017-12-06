@@ -1,14 +1,14 @@
 //
-//  QTMyCell.m
+//  QTMyNewsCommentCell.m
 //  QuickTalk
 //
 //  Created by  Ruibin.Chow on 2017/11/8.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTMyCell.h"
+#import "QTMyNewsCommentCell.h"
 
-@interface QTMyCell ()
+@interface QTMyNewsCommentCell ()
 
 @property (nonatomic, strong, readwrite) UIButton *avatarButton;
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation QTMyCell
+@implementation QTMyNewsCommentCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

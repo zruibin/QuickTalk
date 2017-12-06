@@ -7,25 +7,23 @@
 //
 
 #import "QTMyController.h"
-#import "QTMyCell.h"
-#import "QTCommentModel.h"
 #import "QTSettingController.h"
 #import "QTAvatarEditController.h"
 #import "QTInfoEditController.h"
 #import "QTTopicController.h"
+#import "QTUserPostMainController.h"
+#import "QTMyNewsCommentController.h"
 
 
-@interface QTMyController () <UITableViewDataSource, UITableViewDelegate>
+@interface QTMyController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataList;
-@property (nonatomic, assign) NSInteger page;
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UIButton *avatarView;
 @property (nonatomic, strong) UIButton *nicknameButton;
 
-
-- (void)loadData;
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray *childControllers;
 
 @end
 
@@ -41,37 +39,22 @@
     [super viewDidLoad];
     [self initViews];
     
+    self.childControllers = [NSMutableArray arrayWithCapacity:2];
+    [self selectedOnSegment:0];
+    
     __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         if ([QTUserInfo sharedInstance].isLogin == NO) {
             weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0);
-            [weakSelf.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.edges.equalTo(weakSelf.view);
-            }];
-            [weakSelf.dataList removeAllObjects];
-            [weakSelf.tableView reloadData];
+            self.segmentedControl.hidden = YES;
+            self.scrollView.hidden = YES;
         } else {
             weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
-            [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.and.right.and.bottom.equalTo(weakSelf.view);
-                make.top.equalTo(weakSelf.view).offset(100);
-            }];
-            [weakSelf.tableView beginHeaderRefreshing];
             [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
             [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
+            self.segmentedControl.hidden = NO;
+            self.scrollView.hidden = NO;
         }
-    }];
-
-    [self.tableView headerWithRefreshingBlock:^{
-        weakSelf.page = 1;
-        weakSelf.dataList = [NSMutableArray array];
-        [weakSelf loadData];
-    }];
-    [self.tableView beginHeaderRefreshing];
-    
-    [self.tableView footerWithRefreshingBlock:^{
-        weakSelf.page += 1;
-        [weakSelf loadData];
     }];
 }
 
@@ -89,96 +72,76 @@
 {
     self.title = @"我";
     [self.view addSubview:self.headerView];
-    
-    [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self.view);
-        make.top.equalTo(self.view).offset(100);
-    }];
+    [self.view addSubview:self.segmentedControl];
+    self.segmentedControl.frame = CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 44);
+    [self.view addSubview:self.scrollView];
+    self.scrollView.frame = CGRectMake(0, 144, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-144-49-64);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*2,
+                                             CGRectGetHeight(self.scrollView.bounds));
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(settingAction)];
     self.navigationItem.rightBarButtonItem = item;
-}
-
-- (void)loadData
-{
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
-        [self.tableView endHeaderRefreshing];
-        [self.tableView endFooterRefreshing];
-        return;
+    
+    if ([QTUserInfo sharedInstance].isLogin == NO) {
+        self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0);
+        self.segmentedControl.hidden = YES;
+        self.scrollView.hidden = YES;
+    } else {
+        self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
+        [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
+        [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
+        self.segmentedControl.hidden = NO;
+        self.scrollView.hidden = NO;
     }
-    [QTCommentModel requestMyCommentData:[QTUserInfo sharedInstance].uuid page:self.page completionHandler:^(NSArray<QTCommentModel *> *list, NSError *error) {
-        if (error) {
-            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
-        } else {
-            [self.dataList addObjectsFromArray:[list copy]];
-            if (self.page == 1) {
-                [self.tableView endHeaderRefreshing];
-                if (list.count < 10) {
-                    [self.tableView hiddenFooter];
-                }
-                [self.tableView endFooterRefreshing];
-            } else {
-                if (list.count < 10) {
-                    [self.tableView endRefreshingWithNoMoreData];
-                } else {
-                    [self.tableView endFooterRefreshing];
-                }
-            }
-            [self.tableView reloadData];
+}
+
+#pragma mark - Private
+
+- (void)selectedOnSegment:(NSInteger)index
+{
+    [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
+    if (index == 0) {
+        if (self.childControllers.count == 0) {
+            QTUserPostMainController *userPostController = [[QTUserPostMainController alloc] init];
+            userPostController.userUUID = [QTUserInfo sharedInstance].uuid;
+            [self.childControllers addObject:userPostController];
+            userPostController.view.frame = CGRectMake(0, 0,
+                                                   CGRectGetWidth(self.scrollView.bounds),
+                                                   CGRectGetHeight(self.scrollView.bounds));
+            userPostController.view.userInteractionEnabled = YES;
+            [self.scrollView addSubview:userPostController.view];
+            [self addChildViewController:userPostController];
         }
-    }];
+        [self.scrollView scrollRectToVisible:CGRectMake(0, 0,
+                                                        CGRectGetWidth(self.scrollView.bounds),
+                                                        CGRectGetHeight(self.scrollView.bounds)) animated:YES];
+    }
+    if (index == 1) {
+        if (self.childControllers.count == 1) {
+            QTMyNewsCommentController *myNewsCommentController = [[QTMyNewsCommentController alloc] init];
+            [self.childControllers addObject:myNewsCommentController];
+            myNewsCommentController.view.frame = CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
+                                                      CGRectGetWidth(self.scrollView.bounds),
+                                                      CGRectGetHeight(self.scrollView.bounds));
+            myNewsCommentController.view.userInteractionEnabled = YES;
+            [self.scrollView addSubview:myNewsCommentController.view];
+            [self addChildViewController:myNewsCommentController];
+        }
+        [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
+                                                        CGRectGetWidth(self.scrollView.bounds),
+                                                        CGRectGetHeight(self.scrollView.bounds)) animated:YES];
+    }
 }
 
+#pragma mark - UIScrollViewDelegate
 
-#pragma mark - TableView Delegate And DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    return self.dataList.count;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    QTMyCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMyCell class])];
-    cell.tag = indexPath.section;
-    QTCommentModel *model = self.dataList[indexPath.section];
-    [cell loadData:model.content avatar:model.avatar time:model.time likeNum:model.like title:model.title];
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat height = 80.0f;
-    QTMyCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTMyCell class])];
-    QTCommentModel *model = self.dataList[indexPath.section];
-    height = [cell heightForCell:model.content];
-    return height;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    /*顶部和第一行数据之间的间隔要将0改为一个非0的数值即可实现*/
-    return 0.1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 5;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    QTCommentModel *model = self.dataList[indexPath.section];
-    QTTopicController *topicController = [[QTTopicController alloc] init];
-    topicController.topicUUID = model.topicUUID;
-    [self.navigationController pushViewController:topicController animated:YES];
+    if (scrollView == self.scrollView) {
+        CGFloat pageWidth = scrollView.frame.size.width;
+        NSInteger page = scrollView.contentOffset.x / pageWidth;
+        [self selectedOnSegment:page];
+    }
 }
 
 #pragma mark - Action
@@ -218,29 +181,6 @@
 }
 
 #pragma mark - getter and setter
-
-- (UITableView *)tableView
-{
-    if (_tableView == nil) {
-        _tableView = ({
-            UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-            tableView.estimatedRowHeight = 0;
-            tableView.estimatedSectionHeaderHeight = 0;
-            tableView.estimatedSectionFooterHeight = 0;
-            tableView.delegate = self;
-            tableView.dataSource = self;
-            tableView.translatesAutoresizingMaskIntoConstraints = NO;
-            tableView.showsVerticalScrollIndicator = NO;
-            tableView.exclusiveTouch = YES;
-            tableView.backgroundColor = [UIColor clearColor];
-            tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
-            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[QTMyCell class] forCellReuseIdentifier:NSStringFromClass([QTMyCell class])];
-            tableView;
-        });
-    }
-    return _tableView;
-}
 
 - (UIView *)headerView
 {
@@ -301,6 +241,61 @@
         });
     }
     return _nicknameButton;
+}
+
+- (HMSegmentedControl *)segmentedControl
+{
+    if (_segmentedControl == nil) {
+        _segmentedControl = ({
+            HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc]
+                                                    initWithSectionTitles:@[@"我的快言", @"新闻评论"]];
+            segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+            segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+            segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+            segmentedControl.selectionIndicatorHeight = 2.0f;
+            segmentedControl.selectionIndicatorColor = QuickTalk_MAIN_COLOR;
+            segmentedControl.borderWidth = .05f;
+            [segmentedControl setTitleFormatter:^NSAttributedString *(HMSegmentedControl *segmentedControl,
+                                                                      NSString *title, NSUInteger index, BOOL selected) {
+                NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title
+                                                                                attributes:@{
+                                                                                             NSForegroundColorAttributeName : [UIColor blackColor],
+                                                                                             NSFontAttributeName: [UIFont boldSystemFontOfSize:14]
+                                                                                             }];
+                if (selected == NO) {
+                    attString = [[NSAttributedString alloc] initWithString:title
+                                                                attributes:@{
+                                                                             NSForegroundColorAttributeName : [UIColor colorFromHexValue:0x999999],
+                                                                             NSFontAttributeName: [UIFont systemFontOfSize:14]
+                                                                             }];
+                }
+                return attString;
+            }];
+            segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
+            __weak typeof(self) weakSelf = self;
+            [segmentedControl setIndexChangeBlock:^(NSInteger index) {
+                [weakSelf selectedOnSegment:index];
+            }];
+            segmentedControl;
+        });
+    }
+    return _segmentedControl;
+}
+
+- (UIScrollView *)scrollView
+{
+    if (_scrollView == nil) {
+        _scrollView = ({
+            UIScrollView *scrollView = [[UIScrollView alloc] init];
+            scrollView.backgroundColor = [UIColor colorFromHexValue:0xEFEFEF];
+            scrollView.pagingEnabled = YES;
+            scrollView.delegate = self;
+            scrollView.showsVerticalScrollIndicator = NO;
+            scrollView.showsHorizontalScrollIndicator = NO;
+            scrollView;
+        });
+    }
+    return _scrollView;
 }
 
 @end

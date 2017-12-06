@@ -142,8 +142,8 @@
         self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:model.txt attributes:self.detailAttributes];
     }
     self.webLabel.text = model.title;
-    self.readLabel.text = [NSString stringWithFormat:@"阅读量:%@", [Tools countTransition:model.readCount]];
-    self.commentLabel.text = [NSString stringWithFormat:@"评论:%@", [Tools countTransition:model.commentCount]];
+    self.readLabel.text = [NSString stringWithFormat:@"阅读: %@", [Tools countTransition:model.readCount]];
+    self.commentLabel.text = [NSString stringWithFormat:@"评论: %@", [Tools countTransition:model.commentCount]];
 }
 
 - (CGFloat)heightForCell:(QTUserPostModel *)model

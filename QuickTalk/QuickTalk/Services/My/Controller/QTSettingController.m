@@ -59,20 +59,21 @@
     
     UIView *footView = [[UIView alloc] init];
     footView.frame =CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 54);
+    
+    self.logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.logoutButton.frame = CGRectMake(0, 10, CGRectGetWidth(self.view.bounds), 44);
+    [self.logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    self.logoutButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self.logoutButton setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [footView addSubview:self.logoutButton];
     self.tableView.tableFooterView = footView;
+    
     if ([QTUserInfo sharedInstance].isLogin) {
-        self.logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.logoutButton.frame = CGRectMake(0, 10, CGRectGetWidth(self.view.bounds), 44);
         [self.logoutButton setTitle:@"退出登录" forState:UIControlStateNormal];
-        [self.logoutButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        self.logoutButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [self.logoutButton setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-        [self.logoutButton addTarget:self action:@selector(logoutButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIView *footView = [[UIView alloc] init];
-        footView.frame =CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 54);
-        [footView addSubview:self.logoutButton];
-        self.tableView.tableFooterView = footView;
+    } else {
+        [self.logoutButton setTitle:@"登录" forState:UIControlStateNormal];
     }
 }
 

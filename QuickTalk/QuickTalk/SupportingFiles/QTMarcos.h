@@ -83,4 +83,16 @@
 #define QTDataCache @"QTDataCache"
 #define QTPasteboardURL @"QTPasteboardURL"
 
+/*UITableView 系列使用*/
+#define QTTableViewCellMake(kTableViewCell, kName) kTableViewCell *kName = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([kTableViewCell class])];
+#define QTTableViewCellRegister(kTableView, kTableViewCell)  [kTableView registerClass:[kTableViewCell class] forCellReuseIdentifier:NSStringFromClass([kTableViewCell class])];
+
+
 #endif /* QCMarcos_h */
+
+
+
+
+
+
+

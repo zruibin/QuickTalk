@@ -10,4 +10,6 @@
 
 @interface QTUserPostMainController : QTViewController
 
+@property (nonatomic, copy) NSString *userUUID;
+
 @end

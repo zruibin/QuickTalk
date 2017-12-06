@@ -38,10 +38,6 @@
     
     self.viewControllers = @[userPostNav, newsNav, myNav];
     [self setTabBarItemAppearance];
-    
-//    if ([[QTUserInfo sharedInstance] isLogin] == NO) {
-//        self.selectedIndex = 1;
-//    }
 }
 
 - (void)didReceiveMemoryWarning {
