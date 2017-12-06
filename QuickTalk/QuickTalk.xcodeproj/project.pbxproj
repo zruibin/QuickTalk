@@ -36,6 +36,9 @@
 		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
+		E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */; };
+		E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */; };
+		E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
@@ -87,7 +90,6 @@
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
 		E0A0F4A91FB2AD9E001242DF /* QTMyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A0F4A81FB2AD9E001242DF /* QTMyCell.m */; };
-		E0A4FC841F98899D002ED580 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = E0A4FC831F98899D002ED580 /* Podfile */; };
 		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
 		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
@@ -177,6 +179,12 @@
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
 		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
 		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
+		E079B8F21FD78CA800A76FCD /* QTUserPostCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentController.h; sourceTree = "<group>"; };
+		E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentController.m; sourceTree = "<group>"; };
+		E079B8F51FD78E6700A76FCD /* QTUserPostCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentCell.h; sourceTree = "<group>"; };
+		E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentCell.m; sourceTree = "<group>"; };
+		E079B8F81FD79CC200A76FCD /* QTUserPostCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentModel.h; sourceTree = "<group>"; };
+		E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentModel.m; sourceTree = "<group>"; };
 		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
 		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -259,7 +267,6 @@
 		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
 		E0A0F4A71FB2AD9E001242DF /* QTMyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyCell.h; sourceTree = "<group>"; };
 		E0A0F4A81FB2AD9E001242DF /* QTMyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyCell.m; sourceTree = "<group>"; };
-		E0A4FC831F98899D002ED580 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -621,6 +628,8 @@
 			children = (
 				E088D6831FD68DAC00038736 /* QTUserPostModel.h */,
 				E088D6841FD68DAC00038736 /* QTUserPostModel.m */,
+				E079B8F81FD79CC200A76FCD /* QTUserPostCommentModel.h */,
+				E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -630,6 +639,8 @@
 			children = (
 				E088D6861FD6979400038736 /* QTUserPostMainCell.h */,
 				E088D6871FD6979400038736 /* QTUserPostMainCell.m */,
+				E079B8F51FD78E6700A76FCD /* QTUserPostCommentCell.h */,
+				E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -641,6 +652,8 @@
 				E088D6751FD6650000038736 /* QTUserPostMainController.m */,
 				E088D6781FD6651B00038736 /* QTUserPostAddController.h */,
 				E088D6791FD6651B00038736 /* QTUserPostAddController.m */,
+				E079B8F21FD78CA800A76FCD /* QTUserPostCommentController.h */,
+				E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -803,7 +816,6 @@
 				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
 				E08A64561FA97C5800317CE2 /* QTTabBarController.h */,
 				E08A64571FA97C5800317CE2 /* QTTabBarController.m */,
-				E0A4FC831F98899D002ED580 /* Podfile */,
 			);
 			path = QuickTalk;
 			sourceTree = "<group>";
@@ -1104,7 +1116,6 @@
 				E09351861FA30EBE000687BC /* README.txt in Resources */,
 				E09351871FA30EBE000687BC /* ShareSDK.bundle in Resources */,
 				E084A9211FB5AA8500AE4AD2 /* image.js in Resources */,
-				E0A4FC841F98899D002ED580 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,12 +1309,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
+				E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */,
 				E040F6B41FB179AB00CDA6B0 /* QTCircleCell.m in Sources */,
 				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
 				E088D67A1FD6651B00038736 /* QTUserPostAddController.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
 				E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */,
 				E0A0F4A91FB2AD9E001242DF /* QTMyCell.m in Sources */,
+				E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */,
 				E088D6851FD68DAC00038736 /* QTUserPostModel.m in Sources */,
 				E040F6A11FB15B5900CDA6B0 /* QTAvatarEditController.m in Sources */,
 				E088D6701FD64E0600038736 /* QTTopicLeftCell.m in Sources */,
@@ -1327,6 +1340,7 @@
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
 				E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */,
 				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,

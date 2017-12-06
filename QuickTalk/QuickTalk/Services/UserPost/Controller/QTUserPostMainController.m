@@ -10,13 +10,13 @@
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
 #import "QTUserPostMainCell.h"
+#import <SafariServices/SafariServices.h>
+#import "QTUserPostCommentController.h"
 
 @interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
-@property (nonatomic, assign) CGFloat viewWidth;
-@property (nonatomic, assign) CGFloat viewHeight;
 @property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
 
@@ -119,6 +119,13 @@
     cell.tag = indexPath.section;
     QTUserPostModel *model = self.dataList[indexPath.section];
     [cell loadData:model];
+    __weak typeof(self) weakSelf = self;
+    [cell setOnHrefHandler:^(NSInteger index) {
+        QTUserPostModel *hrefModel = weakSelf.dataList[index];
+        NSString *url = hrefModel.content;
+        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+        [weakSelf presentViewController:safariController animated:YES completion:nil];
+    }];
     return cell;
 }
 
@@ -145,7 +152,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    QTUserPostModel *model = self.dataList[indexPath.section];
+    QTUserPostCommentController *userPostCommentController = [[QTUserPostCommentController alloc] init];
+    userPostCommentController.uuid = model.uuid;
+    [self.navigationController pushViewController:userPostCommentController animated:YES];
 }
 
 #pragma mark - Action

@@ -12,6 +12,8 @@
 
 @interface QTUserPostMainCell : UITableViewCell
 
+@property (nonatomic, copy) void (^onHrefHandler)(NSInteger index);
+
 - (void)loadData:(QTUserPostModel *)model;
 
 - (CGFloat)heightForCell:(QTUserPostModel *)model;

@@ -71,7 +71,7 @@
     [self.nicknameButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarButton.mas_right).offset(10);
         make.top.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.contentView).offset(-30);
+        make.width.mas_greaterThanOrEqualTo(100);
         make.height.mas_equalTo(20);
     }];
     [self.contentView addSubview:self.timeLabel];
@@ -160,7 +160,12 @@
 
 #pragma mark - Action
 
-
+- (void)herfHandlerAction
+{
+    if (self.onHrefHandler) {
+        self.onHrefHandler(self.tag);
+    }
+}
 
 #pragma mark - setter and getter
 
@@ -274,6 +279,7 @@
             button.userInteractionEnabled = YES;
             button.layer.cornerRadius = 4;
             button.layer.masksToBounds = YES;
+            [button addTarget:self action:@selector(herfHandlerAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
