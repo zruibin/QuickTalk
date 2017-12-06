@@ -115,24 +115,23 @@
         NSURL *url =[NSURL URLWithString:board.string] ;
         NSError *err = nil;
         NSString *str =   [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
-        if (err == nil) {
-            NSString *re = @"<title>(.*?)</title>";
-            NSRange range = [str rangeOfString:re options:NSRegularExpressionSearch];
-            if (range.location != NSNotFound) {
-                NSString *title = [str substringWithRange:range];
-                title = [title stringByReplacingOccurrencesOfString:@"<title>"withString:@""];
-                title = [title stringByReplacingOccurrencesOfString:@"</title>"withString:@""];
-                DLog(@"title: %@", title);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //                   [QTProgressHUD showHUDWithText:title];
-                    [QTProgressHUD hide];
-                    weakSelf.webHref = board.string;
-                    weakSelf.webTitle = title;
-                    weakSelf.hrefLabel.hidden = NO;
-                    weakSelf.pasteButton.hidden = YES;
-                    weakSelf.hrefLabel.text = title;
-                });
-            }
+        NSString *re = @"<title>[^<]*</title>";
+        NSRange range = [str rangeOfString:re options:NSRegularExpressionSearch];
+        if (err == nil && range.location != NSNotFound) {
+            NSString *title = [str substringWithRange:range];
+            title = [title stringByReplacingOccurrencesOfString:@"<title>"withString:@""];
+            title = [title stringByReplacingOccurrencesOfString:@"</title>"withString:@""];
+            title = [title stringByReplacingOccurrencesOfString:@" "withString:@""];
+            title = [title stringByReplacingOccurrencesOfString:@"\n"withString:@""];
+//            DLog(@"title: %@", title);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [QTProgressHUD hide];
+                weakSelf.webHref = board.string;
+                weakSelf.webTitle = title;
+                weakSelf.hrefLabel.hidden = NO;
+                weakSelf.pasteButton.hidden = YES;
+                weakSelf.hrefLabel.text = title;
+            });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [QTProgressHUD showHUDWithText:@"获取失败，请复制正确网址"];
