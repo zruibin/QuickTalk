@@ -83,7 +83,7 @@ UITableViewDataSource, UITableViewDelegate
 - (void)initViews
 {    
     self.viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
-    self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]) - 44;
+    self.viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     [self.view addSubview:self.tableView];
     self.tableView.frame = CGRectMake(0, 0, self.viewWidth,
                                       self.viewHeight-64-50);

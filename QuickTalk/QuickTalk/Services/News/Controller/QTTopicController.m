@@ -80,10 +80,13 @@
 
 - (void)initViews
 {
-    [self.view addSubview:self.segmentedControl];
-    self.segmentedControl.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44);
+    self.segmentedControl.frame = CGRectMake(0, 0, 200, 44);
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    [titleView addSubview:self.segmentedControl];
+    self.navigationItem.titleView = titleView;
+    
     [self.view addSubview:self.scrollView];
-    self.scrollView.frame = CGRectMake(0, 44, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-49-64);
+    self.scrollView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-64);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*2,
                                              CGRectGetHeight(self.scrollView.bounds));
     
@@ -198,7 +201,8 @@
     if (_segmentedControl == nil) {
         _segmentedControl = ({
             HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc]
-                                                    initWithSectionTitles:@[@"新闻", @"评论"]];
+                                                    initWithSectionTitles:@[@"内容", @"评论"]];
+            segmentedControl.backgroundColor = [UIColor clearColor];
             segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
             segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
             segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
