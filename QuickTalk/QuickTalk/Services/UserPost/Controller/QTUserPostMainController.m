@@ -125,22 +125,22 @@
         MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
         [view show];
     };
-    void(^shareHandler)(NSInteger index) = ^(NSInteger index){
-        [weakSelf shareData:model];
-    };
+//    void(^shareHandler)(NSInteger index) = ^(NSInteger index){
+//        [weakSelf shareData:model];
+//    };
     NSArray *items = @[];
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         items = @[
-                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler),
-                       MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
+                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
+//                       ,MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
                        ];
-    } else if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
+    } else {// if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
         items = @[
-                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler),
-                       MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
+                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
+//                       ,MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
                        ];
-    } else {
-        items = @[MMItemMake(@"分享", MMItemTypeNormal, shareHandler)];
+//    } else {
+//        items = @[MMItemMake(@"分享", MMItemTypeNormal, shareHandler)];
     }
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
                                                           items:items];

@@ -16,6 +16,7 @@
 @property (nonatomic, strong) RBLabel *hrefLabel;
 @property (nonatomic, strong) UIButton *pasteButton;
 @property (nonatomic, strong) UIButton *saveButton;
+@property (nonatomic, strong) UIButton *deleteButton;
 
 @property (nonatomic, copy) NSString *webHref;
 @property (nonatomic, copy) NSString *webTitle;
@@ -87,9 +88,16 @@
         make.top.equalTo(self.panel.mas_bottom).offset(20);
         make.height.mas_equalTo(44);
     }];
+    [self.view addSubview:self.deleteButton];
+    [self.deleteButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.hrefLabel).offset(-18);
+        make.right.equalTo(self.hrefLabel.mas_right).offset(6);
+        make.height.and.with.mas_equalTo(40);
+    }];
 
     self.hrefLabel.hidden = YES;
     self.pasteButton.hidden = NO;
+    self.deleteButton.hidden = YES;
 }
 
 #pragma mark - Private
@@ -127,16 +135,20 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [QTProgressHUD hide];
                 weakSelf.webHref = board.string;
-                weakSelf.webTitle = title;
+                if (title.length == 0) {
+                    weakSelf.webTitle = weakSelf.webHref;
+                }
                 weakSelf.hrefLabel.hidden = NO;
                 weakSelf.pasteButton.hidden = YES;
-                weakSelf.hrefLabel.text = title;
+                weakSelf.hrefLabel.text = weakSelf.webTitle;
+                weakSelf.deleteButton.hidden = NO;
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDWithText:@"获取失败，请复制正确网址"];
+                [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
                 weakSelf.hrefLabel.hidden = YES;
                 weakSelf.pasteButton.hidden = NO;
+                weakSelf.deleteButton.hidden = YES;
             });
         }
     }];
@@ -146,6 +158,7 @@
 
 - (void)changeButtonAction
 {
+    [self.textView resignFirstResponder];
     [self getPasteboardData];
 }
 
@@ -157,6 +170,7 @@
     }
     
     if (self.webHref.length == 0 || self.webTitle.length == 0) {
+        [QTProgressHUD showHUDText:@"请复制链接" view:self.view];
         return;
     }
     NSString *userUUID = [QTUserInfo sharedInstance].uuid;
@@ -171,6 +185,14 @@
     }];
 }
 
+- (void)deleteButtonAction
+{
+    self.webHref = nil;
+    self.webTitle = nil;
+    self.hrefLabel.hidden = YES;
+    self.pasteButton.hidden = NO;
+    self.deleteButton.hidden = YES;
+}
 
 #pragma mark - getter and setter
 
@@ -263,7 +285,21 @@
     return _saveButton;
 }
 
-
+- (UIButton *)deleteButton
+{
+    if (_deleteButton == nil) {
+        _deleteButton = ({
+            UIImage *image = [UIImage imageNamed:@"delete"];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.translatesAutoresizingMaskIntoConstraints = NO;
+            [button setImage:[image imageWithTintColor:[UIColor redColor]] forState:UIControlStateNormal];
+            [button setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR] forState:UIControlStateHighlighted];
+            [button addTarget:self action:@selector(deleteButtonAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _deleteButton;
+}
 
 
 @end

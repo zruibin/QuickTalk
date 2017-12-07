@@ -28,10 +28,6 @@
 		E040F6A51FB15B5900CDA6B0 /* QTIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6841FB15B5900CDA6B0 /* QTIntroController.m */; };
 		E040F6A61FB15B5900CDA6B0 /* QTSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6861FB15B5900CDA6B0 /* QTSettingController.m */; };
 		E040F6A71FB15B5900CDA6B0 /* QTUserAgreementController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6881FB15B5900CDA6B0 /* QTUserAgreementController.m */; };
-		E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B01FB15CB000CDA6B0 /* QTCircleController.m */; };
-		E040F6B41FB179AB00CDA6B0 /* QTCircleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B31FB179AB00CDA6B0 /* QTCircleCell.m */; };
-		E040F6B71FB1861D00CDA6B0 /* QTAddCircleController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B61FB1861D00CDA6B0 /* QTAddCircleController.m */; };
-		E040F6BA1FB19B5A00CDA6B0 /* QTCircleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6B91FB19B5A00CDA6B0 /* QTCircleModel.m */; };
 		E040F6BD1FB1A9A400CDA6B0 /* QTMyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */; };
 		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
@@ -166,14 +162,6 @@
 		E040F6861FB15B5900CDA6B0 /* QTSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTSettingController.m; sourceTree = "<group>"; };
 		E040F6871FB15B5900CDA6B0 /* QTUserAgreementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTUserAgreementController.h; sourceTree = "<group>"; };
 		E040F6881FB15B5900CDA6B0 /* QTUserAgreementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTUserAgreementController.m; sourceTree = "<group>"; };
-		E040F6AF1FB15CB000CDA6B0 /* QTCircleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCircleController.h; sourceTree = "<group>"; };
-		E040F6B01FB15CB000CDA6B0 /* QTCircleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCircleController.m; sourceTree = "<group>"; };
-		E040F6B21FB179AB00CDA6B0 /* QTCircleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCircleCell.h; sourceTree = "<group>"; };
-		E040F6B31FB179AB00CDA6B0 /* QTCircleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCircleCell.m; sourceTree = "<group>"; };
-		E040F6B51FB1861D00CDA6B0 /* QTAddCircleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAddCircleController.h; sourceTree = "<group>"; };
-		E040F6B61FB1861D00CDA6B0 /* QTAddCircleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAddCircleController.m; sourceTree = "<group>"; };
-		E040F6B81FB19B5A00CDA6B0 /* QTCircleModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCircleModel.h; sourceTree = "<group>"; };
-		E040F6B91FB19B5A00CDA6B0 /* QTCircleModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCircleModel.m; sourceTree = "<group>"; };
 		E040F6BB1FB1A9A400CDA6B0 /* QTMyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyController.h; sourceTree = "<group>"; };
 		E040F6BC1FB1A9A400CDA6B0 /* QTMyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyController.m; sourceTree = "<group>"; };
 		E045AD911FC417D800A16A40 /* QTCleaner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCleaner.h; sourceTree = "<group>"; };
@@ -472,45 +460,6 @@
 			children = (
 				E0A0F4A71FB2AD9E001242DF /* QTMyNewsCommentCell.h */,
 				E0A0F4A81FB2AD9E001242DF /* QTMyNewsCommentCell.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		E040F68B1FB15B5900CDA6B0 /* Circle */ = {
-			isa = PBXGroup;
-			children = (
-				E040F68C1FB15B5900CDA6B0 /* Controller */,
-				E040F68D1FB15B5900CDA6B0 /* Model */,
-				E040F68E1FB15B5900CDA6B0 /* View */,
-			);
-			path = Circle;
-			sourceTree = "<group>";
-		};
-		E040F68C1FB15B5900CDA6B0 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				E040F6AF1FB15CB000CDA6B0 /* QTCircleController.h */,
-				E040F6B01FB15CB000CDA6B0 /* QTCircleController.m */,
-				E040F6B51FB1861D00CDA6B0 /* QTAddCircleController.h */,
-				E040F6B61FB1861D00CDA6B0 /* QTAddCircleController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		E040F68D1FB15B5900CDA6B0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E040F6B81FB19B5A00CDA6B0 /* QTCircleModel.h */,
-				E040F6B91FB19B5A00CDA6B0 /* QTCircleModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		E040F68E1FB15B5900CDA6B0 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E040F6B21FB179AB00CDA6B0 /* QTCircleCell.h */,
-				E040F6B31FB179AB00CDA6B0 /* QTCircleCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -875,7 +824,6 @@
 			isa = PBXGroup;
 			children = (
 				E088D6531FD64E0600038736 /* News */,
-				E040F68B1FB15B5900CDA6B0 /* Circle */,
 				E088D64F1FD64C9800038736 /* UserPost */,
 				E040F6791FB15B5900CDA6B0 /* My */,
 				E08181311F99A01E0035DEF4 /* QTUserInfo.h */,
@@ -1320,7 +1268,6 @@
 			files = (
 				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
 				E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */,
-				E040F6B41FB179AB00CDA6B0 /* QTCircleCell.m in Sources */,
 				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
 				E088D67A1FD6651B00038736 /* QTUserPostAddController.m in Sources */,
 				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
@@ -1349,7 +1296,6 @@
 				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
-				E040F6B11FB15CB000CDA6B0 /* QTCircleController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
 				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
@@ -1363,9 +1309,7 @@
 				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,
 				E040F6A51FB15B5900CDA6B0 /* QTIntroController.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
-				E040F6B71FB1861D00CDA6B0 /* QTAddCircleController.m in Sources */,
 				E040F6A61FB15B5900CDA6B0 /* QTSettingController.m in Sources */,
-				E040F6BA1FB19B5A00CDA6B0 /* QTCircleModel.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
 				E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
