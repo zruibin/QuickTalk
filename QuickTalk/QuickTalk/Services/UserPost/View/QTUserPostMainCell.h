@@ -13,6 +13,7 @@
 @interface QTUserPostMainCell : UITableViewCell
 
 @property (nonatomic, copy) void (^onHrefHandler)(NSInteger index);
+@property (nonatomic, copy) void (^onArrowHandler)(NSInteger index);
 
 - (void)loadData:(QTUserPostModel *)model;
 

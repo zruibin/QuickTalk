@@ -83,7 +83,7 @@
 {
     if (content.length > 0) {
        NSString *style = @"<style>*{font-size:50px; padding: 5px 10px; line-height:80px; margin: 0px;} img{width:98%; padding: 5px 10px; margin: 0px;} hr {border: 0;border-top: 1px solid #eee;} a {color: #999999; font-size: 40px;} a:link, a:visited, a:active{text-decoration:none;} a:hover{text-decoration:underline;} h1{font-size:60px;}</style>";
-        if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+        if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
             NSRange range = [content rangeOfString:@"新闻来源：<strong>"];
             if (range.location != NSNotFound) {
                 content = [content substringToIndex:range.location];

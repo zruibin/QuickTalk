@@ -318,7 +318,7 @@ UITableViewDataSource, UITableViewDelegate
         }];
         [leftCell setOnAvatarHandler:^{
             if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]
-                && [QTUserInfo sharedInstance].hiddenOneClickLogin == NO) {
+                && [QTUserInfo sharedInstance].hiddenData == NO) {
                 [weakSelf blockUser];
             }
         }];

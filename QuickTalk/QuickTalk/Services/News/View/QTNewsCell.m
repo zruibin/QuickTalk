@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong, readwrite) UIButton *playButton;
 @property (nonatomic, copy) NSString *uuid;
+@property (nonatomic, strong) UILabel *readLabel;
 
 - (void)initSubviews;
 
@@ -61,10 +62,18 @@
     [self.contentView addSubview:self.timeLabel];
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(10);
-        make.right.equalTo(self.contentView).offset(-10);
         make.bottom.equalTo(self.contentView).offset(-5);
         make.height.mas_equalTo(30);
+        make.width.mas_greaterThanOrEqualTo(40);
     }];
+    [self.contentView addSubview:self.readLabel];
+    [self.readLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.timeLabel.mas_right).offset(10);
+        make.centerY.equalTo(self.timeLabel);
+        make.height.equalTo(self.timeLabel);
+        make.width.mas_greaterThanOrEqualTo(60);
+    }];
+    
     [self.contentView addSubview:self.playButton];
     [self.playButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(36);
@@ -95,12 +104,12 @@
 
 #pragma mark - Public
 
-- (void)loadData:(NSString *)text time:(NSString *)time uuid:(NSString *)uuid
+- (void)loadData:(NSString *)text time:(NSString *)time uuid:(NSString *)uuid readCount:(NSInteger)readCount
 {
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:self.detailAttributes];
     self.detailLabel.attributedText = attributedText;
     self.timeLabel.text = [Tools getDateStringFromTimeString:time andNeedTime:YES];
-    
+    self.readLabel.text = [NSString stringWithFormat:@"阅读: %@", [Tools countTransition:readCount]];
     self.uuid = uuid;
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
     if ([topicSpeaker.name isEqualToString:uuid]) {
@@ -225,6 +234,21 @@
         [self.playButton setBackgroundImage:nil forState:UIControlStateNormal];
         self.playButton.layer.borderWidth = .5f;
     }
+}
+
+- (UILabel *)readLabel
+{
+    if (_readLabel == nil) {
+        _readLabel = ({
+            UILabel *label = [[UILabel alloc] init];
+            label.text = @"阅读量:1233";
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentLeft;
+            label.textColor = [UIColor colorFromHexValue:0x999999];
+            label;
+        });
+    }
+    return _readLabel;
 }
 
 @end

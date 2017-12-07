@@ -31,4 +31,11 @@
                        txt:(NSString *)txt
          completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestDeleteUserPost:(NSString *)userUUID
+                 userPostUUID:(NSString *)userPostUUID
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestAddUserPostReadCount:(NSString *)userPostUUID
+                  completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
 @end

@@ -138,7 +138,7 @@
         self.qqButton.hidden = NO;
         self.testButton.hidden = NO;
         
-        if ([QTUserInfo sharedInstance].hiddenOneClickLogin) {
+        if ([QTUserInfo sharedInstance].hiddenData) {
             self.testButton.hidden = YES;
         }
     }

@@ -117,4 +117,32 @@
     }];
 }
 
++ (void)requestAddTopicReadCount:(NSString *)topicUUID
+                  completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"topic_uuid":topicUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/updateReadCount" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
 @end

@@ -32,7 +32,7 @@
     // Do any additional setup after loading the view.
     [self initViews];
 
-    if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+    if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
         __weak typeof(self) weakSelf = self;
         [self.tableView headerWithRefreshingBlock:^{
             weakSelf.page = 1;
@@ -57,7 +57,7 @@
 {
     self.title = @"圈子";
     
-    if ([[QTUserInfo sharedInstance] hiddenOneClickLogin] == NO) {
+    if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
         [self.view addSubview:self.tableView];
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self.view);

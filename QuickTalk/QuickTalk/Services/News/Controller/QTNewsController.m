@@ -183,7 +183,7 @@
     QTNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTNewsCell class])];
     cell.tag = indexPath.section;
     QTTopicModel *model = self.dataList[indexPath.section];
-    [cell loadData:model.title time:model.time uuid:model.uuid];
+    [cell loadData:model.title time:model.time uuid:model.uuid readCount:model.readCount];
     __weak typeof(self) weakSelf = self;
     [cell setOnPlayActionHandler:^(NSString *uuid, NSInteger index) {
         [weakSelf speakingTopicContent:uuid index:index];
@@ -218,6 +218,7 @@
     QTTopicController *topicController = [[QTTopicController alloc] init];
     topicController.model = model;
     [self.navigationController pushViewController:topicController animated:YES];
+    [QTTopicModel requestAddTopicReadCount:model.uuid completionHandler:nil];
 }
 
 #pragma mark - getter and setter

@@ -22,6 +22,10 @@
 
 - (void)initViews;
 - (void)loadData;
+- (void)arrowHandlerAction:(NSInteger)index;
+- (void)deleteData:(QTUserPostModel *)model;
+- (void)shareData:(QTUserPostModel *)model;
+- (void)addReadCountAction:(NSInteger)index;
 
 @end
 
@@ -101,6 +105,74 @@
     }];
 }
 
+- (void)arrowHandlerAction:(NSInteger)index
+{
+    QTUserPostModel *model = self.dataList[index];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^reportHandler)(NSInteger index) = ^(NSInteger index){
+        [QTProgressHUD showHUD:weakSelf.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [QTProgressHUD showHUDWithText:@"举报成功" delay:2.0f];
+        });
+    };
+    void(^deleteHandler)(NSInteger index) = ^(NSInteger index){
+        MMPopupItemHandler block = ^(NSInteger index) {
+            [weakSelf deleteData:model];
+        };
+        NSArray *items = @[MMItemMake(@"删除", MMItemTypeHighlight, block),
+                                    MMItemMake(@"取消", MMItemTypeNormal, nil)];
+        MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
+        [view show];
+    };
+    void(^shareHandler)(NSInteger index) = ^(NSInteger index){
+        [weakSelf shareData:model];
+    };
+    NSArray *items = @[];
+    if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        items = @[
+                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler),
+                       MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
+                       ];
+    } else if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
+        items = @[
+                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler),
+                       MMItemMake(@"分享", MMItemTypeNormal, shareHandler)
+                       ];
+    } else {
+        items = @[MMItemMake(@"分享", MMItemTypeNormal, shareHandler)];
+    }
+    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                          items:items];
+    sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+    [sheetView show];
+}
+
+- (void)deleteData:(QTUserPostModel *)model
+{
+    [QTProgressHUD showHUD:self.view];
+    [QTUserPostModel requestDeleteUserPost:[QTUserInfo sharedInstance].uuid userPostUUID:model.uuid completionHandler:^(BOOL action, NSError *error) {
+        if (action) {
+            [QTProgressHUD showHUDSuccess];
+            [self.dataList removeObject:model];
+            [self.tableView reloadData];;
+        } else {
+            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+        }
+    }];
+}
+
+- (void)shareData:(QTUserPostModel *)model
+{
+    
+}
+
+- (void)addReadCountAction:(NSInteger)index
+{
+    QTUserPostModel *model = self.dataList[index];
+    [QTUserPostModel requestAddUserPostReadCount:model.uuid completionHandler:nil];
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -125,6 +197,10 @@
         NSString *url = hrefModel.content;
         SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
         [weakSelf presentViewController:safariController animated:YES completion:nil];
+        [weakSelf addReadCountAction:index];
+    }];
+    [cell setOnArrowHandler:^(NSInteger index) {
+        [weakSelf arrowHandlerAction:index];
     }];
     return cell;
 }
@@ -156,6 +232,7 @@
     QTUserPostCommentController *userPostCommentController = [[QTUserPostCommentController alloc] init];
     userPostCommentController.uuid = model.uuid;
     [self.navigationController pushViewController:userPostCommentController animated:YES];
+    [self addReadCountAction:indexPath.section];
 }
 
 #pragma mark - Action

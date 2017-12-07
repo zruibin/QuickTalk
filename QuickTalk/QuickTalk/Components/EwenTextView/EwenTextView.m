@@ -10,7 +10,7 @@
 #import "Masonry.h"
 #define kScreenBounds ([[UIScreen mainScreen] bounds])
 #define kScreenwidth (kScreenBounds.size.width)
-#define kScreenheight (kScreenBounds.size.height-64-44)
+#define kScreenheight (kScreenBounds.size.height-64-50)
 #define UIColorRGB(x,y,z) [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1.0]
 
 @interface EwenTextView()<UITextViewDelegate,UIScrollViewDelegate>
@@ -83,7 +83,7 @@
     self.placeholderLabel.text = placeholderText;
     [self.sendButton setBackgroundColor:UIColorRGB(180, 180, 180)];
     self.sendButton.userInteractionEnabled = NO;
-    self.frame = CGRectMake(0, kScreenheight-49, kScreenwidth, 49);
+    self.frame = CGRectMake(0, kScreenheight, kScreenwidth, 49);
     self.backGroundView.frame = CGRectMake(0, 0, kScreenwidth, 49);
 }
 
@@ -102,7 +102,7 @@
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
     if (self.textView.text.length == 0) {
-        self.backGroundView.frame = CGRectMake(0, kScreenheight-height-49, kScreenwidth, 49);
+        self.backGroundView.frame = CGRectMake(0, kScreenheight-height, kScreenwidth, 49);
     }else{
         CGRect rect = CGRectMake(0, kScreenheight - self.backGroundView.frame.size.height-height, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;
@@ -117,7 +117,7 @@
 {
     if (self.textView.text.length == 0) {
         self.backGroundView.frame = CGRectMake(0, 0, kScreenwidth, 49);
-        self.frame = CGRectMake(0, kScreenheight-49, kScreenwidth, 49);
+        self.frame = CGRectMake(0, kScreenheight, kScreenwidth, 49);
     }else{
         CGRect rect = CGRectMake(0, 0, kScreenwidth, self.backGroundView.frame.size.height);
         self.backGroundView.frame = rect;

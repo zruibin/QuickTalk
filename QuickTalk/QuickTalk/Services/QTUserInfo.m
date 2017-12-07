@@ -24,7 +24,7 @@ static NSDate *refreshDate = nil;
 @property (nonatomic, readwrite, getter=isLogin) BOOL loginStatus;
 @property (nonatomic, copy, readwrite) NSString *_id;
 @property (nonatomic, copy, readwrite) NSString *uuid;
-@property (nonatomic, assign, readwrite) BOOL hiddenOneClickLogin;
+@property (nonatomic, assign, readwrite) BOOL hiddenData;
 
 - (void)checkHidden;
 
@@ -203,13 +203,7 @@ static NSDate *refreshDate = nil;
             } @catch (NSException *exception) {
                 ;
             } @finally {
-                self.hiddenOneClickLogin = action;
-                if (action) {
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"examine"];
-                } else {
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:@"examine"];
-                }
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                self.hiddenData = action;
             }
         }
     }];

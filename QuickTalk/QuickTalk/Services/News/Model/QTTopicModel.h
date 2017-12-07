@@ -16,6 +16,7 @@
 @property (nonatomic, copy) NSString *href;
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, assign) NSInteger _id;
+@property (nonatomic, assign) NSInteger readCount;
 
 
 + (void)requestTopicData:(NSUInteger)page
@@ -27,4 +28,6 @@
 + (void)requestTopicContent:(NSString *)topicUUID
    completionHandler:(void (^)(NSString *content, NSError * error))completionHandler;
 
++ (void)requestAddTopicReadCount:(NSString *)topicUUID
+               completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 @end

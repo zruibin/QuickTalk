@@ -97,5 +97,61 @@
     }];
 }
 
++ (void)requestDeleteUserPost:(NSString *)userUUID
+                     userPostUUID:(NSString *)userPostUUID
+         completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"user_uuid": userUUID, @"userPost_uuid":userPostUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/deleteUserPost" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestAddUserPostReadCount:(NSString *)userPostUUID
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"uuid":userPostUUID};
+    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/addReadCount" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
 
 @end

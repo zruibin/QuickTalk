@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UIButton *webButton;
 @property (nonatomic, strong) UILabel *readLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
-
+@property (nonatomic, strong) UIButton *arrowButton;
 
 - (void)initSubviews;
 - (CGSize)sizeForString:(NSString *)string attributes:(NSDictionary *)attributes;
@@ -102,22 +102,28 @@
         make.left.equalTo(self.avatarButton.mas_right).offset(10);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
         make.height.mas_equalTo(20);
-        make.width.mas_greaterThanOrEqualTo(60);
+        make.width.mas_greaterThanOrEqualTo(30);
     }];
     [self.contentView addSubview:self.commentLabel];
     [self.commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.readLabel.mas_right).offset(10);
         make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
         make.height.mas_equalTo(20);
-        make.width.mas_greaterThanOrEqualTo(60);
+        make.width.mas_greaterThanOrEqualTo(30);
     }];
     
     [self.contentView addSubview:self.webButton];
     [self.webButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.and.right.and.bottom.equalTo(self.webLabel);
     }];
+    
+    [self.contentView addSubview:self.arrowButton];
+    [self.arrowButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).offset(2);
+        make.right.equalTo(self.contentView).offset(-6);
+        make.width.and.height.mas_equalTo(36);
+    }];
 }
-
 
 #pragma mark - Private
 
@@ -166,6 +172,13 @@
 {
     if (self.onHrefHandler) {
         self.onHrefHandler(self.tag);
+    }
+}
+
+- (void)arrowHandlerAction
+{
+    if (self.onArrowHandler) {
+        self.onArrowHandler(self.tag);
     }
 }
 
@@ -316,6 +329,25 @@
         });
     }
     return _commentLabel;
+}
+
+- (UIButton *)arrowButton
+{
+    if (_arrowButton == nil) {
+        _arrowButton = ({
+            UIImage *image = [UIImage imageNamed:@"down"];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            button.backgroundColor = [UIColor redColor];
+            button.translatesAutoresizingMaskIntoConstraints = NO;
+            [button setImage:[image imageWithTintColor:[UIColor colorFromHexValue:0x999999]] forState:UIControlStateNormal];
+            [button setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR] forState:UIControlStateHighlighted];
+            button.userInteractionEnabled = YES;
+            button.imageEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12);
+            [button addTarget:self action:@selector(arrowHandlerAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _arrowButton;
 }
 
 @end

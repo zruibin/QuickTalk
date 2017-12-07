@@ -13,7 +13,7 @@
 @property (nonatomic, assign) BOOL speaking;
 @property (nonatomic, copy) void (^onPlayActionHandler)(NSString *uuid, NSInteger index);
 
-- (void)loadData:(NSString *)text time:(NSString *)time uuid:(NSString *)uuid;
+- (void)loadData:(NSString *)text time:(NSString *)time uuid:(NSString *)uuid readCount:(NSInteger)readCount;
 - (CGFloat)heightForCell:(NSString *)text;
 
 @end

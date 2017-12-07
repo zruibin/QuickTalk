@@ -18,7 +18,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 @property (nonatomic, copy, readonly) NSString *uuid;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, assign, readonly) BOOL hiddenOneClickLogin;
+@property (nonatomic, assign, readonly) BOOL hiddenData;
 
 + (instancetype)sharedInstance;
 

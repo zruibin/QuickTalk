@@ -25,6 +25,12 @@
 
 - (void)initViews;
 - (void)loadData;
+- (void)loadMoreData;
+- (void)sendComment:(NSString *)text;
+- (void)checkNewData;
+- (void)blockUser;
+- (void)tapCellHandler:(NSInteger)index;
+- (void)deleteComment:(QTUserPostCommentModel *)model;
 
 @end
 
@@ -199,6 +205,54 @@
     [sheetView show];
 }
 
+- (void)tapCellHandler:(NSInteger)index
+{
+    QTUserPostCommentModel *model = [self.dataList objectAtIndex:index];
+    __weak typeof(self) weakSelf = self;
+    void(^reportHandler)(NSInteger index) = ^(NSInteger index){
+        [QTProgressHUD showHUD:weakSelf.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [QTProgressHUD showHUDWithText:@"举报成功" delay:2.0f];
+        });
+    };
+    void(^deleteHandler)(NSInteger index) = ^(NSInteger index){
+        MMPopupItemHandler block = ^(NSInteger index) {
+            [weakSelf deleteComment:model];
+        };
+        NSArray *items = @[MMItemMake(@"删除", MMItemTypeHighlight, block),
+                           MMItemMake(@"取消", MMItemTypeNormal, nil)];
+        MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
+        [view show];
+    };
+    if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        NSArray *items = @[MMItemMake(@"删除评论", MMItemTypeHighlight, deleteHandler)];
+        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                              items:items];
+        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+        [sheetView show];
+    } else if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
+        NSArray *items = @[MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)];
+        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                              items:items];
+        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+        [sheetView show];
+    }
+}
+
+- (void)deleteComment:(QTUserPostCommentModel *)model
+{
+    [QTProgressHUD showHUD:self.view];
+    [QTUserPostCommentModel requestForDeleteComment:self.uuid commentUUID:model.uuid userUUID:model.userUUID completionHandler:^(BOOL action, NSError *error) {
+        if (action) {
+            [QTProgressHUD showHUDSuccess];
+            [self.dataList removeObject:model];
+            [self.tableView reloadData];;
+        } else {
+            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+        }
+    }];
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -219,15 +273,21 @@
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
         [rightCell loadData:model.content avatar:model.avatar];
+        [rightCell setOnTapHandler:^(NSInteger index) {
+            [weakSelf tapCellHandler:index];
+        }];
         cell = rightCell;
     } else {
         QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
         [leftCell loadData:model.content avatar:model.avatar];
         [leftCell setOnAvatarHandler:^{
             if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]
-                && [QTUserInfo sharedInstance].hiddenOneClickLogin == NO) {
+                && [QTUserInfo sharedInstance].hiddenData == NO) {
                 [weakSelf blockUser];
             }
+        }];
+        [leftCell setOnTapHandler:^(NSInteger index) {
+            [weakSelf tapCellHandler:index];
         }];
         cell = leftCell;
     }

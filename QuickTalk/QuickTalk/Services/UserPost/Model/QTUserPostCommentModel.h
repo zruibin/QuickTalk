@@ -33,4 +33,9 @@
                     replyUUID:(NSString *)replyUUID
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestForDeleteComment:(NSString *)userPostUUID
+                    commentUUID:(NSString *)commentUUID
+                       userUUID:(NSString *)userUUID
+              completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
 @end
