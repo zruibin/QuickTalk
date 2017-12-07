@@ -11,6 +11,7 @@
 #import "QTTopicSpeaker.h"
 #import "QTTopicContentController.h"
 #import "QTTopicCommentController.h"
+#import "QTTopicGlobalSpeaker.h"
 
 @interface QTTopicController () <UIScrollViewDelegate>
 
@@ -59,6 +60,9 @@
     [super viewDidAppear:animated];
     [Tools drawBorder:self.segmentedControl top:NO left:NO bottom:YES right:NO
           borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
+    if ([QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+        return ;
+    }
     if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
             [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
@@ -96,6 +100,10 @@
     [self.playButton addTarget:self action:@selector(sayingAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:self.playButton];
     self.navigationItem.rightBarButtonItem = item;
+    
+    if ([QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+        return ;
+    }
     if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
             [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
@@ -163,6 +171,9 @@
     if (![QTNetworking checkingNetworkStatus]) {
         [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
         return ;
+    }
+    if ( [QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+        [[QTTopicGlobalSpeaker sharedInstance] clearSpeaking]; /*清除全局播放*/
     }
     if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerNone ||

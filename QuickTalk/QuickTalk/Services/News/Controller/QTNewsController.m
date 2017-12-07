@@ -12,6 +12,7 @@
 #import "QTIntroController.h"
 #import "QTNewsCell.h"
 #import "QTTopicSpeaker.h"
+#import "QTTopicGlobalSpeaker.h"
 
 @interface QTNewsController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -81,13 +82,16 @@
 
     [self.view addSubview:self.errorView];
     
-    
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
-//        QTIntroController *introController = [[QTIntroController alloc] init];
-//        [self presentViewController:introController animated:YES completion:nil];
-//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//    }
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]
+                                initWithImage:[UIImage imageNamed:@"add"]
+                                style:UIBarButtonItemStylePlain target:self action:@selector(globalPlayingAction)];
+    self.navigationItem.rightBarButtonItem = item;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
+        QTIntroController *introController = [[QTIntroController alloc] init];
+        [self presentViewController:introController animated:YES completion:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)loadData
@@ -127,7 +131,9 @@
         [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
         return ;
     }
-    
+    if ( [QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+         [[QTTopicGlobalSpeaker sharedInstance] clearSpeaking]; /*清除全局播放*/
+    }
     QTTopicModel *model = self.dataList[index];
     QTNewsCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
@@ -219,6 +225,27 @@
     topicController.model = model;
     [self.navigationController pushViewController:topicController animated:YES];
     [QTTopicModel requestAddTopicReadCount:model.uuid completionHandler:nil];
+}
+
+#pragma mark - Action
+
+- (void)globalPlayingAction
+{
+    QTTopicGlobalSpeaker *globalSpeaker = [QTTopicGlobalSpeaker sharedInstance];
+    switch (globalSpeaker.status) {
+        case QTGlobalSpeakerNone:
+            [globalSpeaker startSpeaking];
+            break;
+        case QTGlobalSpeakerStarting:
+            [globalSpeaker pauseSpeaking];
+            break;
+        case QTGlobalSpeakerPause:
+            [globalSpeaker resumeSpeaking];
+            break;
+        default:
+            break;
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - getter and setter

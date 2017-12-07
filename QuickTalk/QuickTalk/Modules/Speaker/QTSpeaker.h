@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, QTSpeakerStatus) {
 - (void)pauseSpeaking;
 - (void)resumeSpeaking;
 - (void)stopSpeaking;
+- (void)clearSpeaking;
 - (void)destory;
 
 @end

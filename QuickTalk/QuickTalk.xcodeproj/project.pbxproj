@@ -45,6 +45,7 @@
 		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
 		E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */; };
 		E084A9211FB5AA8500AE4AD2 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = E084A9201FB5AA8500AE4AD2 /* image.js */; };
+		E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */; };
 		E088D6691FD64E0600038736 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6571FD64E0600038736 /* QTTopicController.m */; };
 		E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6591FD64E0600038736 /* QTTopicContentController.m */; };
 		E088D66B1FD64E0600038736 /* QTTopicSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */; };
@@ -191,6 +192,8 @@
 		E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBImagebrowse.h; sourceTree = "<group>"; };
 		E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBImagebrowse.m; sourceTree = "<group>"; };
 		E084A9201FB5AA8500AE4AD2 /* image.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = image.js; sourceTree = "<group>"; };
+		E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicGlobalSpeaker.h; sourceTree = "<group>"; };
+		E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicGlobalSpeaker.m; sourceTree = "<group>"; };
 		E088D6551FD64E0600038736 /* QTTopicContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
 		E088D6561FD64E0600038736 /* QTTopicSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicSpeaker.h; sourceTree = "<group>"; };
 		E088D6571FD64E0600038736 /* QTTopicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicController.m; sourceTree = "<group>"; };
@@ -544,6 +547,8 @@
 		E088D6541FD64E0600038736 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */,
+				E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */,
 				E088D6561FD64E0600038736 /* QTTopicSpeaker.h */,
 				E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */,
 				E088D6581FD64E0600038736 /* QTNewsController.h */,
@@ -1310,6 +1315,7 @@
 				E040F6A51FB15B5900CDA6B0 /* QTIntroController.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
 				E040F6A61FB15B5900CDA6B0 /* QTSettingController.m in Sources */,
+				E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
 				E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,

@@ -137,6 +137,8 @@
                 weakSelf.webHref = board.string;
                 if (title.length == 0) {
                     weakSelf.webTitle = weakSelf.webHref;
+                } else {
+                    weakSelf.webTitle = title;
                 }
                 weakSelf.hrefLabel.hidden = NO;
                 weakSelf.pasteButton.hidden = YES;

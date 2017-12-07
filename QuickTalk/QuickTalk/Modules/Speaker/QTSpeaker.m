@@ -21,6 +21,7 @@ static const NSInteger numberOfWords = 4000;
 
 @implementation QTSpeaker
 
+//*
 + (instancetype)sharedInstance
 {
     static QTSpeaker *speaker = nil;
@@ -42,6 +43,7 @@ static const NSInteger numberOfWords = 4000;
 {
     return [QTSpeaker sharedInstance];
 }
+ //*/
 
 #pragma mark - Public
 
@@ -104,7 +106,14 @@ static const NSInteger numberOfWords = 4000;
 - (void)stopSpeaking
 {
     [self.iFlySpeechSynthesizer stopSpeaking];
-    self.status = QTSpeakerStop;
+    self.status = QTSpeakerNone;
+}
+
+- (void)clearSpeaking
+{
+//    self.name = nil;
+//    self.content = nil;
+    [self stopSpeaking];
 }
 
 #pragma mark - IFlySpeechSynthesizerDelegate

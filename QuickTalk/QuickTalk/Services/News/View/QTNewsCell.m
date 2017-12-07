@@ -8,6 +8,7 @@
 
 #import "QTNewsCell.h"
 #import "QTTopicSpeaker.h"
+#import "QTTopicGlobalSpeaker.h"
 
 @interface QTNewsCell ()
 
@@ -111,6 +112,11 @@
     self.timeLabel.text = [Tools getDateStringFromTimeString:time andNeedTime:YES];
     self.readLabel.text = [NSString stringWithFormat:@"阅读: %@", [Tools countTransition:readCount]];
     self.uuid = uuid;
+    
+    if ([QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+        self.speaking = NO;
+        return ;
+    }
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
     if ([topicSpeaker.name isEqualToString:uuid]) {
         if (topicSpeaker.speaker.status == QTSpeakerNone ||

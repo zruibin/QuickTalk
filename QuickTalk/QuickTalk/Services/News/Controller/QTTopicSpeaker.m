@@ -47,7 +47,7 @@
 {
     self = [super init];
     if (self) {
-        _speaker = [QTSpeaker sharedInstance];
+        _speaker = [[QTSpeaker alloc] init];
     }
     return self;
 }
@@ -85,6 +85,11 @@
     }
 }
 
+- (void)speakingForRequest:(NSString *)uuid completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    [self speakingForRequest:uuid view:nil completionHandler:completionHandler];
+}
+
 - (void)speakingForContent:(NSString *)content
 {
     if (content.length == 0) {
@@ -108,6 +113,7 @@
 
 - (void)startSpeaking:(NSString *)content
 {
+    DLog(@"name: %@", self.name);
     self.speaker.name = self.name;
     self.speaker.content = [NSString flattenHTML:content trimWhiteSpace:NO];
     [self.speaker startSpeaking];
@@ -117,6 +123,9 @@
         weakSelf.name = nil;
         weakSelf.title = nil;
         weakSelf.content = nil;
+        if (weakSelf.onFinishBlock) {
+            weakSelf.onFinishBlock();
+        }
     }];
 }
 
@@ -124,6 +133,11 @@
 {
     [self.speaker stopSpeaking];
     self.speaking = NO;
+}
+
+- (void)clearSpeaking
+{
+    [self.speaker clearSpeaking];
 }
 
 @end

@@ -16,15 +16,19 @@
 @property (nonatomic, copy) NSString *title; //must
 @property (nonatomic, copy, readonly) NSString *content;
 @property (nonatomic, assign, readonly) BOOL speaking;
+@property (nonatomic, copy) void (^onFinishBlock)(void);
 
 + (instancetype)sharedInstance;
 
 - (void)speakingForRequest:(NSString *)uuid view:(UIView *)view
        completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+- (void)speakingForRequest:(NSString *)uuid
+         completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 - (void)speakingForContent:(NSString *)content;
 
 - (void)pauseSpeaking;
 - (void)resumeSpeaking;
 - (void)stopSpeaking;
+- (void)clearSpeaking;
 
 @end
