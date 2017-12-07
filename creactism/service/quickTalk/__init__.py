@@ -32,8 +32,3 @@ from service.quickTalk import myCommentList
 from service.quickTalk import updateReadCount
 from service.quickTalk import version
 
-# circle
-from service.quickTalk.circle import circleList
-from service.quickTalk.circle import submitCircle
-from service.quickTalk.circle import deleteCircle
-from service.quickTalk.circle import likeCircle
