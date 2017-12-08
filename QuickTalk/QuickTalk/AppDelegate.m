@@ -51,6 +51,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [[QTUserInfo sharedInstance] checkingObsolescence];
+    [[NSNotificationCenter defaultCenter] postNotificationName:QTPasteBoardCheckingNotification object:nil];
 }
 
 

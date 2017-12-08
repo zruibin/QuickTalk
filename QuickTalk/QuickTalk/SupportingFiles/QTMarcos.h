@@ -107,7 +107,7 @@ if (![QTNetworking checkingNetworkIsWiFi] && kVar == NO) { \
     return ; \
 } 
 
-
+#define QTPasteBoardCheckingNotification @"kQTPasteBoardCheckingNotification"
 
 #endif /* QCMarcos_h */
 

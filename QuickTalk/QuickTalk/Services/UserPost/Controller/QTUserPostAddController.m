@@ -31,7 +31,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initViews];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     YYCache *cache = [YYCache cacheWithName:QTDataCache];
     if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
@@ -133,7 +137,7 @@
             title = [title stringByReplacingOccurrencesOfString:@"\n"withString:@""];
 //            DLog(@"title: %@", title);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [QTProgressHUD hide];
+                [QTProgressHUD showHUDSuccess];
                 weakSelf.webHref = board.string;
                 if (title.length == 0) {
                     weakSelf.webTitle = weakSelf.webHref;

@@ -28,10 +28,16 @@
 - (void)deleteData:(QTUserPostModel *)model;
 - (void)shareData:(QTUserPostModel *)model;
 - (void)addReadCountAction:(NSInteger)index;
+- (void)checkPasteAction;
 
 @end
 
 @implementation QTUserPostMainController
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTPasteBoardCheckingNotification object:nil];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,11 +65,10 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {
-        UIPasteboard *board = [UIPasteboard generalPasteboard];
-        if ([board.string isValidUrl]) {
-            [self addAction];
-        }
+        [self checkPasteAction];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
+                                                 name:QTPasteBoardCheckingNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -187,6 +192,14 @@
 {
     QTUserPostModel *model = self.dataList[index];
     [QTUserPostModel requestAddUserPostReadCount:model.uuid completionHandler:nil];
+}
+
+- (void)checkPasteAction
+{
+    UIPasteboard *board = [UIPasteboard generalPasteboard];
+    if ([board.string isValidUrl]) {
+        [self addAction];
+    }
 }
 
 #pragma mark - TableView Delegate And DataSource
