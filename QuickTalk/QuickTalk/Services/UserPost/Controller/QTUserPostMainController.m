@@ -197,7 +197,13 @@
 - (void)checkPasteAction
 {
     UIPasteboard *board = [UIPasteboard generalPasteboard];
-    if ([board.string isValidUrl]) {
+    YYCache *cache = [YYCache cacheWithName:QTDataCache];
+    if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
+        NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
+        if (![urlString isEqualToString:board.string] && [urlString isValidUrl]) {
+            [self addAction];
+        }
+    } else {
         [self addAction];
     }
 }
