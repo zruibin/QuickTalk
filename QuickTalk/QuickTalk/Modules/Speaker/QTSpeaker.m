@@ -60,7 +60,7 @@ static const NSInteger numberOfWords = 4000;
 {
     [self stopSpeaking];
 //    DLog(@"content:%@", self.content);
-    if (self.contentList.count == 0 || self.name.length == 0) {
+    if (self.contentList.count == 0 || self.name.length == 0 || self.index >= self.contentList.count) {
         return ;
     }
     self.status = QTSpeakerStarting;
@@ -111,8 +111,6 @@ static const NSInteger numberOfWords = 4000;
 
 - (void)clearSpeaking
 {
-//    self.name = nil;
-//    self.content = nil;
     [self stopSpeaking];
 }
 
@@ -126,11 +124,6 @@ static const NSInteger numberOfWords = 4000;
     if (error && self.onErrorHandler) {
         self.onErrorHandler(error.errorCode, error.errorDesc);
     }
-    if (error.errorCode == 0) {
-        if (self.onFinishBlock) {
-            self.onFinishBlock();
-        }
-    }
 }
 
 //合成开始
@@ -143,9 +136,16 @@ static const NSInteger numberOfWords = 4000;
 - (void)onSpeakProgress:(int) progress beginPos:(int)beginPos endPos:(int)endPos
 {
 //    DLog(@"progress:%d", progress);
-    if (progress == 100 && self.contentList.count > 1) {
-        ++self.index;
-        [self startSpeaking];
+    if (progress == 100) {
+        if (self.contentList.count > 1 && self.index < self.contentList.count-1) {
+            ++self.index;
+            [self startSpeaking];
+        } else {
+//            DLog(@"onFinish.....");
+            if (self.onFinishBlock) {
+                self.onFinishBlock();
+            }
+        }
     }
 }
 
@@ -153,8 +153,9 @@ static const NSInteger numberOfWords = 4000;
 
 - (void)setContent:(NSString *)content
 {
+    self.index = 0;
     _content = [content stringByReplacingOccurrencesOfString:@" " withString:@""];
-    _content = [_content stringByReplacingOccurrencesOfString:@"\n" withString:@""];;
+    _content = [_content stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     
     NSMutableArray *array = [NSMutableArray array];
     if (_content.length <= numberOfWords) {

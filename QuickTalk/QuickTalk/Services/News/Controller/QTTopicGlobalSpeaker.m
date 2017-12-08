@@ -10,7 +10,6 @@
 #import "QTTopicSpeaker.h"
 #import "QTTopicModel.h"
 
-
 @interface QTTopicGlobalSpeaker ()
 
 @property (nonatomic, assign, readwrite) QTGlobalSpeakerStatus status;
@@ -22,6 +21,7 @@
 @property (nonatomic, strong) UIWindow *window;
 
 - (void)requestTopicDataList;
+- (void)startPlayingInBatches;
 
 @end
 
@@ -31,6 +31,7 @@
 - (void)dealloc
 {
     _topicSpeaker = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTTopicSpeakerStatusNotification object:nil];
 }
 
 + (instancetype)sharedInstance
@@ -62,6 +63,11 @@
         _topicSpeaker = [[QTTopicSpeaker alloc] init];
         _page = 1;
         _window = [UIApplication sharedApplication].keyWindow;
+        
+        __weak typeof(self) weakSelf = self;
+        [[NSNotificationCenter defaultCenter] addObserverForName:QTTopicSpeakerStopNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+            [weakSelf clearSpeaking];
+        }];
     }
     return self;
 }
@@ -72,6 +78,7 @@
 {
     [self requestTopicDataList];
     self.status = QTGlobalSpeakerStarting;
+    self.speaking = YES;
 }
 
 - (void)pauseSpeaking
@@ -138,6 +145,7 @@
         }];
     }
 }
+
 
 @end
 

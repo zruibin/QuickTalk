@@ -12,6 +12,7 @@
 @interface QTNetworking : NSObject
 
 + (BOOL)checkingNetworkStatus;
++ (BOOL)checkingNetworkIsWiFi;
 
 /**
  request 封装

@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "QTSpeaker.h"
 
+extern NSString * const QTTopicSpeakerStatusNotification;
+extern NSString * const QTTopicSpeakerStopNotification;
+
 @interface QTTopicSpeaker : NSObject
 
 @property (nonatomic, strong, readonly) QTSpeaker *speaker;

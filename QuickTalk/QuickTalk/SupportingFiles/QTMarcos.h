@@ -88,6 +88,27 @@
 #define QTTableViewCellRegister(kTableView, kTableViewCell)  [kTableView registerClass:[kTableViewCell class] forCellReuseIdentifier:NSStringFromClass([kTableViewCell class])];
 
 
+#define QTCheckingNetwork(kVar, method)  \
+if (![QTNetworking checkingNetworkStatus]) { \
+    [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view]; \
+    return ; \
+} \
+static BOOL kVar = NO; \
+if (![QTNetworking checkingNetworkIsWiFi] && kVar == NO) { \
+    __weak typeof(self) weakSelf = self; \
+    MMPopupItemHandler block = ^(NSInteger i) { \
+        kVar = YES; \
+        [weakSelf method]; \
+    }; \
+    NSArray *items = @[MMItemMake(@"播放", MMItemTypeHighlight, block), \
+                       MMItemMake(@"取消", MMItemTypeNormal, nil)]; \
+    MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"非wifi环境下将消耗流量" detail:@"" items:items]; \
+    [view show]; \
+    return ; \
+} 
+
+
+
 #endif /* QCMarcos_h */
 
 

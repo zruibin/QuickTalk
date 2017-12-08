@@ -304,14 +304,14 @@ UITableViewDataSource, UITableViewDelegate
     UITableViewCell *cell = nil;
     QTCommentModel *model = [self.dataList objectAtIndex:indexPath.row];
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
-        QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
+        QTTableViewCellMake(QTTopicRightCell, rightCell)
         [rightCell loadData:model.content avatar:model.avatar];
         [rightCell setOnTapHandler:^(NSInteger index) {
             [weakSelf showTipView:index];
         }];
         cell = rightCell;
     } else {
-        QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
+        QTTableViewCellMake(QTTopicLeftCell, leftCell)
         [leftCell loadData:model.content avatar:model.avatar];
         [leftCell setOnTapHandler:^(NSInteger index) {
             [weakSelf showTipView:index];
@@ -369,10 +369,10 @@ UITableViewDataSource, UITableViewDelegate
             tableView.showsVerticalScrollIndicator = NO;
             tableView.exclusiveTouch = YES;
             tableView.backgroundColor = [UIColor clearColor];
-            //            tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
+//            tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[QTTopicLeftCell class] forCellReuseIdentifier:NSStringFromClass([QTTopicLeftCell class])];
-            [tableView registerClass:[QTTopicRightCell class] forCellReuseIdentifier:NSStringFromClass([QTTopicRightCell class])];
+            QTTableViewCellRegister(tableView, QTTopicLeftCell)
+            QTTableViewCellRegister(tableView, QTTopicRightCell)
             tableView;
         });
     }

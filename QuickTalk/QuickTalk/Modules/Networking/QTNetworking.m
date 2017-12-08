@@ -35,6 +35,16 @@
     }
 }
 
++ (BOOL)checkingNetworkIsWiFi
+{
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"http://www.qq.com"];
+    if ([reachability isReachableViaWiFi]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 + (NSURLRequest*)requestURL:(NSString *)baseURL HTTPMethod:(NSString*)httpMethod params:(NSDictionary *)params
 {
     NSMutableString *queryString = [NSMutableString string];

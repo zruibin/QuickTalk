@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *childControllers;
 
 - (void)initViews;
+- (void)playButtonStatus;
 
 @end
 
@@ -30,6 +31,7 @@
 - (void)dealloc
 {
 //    DLog(@"QTTopicController dealloc...");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTTopicSpeakerStatusNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -53,6 +55,11 @@
         self.topicUUID = self.model.uuid;
         [self selectedOnSegment:0];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTTopicSpeakerStatusNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf playButtonStatus];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,16 +67,8 @@
     [super viewDidAppear:animated];
     [Tools drawBorder:self.segmentedControl top:NO left:NO bottom:YES right:NO
           borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
-    if ([QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
-        return ;
-    }
-    if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
-        if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
-            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-        } else {
-            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
-        }
-    }
+    
+    [self playButtonStatus];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -106,6 +105,21 @@
     }
     if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerPause) {
+            [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        } else {
+            [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (void)playButtonStatus
+{
+    if ([QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
+        return ;
+    }
+    if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
+        if (self.topicSpeaker.speaker.status == QTSpeakerPause ||
+            self.topicSpeaker.speaker.status == QTSpeakerNone) {
             [self.playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
         } else {
             [self.playButton setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
@@ -168,13 +182,9 @@
 
 - (void)sayingAction
 {
-    if (![QTNetworking checkingNetworkStatus]) {
-        [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
-        return ;
-    }
-    if ( [QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
-        [[QTTopicGlobalSpeaker sharedInstance] clearSpeaking]; /*清除全局播放*/
-    }
+    QTCheckingNetwork(kSayingAction, sayingAction)
+    QTTopicGlobalSpeakerCheckingClear
+    
     if ([self.topicSpeaker.name isEqualToString:self.topicUUID]) {
         if (self.topicSpeaker.speaker.status == QTSpeakerNone ||
             self.topicSpeaker.speaker.status == QTSpeakerDestory) {

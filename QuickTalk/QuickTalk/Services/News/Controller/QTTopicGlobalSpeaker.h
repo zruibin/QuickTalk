@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#define QTTopicGlobalSpeakerCheckingClear \
+if ( [QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) { \
+    [[QTTopicGlobalSpeaker sharedInstance] clearSpeaking]; /*清除全局播放*/ \
+}
+
 typedef NS_ENUM(NSInteger, QTGlobalSpeakerStatus) {
     QTGlobalSpeakerNone,
     QTGlobalSpeakerStarting,

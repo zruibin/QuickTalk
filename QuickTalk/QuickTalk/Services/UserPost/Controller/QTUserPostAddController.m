@@ -220,7 +220,7 @@
         _pasteButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.translatesAutoresizingMaskIntoConstraints = NO;
-            [button setTitle:@"粘贴你的链接" forState:UIControlStateNormal];
+            [button setTitle:@"点击粘贴链接" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:16];
             button.layer.cornerRadius = 4;

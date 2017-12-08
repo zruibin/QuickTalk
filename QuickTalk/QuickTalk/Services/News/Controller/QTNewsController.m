@@ -33,7 +33,7 @@
 
 - (void)dealloc
 {
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTRefreshDataNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTTopicSpeakerStatusNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -41,7 +41,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initViews];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:QTRefreshDataNotification object:nil];
 
     __weak typeof(self) weakSelf = self;
     [self.tableView headerWithRefreshingBlock:^{
@@ -57,6 +56,10 @@
     }];
     
     self.errorView.hidden = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTTopicSpeakerStatusNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -83,7 +86,7 @@
     [self.view addSubview:self.errorView];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]
-                                initWithImage:[UIImage imageNamed:@"add"]
+                                initWithImage:[UIImage imageNamed:@"globalPlay"]
                                 style:UIBarButtonItemStylePlain target:self action:@selector(globalPlayingAction)];
     self.navigationItem.rightBarButtonItem = item;
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
@@ -127,13 +130,9 @@
 
 - (void)speakingTopicContent:(NSString *)uuid index:(NSInteger)index
 {
-    if (![QTNetworking checkingNetworkStatus]) {
-        [QTProgressHUD showHUDText:@"网络开了点小差，请稍后再试!" view:self.view];
-        return ;
-    }
-    if ( [QTTopicGlobalSpeaker sharedInstance].status != QTGlobalSpeakerNone) {
-         [[QTTopicGlobalSpeaker sharedInstance] clearSpeaking]; /*清除全局播放*/
-    }
+    QTCheckingNetwork(kSpeakingTopicContent, speakingTopicContent:uuid index:index)
+    QTTopicGlobalSpeakerCheckingClear
+    
     QTTopicModel *model = self.dataList[index];
     QTNewsCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]];
     QTTopicSpeaker *topicSpeaker = [QTTopicSpeaker sharedInstance];
@@ -186,7 +185,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTNewsCell class])];
+    QTTableViewCellMake(QTNewsCell, cell)
     cell.tag = indexPath.section;
     QTTopicModel *model = self.dataList[indexPath.section];
     [cell loadData:model.title time:model.time uuid:model.uuid readCount:model.readCount];
@@ -200,7 +199,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat height = 0.0f;
-    QTNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTNewsCell class])];
+    QTTableViewCellMake(QTNewsCell, cell)
     QTTopicModel *model = self.dataList[indexPath.section];
     height = [cell heightForCell:model.title];
     return height;
@@ -231,6 +230,8 @@
 
 - (void)globalPlayingAction
 {
+    QTCheckingNetwork(kGlobalPlayingAction, globalPlayingAction)
+    
     QTTopicGlobalSpeaker *globalSpeaker = [QTTopicGlobalSpeaker sharedInstance];
     switch (globalSpeaker.status) {
         case QTGlobalSpeakerNone:
@@ -266,7 +267,7 @@
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
             tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            [tableView registerClass:[QTNewsCell class] forCellReuseIdentifier:NSStringFromClass([QTNewsCell class])];
+            QTTableViewCellRegister(tableView, QTNewsCell)
             tableView;
         });
     }
