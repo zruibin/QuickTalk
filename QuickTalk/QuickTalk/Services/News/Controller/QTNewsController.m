@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
+@property (nonatomic, strong) NSMutableDictionary *cacheHeightDict;
 @property (nonatomic, assign) CGFloat viewWidth;
 @property (nonatomic, assign) CGFloat viewHeight;
 @property (nonatomic, strong) QTErrorView *errorView;
@@ -46,6 +47,7 @@
     [self.tableView headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         weakSelf.dataList = [NSMutableArray array];
+        weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
         [weakSelf loadData];
     }];
     [self.tableView beginHeaderRefreshing];
@@ -200,8 +202,15 @@
 {
     CGFloat height = 0.0f;
     QTTableViewCellMake(QTNewsCell, cell)
-    QTTopicModel *model = self.dataList[indexPath.section];
-    height = [cell heightForCell:model.title];
+    if ([self.cacheHeightDict.allKeys containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+        height = [[self.cacheHeightDict objectForKey:[NSNumber numberWithInteger:indexPath.section]] floatValue];
+        DLog(@"cache...");
+    } else {
+        QTTopicModel *model = self.dataList[indexPath.section];
+        height = [cell heightForCell:model.title];
+        [self.cacheHeightDict setObject:[NSNumber numberWithFloat:height]
+                                 forKey:[NSNumber numberWithInteger:indexPath.section]];
+    }
     return height;
 }
 

@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
+@property (nonatomic, strong) NSMutableDictionary *cacheHeightDict;
 @property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
 
@@ -39,6 +40,7 @@
     [self.tableView headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         weakSelf.dataList = [NSMutableArray array];
+        weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
         [weakSelf loadData];
     }];
     [self.tableView beginHeaderRefreshing];
@@ -155,6 +157,7 @@
         if (action) {
             [QTProgressHUD showHUDSuccess];
             [self.dataList removeObject:model];
+            [self.cacheHeightDict removeAllObjects];
             [self.tableView reloadData];;
         } else {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
@@ -209,8 +212,14 @@
 {
     CGFloat height = 60.0f;
     QTTableViewCellMake(QTUserPostMainCell, cell);
-    QTUserPostModel *model = self.dataList[indexPath.section];
-    height = [cell heightForCell:model];
+    if ([self.cacheHeightDict.allKeys containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
+        height = [[self.cacheHeightDict objectForKey:[NSNumber numberWithInteger:indexPath.section]] floatValue];
+    } else {
+        QTUserPostModel *model = self.dataList[indexPath.section];
+        height = [cell heightForCell:model];
+        [self.cacheHeightDict setObject:[NSNumber numberWithFloat:height]
+                                 forKey:[NSNumber numberWithInteger:indexPath.section]];
+    }
     return height;
 }
 
