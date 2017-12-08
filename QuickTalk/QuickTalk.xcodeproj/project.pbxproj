@@ -35,6 +35,7 @@
 		E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */; };
 		E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */; };
 		E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */; };
+		E07AF0D31FDAA365003639AF /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E07AF0D21FDAA365003639AF /* video.mp4 */; };
 		E07BA9921FD7E95E00DE8C02 /* QTMyNewsCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9911FD7E95E00DE8C02 /* QTMyNewsCommentController.m */; };
 		E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
@@ -176,6 +177,7 @@
 		E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentCell.m; sourceTree = "<group>"; };
 		E079B8F81FD79CC200A76FCD /* QTUserPostCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentModel.h; sourceTree = "<group>"; };
 		E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentModel.m; sourceTree = "<group>"; };
+		E07AF0D21FDAA365003639AF /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		E07BA9901FD7E95E00DE8C02 /* QTMyNewsCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyNewsCommentController.h; sourceTree = "<group>"; };
 		E07BA9911FD7E95E00DE8C02 /* QTMyNewsCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyNewsCommentController.m; sourceTree = "<group>"; };
 		E07BA9931FD7F6EE00DE8C02 /* QTTopicCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicCommentController.h; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				E08181291F9995AD0035DEF4 /* Assets.xcassets */,
 				E081812A1F9995AD0035DEF4 /* code.json */,
 				E084A9201FB5AA8500AE4AD2 /* image.js */,
+				E07AF0D21FDAA365003639AF /* video.mp4 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1077,6 +1080,7 @@
 				E09351841FA30EBE000687BC /* WeiboSDK.bundle in Resources */,
 				E093517D1FA30EBE000687BC /* ShareSDKUI.bundle in Resources */,
 				E09351861FA30EBE000687BC /* README.txt in Resources */,
+				E07AF0D31FDAA365003639AF /* video.mp4 in Resources */,
 				E09351871FA30EBE000687BC /* ShareSDK.bundle in Resources */,
 				E084A9211FB5AA8500AE4AD2 /* image.js in Resources */,
 			);

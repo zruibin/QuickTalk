@@ -7,12 +7,13 @@
 //
 
 #import "QTIntroController.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface QTIntroController () <UIScrollViewDelegate>
+@interface QTIntroController ()
 
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIButton *button;
+@property (nonatomic,strong) AVPlayer *player;//播放器对象
+@property (nonatomic,strong) UIView *container; //播放器容器
 
 - (void)initViews;
 
@@ -20,10 +21,29 @@
 
 @implementation QTIntroController
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initViews];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playbackFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.player.currentItem];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"video.mp4" ofType:nil];
+    NSURL *sourceMovieUrl = [NSURL fileURLWithPath:path];
+    AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:sourceMovieUrl options:nil];
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+    
+    self.player = [AVPlayer playerWithPlayerItem:playerItem];
+    AVPlayerLayer *playerLayer=[AVPlayerLayer playerLayerWithPlayer:self.player];
+    playerLayer.frame = self.container.bounds;
+    //playerLayer.videoGravity=AVLayerVideoGravityResizeAspect;//视频填充模式
+    [self.container.layer addSublayer:playerLayer];
+    [self.player play];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -46,91 +66,52 @@
 
 - (void)initViews
 {
-    [self.view addSubview:self.scrollView];
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    CGFloat viewWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
-    CGFloat viewHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-    self.scrollView.contentSize = CGSizeMake(viewWidth*3, viewHeight);
+    self.view.backgroundColor = [UIColor colorFromHexValue:0x000 withAlpha:0.7];
+    self.container = [UIView new];
+    self.container.frame = CGRectMake(20, 20, CGRectGetWidth(self.view.bounds)-40, CGRectGetHeight(self.view.bounds)-40);
+    [self.view addSubview:self.container];
     
-    for (NSInteger i=0; i<3; ++i) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.frame = CGRectMake(i*viewWidth, 0, viewWidth, viewHeight);
-        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%ld", (long)i+1]];
-        [self.scrollView addSubview:imageView];
-    }
-    [self.scrollView addSubview:self.button];
-    self.button.frame = CGRectMake(2*viewWidth+(viewWidth-100)/2, viewHeight-60, 100, 30);
-    
-    [self.view addSubview:self.pageControl];
-    [self.pageControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.and.height.mas_equalTo(20);
-        make.centerX.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(-10);
+    [self.view addSubview:self.button];
+    [self.button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.and.height.mas_equalTo(40);
+        make.bottom.equalTo(self.view).offset(-16);
+        make.right.equalTo(self.view).offset(-2);
     }];
 }
 
 - (void)dismiss
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//pagecontroll的委托方法
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(void)playbackFinished:(NSNotification *)notification
 {
-    int page = scrollView.contentOffset.x / scrollView.frame.size.width;
-    self.pageControl.currentPage = page;
+    DLog(@"视频播放完成.");
+    [self dismiss];
 }
 
 #pragma mark - setter and getter
 
-- (UIScrollView *)scrollView
-{
-    if (_scrollView == nil) {
-        _scrollView = ({
-            UIScrollView *scrollView = [[UIScrollView alloc] init];
-            scrollView.showsHorizontalScrollIndicator = NO;
-            scrollView.delegate = self;
-            scrollView.pagingEnabled = YES;
-            scrollView;
-        });
-    }
-    return _scrollView;
-}
-
-- (UIPageControl *)pageControl
-{
-    if (_pageControl == nil) {
-        _pageControl = ({
-            UIPageControl *pageControl = [[UIPageControl alloc] init];
-            pageControl.numberOfPages = 3;
-            pageControl.pageIndicatorTintColor = [UIColor grayColor];
-//            pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
-            pageControl;
-        });
-    }
-    return _pageControl;
-}
 
 - (UIButton *)button
 {
     if (_button == nil) {
         _button = ({
-            UIButton *buttton = [UIButton buttonWithType:UIButtonTypeCustom];
-            [buttton setTitle:@"进入" forState:UIControlStateNormal];
-            [buttton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [buttton setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x00a0e9]] forState:UIControlStateHighlighted];
-            buttton.titleLabel.font = [UIFont systemFontOfSize:15];
-            buttton.layer.cornerRadius = 4;
-            buttton.layer.borderColor = [[UIColor grayColor] CGColor];
-            buttton.layer.borderWidth = 0.5f;
-            buttton.layer.masksToBounds = YES;
-            [buttton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-            buttton;
+            UIImage *image = [UIImage imageNamed:@"cancel"];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setImage:[image imageWithTintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+            [button setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR] forState:UIControlStateHighlighted];
+            button.layer.masksToBounds = YES;
+            button.layer.cornerRadius = 20;
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x000 withAlpha:.9]]
+                              forState:UIControlStateNormal];
+            button.imageEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+            [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+            button;
         });
     }
     return _button;
 }
+
 
 @end
