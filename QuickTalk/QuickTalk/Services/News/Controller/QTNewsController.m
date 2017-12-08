@@ -9,7 +9,6 @@
 #import "QTNewsController.h"
 #import "QTTopicController.h"
 #import "QTTopicModel.h"
-#import "QTIntroController.h"
 #import "QTNewsCell.h"
 #import "QTTopicSpeaker.h"
 #import "QTTopicGlobalSpeaker.h"
@@ -91,12 +90,6 @@
                                 initWithImage:[UIImage imageNamed:@"globalPlay"]
                                 style:UIBarButtonItemStylePlain target:self action:@selector(globalPlayingAction)];
     self.navigationItem.rightBarButtonItem = item;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
-        QTIntroController *introController = [[QTIntroController alloc] init];
-        [self presentViewController:introController animated:YES completion:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
 }
 
 - (void)loadData
@@ -204,7 +197,6 @@
     QTTableViewCellMake(QTNewsCell, cell)
     if ([self.cacheHeightDict.allKeys containsObject:[NSNumber numberWithInteger:indexPath.section]]) {
         height = [[self.cacheHeightDict objectForKey:[NSNumber numberWithInteger:indexPath.section]] floatValue];
-        DLog(@"cache...");
     } else {
         QTTopicModel *model = self.dataList[indexPath.section];
         height = [cell heightForCell:model.title];

@@ -12,6 +12,7 @@
 #import "QTUserPostMainCell.h"
 #import <SafariServices/SafariServices.h>
 #import "QTUserPostCommentController.h"
+#import "QTIntroController.h"
 
 @interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -51,6 +52,18 @@
     }];
     
     self.errorView.hidden = YES;
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
+        QTIntroController *introController = [[QTIntroController alloc] init];
+        [self presentViewController:introController animated:YES completion:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    } else {
+        UIPasteboard *board = [UIPasteboard generalPasteboard];
+        if ([board.string isValidUrl]) {
+            [self addAction];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
