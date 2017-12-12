@@ -138,7 +138,7 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
 def __generateResponseData(userUUID, token):
     querySQL = """
         SELECT uuid, id, nickname, avatar, phone, email, detail, gender, 
-            qq, weibo, wechat
+            qq, weibo, wechat, area
         FROM t_quickTalk_user WHERE uuid=%s
     """
 

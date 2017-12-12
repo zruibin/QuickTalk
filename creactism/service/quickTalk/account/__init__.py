@@ -22,6 +22,8 @@ from service.quickTalk.account import register
 from service.quickTalk.account import login
 from service.quickTalk.account import forgetPassword
 from service.quickTalk.account import changePassword
+from service.quickTalk.account import thirdParty
+from service.quickTalk.account import info
 
 
 if __name__ == '__main__':

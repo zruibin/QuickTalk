@@ -22,7 +22,7 @@ from service.quickTalk.account.generalMethod import verifyUserPassword
 
 
 @account.route('/changePassword', methods=["POST"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def changePassword():
     userUUID = getValueFromRequestByKey("user_uuid")
     oldpassword = md5hex(getValueFromRequestByKey("oldpassword"))

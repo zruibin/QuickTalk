@@ -49,7 +49,7 @@ def __loginForUserAndPassword(accountStr, typeStr, password):
     }
     querySQL = """
         SELECT uuid, t_quickTalk_user.id, nickname, avatar, phone, email, detail,   
-            gender, qq, weibo, wechat, password
+            gender, qq, weibo, wechat, area, password
         FROM t_quickTalk_user, t_quickTalk_user_auth 
         WHERE t_quickTalk_user."""+ typeDict[typeStr] +"""=%s 
             AND t_quickTalk_user_auth.password=%s
@@ -79,7 +79,7 @@ def __loginForThirdAuth(typeStr, authOpenId):
         Config.TYPE_FOR_AUTH_QQ : "qq", Config.TYPE_FOR_AUTH_WEIBO : "weibo"
     }
     querySQL = """
-        SELECT uuid, id, nickname, avatar, phone, email, detail, gender, qq, weibo, wechat
+        SELECT uuid, id, nickname, avatar, phone, email, detail, gender, qq, weibo, wechat, area
         FROM t_quickTalk_user
         WHERE """ + typeDict[typeStr] + """=%s; """
 

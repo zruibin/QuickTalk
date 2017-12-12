@@ -99,6 +99,9 @@ class Config(object):
     # 关注的好友的发表的分享
     NOTIFICATION_FOR_NEW_SHARE = 4
 
+    TYPE_FOR_AUTH_ACTION_ON = "1" # 绑定
+    TYPE_FOR_AUTH_ACTION_OFF = "2" #解绑
+
 
     pass
 
