@@ -1,0 +1,61 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*- 
+#
+# test-register.py
+#
+# Created by ruibin.chow on 2017/08/08.
+# Copyright (c) 2017年 ruibin.chow All rights reserved.
+# 
+
+"""
+
+"""
+import requests
+
+def baseRegister():
+    params = {"account": "12312312300", "type":"2", "password": "001122"}
+    r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/account/register", params=params)    # 最基本的GET请求
+    # print(r.status_code)    # 获取返回状态
+    # r = requests.get(url="http://127.0.0.1:5000/fsfds", params={'wd':'python'}, cookies=cookies)   #带参数的GET请求
+    print r.cookies
+    print(r.text)
+
+def authRegister():
+    params = {"account": "18588430034", "type":"2", "password": "f8f235136f525e39e94f401424954c3a",
+        "authOpenId": "121212",
+        "authType" : "8"
+    }
+    r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/account/register", params=params)    # 最基本的GET请求
+    # print(r.status_code)    # 获取返回状态
+    # r = requests.get(url="http://127.0.0.1:5000/fsfds", params={'wd':'python'}, cookies=cookies)   #带参数的GET请求
+    print r.cookies
+    print(r.text)
+
+
+if __name__ == '__main__':
+    # baseRegister()
+    authRegister()
+    pass
+
+
+
+"""
+{
+"message": "请求成功",
+"code": 10000,
+"data": {
+        "qq": "",
+        "weibo": "",
+        "uuid": "829ae32cc75b4166d321139c3271c0f8",
+        "gender": 0,
+        "detail": null,
+        "id": 10026,
+        "phone": "12312312300",
+        "token": "MTUxMzA1MDc5MC44Mjp5WWppTlMvRFZYNVBpUWlyMm1tVzY0WWp6cmc9Cg==",
+        "wechat": "",
+        "avatar": "",
+        "nickname": "",
+        "email": ""
+    }
+}
+"""

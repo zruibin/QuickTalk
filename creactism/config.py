@@ -36,7 +36,7 @@ class Config(object):
     CACHE_PASSWORD = DBPWD
     CACHE_EXPIRE = 3600 #一个小时
 
-    TOKEN_EXPIRE = 3600
+    TOKEN_EXPIRE = CACHE_EXPIRE
 
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # 上传文件限制，程序限制大小为其一半
     MAX_CONTENT_LENGTH_VERIFY = MAX_CONTENT_LENGTH / 2 # 上传文件的真实要求大小
@@ -52,6 +52,12 @@ class Config(object):
     MAIL_POSTFIX = "creactism.com"  #发件箱的后缀
 
     PAGE_OF_SIZE = 10 # 分页每页数量
+
+    STATUS_ON = 1
+    STATUS_OFF = 0
+
+    TYPE_FOR_GENDER_MALE = 1
+    TYPE_FOR_GENDER_FEMALE = 2
 
       # 数据类型
     TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
@@ -82,6 +88,17 @@ class Config(object):
     TYPE_LIKE_TOPIC_COMMENT = "1"
     TYPE_LIKE_USERPOST = "2"
     TYPE_LIKE_USERPOST_COMMENT = "3"
+
+
+    # 赞(第一次赞就有通知)
+    NOTIFICATION_FOR_LIKE = 1 
+    # 评论
+    NOTIFICATION_FOR_COMMENT = 2
+    # 加关注的
+    NOTIFICATION_FOR_NEW_FRIEND = 3
+    # 关注的好友的发表的分享
+    NOTIFICATION_FOR_NEW_SHARE = 4
+
 
     pass
 

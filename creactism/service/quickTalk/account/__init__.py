@@ -18,6 +18,8 @@ account = Blueprint("account", __name__)
 from service.quickTalk.account import changeArea
 from service.quickTalk.account import changeGender
 from service.quickTalk.account import changeDetail
+from service.quickTalk.account import register
+from service.quickTalk.account import login
 
 
 if __name__ == '__main__':

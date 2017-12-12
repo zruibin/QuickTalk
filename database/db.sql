@@ -1,3 +1,7 @@
+
+-- v1.0
+-- Create By Ruibin.Chow
+
 DROP TABLE IF EXISTS
     `t_quickTalk_user`;
 CREATE TABLE `t_quickTalk_user`(
@@ -63,23 +67,6 @@ ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_user_uuid ( `user_uu
 ALTER TABLE `t_quickTalk_topic_comment` ADD INDEX t_comment_topic_uuid ( `topic_uuid` );
 
 
-DROP TABLE IF EXISTS
-    `t_quickTalk_circle`;
-CREATE TABLE `t_quickTalk_circle`(
-    `id` INT UNSIGNED AUTO_INCREMENT,
-    `uuid` VARCHAR(100) NOT NULL COMMENT 'uuid',
-    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
-    `content` TEXT NOT NULL COMMENT '内容',
-    `time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'  COMMENT '产生时间戳',
-    `like` INT(11) NOT NULL COMMENT '点赞数量',
-    PRIMARY KEY(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-
-ALTER TABLE `t_quickTalk_circle` ADD UNIQUE (`uuid`);
-ALTER TABLE `t_quickTalk_circle` ADD INDEX t_circle_user_uuid ( `user_uuid` );
-
-
-
 INSERT INTO `t_quickTalk_user` (`id`, `uuid`, `nickname`, `phone`, `email`, `avatar`, `wechat`, `qq`, `weibo`, `time`) VALUES
 (10000, 'cea8b1c3aebe31823fa86e069de496b9', '', '', '', '2017102011013512hgLe.png', '1234567', '', '', '2017-10-20 03:01:35'),
 (10001, '22908c712545dca68ae6a09383f47bc3', '', '', '', '201710201102566Ieb5r.png', '100000', '', '', '2017-10-20 03:02:56'),
@@ -87,7 +74,8 @@ INSERT INTO `t_quickTalk_user` (`id`, `uuid`, `nickname`, `phone`, `email`, `ava
 
 
 
-
+-- v1.1
+-- Create By Ruibin.Chow
 
 
 ALTER TABLE `t_quickTalk_user` ADD gender INT NOT NULL Default 0;
@@ -120,7 +108,6 @@ CREATE TABLE `t_quickTalk_like`(
 
 ALTER TABLE `t_quickTalk_like` ADD INDEX t_like_content_uuid (`content_uuid`);
 ALTER TABLE `t_quickTalk_like` ADD INDEX t_like_user_uuid ( `user_uuid` );
-
 
 
 DROP TABLE IF EXISTS
@@ -159,3 +146,33 @@ CREATE TABLE `t_quickTalk_userPost_comment`(
 ALTER TABLE `t_quickTalk_userPost_comment` ADD UNIQUE (`uuid`);
 ALTER TABLE `t_quickTalk_userPost_comment` ADD INDEX t_comment_user_uuid ( `user_uuid` );
 ALTER TABLE `t_quickTalk_userPost_comment` ADD INDEX t_comment_userPost_uuid ( `userPost_uuid` );
+
+
+
+-- v1.2
+-- Create By Ruibin.Chow
+
+DROP TABLE IF EXISTS
+    `t_quickTalk_user_setting`;
+CREATE TABLE `t_quickTalk_user_setting`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户uuid',
+    `type` TINYINT UNSIGNED NOT NULL COMMENT '类型',
+    `status` TINYINT UNSIGNED NOT NULL COMMENT '状态(开与关)',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_quickTalk_user_setting` ADD INDEX t_quickTalk_user_setting_setting_uuid (`user_uuid`);
+
+INSERT INTO t_quickTalk_user_setting (user_uuid, type, status) 
+SELECT uuid AS user_uuid, 1, 1 FROM t_quickTalk_user
+UNION ALL
+SELECT uuid AS user_uuid, 2, 1 FROM t_quickTalk_user
+UNION ALL
+SELECT uuid AS user_uuid, 3, 1 FROM t_quickTalk_user
+UNION ALL
+SELECT uuid AS user_uuid, 4, 0 FROM t_quickTalk_user;
+
+
+
+
