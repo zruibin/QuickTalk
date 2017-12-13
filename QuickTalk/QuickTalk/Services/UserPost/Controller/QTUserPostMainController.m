@@ -197,13 +197,15 @@
 {
     UIPasteboard *board = [UIPasteboard generalPasteboard];
     YYCache *cache = [YYCache cacheWithName:QTDataCache];
-    if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
-        NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
-        if (![urlString isEqualToString:board.string] && [urlString isValidUrl]) {
+    if ([board.string isValidUrl]) {
+        if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
+            NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
+            if (![urlString isEqualToString:board.string]) {
+                [self addAction];
+            }
+        } else {
             [self addAction];
         }
-    } else {
-        [self addAction];
     }
 }
 

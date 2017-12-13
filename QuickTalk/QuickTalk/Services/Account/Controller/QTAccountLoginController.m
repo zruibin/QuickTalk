@@ -149,6 +149,7 @@
                  if (error) {
                      [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
                  } else {
+                     [ShareSDK cancelAuthorize:platformType];
                      [[QTUserInfo sharedInstance] loginWithThirdPart:userInfo openId:[user.uid md5] type:type];
                      [QTProgressHUD hide];
                      if (self.presentingViewController) {

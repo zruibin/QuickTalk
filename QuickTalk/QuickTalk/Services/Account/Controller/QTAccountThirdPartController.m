@@ -17,6 +17,7 @@
 - (void)unbind:(NSString *)type;
 - (void)bind:(NSString *)type openId:(NSString *)openId;
 - (void)bindWithPlatform:(SSDKPlatformType)platformType;
+- (BOOL)checkingBindOnlyOneCount;
 
 @end
 
@@ -84,10 +85,30 @@
      {
          if (state == SSDKResponseStateSuccess) {
              [self bind:type openId:[user.uid md5]];
+             [ShareSDK cancelAuthorize:platformType];
          } else {
              [QTMessage showErrorNotification:@"授权失败!"];
          }
      }];
+}
+
+- (BOOL)checkingBindOnlyOneCount
+{
+    NSInteger count = 0;
+    if ([QTUserInfo sharedInstance].wechat.length > 0) {
+        ++count;
+    }
+    if ([QTUserInfo sharedInstance].qq.length > 0) {
+        ++count;
+    }
+    if ([QTUserInfo sharedInstance].weibo.length > 0) {
+        ++count;
+    }
+    if (count == 1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -183,6 +204,10 @@
         if ([QTUserInfo sharedInstance].wechat.length == 0) {
             [self bindWithPlatform:SSDKPlatformTypeWechat];
         } else {
+            if ([self checkingBindOnlyOneCount]) {
+                [QTProgressHUD showHUDText:@"无法解除当前绑定" view:self.view];
+                return ;
+            }
             MMPopupItemHandler block = ^(NSInteger index) {
                 [weakSelf unbind:QuickTalk_ACCOUNT_WECHAT];
             };
@@ -197,6 +222,10 @@
         if ([QTUserInfo sharedInstance].qq.length == 0) {
             [self bindWithPlatform:SSDKPlatformTypeQQ];
         } else {
+            if ([self checkingBindOnlyOneCount]) {
+                [QTProgressHUD showHUDText:@"无法解除当前绑定" view:self.view];
+                return ;
+            }
             MMPopupItemHandler block = ^(NSInteger index) {
                 [weakSelf unbind:QuickTalk_ACCOUNT_QQ];
             };
@@ -211,6 +240,10 @@
         if ([QTUserInfo sharedInstance].weibo.length == 0) {
             [self bindWithPlatform:SSDKPlatformTypeSinaWeibo];
         } else {
+            if ([self checkingBindOnlyOneCount]) {
+                [QTProgressHUD showHUDText:@"无法解除当前绑定" view:self.view];
+                return ;
+            }
             MMPopupItemHandler block = ^(NSInteger index) {
                 [weakSelf unbind:QuickTalk_ACCOUNT_WEIBO];
             };

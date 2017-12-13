@@ -34,6 +34,12 @@
 //                                                 name:CRAUserInfoChangeNotification object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -84,6 +90,13 @@
     }
     if (indexPath.row == 0) {
         cell.textLabel.text = @"修改手机号码";
+        NSString *phone = [QTUserInfo sharedInstance].phone;
+        if (phone.length == 0) {
+            phone = @"(空)";
+        } else {
+            phone = [phone replaceStringWithAsterisk:3 length:6];
+        }
+        cell.detailTextLabel.text = phone;
     }
     if (indexPath.row == 1) {
         cell.textLabel.text = @"修改密码";
