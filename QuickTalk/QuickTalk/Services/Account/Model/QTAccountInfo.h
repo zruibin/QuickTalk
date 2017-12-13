@@ -41,6 +41,22 @@
                      password:(NSString *)password
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestForChangePassword:(NSString *)userUUID
+                     oldpassword:(NSString *)oldpassword
+                     newpassword:(NSString *)newpassword
+               completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestForAccountInfo:(NSString *)userUUID
+                     type:(NSString *)type
+                     data:(NSString *)data
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestForThirdPart:(NSString *)userUUID
+                       type:(NSString *)type
+                     method:(NSString *)method
+                     openId:(NSString *)openId
+          completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
 @end
 
 

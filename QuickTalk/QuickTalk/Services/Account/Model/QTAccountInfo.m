@@ -148,6 +148,123 @@
     }];
 }
 
++ (void)requestForChangePassword:(NSString *)userUUID
+                     oldpassword:(NSString *)oldpassword
+                     newpassword:(NSString *)newpassword
+               completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    if (oldpassword.length == 0) oldpassword = @"";
+    if (newpassword.length == 0) newpassword = @"";
+    
+    NSDictionary *params = @{
+                             @"user_uuid": userUUID,
+                             @"oldpassword":[oldpassword md5],
+                             @"newpassword": [newpassword md5]
+                             };
+    [QTNetworkAgent requestDataForAccountService:@"/changePassword" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(NO, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestForAccountInfo:(NSString *)userUUID
+                         type:(NSString *)type
+                         data:(NSString *)data
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    if (type.length == 0) type = @"";
+    if (data.length == 0) data = @"";
+    
+    NSDictionary *params = @{
+                             @"user_uuid": userUUID,
+                             @"type":type,
+                             @"data": data
+                             };
+    [QTNetworkAgent requestDataForAccountService:@"/changeInfo" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(NO, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestForThirdPart:(NSString *)userUUID
+                         type:(NSString *)type
+                         method:(NSString *)method
+                     openId:(NSString *)openId
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    if (type.length == 0) type = @"";
+    if (method.length == 0) method = @"";
+    if (openId.length == 0) openId = @"";
+    
+    NSDictionary *params = @{
+                             @"user_uuid": userUUID,
+                             @"type":type,
+                             @"method": method,
+                             @"openId": openId
+                             };
+    [QTNetworkAgent requestDataForAccountService:@"/thirdParty" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(NO, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
 @end
 
 

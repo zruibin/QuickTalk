@@ -9,9 +9,9 @@
 #import "QTNetworkAgent.h"
 #import "QTNetworking.h"
 
-NSString * const QuickTalk_SERVICE_HOST = @"http://192.168.0.103/service";
+//NSString * const QuickTalk_SERVICE_HOST = @"http://192.168.0.103/service";
 //NSString * const QuickTalk_SERVICE_HOST = @"http://127.0.0.1:5000/service";
-//NSString * const QuickTalk_SERVICE_HOST = @"http://creactism.com/service";
+NSString * const QuickTalk_SERVICE_HOST = @"http://creactism.com/service";
 NSString * const SERVICE_REQUEST_GET = @"GET";
 NSString * const SERVICE_REQUEST_POST = @"POST";
 

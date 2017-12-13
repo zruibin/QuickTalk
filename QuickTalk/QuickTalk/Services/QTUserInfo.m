@@ -152,7 +152,7 @@ static NSDate *refreshDate = nil;
     if (userUUID.length == 0) {
         userUUID = @"";
     }
-    NSString *url = [NSString stringWithFormat:@"%@/quickTalk/change_avatar", QuickTalk_SERVICE_HOST];
+    NSString *url = [NSString stringWithFormat:@"%@/quickTalk/account/changeAvatar", QuickTalk_SERVICE_HOST];
     [QTNetworking handlePOST:url params:@{@"user_uuid": userUUID} formDataMap:@{@"0": avatarImage} progress:^(CGFloat progress) {
         
     } success:^(id responseObject) {

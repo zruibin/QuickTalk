@@ -102,6 +102,8 @@
             if (self.page == 1) {
                 self.errorView.hidden = NO;
             }
+            [self.tableView endHeaderRefreshing];
+            [self.tableView endFooterRefreshing];
         } else {
             self.errorView.hidden = YES;
             [self.dataList addObjectsFromArray:[list copy]];

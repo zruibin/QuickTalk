@@ -10,6 +10,7 @@
 #import "QTUserAgreementController.h"
 #import "QTFeedbackController.h"
 #import "QTIntroController.h"
+#import "QTAccountSettingController.h"
 
 @interface QTSettingController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -102,11 +103,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 1;
+    }
     return 4;
 }
 
@@ -126,19 +130,23 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    if (indexPath.row == 0) {
-        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-        cell.textLabel.text = [NSString stringWithFormat:@"引导页(%@)", version];
-    }
-    if (indexPath.row == 1) {
-        cell.textLabel.text = @"声明及用户协议协议";
-    }
-    if (indexPath.row == 2) {
-        cell.textLabel.text = @"意见反馈";
-    }
-    if (indexPath.row == 3) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.textLabel.text = @"清除缓存";
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @"账号与安全";
+    } else {
+        if (indexPath.row == 0) {
+            NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+            cell.textLabel.text = [NSString stringWithFormat:@"引导页(%@)", version];
+        }
+        if (indexPath.row == 1) {
+            cell.textLabel.text = @"声明及用户协议协议";
+        }
+        if (indexPath.row == 2) {
+            cell.textLabel.text = @"意见反馈";
+        }
+        if (indexPath.row == 3) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"清除缓存";
+        }
     }
     
     return cell;
@@ -163,6 +171,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0) {
+        if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+            return ;
+        }
+        QTAccountSettingController *accountSettingController = [[QTAccountSettingController alloc] init];
+        [self.navigationController pushViewController:accountSettingController animated:YES];
+        return ;
+    }
+    
     if (indexPath.row == 0) {
         QTIntroController *introController = [[QTIntroController alloc] init];
         [self presentViewController:introController animated:YES completion:nil];

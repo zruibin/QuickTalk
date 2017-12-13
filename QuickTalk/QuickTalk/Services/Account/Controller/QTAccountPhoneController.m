@@ -1,20 +1,19 @@
 //
-//  QTAccountForgetPasswordController.m
+//  QTAccountPhoneController.m
 //  QuickTalk
 //
 //  Created by  Ruibin.Chow on 2017/12/13.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTAccountForgetPasswordController.h"
+#import "QTAccountPhoneController.h"
 #import "QTAccountInfo.h"
 
 static NSUInteger timeNumber = 60;
 
-@interface QTAccountForgetPasswordController ()
+@interface QTAccountPhoneController ()
 
 @property (nonatomic, strong) UITextField *accountField;
-@property (nonatomic, strong) UITextField *passwordField;
 @property (nonatomic, strong) UITextField *verifyCodeField;
 @property (nonatomic, strong) UIButton *verifyCodeButton;
 @property (nonatomic, strong) UIButton *submitButton;
@@ -25,7 +24,7 @@ static NSUInteger timeNumber = 60;
 
 @end
 
-@implementation QTAccountForgetPasswordController
+@implementation QTAccountPhoneController
 
 - (void)viewDidLoad
 {
@@ -48,7 +47,7 @@ static NSUInteger timeNumber = 60;
 
 - (void)initViews
 {
-    self.title = @"忘记密码";
+    self.title = @"修改手机号码";
     
     [self.view addSubview:self.accountField];
     [self.accountField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -57,13 +56,8 @@ static NSUInteger timeNumber = 60;
         make.right.equalTo(self.view).offset(-20);
         make.height.equalTo(@44);
     }];
-    [self.view addSubview:self.passwordField];
-    [self.passwordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.accountField.mas_bottom).offset(2);
-        make.left.and.right.equalTo(self.accountField);
-        make.height.equalTo(@44);
-    }];
-    for (UITextField *textField in @[self.accountField, self.passwordField, self.verifyCodeField]) {
+
+    for (UITextField *textField in @[self.accountField, self.verifyCodeField]) {
         CGRect frame = [textField frame];
         frame.size.width = 7.0f;
         UIView *leftview = [[UIView alloc] initWithFrame:frame];
@@ -73,15 +67,15 @@ static NSUInteger timeNumber = 60;
     
     [self.view addSubview:self.verifyCodeField];
     [self.verifyCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.passwordField.mas_bottom).offset(20);
-        make.left.equalTo(self.passwordField);
+        make.top.equalTo(self.accountField.mas_bottom).offset(20);
+        make.left.equalTo(self.accountField);
         make.height.equalTo(@44);
         make.width.equalTo(@150);
     }];
     [self.view addSubview:self.verifyCodeButton];
     [self.verifyCodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.verifyCodeField);
-        make.right.equalTo(self.passwordField);
+        make.right.equalTo(self.accountField);
         make.height.equalTo(self.verifyCodeField);
         make.width.equalTo(@120);
     }];
@@ -100,7 +94,6 @@ static NSUInteger timeNumber = 60;
 {
     [self.accountField resignFirstResponder];
     [self.verifyCodeField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
     
     NSString *account = self.accountField.text;
     if ([account isEmailAddress] || [account isMobileNumber]) {
@@ -152,21 +145,12 @@ static NSUInteger timeNumber = 60;
 {
     [self.accountField resignFirstResponder];
     [self.verifyCodeField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
     
     NSString *account = self.accountField.text;
     NSString *verifyCode = self.verifyCodeField.text;
-    NSString *password = self.passwordField.text;
+
     if (account.length == 0) {
         [QTMessage showErrorNotification:@"请输入手机号" viewController:self];
-        return ;
-    }
-    if (password.length == 0) {
-        [QTMessage showErrorNotification:@"请输入新密码" viewController:self];
-        return ;
-    }
-    if (password.length < 6) {
-        [QTMessage showErrorNotification:@"新密码长度至少6位" viewController:self];
         return ;
     }
     if (verifyCode.length == 0) {
@@ -190,12 +174,12 @@ static NSUInteger timeNumber = 60;
 - (void)submitData
 {
     NSString *account = self.accountField.text;
-    NSString *password = self.passwordField.text;
     [QTProgressHUD showHUD:self.view];
-    [QTAccountInfo requestForgetPassword:account type:self.type password:password completionHandler:^(BOOL action, NSError *error) {
+    [QTAccountInfo requestForAccountInfo:[QTUserInfo sharedInstance].uuid type:@"phone" data:account completionHandler:^(BOOL action, NSError *error) {
         if (action) {
             [QTProgressHUD showHUDSuccess];
             [self.navigationController popViewControllerAnimated:YES];
+            [QTUserInfo sharedInstance].phone = account;
         } else {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
         }
@@ -206,9 +190,8 @@ static NSUInteger timeNumber = 60;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (![self.accountField isExclusiveTouch] || ![self.passwordField isExclusiveTouch] || ![self.verifyCodeField isExclusiveTouch]) {
+    if (![self.accountField isExclusiveTouch] || ![self.verifyCodeField isExclusiveTouch]) {
         [self.accountField resignFirstResponder];
-        [self.passwordField resignFirstResponder];
         [self.verifyCodeField resignFirstResponder];
     }
 }
@@ -230,24 +213,6 @@ static NSUInteger timeNumber = 60;
         });
     }
     return _accountField;
-}
-
-- (UITextField *)passwordField
-{
-    if (_passwordField == nil) {
-        _passwordField = ({
-            UITextField *textField = [[UITextField alloc] init];
-            textField.clearButtonMode = UITextFieldViewModeAlways;
-            textField.backgroundColor = [UIColor whiteColor];
-            textField.textColor = [UIColor colorFromHexValue:0x999999];
-            textField.font = [UIFont systemFontOfSize:14];
-            textField.translatesAutoresizingMaskIntoConstraints = NO;
-            textField.secureTextEntry = YES;
-            textField.placeholder = @"设置新密码";
-            textField;
-        });
-    }
-    return _passwordField;
 }
 
 - (UITextField *)verifyCodeField

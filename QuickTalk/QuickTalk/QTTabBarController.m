@@ -49,10 +49,10 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-//    NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
-//    if (index == 1) {
-//        return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
-//    }
+    NSUInteger index = [tabBarController.viewControllers indexOfObject:viewController];
+    if (index == 2) {
+        return [[QTUserInfo sharedInstance] checkLoginStatus:viewController];;
+    }
     return YES;
 }
 
