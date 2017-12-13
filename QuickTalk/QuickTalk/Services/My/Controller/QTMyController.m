@@ -44,16 +44,21 @@
     
     __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf.childControllers removeAllObjects];
+        for (UIView *view in weakSelf.scrollView.subviews) {
+            [view removeFromSuperview];
+        }
         if ([QTUserInfo sharedInstance].isLogin == NO) {
             weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0);
-            self.segmentedControl.hidden = YES;
-            self.scrollView.hidden = YES;
+            weakSelf.segmentedControl.hidden = YES;
+            weakSelf.scrollView.hidden = YES;
         } else {
             weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
-            [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
-            [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
-            self.segmentedControl.hidden = NO;
-            self.scrollView.hidden = NO;
+            [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
+            [weakSelf.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
+            weakSelf.segmentedControl.hidden = NO;
+            weakSelf.scrollView.hidden = NO;
+            [self selectedOnSegment:0];
         }
     }];
 }

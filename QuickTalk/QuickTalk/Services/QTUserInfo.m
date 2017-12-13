@@ -8,12 +8,14 @@
 
 #import "QTUserInfo.h"
 #import <SAMKeychain.h>
-#import "QTInfoController.h"
+#import "QTAccountInfo.h"
+#import "QTAccountLoginController.h"
 
 static NSString * const kQTLoginServiceName = @"com.creactism.QuickTalk/LoginService";
-static NSString * const kQTLoginUUID = @"QTLoginUUID";
-static NSString * const kQTLoginAvatar = @"QTLoginAvatar";
-static NSString * const kQTLoginNickName = @"QTLoginNickName";
+static NSString * const kQTLoginAccount = @"QTLoginAccount";
+static NSString * const kQTLoginPassword = @"QTLoginPassword";
+static NSString * const kQTLoginOpenId = @"QTLoginOpenId";
+static NSString * const kQTLoginType = @"QTLoginType";
 NSString * const QTRefreshDataNotification = @"kkQTRefreshDataNotification";
 NSString * const QTLoginStatusChangeNotification = @"kQTLoginStatusChangeNotification";
 
@@ -22,8 +24,6 @@ static NSDate *refreshDate = nil;
 @interface QTUserInfo ()
 
 @property (nonatomic, readwrite, getter=isLogin) BOOL loginStatus;
-@property (nonatomic, copy, readwrite) NSString *_id;
-@property (nonatomic, copy, readwrite) NSString *uuid;
 @property (nonatomic, assign, readwrite) BOOL hiddenData;
 
 - (void)checkHidden;
@@ -62,24 +62,39 @@ static NSDate *refreshDate = nil;
 
 #pragma mark - Public
 
-- (void)login:(NSString *)uuid avatar:(NSString *)avatar nickname:(NSString *)nickname
+- (void)login:(QTAccountInfo *)userInfo password:(NSString *)password type:(NSString *)type
 {
-    self.uuid = uuid;
-    self.avatar = avatar;
-    self.nickname = nickname;
+    self._id = userInfo._id;
+    self.uuid = userInfo.uuid;
+    self.nickname = userInfo.nickname;
+    self.avatar = userInfo.avatar;
+    self.detail = userInfo.detail;
+    self.email = userInfo.email;
+    self.phone = userInfo.phone;
+    self.qq = userInfo.qq;
+    self.wechat = userInfo.wechat;
+    self.weibo = userInfo.weibo;
+    self.gender = userInfo.gender;
     self.loginStatus = YES;
-    [SAMKeychain setPassword:uuid forService:kQTLoginServiceName account:kQTLoginUUID];
-    [SAMKeychain setPassword:avatar forService:kQTLoginServiceName account:kQTLoginAvatar];
-    [SAMKeychain setPassword:nickname forService:kQTLoginServiceName account:kQTLoginNickName];
+    [SAMKeychain setPassword:userInfo.phone forService:kQTLoginServiceName account:kQTLoginAccount];
+    [SAMKeychain setPassword:password forService:kQTLoginServiceName account:kQTLoginPassword];
+    [SAMKeychain setPassword:type forService:kQTLoginServiceName account:kQTLoginType];
     [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+}
+
+- (void)loginWithThirdPart:(QTAccountInfo *)userInfo openId:(NSString *)openId type:(NSString *)type
+{
+    [SAMKeychain setPassword:openId forService:kQTLoginServiceName account:kQTLoginOpenId];
+    [self login:userInfo password:nil type:type];
 }
 
 - (void)logout
 {
     self.loginStatus = NO;
-    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginUUID];
-    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginAvatar];
-    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginNickName];
+    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginAccount];
+    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginPassword];
+    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginOpenId];
+    [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginType];
     self.uuid = nil;
     self.avatar = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
@@ -89,18 +104,32 @@ static NSDate *refreshDate = nil;
 {
     [self checkHidden];
     refreshDate = [NSDate date];
-    NSString *uuid = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginUUID];
-    NSString *avatar = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginAvatar];
-    NSString *nickname = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginNickName];
-    if (uuid.length > 0) {
-        [self login:uuid avatar:avatar nickname:nickname];
+    NSString *account = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginAccount];
+    NSString *password = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginPassword];
+    NSString *openId = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginOpenId];
+    NSString *type = [SAMKeychain passwordForService:kQTLoginServiceName account:kQTLoginType];
+    if ([type isEqualToString:QuickTalk_ACCOUNT_EMAIL] ||
+        [type isEqualToString:QuickTalk_ACCOUNT_PHONE]) {
+        [QTAccountInfo requestLogin:account type:QuickTalk_ACCOUNT_PHONE password:password completionHandler:^(QTAccountInfo *userInfo, NSError *error) {
+            if (error == nil) {
+                [self login:userInfo password:password type:type];
+            }
+        }];
+    } else if ([type isEqualToString:QuickTalk_ACCOUNT_WECHAT] ||
+               [type isEqualToString:QuickTalk_ACCOUNT_QQ] ||
+               [type isEqualToString:QuickTalk_ACCOUNT_WEIBO])  {
+        [QTAccountInfo requestLoginForThirdPart:openId type:type completionHandler:^(QTAccountInfo *userInfo, NSError *error) {
+            if (error == nil) {
+                [self loginWithThirdPart:userInfo openId:openId type:type];
+            }
+        }];
     }
 }
 
 - (BOOL)checkLoginStatus:(UIViewController *)viewController
 {
     if (self.loginStatus == NO) {
-        QTInfoController *loginController = [QTInfoController new];
+        QTAccountLoginController *loginController = [QTAccountLoginController new];
         QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:loginController];
         [viewController presentViewController:nav animated:YES completion:nil];
     }
@@ -115,40 +144,6 @@ static NSDate *refreshDate = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:QTRefreshDataNotification object:nil];
         refreshDate = [NSDate date];
     }
-}
-
-+ (void)requestLogin:(NSString *)openId
-                type:(NSString *)type
-              avatar:(NSString *)avatar
-            nickName:(NSString *)nickname
-   completionHandler:(void (^)(QTUserInfo *userInfo, NSError * error))completionHandler
-{
-    NSDictionary *params = @{@"openId": [openId md5], @"type": type, @"avatar": avatar, @"nickname": nickname};
-    [QTNetworkAgent requestDataForQuickTalkService:@"/login" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
-        if (completionHandler == nil) {
-            return;
-        }
-        if (error) {
-            completionHandler(nil, error);
-        } else {
-            QTUserInfo *userInfo = nil;
-            @try {
-                NSUInteger code = [responseObject[@"code"] integerValue];
-                if (code == CODE_SUCCESS) {
-                    userInfo = [QTUserInfo yy_modelWithJSON:responseObject[@"data"]];
-                } else {
-                    error = [QTServiceCode error:code];
-                }
-            } @catch (NSException *exception) {
-                ;
-            } @finally {
-                if (userInfo.nickname.length == 0) {
-                    userInfo.nickname = nickname;
-                }
-                completionHandler(userInfo, error);
-            }
-        }
-    }];
 }
 
 + (void)requestChangeAvatar:(NSString *)userUUID avatarImage:(UIImage *)avatarImage

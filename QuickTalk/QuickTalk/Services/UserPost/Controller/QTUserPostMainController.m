@@ -45,6 +45,7 @@
     
     __weak typeof(self) weakSelf = self;
     [self.tableView headerWithRefreshingBlock:^{
+        weakSelf.errorView.hidden = YES;
         weakSelf.page = 1;
         weakSelf.dataList = [NSMutableArray array];
         weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
@@ -96,15 +97,13 @@
 
 - (void)loadData
 {
-    [QTProgressHUD showHUD:self.view];
     [QTUserPostModel requestUserPostData:self.page userUUID:self.userUUID completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
         if (error) {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
                 self.errorView.hidden = NO;
             }
         } else {
-            [QTProgressHUD hide];
             self.errorView.hidden = YES;
             [self.dataList addObjectsFromArray:[list copy]];
             if (self.page == 1) {
@@ -170,15 +169,13 @@
 
 - (void)deleteData:(QTUserPostModel *)model
 {
-    [QTProgressHUD showHUD:self.view];
     [QTUserPostModel requestDeleteUserPost:[QTUserInfo sharedInstance].uuid userPostUUID:model.uuid completionHandler:^(BOOL action, NSError *error) {
         if (action) {
-            [QTProgressHUD showHUDSuccess];
             [self.dataList removeObject:model];
             [self.cacheHeightDict removeAllObjects];
             [self.tableView reloadData];;
         } else {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         }
     }];
 }
@@ -319,7 +316,7 @@
             QTErrorView *view = [[QTErrorView alloc] initWithFrame:self.view.bounds];
             __weak typeof(self) weakSelf = self;
             [view setOnRefreshHandler:^{
-                [weakSelf loadData];
+                [weakSelf.tableView beginHeaderRefreshing];
             }];
             view;
         });

@@ -8,21 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
+@class QTAccountInfo;
+
 extern NSString * const QTRefreshDataNotification;
 extern NSString * const QTLoginStatusChangeNotification;
 
 @interface QTUserInfo : NSObject
 
 @property (nonatomic, readonly, getter=isLogin) BOOL loginStatus;
-@property (nonatomic, copy, readonly) NSString *_id;
-@property (nonatomic, copy, readonly) NSString *uuid;
+@property (nonatomic, assign, readonly) BOOL hiddenData;
+
+@property (nonatomic, copy) NSString *_id;
+@property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, assign, readonly) BOOL hiddenData;
+@property (nonatomic, copy) NSString *detail;
+@property (nonatomic, copy) NSString *email;
+@property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy) NSString *qq;
+@property (nonatomic, copy) NSString *wechat;
+@property (nonatomic, copy) NSString *weibo;
+@property (nonatomic, assign) NSInteger gender;
 
 + (instancetype)sharedInstance;
 
-- (void)login:(NSString *)uuid avatar:(NSString *)avatar nickname:(NSString *)nickname;
+- (void)login:(QTAccountInfo *)userInfo password:(NSString *)password type:(NSString *)type;
+- (void)loginWithThirdPart:(QTAccountInfo *)userInfo openId:(NSString *)openId type:(NSString *)type;
 - (void)logout;
 - (void)loginInBackground;
 - (BOOL)checkLoginStatus:(UIViewController *)viewController;
@@ -40,4 +51,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 
 + (void)requestChangeNickName:(NSString *)userUUID nickname:(NSString *)nickname
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
+
+
 @end

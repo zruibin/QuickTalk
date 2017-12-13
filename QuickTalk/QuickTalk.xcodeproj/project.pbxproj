@@ -63,6 +63,11 @@
 		E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6871FD6979400038736 /* QTUserPostMainCell.m */; };
 		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
 		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
+		E08AABC21FE0C458005B6DBB /* QTAccountRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */; };
+		E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */; };
+		E08AABC91FE0CDBB005B6DBB /* RBButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC71FE0CDBB005B6DBB /* RBButton.m */; };
+		E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */; };
+		E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */; };
 		E09351781FA30EBE000687BC /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351581FA30EBE000687BC /* MOBFoundation.framework */; };
 		E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351591FA30EBE000687BC /* ShareSDK.framework */; };
 		E093517A1FA30EBE000687BC /* ShareSDKConfigFile.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */; };
@@ -228,6 +233,16 @@
 		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
 		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		E08AABC01FE0C458005B6DBB /* QTAccountRegisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountRegisterController.h; sourceTree = "<group>"; };
+		E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountRegisterController.m; sourceTree = "<group>"; };
+		E08AABC31FE0C46C005B6DBB /* QTAccountLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountLoginController.h; sourceTree = "<group>"; };
+		E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountLoginController.m; sourceTree = "<group>"; };
+		E08AABC71FE0CDBB005B6DBB /* RBButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBButton.m; sourceTree = "<group>"; };
+		E08AABC81FE0CDBB005B6DBB /* RBButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBButton.h; sourceTree = "<group>"; };
+		E08AABCA1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountForgetPasswordController.h; sourceTree = "<group>"; };
+		E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountForgetPasswordController.m; sourceTree = "<group>"; };
+		E08AABCD1FE0E1E5005B6DBB /* QTAccountInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountInfo.h; sourceTree = "<group>"; };
+		E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountInfo.m; sourceTree = "<group>"; };
 		E09351581FA30EBE000687BC /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E09351591FA30EBE000687BC /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
 		E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKConfigFile.bundle; sourceTree = "<group>"; };
@@ -647,6 +662,12 @@
 		E08AABBD1FE0BF9D005B6DBB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E08AABC31FE0C46C005B6DBB /* QTAccountLoginController.h */,
+				E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */,
+				E08AABC01FE0C458005B6DBB /* QTAccountRegisterController.h */,
+				E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */,
+				E08AABCA1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.h */,
+				E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -654,6 +675,8 @@
 		E08AABBE1FE0BF9D005B6DBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E08AABCD1FE0E1E5005B6DBB /* QTAccountInfo.h */,
+				E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -663,6 +686,15 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E08AABC61FE0CDBB005B6DBB /* RBButton */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABC81FE0CDBB005B6DBB /* RBButton.h */,
+				E08AABC71FE0CDBB005B6DBB /* RBButton.m */,
+			);
+			path = RBButton;
 			sourceTree = "<group>";
 		};
 		E09351571FA30EBE000687BC /* ShareSDK */ = {
@@ -919,6 +951,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E08AABC61FE0CDBB005B6DBB /* RBButton */,
 				E088D67F1FD6875A00038736 /* RBLabel */,
 				E084A91C1FB598A100AE4AD2 /* RBImagebrowse */,
 				E084A9181FB53F9300AE4AD2 /* QTErrorView */,
@@ -1320,15 +1353,18 @@
 				E088D6701FD64E0600038736 /* QTTopicLeftCell.m in Sources */,
 				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
 				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,
+				E08AABC91FE0CDBB005B6DBB /* RBButton.m in Sources */,
 				E040F6A21FB15B5900CDA6B0 /* QTFeedbackController.m in Sources */,
 				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
 				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
 				E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */,
 				E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */,
 				E088D66E1FD64E0600038736 /* QTTopicModel.m in Sources */,
+				E08AABC21FE0C458005B6DBB /* QTAccountRegisterController.m in Sources */,
 				E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */,
 				E040F6A71FB15B5900CDA6B0 /* QTUserAgreementController.m in Sources */,
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
+				E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */,
 				E088D66B1FD64E0600038736 /* QTTopicSpeaker.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
 				E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */,
@@ -1344,7 +1380,9 @@
 				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,
 				E040F6A41FB15B5900CDA6B0 /* QTInfoEditController.m in Sources */,
 				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
+				E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */,
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
+				E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */,
 				E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */,
 				E088D6771FD6650000038736 /* QTUserPostMainController.m in Sources */,
 				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,

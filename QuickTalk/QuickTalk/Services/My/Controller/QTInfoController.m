@@ -172,7 +172,7 @@
                  if (error) {
                      [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
                  } else {
-                     [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar nickname:userInfo.nickname];
+//                     [[QTUserInfo sharedInstance] login:userInfo.uuid avatar:userInfo.avatar nickname:userInfo.nickname];
                      [self configureData];
                      [QTProgressHUD hide];
                      if (self.presentingViewController) {
@@ -224,7 +224,7 @@
     if (nickname.length == 0) {
         nickname = @"用户1234444";
     }
-    [[QTUserInfo sharedInstance] login:uuid avatar:avatar nickname:nickname];
+//    [[QTUserInfo sharedInstance] login:uuid avatar:avatar nickname:nickname];
     [self configureData];
     [self.avatarView cra_setBackgroundImage:avatar];
     

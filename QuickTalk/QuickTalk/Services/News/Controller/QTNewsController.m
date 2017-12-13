@@ -44,6 +44,7 @@
 
     __weak typeof(self) weakSelf = self;
     [self.tableView headerWithRefreshingBlock:^{
+        weakSelf.errorView.hidden = YES;
         weakSelf.page = 1;
         weakSelf.dataList = [NSMutableArray array];
         weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
@@ -94,15 +95,14 @@
 
 - (void)loadData
 {
-    [QTProgressHUD showHUD:self.view];
+//    [QTProgressHUD showHUD:self.view];
     [QTTopicModel requestTopicData:self.page completionHandler:^(NSArray<QTTopicModel *> *list, NSError *error) {
         if (error) {
-            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
                 self.errorView.hidden = NO;
             }
         } else {
-            [QTProgressHUD hide];
             self.errorView.hidden = YES;
             [self.dataList addObjectsFromArray:[list copy]];
             if (self.page == 1) {
@@ -282,7 +282,7 @@
             QTErrorView *view = [[QTErrorView alloc] initWithFrame:self.view.bounds];
             __weak typeof(self) weakSelf = self;
             [view setOnRefreshHandler:^{
-                [weakSelf loadData];
+                [weakSelf.tableView beginHeaderRefreshing];
             }];
             view;
         });
