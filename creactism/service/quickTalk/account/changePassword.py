@@ -41,12 +41,22 @@ def changePassword():
 
 def __changeUserPasswordInStorage(userUUID, password):
     result = False
+    sqlList = []
+    argsList = []
+
+    deleteSQL = """DELETE FROM t_quickTalk_user_auth WHERE user_uuid=%s """
+    sqlList.append(deleteSQL)
+    argsList.append([userUUID])
+
     updateSQL = """
-        UPDATE t_quickTalk_user_auth SET password=%s WHERE user_uuid=%s; """
+        INSERT INTO t_quickTalk_user_auth(user_uuid, password) VALUES (%s, %s)
+        """
+    sqlList.append(updateSQL)
+    argsList.append([userUUID, password])
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionDmlWithArgs(updateSQL, [password, userUUID])
+        result = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
     except Exception as e:
         Loger.error(e, __file__)
             

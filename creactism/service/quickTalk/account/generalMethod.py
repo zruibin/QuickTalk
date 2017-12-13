@@ -95,10 +95,13 @@ def verifyUserPassword(userUUID, password):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         resultData = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
-        dataPassword = ""
-        dataPassword = resultData[0]["password"]
-        if dataPassword == password or  len(dataPassword) == 0: 
-                result = True
+        if len(resultData) > 0:
+            dataPassword = ""
+            dataPassword = resultData[0]["password"]
+            if dataPassword == password or  len(dataPassword) == 0: 
+                    result = True
+        else:
+            result = True
     except Exception as e:
         Loger.error(e, __file__)
 

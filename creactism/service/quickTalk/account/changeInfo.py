@@ -26,7 +26,7 @@ def changeInfo():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
     data = getValueFromRequestByKey("data")
-    
+
     if userUUID == None or typeStr == None or data == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
     if typeStr not in ("nickname", "phone", "email", "area", "detail"):
@@ -42,7 +42,7 @@ def __changeUserInfoInStorage(userUUID, typeStr, data):
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        action = dbManager.executeTransactionDmlWithArgs(updateSQL, [detail, userUUID])
+        action = dbManager.executeTransactionDmlWithArgs(updateSQL, [data, userUUID])
         if action:
             return RESPONSE_JSON(CODE_SUCCESS)
         else:

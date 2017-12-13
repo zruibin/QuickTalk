@@ -144,6 +144,7 @@ def makeCookie(response, key, value):
     return response
 
 def userAvatarURL(uuid, avatar):
+    if avatar == None or len(avatar) == 0: return ""
     if "http://" in avatar or "https://" in avatar:
         return avatar
     else:
