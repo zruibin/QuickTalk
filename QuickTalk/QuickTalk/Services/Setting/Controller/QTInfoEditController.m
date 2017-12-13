@@ -69,8 +69,8 @@
     [QTProgressHUD showHUD:self.view];
     [QTUserInfo requestChangeNickName:[QTUserInfo sharedInstance].uuid nickname:self.textField.text completionHandler:^(BOOL action, NSError *error) {
         if (action) {
-            [QTProgressHUD showHUDSuccess];
             [QTUserInfo sharedInstance].nickname = self.textField.text;
+            [QTProgressHUD showHUDSuccess];
             if (self.onChangeBlock) {
                 self.onChangeBlock(self.textField.text);
             }

@@ -8,12 +8,11 @@
 
 #import "QTMyController.h"
 #import "QTSettingController.h"
-#import "QTAvatarEditController.h"
-#import "QTInfoEditController.h"
 #import "QTTopicController.h"
 #import "QTUserPostMainController.h"
 #import "QTMyNewsCommentController.h"
-
+#import "QTAccountInfoEditController.h"
+#import "RBImagebrowse.h"
 
 @interface QTMyController () <UIScrollViewDelegate>
 
@@ -24,6 +23,7 @@
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *childControllers;
+@property (nonatomic, strong) FBKVOController *kvoController;
 
 @end
 
@@ -60,6 +60,11 @@
             weakSelf.scrollView.hidden = NO;
             [self selectedOnSegment:0];
         }
+    }];
+    
+    self.kvoController = [FBKVOController controllerWithObserver:self];
+    [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"avatar" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
     }];
 }
 
@@ -161,29 +166,12 @@
 
 - (void)avatarAction
 {
-    QTAvatarEditController *avatarEditController = [QTAvatarEditController new];
-    __weak typeof(self) weakSelf = self;
-    [avatarEditController setOnAvatarChangeHandler:^{
-        [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
-        if ([@"cea8b1c3aebe31823fa86e069de496b9" isEqualToString:[QTUserInfo sharedInstance].uuid]) {
-            [[NSUserDefaults standardUserDefaults] setObject:[QTUserInfo sharedInstance].avatar forKey:@"test_avatar"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }];
-    [self.navigationController pushViewController:avatarEditController animated:YES];
+    [[RBImagebrowse createBrowseWithImages:@[[QTUserInfo sharedInstance].avatar]] show];
 }
 
 - (void)infoEditAction
 {
-    QTInfoEditController *infoEditController = [QTInfoEditController new];
-    __weak typeof(self) weakSelf = self;
-    [infoEditController setOnChangeBlock:^(NSString *text) {
-        [weakSelf.nicknameButton setTitle:text forState:UIControlStateNormal];
-        if ([@"cea8b1c3aebe31823fa86e069de496b9" isEqualToString:[QTUserInfo sharedInstance].uuid]) {
-            [[NSUserDefaults standardUserDefaults] setObject:text forKey:@"test_nickname"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-    }];
+    QTAccountInfoEditController *infoEditController = [QTAccountInfoEditController new];
     [self.navigationController pushViewController:infoEditController animated:YES];
 }
 

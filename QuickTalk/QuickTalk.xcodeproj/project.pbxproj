@@ -72,6 +72,7 @@
 		E08AABFC1FE14129005B6DBB /* QTMyNewsCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */; };
 		E08AABFD1FE14129005B6DBB /* QTMyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABF11FE14129005B6DBB /* QTMyController.m */; };
 		E08AABFE1FE14129005B6DBB /* QTMyNewsCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */; };
+		E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */; };
 		E09351781FA30EBE000687BC /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351581FA30EBE000687BC /* MOBFoundation.framework */; };
 		E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351591FA30EBE000687BC /* ShareSDK.framework */; };
 		E093517A1FA30EBE000687BC /* ShareSDKConfigFile.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */; };
@@ -254,6 +255,8 @@
 		E08AABF11FE14129005B6DBB /* QTMyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTMyController.m; sourceTree = "<group>"; };
 		E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTMyNewsCommentCell.m; sourceTree = "<group>"; };
 		E08AABF51FE14129005B6DBB /* QTMyNewsCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTMyNewsCommentCell.h; sourceTree = "<group>"; };
+		E08AABFF1FE144F0005B6DBB /* QTAccountInfoEditController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountInfoEditController.h; sourceTree = "<group>"; };
+		E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountInfoEditController.m; sourceTree = "<group>"; };
 		E09351581FA30EBE000687BC /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		E09351591FA30EBE000687BC /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
 		E093515C1FA30EBE000687BC /* ShareSDKConfigFile.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKConfigFile.bundle; sourceTree = "<group>"; };
@@ -634,6 +637,8 @@
 				E08AABD71FE10A55005B6DBB /* QTAccountThirdPartController.m */,
 				E08AABD91FE113F2005B6DBB /* QTAccountPhoneController.h */,
 				E08AABDA1FE113F2005B6DBB /* QTAccountPhoneController.m */,
+				E08AABFF1FE144F0005B6DBB /* QTAccountInfoEditController.h */,
+				E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -719,10 +724,10 @@
 		E08AABED1FE14129005B6DBB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
-				E08AABF01FE14129005B6DBB /* QTMyNewsCommentController.h */,
 				E08AABEF1FE14129005B6DBB /* QTMyController.h */,
 				E08AABF11FE14129005B6DBB /* QTMyController.m */,
+				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
+				E08AABF01FE14129005B6DBB /* QTMyNewsCommentController.h */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1427,6 +1432,7 @@
 				E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */,
 				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
 				E08AABF71FE14129005B6DBB /* QTAvatarEditController.m in Sources */,

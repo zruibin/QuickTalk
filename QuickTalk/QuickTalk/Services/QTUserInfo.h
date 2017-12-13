@@ -28,6 +28,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 @property (nonatomic, copy) NSString *qq;
 @property (nonatomic, copy) NSString *wechat;
 @property (nonatomic, copy) NSString *weibo;
+@property (nonatomic, copy) NSString *area;
 @property (nonatomic, assign) NSInteger gender;
 
 + (instancetype)sharedInstance;
@@ -39,12 +40,6 @@ extern NSString * const QTLoginStatusChangeNotification;
 - (BOOL)checkLoginStatus:(UIViewController *)viewController;
 
 - (void)checkingObsolescence;
-
-+ (void)requestLogin:(NSString *)openId
-                type:(NSString *)type
-              avatar:(NSString *)avatar
-            nickName:(NSString *)nickname
-   completionHandler:(void (^)(QTUserInfo *userInfo, NSError * error))completionHandler;
 
 + (void)requestChangeAvatar:(NSString *)userUUID avatarImage:(UIImage *)avatarImage
           completionHandler:(void (^)(NSString *avatar, NSError * error))completionHandler;

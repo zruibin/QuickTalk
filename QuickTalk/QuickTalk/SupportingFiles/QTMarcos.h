@@ -76,6 +76,9 @@
 #define QuickTalk_ACCOUNT_QQ @"9"
 #define QuickTalk_ACCOUNT_WEIBO @"10"
 
+#define QuickTalk_GENDER_MALE 1
+#define QuickTalk_GENDER_FEMALE 2
+
 #define MAX_IMAGE_COUNT 9
 #define IMAGE_COMPRESSION_RATION 0.5f
 
