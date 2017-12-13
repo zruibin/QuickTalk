@@ -24,6 +24,8 @@ from service.quickTalk.account import forgetPassword
 from service.quickTalk.account import changePassword
 from service.quickTalk.account import thirdParty
 from service.quickTalk.account import info
+from service.quickTalk.account import changeAvatar
+from service.quickTalk.account import changeInfo
 
 
 if __name__ == '__main__':
