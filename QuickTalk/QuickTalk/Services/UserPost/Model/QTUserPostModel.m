@@ -38,7 +38,7 @@
                    @"user_uuid": userUUID
                    };
     }
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/userPostList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/userPostList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -73,7 +73,7 @@
     if (txt.length > 0) {
         [params setObject:txt forKey:@"txt"];
     }
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/addUserPost" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/addUserPost" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -102,7 +102,7 @@
          completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
 {
     NSDictionary *params = @{@"user_uuid": userUUID, @"userPost_uuid":userPostUUID};
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/deleteUserPost" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/deleteUserPost" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -130,7 +130,7 @@
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
 {
     NSDictionary *params = @{@"uuid":userPostUUID};
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/addReadCount" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/addReadCount" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }

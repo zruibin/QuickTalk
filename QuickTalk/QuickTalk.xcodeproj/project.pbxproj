@@ -634,6 +634,37 @@
 			path = RBLabel;
 			sourceTree = "<group>";
 		};
+		E08AABBC1FE0BF9D005B6DBB /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABBD1FE0BF9D005B6DBB /* Controller */,
+				E08AABBE1FE0BF9D005B6DBB /* Model */,
+				E08AABBF1FE0BF9D005B6DBB /* View */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		E08AABBD1FE0BF9D005B6DBB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08AABBE1FE0BF9D005B6DBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08AABBF1FE0BF9D005B6DBB /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		E09351571FA30EBE000687BC /* ShareSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,6 +865,7 @@
 				E088D6531FD64E0600038736 /* News */,
 				E088D64F1FD64C9800038736 /* UserPost */,
 				E040F6791FB15B5900CDA6B0 /* My */,
+				E08AABBC1FE0BF9D005B6DBB /* Account */,
 				E08181311F99A01E0035DEF4 /* QTUserInfo.h */,
 				E08181321F99A01E0035DEF4 /* QTUserInfo.m */,
 			);

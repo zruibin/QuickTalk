@@ -19,4 +19,14 @@ extern NSString * _Nonnull const SERVICE_REQUEST_POST;
                                 params:(NSDictionary *_Nullable)params
                      completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler;
 
++ (void)requestDataForUserPostService:(NSString *_Nonnull)serviceURL
+                              method:(NSString *_Nullable)method
+                              params:(NSDictionary *_Nullable)params
+                   completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler;
+
++ (void)requestDataForAccountService:(NSString *_Nonnull)serviceURL
+                                method:(NSString *_Nullable)method
+                                params:(NSDictionary *_Nullable)params
+                     completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler;
+
 @end

@@ -22,7 +22,7 @@ NSString * const SERVICE_REQUEST_POST = @"POST";
 
 + (NSString *_Nonnull)appendHostURL:(NSString * _Nonnull)subURL
 {
-    NSString *fullURL = [NSString stringWithFormat:@"%@%@", QuickTalk_SERVICE_HOST, subURL];
+    NSString *fullURL = [NSString stringWithFormat:@"%@/quickTalk%@", QuickTalk_SERVICE_HOST, subURL];
     return fullURL;
 }
 
@@ -33,8 +33,8 @@ NSString * const SERVICE_REQUEST_POST = @"POST";
                               params:(NSDictionary *_Nullable)params
                    completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
 {
-    NSString *subURL = [NSString stringWithFormat:@"/quickTalk%@", serviceURL];
-    NSString *fullURL = [self appendHostURL:subURL];
+//    NSString *subURL = [NSString stringWithFormat:@"/quickTalk%@", serviceURL];
+    NSString *fullURL = [self appendHostURL:serviceURL];
     [QTNetworking handleRequest:fullURL method:method params:params success:^(id responseObject) {
         if (completionHandler) {
             completionHandler(responseObject, nil);
@@ -44,6 +44,24 @@ NSString * const SERVICE_REQUEST_POST = @"POST";
             completionHandler(nil, error);
         }
     }];
+}
+
++ (void)requestDataForUserPostService:(NSString *_Nonnull)serviceURL
+                               method:(NSString *_Nullable)method
+                               params:(NSDictionary *_Nullable)params
+                    completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/userPost%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForAccountService:(NSString *_Nonnull)serviceURL
+                              method:(NSString *_Nullable)method
+                              params:(NSDictionary *_Nullable)params
+                   completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/account%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
 }
 
 @end

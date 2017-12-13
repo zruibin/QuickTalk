@@ -31,7 +31,7 @@
               completionHandler:(void (^)(NSArray<QTUserPostCommentModel *> *list, NSError * error))completionHandler
 {
     NSDictionary *params = @{@"index": [NSNumber numberWithInteger:page], @"userPost_uuid": userpostUUID};
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/userPostCommentList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/userPostCommentList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -67,7 +67,7 @@
         [params setObject:@"1" forKey:@"isReply"];
         [params setObject:replyUUID forKey:@"reply_uuid"];
     }
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/addUserPostComment" method:SERVICE_REQUEST_POST params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/addUserPostComment" method:SERVICE_REQUEST_POST params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -97,7 +97,7 @@
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
 {
     NSDictionary *params = @{@"userPost_uuid": userPostUUID, @"comment_uuid":commentUUID, @"user_uuid": userUUID};
-    [QTNetworkAgent requestDataForQuickTalkService:@"/userPost/deleteUserPostComment" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    [QTNetworkAgent requestDataForUserPostService:@"/deleteUserPostComment" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }

@@ -127,8 +127,12 @@
         NSURL *url =[NSURL URLWithString:board.string] ;
         NSError *err = nil;
         NSString *str =   [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
-        NSString *re = @"<title [^<]*</title>";
+        NSString *re = @"<title>[^<]*</title>";
         NSRange range = [str rangeOfString:re options:NSRegularExpressionSearch];
+        if (range.location == NSNotFound) {
+            re = @"<title[^<]*</title>";
+            range = [str rangeOfString:re options:NSRegularExpressionSearch];
+        }
         if (err == nil && range.location != NSNotFound) {
             NSString *title = [str substringWithRange:range];
             title = [title stringByReplacingOccurrencesOfString:@"<title>" withString:@""];
