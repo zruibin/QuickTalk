@@ -71,17 +71,18 @@
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:12];
         label.minimumScaleFactor = 10;
+        label.numberOfLines = 2;
         label.textColor = [UIColor colorFromHexValue:0x999999];
         label.translatesAutoresizingMaskIntoConstraints = NO;
         label.textAlignment = NSTextAlignmentLeft;
-        label.text = @"若是通过第三方登录则初始密码为空";
+        label.text = @"若是通过第三方登录则初始密码为空，修改成功后需要重新登录";
         label;
     });
     [self.view addSubview:textLabel];
     [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.comfirField.mas_bottom).offset(5);
         make.left.and.right.equalTo(self.comfirField);
-        make.height.equalTo(@30);
+        make.height.equalTo(@40);
     }];
     
     [self.view addSubview:self.submitButton];

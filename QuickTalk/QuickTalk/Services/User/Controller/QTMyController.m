@@ -72,6 +72,9 @@
     [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"avatar" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
         [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
     }];
+    [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"nickname" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        [weakSelf.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
+    }];
     [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"area" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
         weakSelf.areaLabel.text = [QTUserInfo sharedInstance].area;
     }];
