@@ -10,4 +10,6 @@
 
 @interface QTMyNewsCommentController : QTViewController
 
+@property (nonatomic, copy) void (^onScrollingHandler)(CGFloat offsetY);
+
 @end

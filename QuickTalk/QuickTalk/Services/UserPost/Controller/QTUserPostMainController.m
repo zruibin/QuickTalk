@@ -13,6 +13,7 @@
 #import <SafariServices/SafariServices.h>
 #import "QTUserPostCommentController.h"
 #import "QTIntroController.h"
+#import "QTUserController.h"
 
 @interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -195,18 +196,21 @@
 
 - (void)checkPasteAction
 {
-    UIPasteboard *board = [UIPasteboard generalPasteboard];
-    YYCache *cache = [YYCache cacheWithName:QTDataCache];
-    if ([board.string isValidUrl]) {
-        if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
-            NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
-            if (![urlString isEqualToString:board.string]) {
+    //防止登录延时问题
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIPasteboard *board = [UIPasteboard generalPasteboard];
+        YYCache *cache = [YYCache cacheWithName:QTDataCache];
+        if ([board.string isValidUrl]) {
+            if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
+                NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
+                if (![urlString isEqualToString:board.string]) {
+                    [self addAction];
+                }
+            } else {
                 [self addAction];
             }
-        } else {
-            [self addAction];
         }
-    }
+    });
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -237,6 +241,13 @@
     }];
     [cell setOnArrowHandler:^(NSInteger index) {
         [weakSelf arrowHandlerAction:index];
+    }];
+    [cell setOnInfoHandler:^(NSInteger index) {
+        QTUserPostModel *userModel = weakSelf.dataList[index];
+        QTUserController *userController = [[QTUserController alloc] init];
+        userController.userUUID = userModel.userUUID;
+        userController.nickname = userModel.nickname;
+        [weakSelf.navigationController pushViewController:userController animated:YES];
     }];
     return cell;
 }
@@ -275,6 +286,15 @@
     userPostCommentController.uuid = model.uuid;
     [self.navigationController pushViewController:userPostCommentController animated:YES];
     [self addReadCountAction:indexPath.section];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.onScrollingHandler && self.dataList.count >= 10) {
+        self.onScrollingHandler(scrollView.contentOffset.y);
+    }
 }
 
 #pragma mark - Action

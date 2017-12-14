@@ -12,6 +12,7 @@
 #import "QTTopicLeftCell.h"
 #import "QTTopicRightCell.h"
 #import "QTUserPostCommentModel.h"
+#import "QTUserController.h"
 
 
 @interface QTUserPostCommentController ()<UITableViewDataSource, UITableViewDelegate>
@@ -28,7 +29,6 @@
 - (void)loadMoreData;
 - (void)sendComment:(NSString *)text;
 - (void)checkNewData;
-- (void)blockUser;
 - (void)tapCellHandler:(NSInteger)index;
 - (void)deleteComment:(QTUserPostCommentModel *)model;
 
@@ -187,24 +187,6 @@
     }];
 }
 
-- (void)blockUser
-{
-    __weak typeof(self) weakSelf = self;
-    void(^handler)(NSInteger index) = ^(NSInteger index){
-        if (index == 0) {
-            [QTProgressHUD showHUD:weakSelf.view];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理。" delay:2.0f];
-            });
-        }
-    };
-    NSArray *items = @[MMItemMake(@"拉黑", MMItemTypeHighlight, handler)];
-    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
-                                                          items:items];
-    sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
-    [sheetView show];
-}
-
 - (void)tapCellHandler:(NSInteger)index
 {
     QTUserPostCommentModel *model = [self.dataList objectAtIndex:index];
@@ -273,6 +255,12 @@
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         QTTopicRightCell *rightCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicRightCell class])];
         [rightCell loadData:model.content avatar:model.avatar];
+        [rightCell setOnAvatarHandler:^{
+            QTUserController *userController = [[QTUserController alloc] init];
+            userController.userUUID = model.userUUID;
+            userController.nickname = model.nickname;
+            [weakSelf.navigationController pushViewController:userController animated:YES];
+        }];
         [rightCell setOnTapHandler:^(NSInteger index) {
             [weakSelf tapCellHandler:index];
         }];
@@ -281,10 +269,10 @@
         QTTopicLeftCell *leftCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QTTopicLeftCell class])];
         [leftCell loadData:model.content avatar:model.avatar];
         [leftCell setOnAvatarHandler:^{
-            if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]
-                && [QTUserInfo sharedInstance].hiddenData == NO) {
-                [weakSelf blockUser];
-            }
+            QTUserController *userController = [[QTUserController alloc] init];
+            userController.userUUID = model.userUUID;
+            userController.nickname = model.nickname;
+            [weakSelf.navigationController pushViewController:userController animated:YES];
         }];
         [leftCell setOnTapHandler:^(NSInteger index) {
             [weakSelf tapCellHandler:index];

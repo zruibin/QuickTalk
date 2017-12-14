@@ -30,6 +30,13 @@
 		E07AF0D31FDAA365003639AF /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E07AF0D21FDAA365003639AF /* video.mp4 */; };
 		E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */; };
 		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
+		E081316A1FE21701001A6E3D /* CRALocation.json in Resources */ = {isa = PBXBuildFile; fileRef = E08131601FE21701001A6E3D /* CRALocation.json */; };
+		E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131611FE21701001A6E3D /* CRALocationPickerView.m */; };
+		E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131631FE21701001A6E3D /* CRADatePickerView.m */; };
+		E081316D1FE21701001A6E3D /* CRABasePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131641FE21701001A6E3D /* CRABasePickerView.m */; };
+		E081316E1FE21701001A6E3D /* CRAStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131651FE21701001A6E3D /* CRAStringPickerView.m */; };
+		E08131711FE23117001A6E3D /* QTUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131701FE23117001A6E3D /* QTUserController.m */; };
+		E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131771FE248AB001A6E3D /* QTUserModel.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
 		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
@@ -175,6 +182,20 @@
 		E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicCommentController.m; sourceTree = "<group>"; };
 		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
 		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
+		E08131601FE21701001A6E3D /* CRALocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CRALocation.json; sourceTree = "<group>"; };
+		E08131611FE21701001A6E3D /* CRALocationPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRALocationPickerView.m; sourceTree = "<group>"; };
+		E08131621FE21701001A6E3D /* CRAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAPickerView.h; sourceTree = "<group>"; };
+		E08131631FE21701001A6E3D /* CRADatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRADatePickerView.m; sourceTree = "<group>"; };
+		E08131641FE21701001A6E3D /* CRABasePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRABasePickerView.m; sourceTree = "<group>"; };
+		E08131651FE21701001A6E3D /* CRAStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRAStringPickerView.m; sourceTree = "<group>"; };
+		E08131661FE21701001A6E3D /* CRALocationPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRALocationPickerView.h; sourceTree = "<group>"; };
+		E08131671FE21701001A6E3D /* CRADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRADatePickerView.h; sourceTree = "<group>"; };
+		E08131681FE21701001A6E3D /* CRAStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAStringPickerView.h; sourceTree = "<group>"; };
+		E08131691FE21701001A6E3D /* CRABasePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRABasePickerView.h; sourceTree = "<group>"; };
+		E081316F1FE23117001A6E3D /* QTUserController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserController.h; sourceTree = "<group>"; };
+		E08131701FE23117001A6E3D /* QTUserController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserController.m; sourceTree = "<group>"; };
+		E08131761FE248AB001A6E3D /* QTUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserModel.h; sourceTree = "<group>"; };
+		E08131771FE248AB001A6E3D /* QTUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserModel.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E081812A1F9995AD0035DEF4 /* code.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = code.json; sourceTree = "<group>"; };
 		E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -472,6 +493,23 @@
 			path = QTTipView;
 			sourceTree = "<group>";
 		};
+		E081315F1FE21701001A6E3D /* CRAPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				E08131601FE21701001A6E3D /* CRALocation.json */,
+				E08131611FE21701001A6E3D /* CRALocationPickerView.m */,
+				E08131621FE21701001A6E3D /* CRAPickerView.h */,
+				E08131631FE21701001A6E3D /* CRADatePickerView.m */,
+				E08131641FE21701001A6E3D /* CRABasePickerView.m */,
+				E08131651FE21701001A6E3D /* CRAStringPickerView.m */,
+				E08131661FE21701001A6E3D /* CRALocationPickerView.h */,
+				E08131671FE21701001A6E3D /* CRADatePickerView.h */,
+				E08131681FE21701001A6E3D /* CRAStringPickerView.h */,
+				E08131691FE21701001A6E3D /* CRABasePickerView.h */,
+			);
+			path = CRAPickerView;
+			sourceTree = "<group>";
+		};
 		E08181281F9995AD0035DEF4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -726,8 +764,10 @@
 			children = (
 				E08AABEF1FE14129005B6DBB /* QTMyController.h */,
 				E08AABF11FE14129005B6DBB /* QTMyController.m */,
-				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
 				E08AABF01FE14129005B6DBB /* QTMyNewsCommentController.h */,
+				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
+				E081316F1FE23117001A6E3D /* QTUserController.h */,
+				E08131701FE23117001A6E3D /* QTUserController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -735,6 +775,8 @@
 		E08AABF21FE14129005B6DBB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E08131761FE248AB001A6E3D /* QTUserModel.h */,
+				E08131771FE248AB001A6E3D /* QTUserModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -742,8 +784,8 @@
 		E08AABF31FE14129005B6DBB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */,
 				E08AABF51FE14129005B6DBB /* QTMyNewsCommentCell.h */,
+				E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1003,6 +1045,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E081315F1FE21701001A6E3D /* CRAPickerView */,
 				E08AABC61FE0CDBB005B6DBB /* RBButton */,
 				E088D67F1FD6875A00038736 /* RBLabel */,
 				E084A91C1FB598A100AE4AD2 /* RBImagebrowse */,
@@ -1192,6 +1235,7 @@
 				E081812D1F9995AD0035DEF4 /* code.json in Resources */,
 				E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */,
 				E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */,
+				E081316A1FE21701001A6E3D /* CRALocation.json in Resources */,
 				E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */,
 				E093517A1FA30EBE000687BC /* ShareSDKConfigFile.bundle in Resources */,
 				E09351841FA30EBE000687BC /* WeiboSDK.bundle in Resources */,
@@ -1428,10 +1472,12 @@
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
 				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
 				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
+				E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */,
 				E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */,
 				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
 				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
@@ -1441,8 +1487,10 @@
 				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,
 				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
 				E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */,
+				E081316D1FE21701001A6E3D /* CRABasePickerView.m in Sources */,
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
 				E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */,
+				E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */,
 				E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */,
 				E088D6771FD6650000038736 /* QTUserPostMainController.m in Sources */,
 				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,
@@ -1459,6 +1507,8 @@
 				E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
 				E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */,
+				E081316E1FE21701001A6E3D /* CRAStringPickerView.m in Sources */,
+				E08131711FE23117001A6E3D /* QTUserController.m in Sources */,
 				E0DF28FB1F95A81000F1B8C8 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

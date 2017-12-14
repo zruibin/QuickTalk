@@ -20,6 +20,7 @@
 @property (nonatomic, copy) NSString *qq;
 @property (nonatomic, copy) NSString *wechat;
 @property (nonatomic, copy) NSString *weibo;
+@property (nonatomic, copy) NSString *area;
 @property (nonatomic, assign) NSInteger gender;
 
 + (void)requestLogin:(NSString *)account
@@ -56,6 +57,10 @@
                      method:(NSString *)method
                      openId:(NSString *)openId
           completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestForChangeGender:(NSString *)userUUID
+                         gender:(NSString *)gender
+            completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
 @end
 

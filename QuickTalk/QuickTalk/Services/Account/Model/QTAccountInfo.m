@@ -265,6 +265,41 @@
     }];
 }
 
++ (void)requestForChangeGender:(NSString *)userUUID
+                        gender:(NSString *)gender
+             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    if (gender.length == 0) gender = @"";
+    
+    NSDictionary *params = @{
+                             @"user_uuid": userUUID,
+                             @"gender": gender
+                             };
+    [QTNetworkAgent requestDataForAccountService:@"/change_gender" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(NO, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
 @end
 
 

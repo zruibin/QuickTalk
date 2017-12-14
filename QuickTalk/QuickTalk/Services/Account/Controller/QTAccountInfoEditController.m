@@ -9,6 +9,8 @@
 #import "QTAccountInfoEditController.h"
 #import "QTInfoEditController.h"
 #import "QTAvatarEditController.h"
+#import "CRAPickerView.h"
+#import "QTAccountInfo.h"
 
 @interface QTAccountInfoEditController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -79,26 +81,33 @@
     cell.textLabel.textColor = [UIColor colorFromHexValue:0x999999];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.section == 0 && indexPath.row == 0) {
-        UIImageView *avatarView = [[UIImageView alloc] init];
-        avatarView.frame = CGRectMake(CGRectGetWidth(tableView.bounds)-35-30, 7.5, 35, 35);
-        avatarView.tag = 1000;
-        [avatarView circularImage:[QTUserInfo sharedInstance].avatar];
-        [cell addSubview:avatarView];
+        UIImageView *avatarView =  [cell viewWithTag:1010110];
+        if (avatarView == nil) {
+            avatarView = [[UIImageView alloc] init];
+            avatarView.frame = CGRectMake(CGRectGetWidth(tableView.bounds)-35-30, 7.5, 35, 35);
+            avatarView.tag = 1010110;
+            [cell addSubview:avatarView];
+        }
         cell.textLabel.text = @"头像";
+        [avatarView cra_setImage:[QTUserInfo sharedInstance].avatar];
     }
     if (indexPath.section == 1) {
-        UILabel *label = [[UILabel alloc] init];
-        label.font = [UIFont systemFontOfSize:14];
-        label.textColor = [UIColor blackColor];
-        label.tag = [[NSString stringWithFormat:@"1%ld", (long)indexPath.row] integerValue];
-        label.translatesAutoresizingMaskIntoConstraints = NO;
-        [cell.contentView addSubview:label];
-        [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(cell.contentView).offset(60);
-            make.right.equalTo(cell.contentView).offset(-60);
-            make.top.equalTo(cell.contentView).offset(5);
-            make.bottom.equalTo(cell.contentView).offset(-5);
-        }];
+        UILabel *label = [cell viewWithTag:1010111];
+        if (label == nil) {
+            label = [[UILabel alloc] init];
+            label.font = [UIFont systemFontOfSize:14];
+            label.textColor = [UIColor blackColor];
+            label.tag = [[NSString stringWithFormat:@"1%ld", (long)indexPath.row] integerValue];
+            label.translatesAutoresizingMaskIntoConstraints = NO;
+            label.tag = 1010111;
+            [cell.contentView addSubview:label];
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(cell.contentView).offset(60);
+                make.right.equalTo(cell.contentView).offset(-60);
+                make.top.equalTo(cell.contentView).offset(5);
+                make.bottom.equalTo(cell.contentView).offset(-5);
+            }];
+        }
         
         if (indexPath.row == 0) {
             cell.textLabel.text = @"昵称";
@@ -156,9 +165,42 @@
         [self.navigationController pushViewController:controller animated:YES];
     }
     if (indexPath.section == 1) {
+        __weak typeof(self) weakSelf = self;
         if (indexPath.row == 0) { //昵称
             QTInfoEditController *infoEditController = [QTInfoEditController new];
             [self.navigationController pushViewController:infoEditController animated:YES];
+        }
+        if (indexPath.row == 1) { //性别
+            [CRAStringPickerView showStringPickerWithTitle:@"性别" dataSource:@[@"男", @"女"] defaultSelValue:@"男" isAutoSelect:NO resultBlock:^(id selectValue) {
+                NSString *gender = @"0";
+                if ([selectValue isEqualToString:@"女"]) {
+                    gender = @"2";
+                }
+                if ([selectValue isEqualToString:@"男"]) {
+                    gender = @"1";
+                }
+                [QTAccountInfo requestForChangeGender:[QTUserInfo sharedInstance].uuid gender:gender completionHandler:^(BOOL action, NSError *error) {
+                    if (action) {
+                        [QTUserInfo sharedInstance].gender = [gender integerValue];
+                        [weakSelf.tableView reloadData];
+                    } else {
+                        [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:weakSelf.view];
+                    }
+                }];
+            }];
+        }
+        if (indexPath.row == 2) {
+            [CRALocationPickerView showAddressPickerWithDefaultSelected:nil isAutoSelect:NO resultBlock:^(NSArray *selectAddressArr) {
+                NSString *area = selectAddressArr[1];
+                [QTAccountInfo requestForAccountInfo:[QTUserInfo sharedInstance].uuid type:@"area" data:area completionHandler:^(BOOL action, NSError *error) {
+                    if (action) {
+                        [QTUserInfo sharedInstance].area = area;
+                        [weakSelf.tableView reloadData];
+                    } else {
+                        [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:weakSelf.view];
+                    }
+                }];
+            }];
         }
     }
 }

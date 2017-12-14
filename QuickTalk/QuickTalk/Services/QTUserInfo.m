@@ -75,6 +75,7 @@ static NSDate *refreshDate = nil;
     self.wechat = userInfo.wechat;
     self.weibo = userInfo.weibo;
     self.gender = userInfo.gender;
+    self.area = userInfo.area;
     self.loginStatus = YES;
     [SAMKeychain setPassword:userInfo.phone forService:kQTLoginServiceName account:kQTLoginAccount];
     [SAMKeychain setPassword:password forService:kQTLoginServiceName account:kQTLoginPassword];

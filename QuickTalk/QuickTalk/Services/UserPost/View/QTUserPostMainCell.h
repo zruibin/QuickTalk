@@ -14,6 +14,7 @@
 
 @property (nonatomic, copy) void (^onHrefHandler)(NSInteger index);
 @property (nonatomic, copy) void (^onArrowHandler)(NSInteger index);
+@property (nonatomic, copy) void (^onInfoHandler)(NSInteger index);
 
 - (void)loadData:(QTUserPostModel *)model;
 

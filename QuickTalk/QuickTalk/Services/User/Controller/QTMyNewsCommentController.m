@@ -42,7 +42,7 @@
             [weakSelf.dataList removeAllObjects];
             [weakSelf.tableView reloadData];
         } else {
-            [self.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            [weakSelf.tableView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.left.and.right.and.bottom.equalTo(weakSelf.view);
                 make.top.equalTo(weakSelf.view).offset(100);
             }];
@@ -161,6 +161,15 @@
     QTTopicController *topicController = [[QTTopicController alloc] init];
     topicController.topicUUID = model.topicUUID;
     [self.navigationController pushViewController:topicController animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.onScrollingHandler && self.dataList.count >= 10) {
+        self.onScrollingHandler(scrollView.contentOffset.y);
+    }
 }
 
 #pragma mark - Action

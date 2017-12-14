@@ -11,6 +11,7 @@
 @interface QTTopicRightCell : UITableViewCell
 
 @property (nonatomic, copy) void (^onTapHandler)(NSInteger index);
+@property (nonatomic, copy) void (^onAvatarHandler)(void);
 
 - (void)loadData:(NSString *)detail avatar:(NSString *)avatar;
 - (CGFloat)heightForCell:(NSString *)detail;

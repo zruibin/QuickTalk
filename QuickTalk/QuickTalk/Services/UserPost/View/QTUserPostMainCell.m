@@ -182,6 +182,13 @@
     }
 }
 
+- (void)infoHandlerAction
+{
+    if (self.onInfoHandler) {
+        self.onInfoHandler(self.tag);
+    }
+}
+
 #pragma mark - setter and getter
 
 - (UIButton *)avatarButton
@@ -192,6 +199,7 @@
             button.backgroundColor = [UIColor clearColor];
             button.translatesAutoresizingMaskIntoConstraints = NO;
             [button setBackgroundImage:QuickTalk_DEFAULT_IMAGE forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(infoHandlerAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
@@ -203,10 +211,11 @@
     if (_nicknameButton == nil) {
         _nicknameButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button setTitle:@"xxxxxxxxxxxxxxxxxxx" forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:16];
+            [button setTitleColor:[UIColor colorFromHexValue:0x5a6e97] forState:UIControlStateNormal];
             [button setTitleColor:QuickTalk_MAIN_COLOR forState:UIControlStateHighlighted];
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            [button addTarget:self action:@selector(infoHandlerAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }

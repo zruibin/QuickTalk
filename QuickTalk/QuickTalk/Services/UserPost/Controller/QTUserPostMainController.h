@@ -11,5 +11,6 @@
 @interface QTUserPostMainController : QTViewController
 
 @property (nonatomic, copy) NSString *userUUID;
+@property (nonatomic, copy) void (^onScrollingHandler)(CGFloat offsetY);
 
 @end

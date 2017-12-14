@@ -13,6 +13,7 @@
 #import "QTCommentModel.h"
 #import "EwenTextView.h"
 #import "QTTipView.h"
+#import "QTUserController.h"
 
 @interface QTTopicCommentController ()
 <
@@ -268,24 +269,6 @@ UITableViewDataSource, UITableViewDelegate
     self.tipView = tipView;
 }
 
-- (void)blockUser
-{
-    __weak typeof(self) weakSelf = self;
-    void(^handler)(NSInteger index) = ^(NSInteger index){
-        if (index == 0) {
-            [QTProgressHUD showHUD:weakSelf.view];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理。" delay:2.0f];
-            });
-        }
-    };
-    NSArray *items = @[MMItemMake(@"拉黑", MMItemTypeHighlight, handler)];
-    MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
-                                                          items:items];
-    sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
-    [sheetView show];
-}
-
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -306,6 +289,10 @@ UITableViewDataSource, UITableViewDelegate
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         QTTableViewCellMake(QTTopicRightCell, rightCell)
         [rightCell loadData:model.content avatar:model.avatar];
+        [rightCell setOnAvatarHandler:^{
+            QTUserController *userController = [[QTUserController alloc] init];
+            [weakSelf.navigationController pushViewController:userController animated:YES];
+        }];
         [rightCell setOnTapHandler:^(NSInteger index) {
             [weakSelf showTipView:index];
         }];
@@ -317,10 +304,9 @@ UITableViewDataSource, UITableViewDelegate
             [weakSelf showTipView:index];
         }];
         [leftCell setOnAvatarHandler:^{
-            if ([[QTUserInfo sharedInstance] checkLoginStatus:weakSelf]
-                && [QTUserInfo sharedInstance].hiddenData == NO) {
-                [weakSelf blockUser];
-            }
+            QTUserController *userController = [[QTUserController alloc] init];
+            userController.userUUID = model.userUUID;
+            [weakSelf.navigationController pushViewController:userController animated:YES];
         }];
         cell = leftCell;
     }
