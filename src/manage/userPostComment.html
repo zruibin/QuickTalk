@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<title>评论列表</title>
+<title>分享评论列表</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -37,7 +37,7 @@ button {
 <body>
 
 
-<h4 id="title">话题评论列表</h4>
+<h4 id="title">分享评论列表</h4>
 <nav aria-label="Page navigation">
 	<ul class="pagination">
 		<li>
@@ -64,13 +64,13 @@ button {
 $(document).ready(function() {
 	checkingAuth();
 	headerAction();
-	getTopicComment();
+	getUserPostComment();
 });
 
 function getLink() {
 	var uuid = getQueryString("uuid");
 	var title = decodeURI(getQueryString("title"));
-	var link = "./comment.html?uuid=" + uuid + "&title=" + encodeURI(encodeURI(title));
+	var link = "./userPostComment.html?uuid=" + uuid + "&title=" + encodeURI(encodeURI(title));
 	return link;
 }
 
@@ -99,7 +99,7 @@ function prePage() {
 }
 
 
-function getTopicComment() {
+function getUserPostComment() {
 	var uuid = getQueryString("uuid");
 	var title = decodeURI(getQueryString("title"));
 	var index = getIndex();
@@ -107,11 +107,12 @@ function getTopicComment() {
 	var titleElement = document.getElementById("title");
 	titleElement.innerText = title;
 
-	var url = host + "service/quickTalk/commentList?topic_uuid=" + uuid + "&index=" + index + "&size=100";
+	var url = host + "service/quickTalk/userPost/userPostCommentList";
 	reqwest({
 		url: url, 
 		type: 'json', 
-		method: 'post'
+		method: 'post',
+		data:{userPost_uuid:uuid, index:index, size:100}
 	}).then(function (response) {
 		// console.log(response);
 		showCommentList(response.data);
@@ -122,24 +123,28 @@ function getTopicComment() {
 }
 
 
-
 function showCommentList(dataList) {
-    var html = "<h6>评论列表</h6>";
+    var html = "<h6>分享评论列表</h6>";
     if (dataList) { //有数据时
-        html += '<table cellspacing="0" cellpadding="0" id="table">';
-			html += '<tr>';
+		html += '<table cellspacing="0" cellpadding="0" id="table">';
+		html += '<tr>';
 		html += '<th>id</th>';
 		html += '<th>昵称</th>';
-		html += '<th>内容</th>';
-		html += '<th>操作</th>';			
+		html += '<th>头像</th>';
+		html += '<th>内容</th>';			
+		html += '<th>时间</th>';
+		html += '<th>操作</th>';
 		html += '</tr>';
         for (var i = 0; i < dataList.length; i++) {
-            var data = dataList[i];
+			var data = dataList[i];
+			var content = encodeURI(encodeURI(trim(data.content)));
             html += '<tr>';
             html += '<td style="width:60px;">'+ data.id +'</td>';
-			html += '<td style="width:100px; font-size:14px;">'+ data.nickname +'</td>';
-            html += '<td>'+ data.content +'</td>';
-            html += '<td><button class="btn btn-danger" onclick=deleteComment("'+ data.uuid +'","' + data.content +'")>删除</button></td>';
+			html += '<td style="width:100px; font-size:12px;">'+ data.nickname +'</td>';
+			html += '<td><img src="'+ data.avatar +'" style="width:60px;height:60px;"></td>';
+			html += '<td>'+ data.content +'</td>';
+			html += '<td style="width:100px; font-size:12px;">'+ data.time +'</td>';
+            html += '<td><button class="btn btn-danger" onclick=deleteComment("'+ data.uuid +'","' + data.userUUID +'","' + content +'")>删除</button></td>';
             html += '</tr>';
         }
         
@@ -151,24 +156,25 @@ function showCommentList(dataList) {
     container.innerHTML = html;
 }
 
-function deleteComment(uuid, content) {
-	console.log(content);
+function deleteComment(uuid, userUUID, content) {
+	// console.log(content);
 	$.confirm({
 		title: '删除评论',
-		content: content,
+		content: decodeURI(decodeURI(content)),
 		confirmButton: "确定",
 		cancelButton: "取消",
 		confirm: function(){
 			var topic_uuid = getQueryString("uuid");
-			var url = host + "service/quickTalk/deleteComment?uuid=" + uuid + "&topic_uuid=" + topic_uuid;
-			console.log(url); 
+			var url = host + "service/quickTalk/userPost/deleteUserPostComment";
+			var userPostUUID = getQueryString("uuid");
 			reqwest({
 				url: url, 
 				type: 'json', 
-				method: 'post'
+				method: 'post',
+				data: {comment_uuid:uuid, userPost_uuid:userPostUUID, user_uuid:userUUID}
 			}).then(function (response) {
 				// console.log(response);
-				getTopicComment();
+				getUserPostComment();
 			}).fail(function (err, msg) {
 				console.log(err);     
 				toast("请求失败，请重新刷新！");

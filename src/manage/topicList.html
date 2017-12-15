@@ -24,9 +24,6 @@
 
 <style>
 
-#table,  #table td{border:1px solid #585858; line-height:22px;} 
-#table td {padding: 10px 10px; word-break: break-all;}
-#table button {width: 100px; margin-top: 2px;}
 
 </style>
 
@@ -115,7 +112,12 @@ function showTopicList(dataList) {
     var html = "";
     if (dataList) { //有数据时
         html += '<table cellspacing="0" cellpadding="0" id="table">';
-        
+		html += '<tr>';
+		html += '<th>id</th>';
+		html += '<th>标题</th>';
+		html += '<th>简介</th>';
+		html += '<th>操作</th>';			
+		html += '</tr>';
         for (var i = 0; i < dataList.length; i++) {
             var data = dataList[i];
 			var title = encodeURI(encodeURI(trim(data.title)));
@@ -179,9 +181,6 @@ function changeTopic(uuid) {
 	window.location.href = "./changeTopic.html?uuid=" + uuid
 }
 
-function trim(str) { 
-  return str.replace(/(^\s*)|(\s*$)/g, ""); 
-}
 
 </script>
 

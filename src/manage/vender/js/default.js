@@ -125,12 +125,17 @@ function stringReplace(text) {
     return text;
 }
 
+function trim(str) { 
+    return str.replace(/(^\s*)|(\s*$)/g, ""); 
+}
 
 function headerAction() {
     var nav = '<nav class="navbar navbar-default" role="navigation"> \
                 <div class="navbar-header"> \
-                <a class="navbar-brand" href="topicList.html">话题列表</a> \
+                <a class="navbar-brand" href="topicList.html">新闻列表</a> \
                 <a class="navbar-brand" href="addTopic.html">新增话题</a> \
+                <a class="navbar-brand" href="userPostList.html">分享列表</a> \
+                <a class="navbar-brand" href="userList.html">所有用户</a> \
                 <a class="navbar-brand" href="log.html">日志</a> \
                 <a class="navbar-brand" onclick="deleteCookie(cookieName);">退出</a> \
                 </div> \

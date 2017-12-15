@@ -106,3 +106,7 @@ select, #pageSelector{
 
 
 
+#table,  #table td, #table th{border:1px solid #585858; line-height:22px;} 
+#table th{text-align: center}
+#table td {padding: 10px 10px; word-break: break-all;}
+#table button {width: 100px; margin-top: 2px;}
