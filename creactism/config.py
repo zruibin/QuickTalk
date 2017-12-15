@@ -15,95 +15,104 @@ import os
 
 class Config(object):
 
-    DEBUG = True
+  DEBUG = True
 
-    WEB_SITE_HOST = "http://creactism.com/"
-    LOG_DIR = "logs/"
-    WEB_SITE_DIR = "/home/creactism"
-    BACKUP_DIR = "/home/creactism_bak" # 数据备份目录
+  WEB_SITE_HOST = "http://creactism.com/"
+  LOG_DIR = "logs/"
+  WEB_SITE_DIR = "/home/creactism"
+  BACKUP_DIR = "/home/creactism_bak" # 数据备份目录
 
-    DBHOST = "localhost"
-    DBPORT = 3306
-    DBUSER = "root"
-    DBPWD = "0928"
-    DBNAME = "creactism"
-    DBCHAR = "utf8"
-    DBPOOLSIZE = 10
+  DBHOST = "localhost"
+  DBPORT = 3306
+  DBUSER = "root"
+  DBPWD = "0928"
+  DBNAME = "creactism"
+  DBCHAR = "utf8"
+  DBPOOLSIZE = 10
 
-    CACHE_DB = "redis"
-    CACHE_HOST = DBHOST
-    CACHE_PORT = 6379
-    CACHE_PASSWORD = DBPWD
-    CACHE_EXPIRE = 3600 #一个小时
+  CACHE_DB = "redis"
+  CACHE_HOST = DBHOST
+  CACHE_PORT = 6379
+  CACHE_PASSWORD = DBPWD
+  CACHE_EXPIRE = 3600 #一个小时
 
-    TOKEN_EXPIRE = CACHE_EXPIRE
+  TOKEN_EXPIRE = CACHE_EXPIRE
 
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # 上传文件限制，程序限制大小为其一半
-    MAX_CONTENT_LENGTH_VERIFY = MAX_CONTENT_LENGTH / 2 # 上传文件的真实要求大小
-    UPLOAD_FOLDER = "medias/" # 多媒体存放的目录，必须加上/
-    FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
-    FULL_UPLOAD_FOLDER_TEMP = FULL_UPLOAD_FOLDER + "tmp/"
-    ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
-    JSONIFY_MIMETYPE = "application/json"
+  MAX_CONTENT_LENGTH = 16 * 1024 * 1024 # 上传文件限制，程序限制大小为其一半
+  MAX_CONTENT_LENGTH_VERIFY = MAX_CONTENT_LENGTH / 2 # 上传文件的真实要求大小
+  UPLOAD_FOLDER = "medias/" # 多媒体存放的目录，必须加上/
+  FULL_UPLOAD_FOLDER = os.getcwd() + "/" + UPLOAD_FOLDER
+  FULL_UPLOAD_FOLDER_TEMP = FULL_UPLOAD_FOLDER + "tmp/"
+  ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
+  JSONIFY_MIMETYPE = "application/json"
 
-    MAIL_HOST = "smtp.exmail.qq.com"  #设置服务器
-    MAIL_USER = "auto.mail"    #用户名
-    MAIL_PASSWORD = "CreAction1"   #口令 
-    MAIL_POSTFIX = "creactism.com"  #发件箱的后缀
+  MAIL_HOST = "smtp.exmail.qq.com"  #设置服务器
+  MAIL_USER = "auto.mail"    #用户名
+  MAIL_PASSWORD = "CreAction1"   #口令 
+  MAIL_POSTFIX = "creactism.com"  #发件箱的后缀
 
-    PAGE_OF_SIZE = 10 # 分页每页数量
+  PAGE_OF_SIZE = 10 # 分页每页数量
 
-    STATUS_ON = 1
-    STATUS_OFF = 0
+  STATUS_ON = 1
+  STATUS_OFF = 0
 
-    TYPE_FOR_GENDER_MALE = 1
-    TYPE_FOR_GENDER_FEMALE = 2
+  TYPE_FOR_GENDER_MALE = 1
+  TYPE_FOR_GENDER_FEMALE = 2
 
-      # 数据类型
-    TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
-    TYPE_FOR_PHONE = "2" # 只用于登录，区别于联系的
-    
-    TYPE_FOR_WECHAT = "3" # 用于信息显示，方便联系
-    TYPE_FOR_QQ = "4" #  用于信息显示，方便联系
-    TYPE_FOR_WEIBO = "5" #  用于信息显示，方便联系
-    TYPE_FOR_CONTACT_PHONE = "6" #  用于信息显示，方便联系
-    TYPE_FOR_CONTACT_EMAIL = "7" #  用于信息显示，方便联系
+  # 数据类型
+  TYPE_FOR_EMAIL = "1" # 只用于登录，区别于联系的
+  TYPE_FOR_PHONE = "2" # 只用于登录，区别于联系的
 
-    # 第三方授权的类型 
-    TYPE_FOR_AUTH_WECHAT = "8"
-    TYPE_FOR_AUTH_QQ = "9"
-    TYPE_FOR_AUTH_WEIBO = "10"
+  TYPE_FOR_WECHAT = "3" # 用于信息显示，方便联系
+  TYPE_FOR_QQ = "4" #  用于信息显示，方便联系
+  TYPE_FOR_WEIBO = "5" #  用于信息显示，方便联系
+  TYPE_FOR_CONTACT_PHONE = "6" #  用于信息显示，方便联系
+  TYPE_FOR_CONTACT_EMAIL = "7" #  用于信息显示，方便联系
 
-    # 上传文件的所属类型，分别为用户与项目
-    UPLOAD_FILE_FOR_USER = "u"
-    UPLOAD_FILE_FOR_PROJECT = "p"
+  # 第三方授权的类型 
+  TYPE_FOR_AUTH_WECHAT = "8"
+  TYPE_FOR_AUTH_QQ = "9"
+  TYPE_FOR_AUTH_WEIBO = "10"
 
-    TYPE_FOR_COMMENT_DEFAULT = "0"
-    TYPE_FOR_COMMENT_REPLY = "1"
+  # 上传文件的所属类型，分别为用户与项目
+  UPLOAD_FILE_FOR_USER = "u"
+  UPLOAD_FILE_FOR_PROJECT = "p"
 
-    LIKE_ACTION_AGREE = "1"
-    LIKE_ACTION_DISAGREE = "2"
+  TYPE_FOR_COMMENT_DEFAULT = "0"
+  TYPE_FOR_COMMENT_REPLY = "1"
 
-    TYPE_LIKE_TOPIC = "0"
-    TYPE_LIKE_TOPIC_COMMENT = "1"
-    TYPE_LIKE_USERPOST = "2"
-    TYPE_LIKE_USERPOST_COMMENT = "3"
+  LIKE_ACTION_AGREE = "1"
+  LIKE_ACTION_DISAGREE = "2"
 
-
-    # 赞(第一次赞就有通知)
-    NOTIFICATION_FOR_LIKE = 1 
-    # 评论
-    NOTIFICATION_FOR_COMMENT = 2
-    # 加关注的
-    NOTIFICATION_FOR_NEW_FRIEND = 3
-    # 关注的好友的发表的分享
-    NOTIFICATION_FOR_NEW_SHARE = 4
-
-    TYPE_FOR_AUTH_ACTION_ON = "1" # 绑定
-    TYPE_FOR_AUTH_ACTION_OFF = "2" #解绑
+  TYPE_LIKE_TOPIC = "0"
+  TYPE_LIKE_TOPIC_COMMENT = "1"
+  TYPE_LIKE_USERPOST = "2"
+  TYPE_LIKE_USERPOST_COMMENT = "3"
 
 
-    pass
+  # 赞(第一次赞就有通知)
+  NOTIFICATION_FOR_LIKE = 1 
+  # 评论
+  NOTIFICATION_FOR_COMMENT = 2
+  # 加关注的
+  NOTIFICATION_FOR_NEW_FRIEND = 3
+  # 关注的好友的发表的分享
+  NOTIFICATION_FOR_NEW_SHARE = 4
+
+  TYPE_FOR_AUTH_ACTION_ON = "1" # 绑定
+  TYPE_FOR_AUTH_ACTION_OFF = "2" #解绑
+
+  # 收藏与取消收藏
+  COLLECTION_ACTION_ON = "1"
+  COLLECTION_ACTION_OFF = "2"
+
+  # 收藏类型
+  TYPE_FOR_COLLECTION_ALL = "0"
+  TYPE_FOR_COLLECTION_USERPOST = "1"
+
+
+
+  pass
 
 
 

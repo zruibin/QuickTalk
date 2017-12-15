@@ -17,6 +17,7 @@ from service.quickTalk import quickTalk
 from service.quickTalk.userPost import userPost
 from service.quickTalk.account import account
 from service.quickTalk.like import like
+from service.quickTalk.collection import collection
 
 
 def registerBlueprint(app):
@@ -27,6 +28,7 @@ def registerBlueprint(app):
     app.register_blueprint(userPost, url_prefix="/service/quickTalk/userPost") # userPost
     app.register_blueprint(account, url_prefix="/service/quickTalk/account") # account
     app.register_blueprint(like, url_prefix="/service/quickTalk/like") # like
+    app.register_blueprint(collection, url_prefix="/service/quickTalk/collection") # 收藏
     
 
 if __name__ == '__main__':
