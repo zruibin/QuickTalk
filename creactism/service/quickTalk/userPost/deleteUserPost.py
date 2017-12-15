@@ -27,10 +27,10 @@ def deleteUserPost():
     if userPostUUID == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __delteUserPostInStorage(userPostUUID, userUUID)
+    return __deleteUserPostInStorage(userPostUUID, userUUID)
     
 
-def __delteUserPostInStorage(userPostUUID, userUUID):
+def __deleteUserPostInStorage(userPostUUID, userUUID):
     
     if __queryUserPostOwner(userPostUUID, userUUID) == False:
         return RESPONSE_JSON(CODE_ERROR_INVALID_USER)

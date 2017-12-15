@@ -29,10 +29,10 @@ def userPostCommentList():
     if userPostUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
         
-    return __getuserPostFromStorage(index, size, userPostUUID)
+    return __getUserPostFromStorage(index, size, userPostUUID)
 
 
-def __getuserPostFromStorage(index, size, userPostUUID):
+def __getUserPostFromStorage(index, size, userPostUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         

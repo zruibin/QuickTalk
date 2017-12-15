@@ -28,10 +28,10 @@ def deleteUserPostComment():
     if userPostUUID == None or commentUUID == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __delteUserPostCommentInStorage(userPostUUID, commentUUID, userUUID)
+    return __deleteUserPostCommentInStorage(userPostUUID, commentUUID, userUUID)
     
 
-def __delteUserPostCommentInStorage(userPostUUID, commentUUID, userUUID):
+def __deleteUserPostCommentInStorage(userPostUUID, commentUUID, userUUID):
 
     deleteSQL = """DELETE FROM t_quickTalk_userPost_comment WHERE uuid='%s' AND user_uuid='%s' AND userPost_uuid='%s'; """ % (commentUUID, userUUID, userPostUUID)
         

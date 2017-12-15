@@ -26,10 +26,10 @@ def userPostList():
     index = parsePageIndex(index)
     size = getValueFromRequestByKey("size")
 
-    return __getuserPostFromStorage(index, size, userUUID)
+    return __getUserPostFromStorage(index, size, userUUID)
 
 
-def __getuserPostFromStorage(index, size, userUUID):
+def __getUserPostFromStorage(index, size, userUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         
