@@ -118,6 +118,13 @@ class Config(object):
   TYPE_FOR_COLLECTION_ALL = "0"
   TYPE_FOR_COLLECTION_USERPOST = "1"
 
+  # 关注与取消关注
+  STAR_ACTION_FOR_STAR = "1"
+  STAR_ACTION_FOR_UNSTAR = "2"
+
+  # 关注类型
+  TYPE_STAR_FOR_USER_RELATION = "0"
+
 
 
   pass

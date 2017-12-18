@@ -26,10 +26,10 @@ def likeAction():
     contentUUID = getValueFromRequestByKey("content_uuid")
     action = getValueFromRequestByKey("action")
 
-    if action not in (Config.LIKE_ACTION_AGREE, Config.LIKE_ACTION_DISAGREE):
+    if typeStr not in (Config.LIKE_ACTION_AGREE, Config.LIKE_ACTION_DISAGREE):
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
-    if action not in (Config.TYPE_MESSAGE_LIKE_TOPIC, Config.TYPE_MESSAGE_LIKE_TOPIC_COMMENT, Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_LIKE_USERPOST_COMMENT):
+    if typeStr not in (Config.TYPE_MESSAGE_LIKE_TOPIC, Config.TYPE_MESSAGE_LIKE_TOPIC_COMMENT, Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_LIKE_USERPOST_COMMENT):
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     if userUUID == None or contentUUID == None:
@@ -108,7 +108,7 @@ def __queryWhetherLike(likeUUID, typeStr, userUUID):
         if len(resultList) > 0: return True
     except Exception as e:
         Loger.error(e, __file__)
-        raise e
+        return False
 
 
 def __queryUserPostUserUUID(userPostUUID):
@@ -122,7 +122,7 @@ def __queryUserPostUserUUID(userPostUUID):
             return None
     except Exception as e:
         Loger.error(e, __file__)
-        raise e
+        return None
 
 
 if __name__ == '__main__':
