@@ -12,10 +12,10 @@
     LIKE_ACTION_AGREE = "1"
     LIKE_ACTION_DISAGREE = "2"
 
-    TYPE_LIKE_TOPIC = "0"
-    TYPE_LIKE_TOPIC_COMMENT = "1"
-    TYPE_LIKE_USERPOST = "2"
-    TYPE_LIKE_USERPOST_COMMENT = "3"
+    TYPE_MESSAGE_LIKE_TOPIC = "0"
+    TYPE_MESSAGE_LIKE_TOPIC_COMMENT = "1"
+    TYPE_MESSAGE_LIKE_USERPOST = "2"
+    TYPE_MESSAGE_LIKE_USERPOST_COMMENT = "3"
 """
 
 
@@ -69,8 +69,8 @@ def disLikeTopicComment():
 def likeUserPost():
     params = {
         "type":"2",
-        "user_uuid": "cea8b1c3aebe31823fa86e069de496b9",
-        "content_uuid": "ac52eb6078759dc410068794f9156462",
+        "user_uuid": "fbd1d63882ff73751accacd39621fa9c",
+        "content_uuid": "6e5a1c1668abb448407de389a8792bf0",
         "action": "1"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/like/like", params=params)    
@@ -80,8 +80,8 @@ def likeUserPost():
 def disLikeUserPost():
     params = {
         "type":"2",
-        "user_uuid": "cea8b1c3aebe31823fa86e069de496b9",
-        "content_uuid": "ac52eb6078759dc410068794f9156462",
+        "user_uuid": "fbd1d63882ff73751accacd39621fa9c",
+        "content_uuid": "6e5a1c1668abb448407de389a8792bf0",
         "action": "2"
     }
     r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/like/like", params=params)    
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     # disLikeTopicComment()
 
     # likeUserPost()
-    # disLikeUserPost()
+    disLikeUserPost()
 
     # likeUserPostComment()
     # disLikeUserPostComment()

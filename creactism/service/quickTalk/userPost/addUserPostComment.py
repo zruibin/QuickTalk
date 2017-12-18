@@ -42,19 +42,67 @@ def addUserPostComment():
 
 def __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID=""):
     print isReply
+    reciveUserUUID = ""
+    typeStr = Config.TYPE_MESSAGE_USERPOST_COMMENT
+    if isReply == Config.TYPE_FOR_COMMENT_REPLY:
+        reciveUserUUID = __queryUserPostCommentUserUUID(replyUUID)
+        typeStr = Config.TYPE_MESSAGE_USERPOST_REPLY_COMMENT
+    else:
+        reciveUserUUID = __queryUserPostUserUUID(userPostUUID)
+    
+    if reciveUserUUID == None:
+        return RESPONSE_JSON(CODE_ERROR_CONTENT_IS_NULL) 
+
+    sqlList = []
+    argsList = []
     uuid = generateUUID()
     time = generateCurrentTime()
     insertSQL = "INSERT INTO t_quickTalk_userPost_comment (uuid, user_uuid, userPost_uuid, content, isReply, reply_uuid, time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    args = [uuid, userUUID, userPostUUID, content, isReply, replyUUID, time]
+    sqlList.append(insertSQL)
+    argsList.append([uuid, userUUID, userPostUUID, content, isReply, replyUUID, time])
+
+    messageSQL = """
+        INSERT INTO t_quickTalk_message (user_uuid, type, content_uuid, time, 
+            generated_user_uuid, status, content) VALUES (%s, %s, %s, %s, %s, %s, %s);
+    """
+    sqlList.append(messageSQL)
+    argsList.append([reciveUserUUID, typeStr, uuid, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
         
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionDmlWithArgs(insertSQL, args)
+        result = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     return RESPONSE_JSON(CODE_SUCCESS)
     
+
+def __queryUserPostUserUUID(userPostUUID):
+    querySQL = """SELECT user_uuid FROM t_quickTalk_userPost WHERE uuid='%s';""" % (userPostUUID)
+    dbManager = DB.DBManager.shareInstanced()
+    try:
+        resultList = dbManager.executeSingleQuery(querySQL)
+        if len(resultList) > 0: 
+            return resultList[0]["user_uuid"]
+        else:
+            return None
+    except Exception as e:
+        Loger.error(e, __file__)
+        raise e
+
+
+def __queryUserPostCommentUserUUID(uuid):
+    querySQL = """SELECT user_uuid FROM t_quickTalk_userPost_comment WHERE uuid='%s';""" % (uuid)
+    dbManager = DB.DBManager.shareInstanced()
+    try:
+        resultList = dbManager.executeSingleQuery(querySQL)
+        if len(resultList) > 0: 
+            return resultList[0]["user_uuid"]
+        else:
+            return None
+    except Exception as e:
+        Loger.error(e, __file__)
+        raise e
 
 
 if __name__ == '__main__':

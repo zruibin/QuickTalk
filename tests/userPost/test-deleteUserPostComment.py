@@ -15,9 +15,12 @@
 import requests
 
 params = {
-    "userPost_uuid":"61c7b80fecd1c3b6d18d85f6c1fe7d4d",
+    "userPost_uuid":"6e5a1c1668abb448407de389a8792bf0",
     "user_uuid": "cea8b1c3aebe31823fa86e069de496b9",
-    "comment_uuid": "12f7b54f3cce07bf4d707c97effb8497"
+    "comment_uuid": "05fdd943d1d2994e67b10b0cc1f1707b",
+
+    "isReply": "0",
+    "reply_uuid": "05fdd943d1d2994e67b10b0cc1f1707b"
 }
 r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/userPost/deleteUserPostComment", params=params)    
 print(r.text)
