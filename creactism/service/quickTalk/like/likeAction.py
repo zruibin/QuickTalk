@@ -34,6 +34,9 @@ def likeAction():
     if typeStr not in (Config.TYPE_MESSAGE_LIKE_TOPIC, Config.TYPE_MESSAGE_LIKE_TOPIC_COMMENT, Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_LIKE_USERPOST_COMMENT):
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
+    if typeStr != Config.TYPE_MESSAGE_LIKE_USERPOST:
+        return RESPONSE_JSON(CODE_ERROR_PARAM)
+
     if userUUID == None or contentUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
