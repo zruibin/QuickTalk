@@ -8,7 +8,7 @@
 # 
 
 """
-
+根据通讯录号码列表匹配好友
 """
 
 from service.quickTalk.user import user

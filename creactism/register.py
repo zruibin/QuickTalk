@@ -23,6 +23,7 @@ from service.quickTalk.search import search
 from service.quickTalk.user import user
 
 
+
 def registerBlueprint(app):
     """ 注册蓝图，并指定前缀""" 
     app.register_blueprint(api, url_prefix="/service/api")

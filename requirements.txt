@@ -11,3 +11,4 @@ gevent==1.1.2
 Celery==4.1.0
 ConcurrentLogHandler==0.9.1
 Flask-Cors==3.0.3
+pycurl==7.19.3.1
