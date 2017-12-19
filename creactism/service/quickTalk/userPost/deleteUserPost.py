@@ -40,7 +40,9 @@ def __deleteUserPostInStorage(userPostUUID, userUUID):
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionMutltiDml([deleteSQL, deleteCommentSQL])
+        commentUUIDList = __queryAllUserPostComment(userPostUUID)
+        dbManager.executeTransactionMutltiDml([deleteSQL, deleteCommentSQL])
+        __deleteAllAboutUserPost(userPostUUID, commentUUIDList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -60,6 +62,41 @@ def __queryUserPostOwner(userPostUUID, userUUID):
     except Exception as e:
         Loger.error(e, __file__)
         return False
+
+
+def __queryAllUserPostComment(userPostUUID):
+    querySQL = """SELECT uuid FROM t_quickTalk_userPost_comment WHERE userPost_uuid='%s' """ % userPostUUID
+    commentUUIDList = []
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        dataList = dbManager.executeTransactionQuery(querySQL)
+        for data in dataList:
+            commentUUIDList.append(data["uuid"])
+    except Exception as e:
+        Loger.error(e, __file__)
+    return commentUUIDList
+
+
+def __deleteAllAboutUserPost(userPostUUID, commentUUIDList):
+    deleteStarSQL = """DELETE FROM t_quickTalk_like WHERE content_uuid='%s' 
+        AND type='%s'; """ % (userPostUUID, Config.TYPE_MESSAGE_LIKE_USERPOST)
+    deleteCollectionSQL = """DELETE FROM t_quickTalk_collection 
+        WHERE content_uuid='%s' AND type='%s'; """ % (userPostUUID, Config.TYPE_FOR_COLLECTION_USERPOST)
+    deleteMessageSQL = """DELETE FROM t_quickTalk_message 
+        WHERE content_uuid='%s' AND type='%s'; """ % (userPostUUID, Config.TYPE_MESSAGE_LIKE_USERPOST)
+
+    inString = "'" + "','".join(commentUUIDList) + "'"
+    deleteCommentMessageSQL = """DELETE FROM t_quickTalk_message 
+        WHERE content_uuid IN (%s) AND type='%s'; """ % (inString, Config.TYPE_MESSAGE_USERPOST_COMMENT)
+    
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        dbManager.executeTransactionMutltiDml([deleteStarSQL, deleteCollectionSQL, deleteMessageSQL, deleteCommentMessageSQL])
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    
+    
 
 
 if __name__ == '__main__':

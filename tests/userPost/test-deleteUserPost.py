@@ -13,8 +13,8 @@
 import requests
 
 params = {
-    "userPost_uuid":"61c7b80fecd1c3b6d18d85f6c1fe7d4d",
-    "user_uuid": "cea8b1c3aebe31823fa86e069de496b9"
+    "userPost_uuid":"6e5a1c1668abb448407de389a8792bf0",
+    "user_uuid": "bb004ba120ffae3da7a879da82c4b2f6" 
 }
 r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/userPost/deleteUserPost", params=params)    
 print(r.text)

@@ -17,7 +17,7 @@ import requests
 params = {
     "userPost_uuid":"6e5a1c1668abb448407de389a8792bf0",
     "user_uuid": "cea8b1c3aebe31823fa86e069de496b9",
-    "comment_uuid": "05fdd943d1d2994e67b10b0cc1f1707b",
+    "comment_uuid": "37b9839472b3ec61adabb92204fe3c90",
 
     "isReply": "0",
     "reply_uuid": "05fdd943d1d2994e67b10b0cc1f1707b"

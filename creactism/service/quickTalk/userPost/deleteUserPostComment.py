@@ -63,7 +63,8 @@ def __deleteUserPostCommentInStorage(userPostUUID, commentUUID, userUUID, isRepl
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
+        dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
+        __deleteAllAboutUserPostComment(commentUUID)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
@@ -97,6 +98,18 @@ def __queryUserPostCommentUserUUID(uuid):
         Loger.error(e, __file__)
         raise e
 
+
+def __deleteAllAboutUserPostComment(commentUUID):
+    deleteMessageSQL = """DELETE FROM t_quickTalk_message 
+        WHERE content_uuid='%s' AND type='%s'; """ % (commentUUID, Config.TYPE_MESSAGE_USERPOST_COMMENT)
+    
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        dbManager.executeTransactionMutltiDml([deleteMessageSQL])
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    
 
 
 if __name__ == '__main__':
