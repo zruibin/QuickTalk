@@ -16,10 +16,12 @@ from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
+from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
 @like.route('/like', methods=["GET", "POST"])
+@vertifyTokenHandle
 def likeAction():
     typeStr = getValueFromRequestByKey("type")
     userUUID = getValueFromRequestByKey("user_uuid")

@@ -17,9 +17,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from common.auth import vertifyTokenHandle
 
 
 @star.route('/userAction', methods=["GET", "POST"])
+@vertifyTokenHandle
 def userAction():
     typeStr = getValueFromRequestByKey("type")
     userUUID = getValueFromRequestByKey("user_uuid")

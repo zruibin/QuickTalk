@@ -17,9 +17,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
+from common.auth import vertifyTokenHandle
 
 
 @message.route('/message', methods=["GET", "POST"])
+@vertifyTokenHandle
 def messageData():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
