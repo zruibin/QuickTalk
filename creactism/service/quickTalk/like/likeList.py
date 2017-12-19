@@ -21,7 +21,7 @@ from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList
 
 
 @like.route('/likeList', methods=["GET", "POST"])
-def userPostList():
+def likeList():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
     index = getValueFromRequestByKey("index")
@@ -30,6 +30,9 @@ def userPostList():
 
     if userUUID == None or typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+
+    if typeStr != Config.TYPE_MESSAGE_LIKE_USERPOST:
+        return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     return __getLikeListFromStorage(userUUID, typeStr, index, size)
 
