@@ -41,7 +41,7 @@ def addUserPostComment():
     
 
 def __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID=""):
-    print isReply
+    # print isReply
     reciveUserUUID = ""
     typeStr = Config.TYPE_MESSAGE_USERPOST_COMMENT
     if isReply == Config.TYPE_FOR_COMMENT_REPLY:

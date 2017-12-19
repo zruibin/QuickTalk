@@ -20,7 +20,7 @@ from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, userAvatarURL
 
 
-@account.route('/info', methods=["GET"])
+@account.route('/info', methods=["GET", "POST"])
 def info():
     userUUID = getValueFromRequestByKey("user_uuid")
     if userUUID == None: return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
