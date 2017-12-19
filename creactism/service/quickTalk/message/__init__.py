@@ -17,6 +17,7 @@ from flask import Blueprint
 message = Blueprint("message", __name__)
 
 from service.quickTalk.message import messageData
+from service.quickTalk.message import messageCount
 
 
 

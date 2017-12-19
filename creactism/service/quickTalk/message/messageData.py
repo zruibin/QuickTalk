@@ -28,6 +28,7 @@ def messageData():
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
     size = getValueFromRequestByKey("size")
+    update = getValueFromRequestByKey("update") # 非必要，默认自动设置请求的未读变为已读
 
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
@@ -36,15 +37,15 @@ def messageData():
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     if typeStr == Config.TYPE_MESSAGE_LIKE_USERPOST:
-        return __getLikeUserPostDataFromStorage(userUUID, limitSQL)
+        return __getLikeUserPostDataFromStorage(userUUID, limitSQL, update)
     elif typeStr == Config.TYPE_MESSAGE_ADD_NEW_FRIEND:
-        return __getNewFriendDataFromStorage(userUUID, limitSQL)
+        return __getNewFriendDataFromStorage(userUUID, limitSQL, update)
     else:
-        return __getUserPostCommentDataFromStorage(userUUID, limitSQL)
+        return __getUserPostCommentDataFromStorage(userUUID, limitSQL, update)
 
 
 
-def __getLikeUserPostDataFromStorage(userUUID, limitSQL):
+def __getLikeUserPostDataFromStorage(userUUID, limitSQL, update):
     querySQL = """
         SELECT t_quickTalk_message.id, t_quickTalk_message.time,
             content_uuid, generated_user_uuid, %s AS type,
@@ -78,11 +79,11 @@ def __getLikeUserPostDataFromStorage(userUUID, limitSQL):
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
-        __updateMessageData(messageIdList)
+        __updateMessageData(messageIdList, update)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataList)
 
 
-def __getNewFriendDataFromStorage(userUUID, limitSQL):
+def __getNewFriendDataFromStorage(userUUID, limitSQL, update):
     querySQL = """
         SELECT t_quickTalk_message.id, t_quickTalk_message.time,
             content_uuid, generated_user_uuid, %s AS type,
@@ -112,11 +113,11 @@ def __getNewFriendDataFromStorage(userUUID, limitSQL):
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
-        __updateMessageData(messageIdList)
+        __updateMessageData(messageIdList, update)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataList)
     
 
-def __getUserPostCommentDataFromStorage(userUUID, limitSQL):
+def __getUserPostCommentDataFromStorage(userUUID, limitSQL, update):
     querySQL = """
         SELECT t_quickTalk_message.id, t_quickTalk_message.time,
             content_uuid, generated_user_uuid, %s AS type,
@@ -152,13 +153,15 @@ def __getUserPostCommentDataFromStorage(userUUID, limitSQL):
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     else:
-        __updateMessageData(messageIdList)
+        __updateMessageData(messageIdList, update)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataList)
 
 
 
 
-def __updateMessageData(messageIdList):
+def __updateMessageData(messageIdList, update):
+    if update != None:
+        return
     if len(messageIdList) == 0:
         return
 

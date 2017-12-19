@@ -18,9 +18,11 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
 from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
+from common.auth import vertifyTokenHandle
 
 
 @star.route('/queryFans', methods=["GET", "POST"])
+@vertifyTokenHandle
 def queryFans():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")

@@ -17,9 +17,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
+from common.auth import vertifyTokenHandle
 
 
 @star.route('/queryStarUser', methods=["GET", "POST"])
+@vertifyTokenHandle
 def queryStarUser():
     userUUID = getValueFromRequestByKey("user_uuid")
     index = getValueFromRequestByKey("index")

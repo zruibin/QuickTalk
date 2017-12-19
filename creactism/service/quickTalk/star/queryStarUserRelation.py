@@ -18,9 +18,11 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey
 import json
+from common.auth import vertifyTokenHandle
 
 
 @star.route('/queryStarUserRelation', methods=["GET", "POST"])
+@vertifyTokenHandle
 def queryStarUserRelationRequest():
     userUUID = getValueFromRequestByKey("user_uuid")
     uuidList = getValueFromRequestByKey("uuidList")
