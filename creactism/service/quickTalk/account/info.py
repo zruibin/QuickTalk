@@ -34,11 +34,30 @@ def info():
 def __getUserBaseInfo(userUUID):
     dataDict = None
     querySQL = """ 
-    SELECT uuid, t_quickTalk_user.id, nickname, avatar, phone, email, detail,   
-            gender, qq, weibo, wechat, area
+    SELECT t_quickTalk_user.uuid, t_quickTalk_user.id, nickname, avatar, 
+            phone, email, detail, gender, qq, weibo, wechat, area,
+        (SELECT COUNT(t_quickTalk_userPost.uuid) 
+            FROM t_quickTalk_userPost 
+            WHERE t_quickTalk_userPost.user_uuid=t_quickTalk_user.uuid
+        ) AS userPostCount,
+        (SELECT COUNT(id) FROM t_quickTalk_like 
+            WHERE t_quickTalk_like.user_uuid=t_quickTalk_user.uuid 
+            AND t_quickTalk_like.type=%s
+        ) AS userPostLikeCount,
+        (SELECT COUNT(id) FROM t_quickTalk_user_user 
+            WHERE t_quickTalk_user_user.user_uuid=t_quickTalk_user.uuid 
+            AND t_quickTalk_user_user.type=%s
+        ) AS followCount,
+        (SELECT COUNT(id) FROM t_quickTalk_user_user 
+            WHERE t_quickTalk_user_user.other_user_uuid=t_quickTalk_user.uuid 
+            AND t_quickTalk_user_user.type=%s
+        ) AS followingCount
     FROM t_quickTalk_user WHERE uuid=%s 
     """
-    args = [userUUID]
+    args = [Config.TYPE_MESSAGE_LIKE_USERPOST, 
+                Config.TYPE_STAR_FOR_USER_RELATION, 
+                Config.TYPE_STAR_FOR_USER_RELATION,
+                userUUID]
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
