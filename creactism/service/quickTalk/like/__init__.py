@@ -18,6 +18,7 @@ like = Blueprint("like", __name__)
 
 from service.quickTalk.like import likeAction
 from service.quickTalk.like import likeList
+from service.quickTalk.like import queryLikeRelation
 
 
 if __name__ == '__main__':
