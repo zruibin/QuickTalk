@@ -112,6 +112,13 @@ if (![QTNetworking checkingNetworkIsWiFi] && kVar == NO) { \
 
 #define QTPasteBoardCheckingNotification @"kQTPasteBoardCheckingNotification"
 
+#define COLLECTION_ACTION_ON @"1"
+#define COLLECTION_ACTION_OFF @"2"
+#define STAR_ACTION_FOR_STAR @"1"
+#define STAR_ACTION_FOR_UNSTAR @"2"
+#define LIKE_ACTION_AGREE @"1"
+#define LIKE_ACTION_DISAGREE @"2"
+
 #endif /* QCMarcos_h */
 
 

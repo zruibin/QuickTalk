@@ -21,9 +21,14 @@
 		E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */; };
 		E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */; };
 		E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E0233C721FC2E2770010D9DC /* QTSpeaker.m */; };
+		E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */; };
+		E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */; };
+		E0256D901FEA6C5200217D9F /* QTUserFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */; };
 		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
+		E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F42D71FEA37AD00F99A66 /* QTMyCell.m */; };
+		E06F42DB1FEA459900F99A66 /* QTUserCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */; };
 		E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */; };
 		E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */; };
 		E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */; };
@@ -166,11 +171,21 @@
 		E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E0233C711FC2E2770010D9DC /* QTSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTSpeaker.h; sourceTree = "<group>"; };
 		E0233C721FC2E2770010D9DC /* QTSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTSpeaker.m; sourceTree = "<group>"; };
+		E0256D851FEA4B3200217D9F /* QTUserStarAndFansController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarAndFansController.h; sourceTree = "<group>"; };
+		E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarAndFansController.m; sourceTree = "<group>"; };
+		E0256D8B1FEA6C3800217D9F /* QTUserStarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarController.h; sourceTree = "<group>"; };
+		E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarController.m; sourceTree = "<group>"; };
+		E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserFansController.h; sourceTree = "<group>"; };
+		E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserFansController.m; sourceTree = "<group>"; };
 		E045AD911FC417D800A16A40 /* QTCleaner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCleaner.h; sourceTree = "<group>"; };
 		E045AD921FC417D800A16A40 /* QTCleaner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCleaner.m; sourceTree = "<group>"; };
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
 		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
 		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
+		E06F42D61FEA37AD00F99A66 /* QTMyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyCell.h; sourceTree = "<group>"; };
+		E06F42D71FEA37AD00F99A66 /* QTMyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyCell.m; sourceTree = "<group>"; };
+		E06F42D91FEA459900F99A66 /* QTUserCollectionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCollectionController.h; sourceTree = "<group>"; };
+		E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCollectionController.m; sourceTree = "<group>"; };
 		E079B8F21FD78CA800A76FCD /* QTUserPostCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentController.h; sourceTree = "<group>"; };
 		E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentController.m; sourceTree = "<group>"; };
 		E079B8F51FD78E6700A76FCD /* QTUserPostCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentCell.h; sourceTree = "<group>"; };
@@ -768,6 +783,14 @@
 				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
 				E081316F1FE23117001A6E3D /* QTUserController.h */,
 				E08131701FE23117001A6E3D /* QTUserController.m */,
+				E06F42D91FEA459900F99A66 /* QTUserCollectionController.h */,
+				E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */,
+				E0256D851FEA4B3200217D9F /* QTUserStarAndFansController.h */,
+				E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */,
+				E0256D8B1FEA6C3800217D9F /* QTUserStarController.h */,
+				E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */,
+				E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */,
+				E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -786,6 +809,8 @@
 			children = (
 				E08AABF51FE14129005B6DBB /* QTMyNewsCommentCell.h */,
 				E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */,
+				E06F42D61FEA37AD00F99A66 /* QTMyCell.h */,
+				E06F42D71FEA37AD00F99A66 /* QTMyCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1467,8 +1492,10 @@
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */,
 				E088D66B1FD64E0600038736 /* QTTopicSpeaker.m in Sources */,
+				E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
 				E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */,
+				E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
 				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
 				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
@@ -1477,6 +1504,7 @@
 				E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */,
 				E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */,
 				E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */,
 				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
@@ -1492,12 +1520,14 @@
 				E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */,
 				E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */,
 				E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */,
+				E0256D901FEA6C5200217D9F /* QTUserFansController.m in Sources */,
 				E088D6771FD6650000038736 /* QTUserPostMainController.m in Sources */,
 				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,
 				E08AABFD1FE14129005B6DBB /* QTMyController.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
 				E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
+				E06F42DB1FEA459900F99A66 /* QTUserCollectionController.m in Sources */,
 				E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
 				E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */,

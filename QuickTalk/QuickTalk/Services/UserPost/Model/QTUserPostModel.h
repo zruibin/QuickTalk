@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@interface QTUserPostLikeModel : NSObject
+
+@property (nonatomic, copy) NSString *userId;
+@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString *time;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *userUUID;
+
+@end
+
 @interface QTUserPostModel : NSObject
 
 @property (nonatomic, assign) NSInteger _id;
@@ -22,6 +32,9 @@
 @property (nonatomic, assign) NSInteger commentCount;
 @property (nonatomic, assign) NSInteger readCount;
 @property (nonatomic, copy) NSString *time;
+@property (nonatomic, copy) NSArray<QTUserPostLikeModel *> *likeList;
+@property (nonatomic, assign) BOOL likeStatus;
+
 
 + (void)requestUserPostData:(NSUInteger)page userUUID:(NSString *)userUUID
           completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
@@ -39,4 +52,15 @@
 + (void)requestAddUserPostReadCount:(NSString *)userPostUUID
                   completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestUserCollectionAction:(NSString *)userPostUUID
+                           userUUID:(NSString *)userUUID
+                            action:(NSString *)action
+                  completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestCollectionData:(NSUInteger)page userUUID:(NSString *)userUUID
+                type:(NSString *)type
+          completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
+
 @end
+
+

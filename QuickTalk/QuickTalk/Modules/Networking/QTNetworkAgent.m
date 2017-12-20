@@ -64,4 +64,58 @@ NSString * const SERVICE_REQUEST_POST = @"POST";
     [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
 }
 
++ (void)requestDataForLikeService:(NSString *_Nonnull)serviceURL
+                           method:(NSString *_Nullable)method
+                           params:(NSDictionary *_Nullable)params
+                completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/like%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForStarService:(NSString *_Nonnull)serviceURL
+                           method:(NSString *_Nullable)method
+                           params:(NSDictionary *_Nullable)params
+                completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/star%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForSearchService:(NSString *_Nonnull)serviceURL
+                             method:(NSString *_Nullable)method
+                             params:(NSDictionary *_Nullable)params
+                  completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/search%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForUserService:(NSString *_Nonnull)serviceURL
+                           method:(NSString *_Nullable)method
+                           params:(NSDictionary *_Nullable)params
+                completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/user%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForMessageService:(NSString *_Nonnull)serviceURL
+                              method:(NSString *_Nullable)method
+                              params:(NSDictionary *_Nullable)params
+                   completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/message%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
++ (void)requestDataForCollectionService:(NSString *_Nonnull)serviceURL
+                                 method:(NSString *_Nullable)method
+                                 params:(NSDictionary *_Nullable)params
+                      completionHandler:(void(^_Nullable)(id  _Nullable responseObject, NSError * _Nullable error))completionHandler
+{
+    NSString *subURL = [NSString stringWithFormat:@"/collection%@", serviceURL];
+    [self requestDataForQuickTalkService:subURL method:method params:params completionHandler:completionHandler];
+}
+
 @end

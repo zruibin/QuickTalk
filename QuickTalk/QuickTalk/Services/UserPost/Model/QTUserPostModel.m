@@ -20,11 +20,20 @@
 @end
 
 
+@implementation QTUserPostLikeModel
+
+@end
+
 @implementation QTUserPostModel
 
 + (NSDictionary *)modelCustomPropertyMapper
 {
     return @{@"_id" : @"id"};
+}
+
++ (NSDictionary *)modelContainerPropertyGenericClass
+{
+    return @{@"likeList" : [QTUserPostLikeModel class]};
 }
 
 
@@ -149,6 +158,69 @@
                 ;
             } @finally {
                 completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestUserCollectionAction:(NSString *)userPostUUID
+                           userUUID:(NSString *)userUUID
+                             action:(NSString *)action
+                  completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"content_uuid":userPostUUID, @"user_uuid":userUUID, @"action": action, @"type": @"1"};
+    [QTNetworkAgent requestDataForCollectionService:@"/action" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestCollectionData:(NSUInteger)page userUUID:(NSString *)userUUID
+                         type:(NSString *)type
+            completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
+{
+    NSDictionary *params = @{
+                             @"index": [NSNumber numberWithInteger:page],
+                             @"user_uuid": userUUID,
+                             @"type": type
+                             };
+    [QTNetworkAgent requestDataForCollectionService:@"/list" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserPostModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(listModel.data, error);
             }
         }
     }];

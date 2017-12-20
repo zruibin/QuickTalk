@@ -7,29 +7,22 @@
 //
 
 #import "QTMyController.h"
-#import "QTSettingController.h"
-#import "QTTopicController.h"
-#import "QTUserPostMainController.h"
-#import "QTMyNewsCommentController.h"
 #import "QTAccountInfoEditController.h"
+#import "QTSettingController.h"
+#import "QTUserPostMainController.h"
+#import "QTUserCollectionController.h"
+#import "QTUserStarAndFansController.h"
 #import "RBImagebrowse.h"
+#import "QTMyCell.h"
 
-@interface QTMyController () <UIScrollViewDelegate>
+@interface QTMyController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UIView *headerView;
-@property (nonatomic, strong) UIButton *avatarView;
-@property (nonatomic, strong) UIButton *nicknameButton;
-@property (nonatomic, strong) UIImageView *genderView;
-@property (nonatomic, strong) UILabel *areaLabel;
-@property (nonatomic, strong) UIImageView *arrowView;
-
-@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSMutableArray *childControllers;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, copy) NSArray *dataList;
+@property (nonatomic, copy) NSDictionary *dataDict;
 @property (nonatomic, strong) FBKVOController *kvoController;
 
 - (void)initViews;
-- (void)makeGenderView;
 
 @end
 
@@ -45,52 +38,21 @@
     [super viewDidLoad];
     [self initViews];
     
-    self.childControllers = [NSMutableArray arrayWithCapacity:2];
-    [self selectedOnSegment:0];
-    
     __weak typeof(self) weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        [weakSelf.childControllers removeAllObjects];
-        for (UIView *view in weakSelf.scrollView.subviews) {
-            [view removeFromSuperview];
-        }
-        if ([QTUserInfo sharedInstance].isLogin == NO) {
-            weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0);
-            weakSelf.segmentedControl.hidden = YES;
-            weakSelf.scrollView.hidden = YES;
-        } else {
-            weakSelf.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
-            [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
-            [weakSelf.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
-            weakSelf.segmentedControl.hidden = NO;
-            weakSelf.scrollView.hidden = NO;
-            [self selectedOnSegment:0];
-        }
+        weakSelf.dataDict = nil;
+        [weakSelf.tableView reloadData];
     }];
     
     self.kvoController = [FBKVOController controllerWithObserver:self];
     [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"avatar" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        [weakSelf.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
+        weakSelf.dataDict = nil;
+        [weakSelf.tableView reloadData];
     }];
     [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"nickname" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        [weakSelf.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
+        weakSelf.dataDict = nil;
+        [weakSelf.tableView reloadData];
     }];
-    [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"area" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        weakSelf.areaLabel.text = [QTUserInfo sharedInstance].area;
-    }];
-    [self.kvoController observe:[QTUserInfo sharedInstance] keyPath:@"gender" options:NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
-        [weakSelf makeGenderView];
-    }];
-    
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infoEditAction)];
-    [self.headerView addGestureRecognizer:gesture];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [Tools drawBorder:self.segmentedControl top:NO left:NO bottom:YES right:NO
-               borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,300 +63,151 @@
 - (void)initViews
 {
     self.title = @"我";
-    [self.view addSubview:self.headerView];
-    [self.view addSubview:self.segmentedControl];
-    self.segmentedControl.frame = CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 44);
-    [self.view addSubview:self.scrollView];
-    self.scrollView.frame = CGRectMake(0, 144, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-144-49-64);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*2,
-                                             CGRectGetHeight(self.scrollView.bounds));
+    [self.view addSubview:self.tableView];
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+}
+
+#pragma mark - TableView Delegate And DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.dataList.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSString *key = self.dataList[section];
+    return [self.dataDict[key] count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    QTTableViewCellMake(QTMyCell, cell)
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(settingAction)];
-    self.navigationItem.rightBarButtonItem = item;
+    NSString *key = self.dataList[indexPath.section];
+    NSArray *data = self.dataDict[key][indexPath.row];
     
-    if ([QTUserInfo sharedInstance].isLogin == NO) {
-        self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 0);
-        self.segmentedControl.hidden = YES;
-        self.scrollView.hidden = YES;
+    UIImage *image = [UIImage imageNamed:data[0]];
+    cell.iconView.image = image;
+    if (image == nil) {
+        [cell.iconView cra_setImage:data[0]];
+    }
+    cell.titleLabel.text = data[1];
+    
+    if ([key isEqualToString:@"user"]) {
+        cell.titleLabel.font = [UIFont systemFontOfSize:18];
+        cell.multiplie = 0.8;
     } else {
-        self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
-        [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
-        [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
-        self.segmentedControl.hidden = NO;
-        self.scrollView.hidden = NO;
+        cell.titleLabel.font = [UIFont systemFontOfSize:16];
+        cell.multiplie = 0.5;
     }
+    
+    return cell;
 }
 
-- (void)makeGenderView
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIImage *male = [UIImage imageNamed:@"male"];
-    UIImage *female = [UIImage imageNamed:@"female"];
-    if ([QTUserInfo sharedInstance].gender == 1) {
-        self.genderView.image = male;
-    }
-    if ([QTUserInfo sharedInstance].gender == 2) {
-        self.genderView.image = female;
-    }
-    if ([QTUserInfo sharedInstance].gender == 0) {
-        [self.genderView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.width.and.height.mas_equalTo(0);
-            make.left.equalTo(self.nicknameButton);
-            make.top.equalTo(self.nicknameButton.mas_bottom).offset(4);
-        }];
-    } else {
-        [self.genderView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.width.and.height.mas_equalTo(16);
-            make.left.equalTo(self.nicknameButton);
-            make.top.equalTo(self.nicknameButton.mas_bottom).offset(8);
-        }];
-    }
+    NSString *key = self.dataList[indexPath.section];
+    return [self.dataDict[key][indexPath.row][2] floatValue];
 }
 
-#pragma mark - Private
-
-- (void)selectedOnSegment:(NSInteger)index
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-    if (index == 0) {
-        if (self.childControllers.count == 0) {
-            QTUserPostMainController *userPostController = [[QTUserPostMainController alloc] init];
-            userPostController.userUUID = [QTUserInfo sharedInstance].uuid;
-            [self.childControllers addObject:userPostController];
-            userPostController.view.frame = CGRectMake(0, 0,
-                                                   CGRectGetWidth(self.scrollView.bounds),
-                                                   CGRectGetHeight(self.scrollView.bounds));
-            userPostController.view.userInteractionEnabled = YES;
-            [self.scrollView addSubview:userPostController.view];
-            [self addChildViewController:userPostController];
+    /*顶部和第一行数据之间的间隔要将0改为一个非0的数值即可实现*/
+    return 0.1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *key = self.dataList[indexPath.section];
+    NSArray *data = self.dataDict[key][indexPath.row];
+    
+    UIViewController *viewController = [[NSClassFromString(data[3]) alloc] init];
+    
+    unsigned int outCount = 0;
+    objc_property_t * properties = class_copyPropertyList(NSClassFromString(data[3]), &outCount);
+    for (unsigned int i = 0; i < outCount; i ++) {
+        objc_property_t property = properties[i];
+        const char *name = property_getName(property);
+        if ([@"userUUID" isEqualToString:[NSString stringWithUTF8String:name]]) {
+            [viewController setValue:[QTUserInfo sharedInstance].uuid forKey:@"userUUID"];
         }
-        [self.scrollView scrollRectToVisible:CGRectMake(0, 0,
-                                                        CGRectGetWidth(self.scrollView.bounds),
-                                                        CGRectGetHeight(self.scrollView.bounds)) animated:YES];
     }
-    if (index == 1) {
-        if (self.childControllers.count == 1) {
-            QTMyNewsCommentController *myNewsCommentController = [[QTMyNewsCommentController alloc] init];
-            [self.childControllers addObject:myNewsCommentController];
-            myNewsCommentController.view.frame = CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
-                                                      CGRectGetWidth(self.scrollView.bounds),
-                                                      CGRectGetHeight(self.scrollView.bounds));
-            myNewsCommentController.view.userInteractionEnabled = YES;
-            [self.scrollView addSubview:myNewsCommentController.view];
-            [self addChildViewController:myNewsCommentController];
-        }
-        [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
-                                                        CGRectGetWidth(self.scrollView.bounds),
-                                                        CGRectGetHeight(self.scrollView.bounds)) animated:YES];
-    }
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (scrollView == self.scrollView) {
-        CGFloat pageWidth = scrollView.frame.size.width;
-        NSInteger page = scrollView.contentOffset.x / pageWidth;
-        [self selectedOnSegment:page];
-    }
+    free(properties);
+    
+    
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - Action
 
-- (void)settingAction
-{
-    QTSettingController *settingControlle = [QTSettingController new];
-    [self.navigationController pushViewController:settingControlle animated:YES];
-}
 
-- (void)avatarAction
-{
-    [[RBImagebrowse createBrowseWithImages:@[[QTUserInfo sharedInstance].avatar]] show];
-}
 
-- (void)infoEditAction
-{
-    QTAccountInfoEditController *infoEditController = [QTAccountInfoEditController new];
-    [self.navigationController pushViewController:infoEditController animated:YES];
-}
+#pragma mark - setter and getter
 
-#pragma mark - getter and setter
-
-- (UIView *)headerView
+- (UITableView *)tableView
 {
-    if (_headerView == nil) {
-        _headerView = ({
-            UIView *view = [[UIView alloc] init];
-            view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
-            view.backgroundColor = [UIColor whiteColor];
-            view.clipsToBounds = YES;
-            
-            [view addSubview:self.avatarView];
-            [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.and.height.mas_equalTo(80);
-                make.left.mas_equalTo(10);
-                make.centerY.equalTo(view);
-            }];
-            [self.avatarView cra_setBackgroundImage:[QTUserInfo sharedInstance].avatar];
-            [view addSubview:self.nicknameButton];
-            [self.nicknameButton mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self.avatarView).offset(10);
-                make.left.equalTo(self.avatarView.mas_right).offset(10);
-                make.right.equalTo(view).offset(-40);
-                make.height.mas_equalTo(30);
-            }];
-            [self.nicknameButton setTitle:[QTUserInfo sharedInstance].nickname forState:UIControlStateNormal];
-            [view addSubview:self.genderView];
-            [self.genderView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.and.height.mas_equalTo(16);
-                make.left.equalTo(self.nicknameButton);
-                make.top.equalTo(self.nicknameButton.mas_bottom).offset(8);
-            }];
-            [self makeGenderView];
-            [view addSubview:self.areaLabel];
-            [self.areaLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self.nicknameButton.mas_bottom).offset(6);
-                make.left.equalTo(self.genderView.mas_right).offset(8);
-                make.width.mas_greaterThanOrEqualTo(100);
-                make.height.mas_equalTo(22);
-            }];
-            self.areaLabel.text = [QTUserInfo sharedInstance].area;
-            [view addSubview:self.arrowView];
-            [self.arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.and.height.mas_equalTo(14);
-                make.centerY.equalTo(view);
-                make.right.equalTo(view).offset(-18);
-            }];
-            
-            view;
+    if (_tableView == nil) {
+        _tableView = ({
+            UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+            tableView.estimatedRowHeight = 0;
+            tableView.estimatedSectionHeaderHeight = 0;
+            tableView.estimatedSectionFooterHeight = 0;
+            tableView.delegate = self;
+            tableView.dataSource = self;
+            tableView.translatesAutoresizingMaskIntoConstraints = NO;
+            tableView.exclusiveTouch = YES;
+            tableView.backgroundColor = [UIColor colorFromHexValue:0xEFEFEF];
+            tableView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
+            QTTableViewCellRegister(tableView, QTMyCell)
+            tableView;
         });
     }
-    return _headerView;
+    return _tableView;
 }
 
-- (UIButton *)avatarView
+
+- (NSArray *)dataList
 {
-    if (_avatarView == nil) {
-        _avatarView = ({
-            UIButton *button = [UIButton new];
-//            button.layer.cornerRadius = 40;
-//            button.layer.masksToBounds = YES;
-            button.userInteractionEnabled = YES;
-            [button addTarget:self action:@selector(avatarAction) forControlEvents:UIControlEventTouchUpInside];
-            button;
-        });
+    NSArray *list = @[@"user", @"data", @"setting"];
+    if ([QTUserInfo sharedInstance].isLogin == NO) {
+        list = @[@"setting"];
     }
-    return _avatarView;
+    return list;
 }
 
-- (UIButton *)nicknameButton
+- (NSDictionary *)dataDict
 {
-    if (_nicknameButton == nil) {
-        _nicknameButton = ({
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-            button.userInteractionEnabled = NO;
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-            button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-            button;
-        });
+    if (_dataDict == nil) {
+        NSString *height = @"44";
+        NSString *avatar = [QTUserInfo sharedInstance].avatar.length == 0 ? @"" : [QTUserInfo sharedInstance].avatar;
+        NSString *nickname = [QTUserInfo sharedInstance].nickname.length == 0 ? @"" : [QTUserInfo sharedInstance].nickname;
+        _dataDict = @{
+                       @"user": @[
+                               @[avatar, nickname, @"88", NSStringFromClass([QTAccountInfoEditController class])]
+                               ],
+                       @"data": @[
+                               @[@"users", @"关注与粉丝", height, NSStringFromClass([QTUserStarAndFansController class])],
+                               @[@"userPost", @"我的快言", height, NSStringFromClass([QTUserPostMainController class])],
+                               @[@"collection", @"收藏", height, NSStringFromClass([QTUserCollectionController class])],
+                               ],
+                       @"setting": @[
+                               @[@"setting", @"设置", height, NSStringFromClass([QTSettingController class])]
+                               ]
+                       };
     }
-    return _nicknameButton;
+    return _dataDict;
 }
 
-- (UIImageView *)genderView
-{
-    if (_genderView == nil) {
-        _genderView = ({
-            UIImageView *imageView = [[UIImageView alloc] init];
-//            imageView.backgroundColor = [UIColor yellowColor];
-            imageView;
-        });
-    }
-    return _genderView;
-}
 
-- (UILabel *)areaLabel
-{
-    if (_areaLabel == nil) {
-        _areaLabel = ({
-            UILabel *label = [[UILabel alloc] init];
-            label.font = [UIFont systemFontOfSize:14];
-            label.textAlignment = NSTextAlignmentLeft;
-            label.textColor = [UIColor colorFromHexValue:0x999999];
-            label;
-        });
-    }
-    return _areaLabel;
-}
-
-- (UIImageView *)arrowView
-{
-    if (_arrowView == nil) {
-        _arrowView = ({
-            UIImageView *imageView = [[UIImageView alloc] init];
-            imageView.image = [[[UIImage imageNamed:@"down"] imageRotatedByDegrees:-90]
-                               imageWithTintColor:[UIColor colorFromHexValue:0x999999]];
-            imageView;
-        });
-    }
-    return _arrowView;
-}
-
-- (HMSegmentedControl *)segmentedControl
-{
-    if (_segmentedControl == nil) {
-        _segmentedControl = ({
-            HMSegmentedControl *segmentedControl = [[HMSegmentedControl alloc]
-                                                    initWithSectionTitles:@[@"快言", @"新闻评论"]];
-            segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-            segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-            segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-            segmentedControl.selectionIndicatorHeight = 2.0f;
-            segmentedControl.selectionIndicatorColor = QuickTalk_MAIN_COLOR;
-            segmentedControl.borderWidth = .05f;
-            [segmentedControl setTitleFormatter:^NSAttributedString *(HMSegmentedControl *segmentedControl,
-                                                                      NSString *title, NSUInteger index, BOOL selected) {
-                NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title
-                                                                                attributes:@{
-                                                                                             NSForegroundColorAttributeName : [UIColor blackColor],
-                                                                                             NSFontAttributeName: [UIFont boldSystemFontOfSize:14]
-                                                                                             }];
-                if (selected == NO) {
-                    attString = [[NSAttributedString alloc] initWithString:title
-                                                                attributes:@{
-                                                                             NSForegroundColorAttributeName : [UIColor colorFromHexValue:0x999999],
-                                                                             NSFontAttributeName: [UIFont systemFontOfSize:14]
-                                                                             }];
-                }
-                return attString;
-            }];
-            segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
-            __weak typeof(self) weakSelf = self;
-            [segmentedControl setIndexChangeBlock:^(NSInteger index) {
-                [weakSelf selectedOnSegment:index];
-            }];
-            segmentedControl;
-        });
-    }
-    return _segmentedControl;
-}
-
-- (UIScrollView *)scrollView
-{
-    if (_scrollView == nil) {
-        _scrollView = ({
-            UIScrollView *scrollView = [[UIScrollView alloc] init];
-            scrollView.backgroundColor = [UIColor colorFromHexValue:0xEFEFEF];
-            scrollView.pagingEnabled = YES;
-            scrollView.delegate = self;
-            scrollView.showsVerticalScrollIndicator = NO;
-            scrollView.showsHorizontalScrollIndicator = NO;
-            scrollView;
-        });
-    }
-    return _scrollView;
-}
 
 @end

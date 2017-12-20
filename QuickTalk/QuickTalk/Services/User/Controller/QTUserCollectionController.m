@@ -1,21 +1,18 @@
 //
-//  QTUserPostMainController.m
+//  QTUserCollectionController.m
 //  QuickTalk
 //
-//  Created by  Ruibin.Chow on 2017/12/5.
+//  Created by  Ruibin.Chow on 2017/12/20.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTUserPostMainController.h"
-#import "QTUserPostAddController.h"
+#import "QTUserCollectionController.h"
 #import "QTUserPostModel.h"
 #import "QTUserPostMainCell.h"
-#import <SafariServices/SafariServices.h>
-#import "QTUserPostCommentController.h"
-#import "QTIntroController.h"
 #import "QTUserController.h"
+#import "QTUserPostCommentController.h"
 
-@interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
+@interface QTUserCollectionController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
@@ -26,22 +23,15 @@
 - (void)initViews;
 - (void)loadData;
 - (void)arrowHandlerAction:(NSInteger)index;
-- (void)deleteData:(QTUserPostModel *)model;
-- (void)shareData:(QTUserPostModel *)model;
-- (void)collectionData:(QTUserPostModel *)model;
+- (void)unCollectionData:(QTUserPostModel *)model;
 - (void)addReadCountAction:(NSInteger)index;
-- (void)checkPasteAction;
 
 @end
 
-@implementation QTUserPostMainController
+@implementation QTUserCollectionController
 
-- (void)dealloc
+- (void)viewDidLoad
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTPasteBoardCheckingNotification object:nil];
-}
-
-- (void)viewDidLoad {
     [super viewDidLoad];
     [self initViews];
     
@@ -62,16 +52,6 @@
     
     self.errorView.hidden = YES;
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
-        QTIntroController *introController = [[QTIntroController alloc] init];
-        [self presentViewController:introController animated:YES completion:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [self checkPasteAction];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
-                                                 name:QTPasteBoardCheckingNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,10 +59,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 - (void)initViews
 {
-    self.title = @"快言";
+    self.title = @"我的收藏";
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -90,16 +69,11 @@
     }];
     
     [self.view addSubview:self.errorView];
-    
-    UIBarButtonItem *addItem = [[UIBarButtonItem alloc]
-                                       initWithImage:[UIImage imageNamed:@"add"]
-                                       style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
-    self.navigationItem.rightBarButtonItem = addItem;
 }
 
 - (void)loadData
 {
-    [QTUserPostModel requestUserPostData:self.page userUUID:self.userUUID completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
+    [QTUserPostModel requestCollectionData:self.page userUUID:self.userUUID type:@"1" completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
@@ -131,71 +105,26 @@
 - (void)arrowHandlerAction:(NSInteger)index
 {
     QTUserPostModel *model = self.dataList[index];
-    
     __weak typeof(self) weakSelf = self;
-    void(^reportHandler)(NSInteger index) = ^(NSInteger index){
-        [QTProgressHUD showHUD:weakSelf.view];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [QTProgressHUD showHUDWithText:@"举报成功" delay:2.0f];
-        });
-    };
     void(^deleteHandler)(NSInteger index) = ^(NSInteger index){
-        MMPopupItemHandler block = ^(NSInteger index) {
-            [weakSelf deleteData:model];
-        };
-        NSArray *items = @[MMItemMake(@"删除", MMItemTypeHighlight, block),
-                                    MMItemMake(@"取消", MMItemTypeNormal, nil)];
-        MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
-        [view show];
+        [weakSelf unCollectionData:model];
     };
-    void(^collectionHandler)(NSInteger index) = ^(NSInteger index){
-        [weakSelf collectionData:model];
-    };
-
-    NSArray *items = @[];
-    if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
-        items = @[
+    NSArray *items = @[
                        MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
                        ];
-    } else {// if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
-        items = @[
-                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
-                       ];
-    }
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
                                                           items:items];
     sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
     [sheetView show];
 }
 
-- (void)deleteData:(QTUserPostModel *)model
+- (void)unCollectionData:(QTUserPostModel *)model
 {
-    [QTUserPostModel requestDeleteUserPost:[QTUserInfo sharedInstance].uuid userPostUUID:model.uuid completionHandler:^(BOOL action, NSError *error) {
+    [QTUserPostModel requestUserCollectionAction:model.uuid userUUID:[QTUserInfo sharedInstance].uuid action:COLLECTION_ACTION_OFF completionHandler:^(BOOL action, NSError *error) {
         if (action) {
+            [QTProgressHUD showHUDText:@"删除成功" view:self.view];
             [self.dataList removeObject:model];
-            [self.cacheHeightDict removeAllObjects];
-            [self.tableView reloadData];;
-        } else {
-            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
-        }
-    }];
-}
-
-- (void)shareData:(QTUserPostModel *)model
-{
-    
-}
-
-- (void)collectionData:(QTUserPostModel *)model
-{
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
-        return ;
-    }
-    [QTUserPostModel requestUserCollectionAction:model.uuid userUUID:[QTUserInfo sharedInstance].uuid action:COLLECTION_ACTION_ON completionHandler:^(BOOL action, NSError *error) {
-        if (action) {
-            [QTProgressHUD showHUDText:@"收藏成功" view:self.view];
+            [self.tableView reloadData];
         } else {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         }
@@ -206,25 +135,6 @@
 {
     QTUserPostModel *model = self.dataList[index];
     [QTUserPostModel requestAddUserPostReadCount:model.uuid completionHandler:nil];
-}
-
-- (void)checkPasteAction
-{
-    //防止登录延时问题
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        UIPasteboard *board = [UIPasteboard generalPasteboard];
-        YYCache *cache = [YYCache cacheWithName:QTDataCache];
-        if ([board.string isValidUrl]) {
-            if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
-                NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
-                if (![urlString isEqualToString:board.string]) {
-                    [self addAction];
-                }
-            } else {
-                [self addAction];
-            }
-        }
-    });
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -302,26 +212,6 @@
     [self addReadCountAction:indexPath.section];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.onScrollingHandler && self.dataList.count >= 10) {
-        self.onScrollingHandler(scrollView.contentOffset.y);
-    }
-}
-
-#pragma mark - Action
-
-- (void)addAction
-{
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
-        QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
-        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
-}
-
 #pragma mark - getter and setter
 
 - (UITableView *)tableView
@@ -362,7 +252,4 @@
     return _errorView;
 }
 
-
 @end
-
-
