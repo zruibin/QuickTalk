@@ -34,6 +34,7 @@
     [self initViews];
     
     self.childControllers = [NSMutableArray arrayWithCapacity:self.count];
+    [self selectedOnSegment:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated

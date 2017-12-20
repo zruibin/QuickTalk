@@ -24,6 +24,9 @@
 		E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */; };
 		E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */; };
 		E0256D901FEA6C5200217D9F /* QTUserFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */; };
+		E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D921FEA7DC800217D9F /* QTUserStarButton.m */; };
+		E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */; };
+		E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D981FEA889100217D9F /* QTUserSearchController.m */; };
 		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
@@ -177,6 +180,12 @@
 		E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarController.m; sourceTree = "<group>"; };
 		E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserFansController.h; sourceTree = "<group>"; };
 		E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserFansController.m; sourceTree = "<group>"; };
+		E0256D911FEA7DC800217D9F /* QTUserStarButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarButton.h; sourceTree = "<group>"; };
+		E0256D921FEA7DC800217D9F /* QTUserStarButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarButton.m; sourceTree = "<group>"; };
+		E0256D941FEA87FB00217D9F /* QTUserContactBookController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserContactBookController.h; sourceTree = "<group>"; };
+		E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserContactBookController.m; sourceTree = "<group>"; };
+		E0256D971FEA889100217D9F /* QTUserSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserSearchController.h; sourceTree = "<group>"; };
+		E0256D981FEA889100217D9F /* QTUserSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserSearchController.m; sourceTree = "<group>"; };
 		E045AD911FC417D800A16A40 /* QTCleaner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCleaner.h; sourceTree = "<group>"; };
 		E045AD921FC417D800A16A40 /* QTCleaner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCleaner.m; sourceTree = "<group>"; };
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
@@ -383,11 +392,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */,
 				E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */,
 				E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */,
 				E0233C6B1FC2C2910010D9DC /* SystemConfiguration.framework in Frameworks */,
 				E0233C691FC2C2860010D9DC /* AudioToolbox.framework in Frameworks */,
-				E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */,
 				E0233C651FC2C26C0010D9DC /* AddressBook.framework in Frameworks */,
 				E0233C631FC2C2600010D9DC /* AVFoundation.framework in Frameworks */,
 				E0233C611FC2C2570010D9DC /* CoreTelephony.framework in Frameworks */,
@@ -791,6 +800,10 @@
 				E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */,
 				E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */,
 				E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */,
+				E0256D971FEA889100217D9F /* QTUserSearchController.h */,
+				E0256D981FEA889100217D9F /* QTUserSearchController.m */,
+				E0256D941FEA87FB00217D9F /* QTUserContactBookController.h */,
+				E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -811,6 +824,8 @@
 				E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */,
 				E06F42D61FEA37AD00F99A66 /* QTMyCell.h */,
 				E06F42D71FEA37AD00F99A66 /* QTMyCell.m */,
+				E0256D911FEA7DC800217D9F /* QTUserStarButton.h */,
+				E0256D921FEA7DC800217D9F /* QTUserStarButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1488,6 +1503,7 @@
 				E08AABFB1FE14129005B6DBB /* QTSettingController.m in Sources */,
 				E08AABF61FE14129005B6DBB /* QTInfoEditController.m in Sources */,
 				E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */,
+				E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */,
 				E08AABDB1FE113F2005B6DBB /* QTAccountPhoneController.m in Sources */,
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */,
@@ -1500,10 +1516,12 @@
 				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
 				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
 				E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */,
+				E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */,
 				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
 				E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */,
 				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
 				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */,
 				E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */,
 				E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */,
 				E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */,
