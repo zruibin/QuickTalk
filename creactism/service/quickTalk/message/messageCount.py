@@ -26,15 +26,17 @@ def messageCount():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
 
-    if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_ADD_NEW_FRIEND):
-        return RESPONSE_JSON(CODE_ERROR_PARAM)
+    # if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_ADD_NEW_FRIEND):
+    #     return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     if typeStr == Config.TYPE_MESSAGE_LIKE_USERPOST:
+        return __getCountFromStorage(userUUID, typeStr)
+    elif typeStr == Config.TYPE_MESSAGE_USERPOST_COMMENT:
         return __getCountFromStorage(userUUID, typeStr)
     elif typeStr == Config.TYPE_MESSAGE_ADD_NEW_FRIEND:
         return __getCountFromStorage(userUUID, typeStr)
     else:
-        return __getCountFromStorage(userUUID, typeStr)
+        return __getCountFromStorage(userUUID, None)
 
 
 def __getCountFromStorage(userUUID, typeStr):
@@ -44,6 +46,12 @@ def __getCountFromStorage(userUUID, typeStr):
         WHERE user_uuid='%s' AND type=%s AND status=%d;
     """ % (typeStr, userUUID, typeStr, 
             Config.TYPE_MESSAGE_UNREAD)
+    if typeStr == None:
+        querySQL = """
+            SELECT COUNT(generated_user_uuid) AS count, -1 AS type
+            FROM t_quickTalk_message
+            WHERE user_uuid='%s' AND status=%d;
+        """ % (userUUID, Config.TYPE_MESSAGE_UNREAD)
     # print querySQL
 
     dbManager = DB.DBManager.shareInstanced()
