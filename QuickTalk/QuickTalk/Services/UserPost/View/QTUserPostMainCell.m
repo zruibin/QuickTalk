@@ -142,7 +142,11 @@
 - (void)loadData:(QTUserPostModel *)model
 {
     [self.avatarButton cra_setBackgroundImage:model.avatar];
-    [self.nicknameButton setTitle:model.nickname forState:UIControlStateNormal];
+    if (model.nickname > 0) {
+        [self.nicknameButton setTitle:model.nickname forState:UIControlStateNormal];
+    } else {
+        [self.nicknameButton setTitle:[NSString stringWithFormat:@"用户%@", model.userId] forState:UIControlStateNormal];
+    }
     self.timeLabel.text = [Tools getDateStringFromTimeString:model.time andNeedTime:YES];
     if (model.txt.length > 0) {
         self.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:model.txt attributes:self.detailAttributes];

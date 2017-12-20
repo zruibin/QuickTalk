@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *userUUID;
+@property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *avatar;
 @property (nonatomic, copy) NSString *txt;
