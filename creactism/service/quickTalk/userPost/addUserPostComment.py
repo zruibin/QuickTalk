@@ -61,12 +61,13 @@ def __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID
     sqlList.append(insertSQL)
     argsList.append([uuid, userUUID, userPostUUID, content, isReply, replyUUID, time])
 
-    messageSQL = """
+    if reciveUserUUID != userUUID:
+        messageSQL = """
         INSERT INTO t_quickTalk_message (user_uuid, type, content_uuid, time, 
             generated_user_uuid, status, content) VALUES (%s, %s, %s, %s, %s, %s, %s);
-    """
-    sqlList.append(messageSQL)
-    argsList.append([reciveUserUUID, typeStr, uuid, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
+        """
+        sqlList.append(messageSQL)
+        argsList.append([reciveUserUUID, typeStr, uuid, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
         
     dbManager = DB.DBManager.shareInstanced()
     try: 

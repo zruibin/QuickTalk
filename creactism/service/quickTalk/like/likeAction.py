@@ -62,12 +62,13 @@ def __likeUserPostMethod(typeStr, userUUID, contentUUID):
     sqlList.append(insertSQL)
     argsList.append([typeStr, userUUID, contentUUID, time])
 
-    messageSQL = """
+    if reciveUserUUID != userUUID:
+        messageSQL = """
         INSERT INTO t_quickTalk_message (user_uuid, type, content_uuid, time, 
             generated_user_uuid, status, content) VALUES (%s, %s, %s, %s, %s, %s, %s);
-    """
-    sqlList.append(messageSQL)
-    argsList.append([reciveUserUUID, Config.TYPE_MESSAGE_LIKE_USERPOST, contentUUID, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
+        """
+        sqlList.append(messageSQL)
+        argsList.append([reciveUserUUID, Config.TYPE_MESSAGE_LIKE_USERPOST, contentUUID, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
     
     dbManager = DB.DBManager.shareInstanced()
     try: 
