@@ -41,6 +41,8 @@ def action():
 
 
 def __onAction(userUUID, contentUUID, typeStr):
+    if __queryWhetherCollection(contentUUID, typeStr, userUUID):
+        return RESPONSE_JSON(CODE_ERROR_ALREADY_COLLECTION) 
     time = generateCurrentTime()
     insertSQL = """
         INSERT INTO t_quickTalk_collection (user_uuid, type, content_uuid, time) VALUES (%s, %s, %s, %s);
@@ -72,6 +74,18 @@ def __offAction(userUUID, contentUUID, typeStr):
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
+
+
+def __queryWhetherCollection(collectionUUID, typeStr, userUUID):
+    querySQL = """SELECT user_uuid FROM t_quickTalk_collection WHERE content_uuid='%s' AND type=%s AND user_uuid='%s'; """ % (collectionUUID, typeStr, userUUID)
+    dbManager = DB.DBManager.shareInstanced()
+    try:
+        resultList = dbManager.executeSingleQuery(querySQL)
+        if len(resultList) > 0: return True
+    except Exception as e:
+        Loger.error(e, __file__)
+        return False
+    
 
 
 
