@@ -114,6 +114,7 @@
 		E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */ = {isa = PBXBuildFile; fileRef = E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
+		E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147521FEB574D0069AC6D /* QTUserCell.m */; };
 		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
 		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
@@ -338,6 +339,8 @@
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
 		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
 		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
+		E0C147511FEB574D0069AC6D /* QTUserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCell.h; sourceTree = "<group>"; };
+		E0C147521FEB574D0069AC6D /* QTUserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCell.m; sourceTree = "<group>"; };
 		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -826,6 +829,8 @@
 				E06F42D71FEA37AD00F99A66 /* QTMyCell.m */,
 				E0256D911FEA7DC800217D9F /* QTUserStarButton.h */,
 				E0256D921FEA7DC800217D9F /* QTUserStarButton.m */,
+				E0C147511FEB574D0069AC6D /* QTUserCell.h */,
+				E0C147521FEB574D0069AC6D /* QTUserCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1554,6 +1559,7 @@
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
 				E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
+				E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */,
 				E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */,
 				E081316E1FE21701001A6E3D /* CRAStringPickerView.m in Sources */,
 				E08131711FE23117001A6E3D /* QTUserController.m in Sources */,

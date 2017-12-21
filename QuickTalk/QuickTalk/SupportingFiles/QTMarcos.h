@@ -57,6 +57,8 @@
 
 #define QuickTalk_MAIN_COLOR_HEX @"#00a0e9"
 #define QuickTalk_MAIN_COLOR [UIColor colorFromHexString:QuickTalk_MAIN_COLOR_HEX]
+#define QuickTalk_SECOND_COLOR_HEX @"#999999"
+#define QuickTalk_SECOND_COLOR [UIColor colorFromHexString:QuickTalk_SECOND_COLOR_HEX]
 
 
 //判断设备型号

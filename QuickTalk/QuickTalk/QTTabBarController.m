@@ -67,21 +67,21 @@
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
                                            @"imageName":@"news_unselect",
-                                           @"selectedImageName":@"news_select"
+                                           @"selectedImageName":@"news_unselect"
                                            },
                                    @"tab1":@{
                                            @"title":@"新闻",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
                                            @"imageName":@"circle_unselect",
-                                           @"selectedImageName":@"circle_select"
+                                           @"selectedImageName":@"circle_unselect"
                                            },
                                    @"tab2":@{
                                            @"title":@"我",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
                                            @"imageName":@"my_unselect",
-                                           @"selectedImageName":@"my_select"
+                                           @"selectedImageName":@"my_unselect"
                                            }
                                    }];
     return info;

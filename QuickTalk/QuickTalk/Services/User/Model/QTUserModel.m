@@ -8,6 +8,18 @@
 
 #import "QTUserModel.h"
 
+@interface QTUserListModel: NSObject
+@property (nonatomic, copy) NSArray<QTUserModel *> *data;
+@end
+
+@implementation QTUserListModel
++ (NSDictionary *)modelContainerPropertyGenericClass
+{
+    return @{@"data" : [QTUserModel class]};
+}
+@end
+
+
 @implementation QTUserModel
 
 + (NSDictionary *)modelCustomPropertyMapper
@@ -41,6 +53,124 @@
             }
         }
     }];
+}
+
++ (void)requestPhoneUserData:(NSString *)userUUID phones:(NSArray *)phones
+           completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler
+{
+    NSString *phoneListString = [Tools dataTojsonString:phones];;
+    NSDictionary *params = @{@"user_uuid": userUUID, @"phoneList": phoneListString};
+    [QTNetworkAgent requestDataForUserService:@"/phoneListUsers" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserListModel *list = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    list = [QTUserListModel yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(list.data, error);
+            }
+        }
+    }];
+}
+
++ (void)requestStarRelation:(NSString *)userUUID uuidList:(NSArray *)uuidList
+          completionHandler:(void (^)(NSDictionary *dict, NSError * error))completionHandler
+{
+    NSString *uuidListString = [Tools dataTojsonString:uuidList];;
+    NSDictionary *params = @{@"user_uuid": userUUID, @"uuidList": uuidListString};
+    [QTNetworkAgent requestDataForStarService:@"/queryStarUserRelation" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            NSDictionary *tempDict = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    tempDict = [responseObject[@"data"] copy];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(tempDict, error);
+            }
+        }
+    }];
+}
+
++ (void)requestBeStarRelation:(NSString *)userUUID uuidList:(NSArray *)uuidList
+          completionHandler:(void (^)(NSDictionary *dict, NSError * error))completionHandler
+{
+    NSString *uuidListString = [Tools dataTojsonString:uuidList];;
+    NSDictionary *params = @{@"user_uuid": userUUID, @"uuidList": uuidListString};
+    [QTNetworkAgent requestDataForStarService:@"/queryBeStarRelation" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            NSDictionary *tempDict = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    tempDict = [responseObject[@"data"] copy];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(tempDict, error);
+            }
+        }
+    }];
+}
+
++ (void)requestForStarOrUnStar:(NSString *)userUUID
+                   contentUUID:(NSString *)contentUUID
+                        action:(NSString *)action
+             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"action": action, @"content_uuid":contentUUID, @"user_uuid": userUUID, @"type":@"0"};
+    [QTNetworkAgent requestDataForStarService:@"/userAction" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+    
 }
 
 @end
