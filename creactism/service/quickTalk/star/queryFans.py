@@ -25,6 +25,7 @@ from common.auth import vertifyTokenHandle
 @vertifyTokenHandle
 def queryFans():
     userUUID = getValueFromRequestByKey("user_uuid")
+    relationUserUUID = getValueFromRequestByKey("relation_user_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
     size = getValueFromRequestByKey("size")
@@ -32,10 +33,10 @@ def queryFans():
     if userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __getFansFromStorage(index, size, userUUID)
+    return __getFansFromStorage(index, size, userUUID, relationUserUUID)
 
 
-def __getFansFromStorage(index, size, userUUID):
+def __getFansFromStorage(index, size, userUUID, relationUserUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         
@@ -48,14 +49,14 @@ def __getFansFromStorage(index, size, userUUID):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataList = dbManager.executeSingleQuery(querySQL)
-        dataList = __packageUserData(dataList, userUUID)
+        dataList = __packageUserData(dataList, userUUID, relationUserUUID)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def __packageUserData(dataList, userUUID):
+def __packageUserData(dataList, userUUID, relationUserUUID):
     if len(dataList) == 0:
         return dataList
 
@@ -80,7 +81,7 @@ def __packageUserData(dataList, userUUID):
         fansUUIDList = []
         for data in dataList:
             fansUUIDList.append(data["uuid"])
-        dataDict = queryStarUserRelation(userUUID, fansUUIDList)
+        dataDict = queryStarUserRelation(relationUserUUID, fansUUIDList)
         # print dataDict
         
         for data in dataList:

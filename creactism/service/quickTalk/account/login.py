@@ -26,7 +26,7 @@ def login():
     accountStr = getValueFromRequestByKey("account")
     password = getValueFromRequestByKey("password")
     typeStr = getValueFromRequestByKey("type")
-
+    # print account, password, typeStr
     if  accountStr is None:
             return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 

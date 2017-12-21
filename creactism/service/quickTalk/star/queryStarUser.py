@@ -18,12 +18,14 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
 from common.auth import vertifyTokenHandle
+from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
 
 
 @star.route('/queryStarUser', methods=["GET", "POST"])
 @vertifyTokenHandle
 def queryStarUser():
     userUUID = getValueFromRequestByKey("user_uuid")
+    relationUserUUID = getValueFromRequestByKey("relation_user_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
     size = getValueFromRequestByKey("size")
@@ -31,10 +33,10 @@ def queryStarUser():
     if userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __getUserStarFromStorage(index, size, userUUID)
+    return __getUserStarFromStorage(index, size, userUUID, relationUserUUID)
 
 
-def __getUserStarFromStorage(index, size, userUUID):
+def __getUserStarFromStorage(index, size, userUUID, relationUserUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         
@@ -47,14 +49,14 @@ def __getUserStarFromStorage(index, size, userUUID):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataList = dbManager.executeSingleQuery(querySQL)
-        dataList = __packageUserData(dataList)
+        dataList = __packageUserData(dataList, relationUserUUID)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def __packageUserData(dataList):
+def __packageUserData(dataList, relationUserUUID):
     if len(dataList) == 0:
         return dataList
 
@@ -75,10 +77,23 @@ def __packageUserData(dataList):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataList = dbManager.executeSingleQuery(querySQL)
+
+        fansUUIDList = []
         for data in dataList:
-            userUUID = data["uuid"]
+            fansUUIDList.append(data["uuid"])
+        dataDict = queryStarUserRelation(relationUserUUID, fansUUIDList)
+        # print dataDict
+        
+        for data in dataList:
+            uuid = data["uuid"]
+            fansUUIDList.append(uuid)
             data["time"] = str(data["time"])
-            data["avatar"] = userAvatarURL(userUUID, data["avatar"])
+            data["avatar"] = userAvatarURL(uuid, data["avatar"])
+            if dataDict.has_key(uuid):
+                data["relation"] = 1
+            else:
+                data["relation"] = 0
+
         return dataList
     except Exception as e:
         Loger.error(e, __file__)
