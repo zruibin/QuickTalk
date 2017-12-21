@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# queryStarUserRelation.py
+# queryBeStarRelation.py
 #
-# Created by ruibin.chow on 2017/12/18.
+# Created by ruibin.chow on 2017/12/21.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-查询是否已关注
+查询是否被关注
 """
 
 from service.quickTalk.star import star
@@ -21,9 +21,9 @@ import json
 from common.auth import vertifyTokenHandle
 
 
-@star.route('/queryStarUserRelation', methods=["GET", "POST"])
+@star.route('/queryBeStarRelation', methods=["GET", "POST"])
 @vertifyTokenHandle
-def queryStarUserRelationRequest():
+def queryBeStarRelationRequest():
     userUUID = getValueFromRequestByKey("user_uuid")
     uuidList = getValueFromRequestByKey("uuidList")
 
@@ -37,14 +37,14 @@ def queryStarUserRelationRequest():
         return RESPONSE_JSON(CODE_ERROR_ILLEGAL_DATA_CONTENT)
 
     try:
-        dataDict = queryStarUserRelation(userUUID, uuidList)
+        dataDict = queryBeStarRelation(userUUID, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def queryStarUserRelation(userUUID, uuidList):
+def queryBeStarRelation(userUUID, uuidList):
     # print userUUID, uuidList
     dataDict = {}
     if len(uuidList) == 0:
@@ -53,7 +53,7 @@ def queryStarUserRelation(userUUID, uuidList):
     inString = "'" + "','".join(uuidList) + "'"
     querySQL = """
         SELECT user_uuid, type, other_user_uuid
-        FROM t_quickTalk_user_user WHERE user_uuid='%s' AND other_user_uuid IN (%s) 
+        FROM t_quickTalk_user_user WHERE other_user_uuid='%s' AND user_uuid IN (%s) 
     """ % (userUUID, inString)
 
     # print querySQL
@@ -73,9 +73,11 @@ def __packageDataDict(dataList):
     if len(dataList) == 0:
         return dataDict
     for data in dataList:
-        dataDict[data["other_user_uuid"]] = data["user_uuid"]
+        dataDict[data["user_uuid"]] = data["other_user_uuid"]
     return dataDict
         
+
+
 
 if __name__ == '__main__':
     pass

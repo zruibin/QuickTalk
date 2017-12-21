@@ -19,6 +19,7 @@ from service.quickTalk.star import userAction
 from service.quickTalk.star import queryStarUser
 from service.quickTalk.star import queryStarUserRelation
 from service.quickTalk.star import queryFans
+from service.quickTalk.star import queryBeStarRelation
 
 
 if __name__ == '__main__':
