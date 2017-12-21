@@ -300,6 +300,70 @@
     }];
 }
 
++ (void)requestForSetting:(NSString *)userUUID
+                     type:(NSString *)type
+                   status:(NSString *)status
+        completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    NSDictionary *params = @{
+                             @"user_uuid":userUUID,
+                             @"type":type,
+                             @"status":status
+                             };
+    [QTNetworkAgent requestDataForAccountService:@"/setting" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(NO, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
+            }
+        }
+    }];
+}
+
++ (void)requestForSettingList:(NSString *)userUUID
+            completionHandler:(void (^)(NSDictionary *dict, NSError * error))completionHandler
+{
+    if (userUUID.length == 0) userUUID = @"";
+    NSDictionary *params = @{@"user_uuid":userUUID};
+    [QTNetworkAgent requestDataForAccountService:@"/settingList" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            NSDictionary *dict = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    dict = responseObject[@"data"];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(dict, error);
+            }
+        }
+    }];
+}
+
 @end
 
 

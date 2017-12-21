@@ -62,6 +62,14 @@
                          gender:(NSString *)gender
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestForSetting:(NSString *)userUUID
+                     type:(NSString *)type
+                   status:(NSString *)status
+        completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
+
++ (void)requestForSettingList:(NSString *)userUUID
+            completionHandler:(void (^)(NSDictionary *dict, NSError * error))completionHandler;
+
 @end
 
 

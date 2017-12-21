@@ -11,6 +11,7 @@
 #import "QTFeedbackController.h"
 #import "QTIntroController.h"
 #import "QTAccountSettingController.h"
+#import "QTAccountNotificationController.h"
 
 @interface QTSettingController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -109,7 +110,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 1;
+        return 2;
     }
     return 4;
 }
@@ -131,7 +132,12 @@
     }
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"账号与安全";
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"账号与安全";
+        }
+        if (indexPath.row == 1) {
+            cell.textLabel.text = @"消息通知";
+        }
     } else {
         if (indexPath.row == 0) {
             NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -173,11 +179,17 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 0) {
-        if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
-            return ;
+        if (indexPath.row == 0) {
+            if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+                return ;
+            }
+            QTAccountSettingController *accountSettingController = [[QTAccountSettingController alloc] init];
+            [self.navigationController pushViewController:accountSettingController animated:YES];
         }
-        QTAccountSettingController *accountSettingController = [[QTAccountSettingController alloc] init];
-        [self.navigationController pushViewController:accountSettingController animated:YES];
+        if (indexPath.row == 1) {
+            QTAccountNotificationController *notificationController = [[QTAccountNotificationController alloc] init];
+            [self.navigationController pushViewController:notificationController animated:YES];
+        }
         return ;
     }
     

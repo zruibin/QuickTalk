@@ -121,6 +121,13 @@ if (![QTNetworking checkingNetworkIsWiFi] && kVar == NO) { \
 #define LIKE_ACTION_AGREE @"1"
 #define LIKE_ACTION_DISAGREE @"2"
 
+#define NOTIFICATION_FOR_LIKE @"1"
+#define NOTIFICATION_FOR_COMMENT @"2"
+#define NOTIFICATION_FOR_NEW_STAR @"3"
+#define  NOTIFICATION_FOR_NEW_SHARE @"4"
+
+
+
 #endif /* QCMarcos_h */
 
 

@@ -115,6 +115,7 @@
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
 		E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147521FEB574D0069AC6D /* QTUserCell.m */; };
+		E0C1475A1FEBCDC20069AC6D /* QTAccountNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */; };
 		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
 		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
 		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
@@ -341,6 +342,9 @@
 		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
 		E0C147511FEB574D0069AC6D /* QTUserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCell.h; sourceTree = "<group>"; };
 		E0C147521FEB574D0069AC6D /* QTUserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCell.m; sourceTree = "<group>"; };
+		E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountNotificationController.h; sourceTree = "<group>"; };
+		E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountNotificationController.m; sourceTree = "<group>"; };
+		E0C1475B1FEBD6840069AC6D /* QuickTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickTalk.entitlements; sourceTree = "<group>"; };
 		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -758,6 +762,8 @@
 				E08AABE71FE14129005B6DBB /* QTFeedbackController.m */,
 				E08AABE21FE14129005B6DBB /* QTSettingController.h */,
 				E08AABE81FE14129005B6DBB /* QTSettingController.m */,
+				E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */,
+				E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -973,6 +979,7 @@
 		E0DF287A1F95A57E00F1B8C8 /* QuickTalk */ = {
 			isa = PBXGroup;
 			children = (
+				E0C1475B1FEBD6840069AC6D /* QuickTalk.entitlements */,
 				E08181281F9995AD0035DEF4 /* Resources */,
 				E0DF28C11F95A7CE00F1B8C8 /* 3rd */,
 				E0DF28AE1F95A7CE00F1B8C8 /* Util */,
@@ -1238,6 +1245,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					E0DF288F1F95A57E00F1B8C8 = {
@@ -1484,6 +1494,7 @@
 				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
 				E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */,
 				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
+				E0C1475A1FEBCDC20069AC6D /* QTAccountNotificationController.m in Sources */,
 				E08AABFE1FE14129005B6DBB /* QTMyNewsCommentCell.m in Sources */,
 				E08AABD51FE10A42005B6DBB /* QTAccountChangePasswordController.m in Sources */,
 				E088D67A1FD6651B00038736 /* QTUserPostAddController.m in Sources */,
@@ -1708,6 +1719,7 @@
 			baseConfigurationReference = 9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickTalk/QuickTalk.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S8VUN65RG9;
@@ -1744,6 +1756,7 @@
 			baseConfigurationReference = 0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickTalk/QuickTalk.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = S8VUN65RG9;
