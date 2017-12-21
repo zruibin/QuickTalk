@@ -32,7 +32,7 @@ def messageData():
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
     
-    # if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_USERPOST_REPLY_COMMENT, Config.TYPE_MESSAGE_ADD_NEW_FRIEND):
+    # if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_USERPOST_REPLY_COMMENT, Config.TYPE_MESSAGE_NEW_STAR):
     #     return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     return __queryUserMessageFromStorage(userUUID, limitSQL, update)
@@ -92,7 +92,7 @@ def __queryUserMessageFromStorage(userUUID, limitSQL, update):
     """.format(userUUID=userUUID, limitSQL=limitSQL,
              likeUserPost=Config.TYPE_MESSAGE_LIKE_USERPOST, 
              userPostComment=Config.TYPE_MESSAGE_USERPOST_COMMENT, 
-             newFriend=Config.TYPE_MESSAGE_ADD_NEW_FRIEND)
+             newFriend=Config.TYPE_MESSAGE_NEW_STAR)
     # print querySQL
 
     dbManager = DB.DBManager.shareInstanced()

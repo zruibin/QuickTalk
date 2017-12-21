@@ -61,7 +61,7 @@ def __starUserMethod(typeStr, userUUID, contentUUID):
             generated_user_uuid, status, content) VALUES (%s, %s, %s, %s, %s, %s, %s);
     """
     sqlList.append(messageSQL)
-    argsList.append([contentUUID, Config.TYPE_MESSAGE_ADD_NEW_FRIEND, contentUUID, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
+    argsList.append([contentUUID, Config.TYPE_MESSAGE_NEW_STAR, contentUUID, time, userUUID, str(Config.TYPE_MESSAGE_UNREAD), ""])
     
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -85,7 +85,7 @@ def __unStarUserMethod(typeStr, userUUID, contentUUID):
         DELETE FROM t_quickTalk_message WHERE generated_user_uuid=%s AND type=%s AND user_uuid=%s;
     """
     sqlList.append(deleteMessageSQL)
-    argsList.append([userUUID, Config.TYPE_MESSAGE_ADD_NEW_FRIEND, contentUUID])
+    argsList.append([userUUID, Config.TYPE_MESSAGE_NEW_STAR, contentUUID])
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

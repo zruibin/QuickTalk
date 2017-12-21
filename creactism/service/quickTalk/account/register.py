@@ -120,7 +120,7 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
         settingArgsList= [
                 userUUID, str(Config.NOTIFICATION_FOR_LIKE), str(Config.STATUS_ON),
                 userUUID, str(Config.NOTIFICATION_FOR_COMMENT), str(Config.STATUS_ON),
-                userUUID, str(Config.NOTIFICATION_FOR_NEW_FRIEND), str(Config.STATUS_ON),
+                userUUID, str(Config.NOTIFICATION_FOR_NEW_STAR), str(Config.STATUS_ON),
                 userUUID, str(Config.NOTIFICATION_FOR_NEW_SHARE), str(Config.STATUS_OFF)
             ]
         sqlList.append(userSettingSQL)

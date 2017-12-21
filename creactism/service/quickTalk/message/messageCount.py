@@ -26,14 +26,14 @@ def messageCount():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
 
-    # if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_ADD_NEW_FRIEND):
+    # if typeStr not in (Config.TYPE_MESSAGE_LIKE_USERPOST, Config.TYPE_MESSAGE_USERPOST_COMMENT, Config.TYPE_MESSAGE_NEW_STAR):
     #     return RESPONSE_JSON(CODE_ERROR_PARAM)
 
     if typeStr == Config.TYPE_MESSAGE_LIKE_USERPOST:
         return __getCountFromStorage(userUUID, typeStr)
     elif typeStr == Config.TYPE_MESSAGE_USERPOST_COMMENT:
         return __getCountFromStorage(userUUID, typeStr)
-    elif typeStr == Config.TYPE_MESSAGE_ADD_NEW_FRIEND:
+    elif typeStr == Config.TYPE_MESSAGE_NEW_STAR:
         return __getCountFromStorage(userUUID, typeStr)
     else:
         return __getCountFromStorage(userUUID, None)
