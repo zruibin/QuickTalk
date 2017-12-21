@@ -11,6 +11,7 @@
 #import "QTUserSearchController.h"
 #import "QTUserContactBookController.h"
 
+
 @interface QTUserStarController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -19,8 +20,10 @@
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, strong) UIView *headerView;
 
+
 - (void)initViews;
 - (void)loadData;
+- (void)initSearch;
 
 @end
 
@@ -75,10 +78,6 @@
 
 }
 
-
-
-#pragma mark - Private
-
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -116,6 +115,7 @@
     QTUserSearchController *searchController = [[QTUserSearchController alloc] init];
     [self.navigationController pushViewController:searchController animated:YES];
 }
+
 
 - (void)contactBookAction
 {

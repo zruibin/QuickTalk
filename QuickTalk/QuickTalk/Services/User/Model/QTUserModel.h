@@ -48,6 +48,9 @@ typedef NS_ENUM(NSInteger, QTUserRelationStatus) {
                      action:(NSString *)action
             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestForSearchUser:(NSString *)text page:(NSUInteger)page userUUID:(NSString *)userUUID
+           completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler;
+
 @end
 
 

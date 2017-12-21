@@ -24,7 +24,7 @@
 
 + (NSDictionary *)modelCustomPropertyMapper
 {
-    return @{@"_id" : @"id"};
+    return @{@"_id" : @"id", @"relationStatus":@"relation"};
 }
 
 + (void)requestUserInfo:(NSString *)userUUID
@@ -170,7 +170,38 @@
             }
         }
     }];
-    
+}
+
++ (void)requestForSearchUser:(NSString *)text page:(NSUInteger)page userUUID:(NSString *)userUUID
+           completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler
+{
+    NSString *uuid = userUUID;
+    if (userUUID.length == 0) {
+        uuid = @"";
+    }
+    NSDictionary *params = @{@"text": text, @"index": [NSNumber numberWithInteger:page], @"user_uuid": uuid};
+    [QTNetworkAgent requestDataForSearchService:@"/searchUser" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserListModel *list = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    list = [QTUserListModel yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(list.data, error);
+            }
+        }
+    }];
 }
 
 @end

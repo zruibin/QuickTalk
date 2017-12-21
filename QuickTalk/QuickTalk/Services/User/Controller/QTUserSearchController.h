@@ -10,4 +10,6 @@
 
 @interface QTUserSearchController : QTViewController
 
+@property (nonatomic, copy) void (^onDismissBlock)(void);
+
 @end
