@@ -44,7 +44,6 @@ def __queryUserFromStorage(text, index, size, userUUID):
             gender, qq, weibo, wechat, area, time
         FROM t_quickTalk_user WHERE nickname LIKE %s OR phone LIKE %s 
     """ + limitSQL
-
     # print querySQL
 
     dbManager = DB.DBManager.shareInstanced()
@@ -53,11 +52,12 @@ def __queryUserFromStorage(text, index, size, userUUID):
 
         dataDict = {}
         if userUUID != None:
-            fansUUIDList = []
+            uuidList = []
             for data in dataList:
-                fansUUIDList.append(data["uuid"])
-            dataDict = queryStarUserRelation(userUUID, fansUUIDList)
-            # print dataDict
+                uuidList.append(data["uuid"])
+            # print uuidList, userUUID
+            dataDict = queryStarUserRelation(userUUID, uuidList)
+        print dataDict
 
         for data in dataList:
             uuid = data["uuid"]
