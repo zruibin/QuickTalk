@@ -49,16 +49,16 @@
 - (void)initViews
 {    
     CGFloat width = CGRectGetWidth([[UIScreen mainScreen] bounds]) - 80;
-    self.textField.frame = CGRectMake(36, 6, width-36, 32);
+    self.textField.frame = CGRectMake(0, 6, width, 32);
     UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 44)];
     [searchView addSubview:self.textField];
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[[UIImage imageNamed:@"back"] imageWithTintColor:[UIColor blackColor]]
-                forState:UIControlStateNormal];
-    backButton.frame = CGRectMake(0, 0, 36, 44);
-    backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    [searchView addSubview:backButton];
+//    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [backButton setImage:[[UIImage imageNamed:@"back"] imageWithTintColor:[UIColor blackColor]]
+//                forState:UIControlStateNormal];
+//    backButton.frame = CGRectMake(0, 0, 36, 44);
+//    backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    [backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
+//    [searchView addSubview:backButton];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:searchView];;
     
     [self.view addSubview:self.tableView];
@@ -67,10 +67,10 @@
     }];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]
-                             initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchAction)];
+                             initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonAction)];
     self.navigationItem.rightBarButtonItem = item;
     
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+//    self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)loadData
@@ -175,7 +175,7 @@
     if (model.relationStatus == QTUserRelationDefault) {
         cell.relationStatus = QTViewRelationDefault;
     } else {
-        cell.relationStatus = QTViewRelationStar;
+        cell.relationStatus = QTViewRelationStarAndBeStar;
     }
 
     __weak typeof(self) weakSelf = self;

@@ -52,7 +52,12 @@ typedef NS_ENUM(NSInteger, QTUserRelationStatus) {
            completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler;
 
 + (void)requestForStarUser:(NSUInteger)page userUUID:(NSString *)userUUID
+                relationUserUUID:(NSString *)relationUserUUID
            completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler;
+
++ (void)requestForFans:(NSUInteger)page userUUID:(NSString *)userUUID
+            relationUserUUID:(NSString *)relationUserUUID
+         completionHandler:(void (^)(NSArray<QTUserModel *> *list, NSError * error))completionHandler;
 
 @end
 

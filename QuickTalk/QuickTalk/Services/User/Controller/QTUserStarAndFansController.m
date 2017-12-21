@@ -88,6 +88,7 @@
     if (index == 1) {
         if (self.childControllers.count == 1) {
             QTUserFansController *userFansController = [[QTUserFansController alloc] init];
+            userFansController.userUUID = self.userUUID;
             [self.childControllers addObject:userFansController];
             userFansController.view.frame = CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
                                                             CGRectGetWidth(self.scrollView.bounds),

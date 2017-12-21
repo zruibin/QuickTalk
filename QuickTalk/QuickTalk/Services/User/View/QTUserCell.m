@@ -66,7 +66,7 @@
     }];
     [self.contentView addSubview:self.actionButton];
     [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(60);
+        make.width.mas_equalTo(65);
         make.height.mas_equalTo(28);
         make.centerY.equalTo(self.contentView);
         make.right.equalTo(self.contentView).offset(-10);
@@ -144,7 +144,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x000 withAlpha:.4]]
                               forState:UIControlStateHighlighted];
-            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
             button.userInteractionEnabled = YES;
             button.layer.borderWidth = 1;
             button.layer.cornerRadius = 2;

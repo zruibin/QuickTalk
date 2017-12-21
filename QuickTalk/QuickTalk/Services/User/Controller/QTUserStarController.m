@@ -76,9 +76,14 @@
 - (void)loadData
 {
     [QTProgressHUD showHUD:self.view];
-    [QTUserModel requestForStarUser:self.page userUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserModel *> *list, NSError *error) {
+    [QTUserModel requestForStarUser:self.page userUUID:self.userUUID
+                   relationUserUUID:[QTUserInfo sharedInstance].uuid
+                  completionHandler:^(NSArray<QTUserModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+            [self.tableView showFooter];
+            [self.tableView endFooterRefreshing];
+            [self.tableView endHeaderRefreshing];
         } else {
             [self.tableView showFooter];
             if (list.count < 10) {

@@ -7,6 +7,9 @@
 //
 
 #import "QTUserFansController.h"
+#import "QTUserCell.h"
+#import "QTUserModel.h"
+#import "QTUserController.h"
 
 @interface QTUserFansController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -17,6 +20,7 @@
 
 - (void)initViews;
 - (void)loadData;
+- (void)starOrUnStarAction:(NSInteger)index;
 
 @end
 
@@ -28,19 +32,19 @@
     // Do any additional setup after loading the view.
     [self initViews];
     
-//    __weak typeof(self) weakSelf = self;
-//    [self.tableView headerWithRefreshingBlock:^{
-//        weakSelf.errorView.hidden = YES;
-//        weakSelf.page = 1;
-//        weakSelf.dataList = [NSMutableArray array];
-//        [weakSelf loadData];
-//    }];
-//    [self.tableView beginHeaderRefreshing];
-//
-//    [self.tableView footerWithRefreshingBlock:^{
-//        weakSelf.page += 1;
-//        [weakSelf loadData];
-//    }];
+    __weak typeof(self) weakSelf = self;
+    [self.tableView headerWithRefreshingBlock:^{
+        weakSelf.errorView.hidden = YES;
+        weakSelf.page = 1;
+        weakSelf.dataList = [NSMutableArray array];
+        [weakSelf loadData];
+    }];
+    [self.tableView beginHeaderRefreshing];
+
+    [self.tableView footerWithRefreshingBlock:^{
+        weakSelf.page += 1;
+        [weakSelf loadData];
+    }];
     
     self.errorView.hidden = YES;
 }
@@ -64,29 +68,82 @@
 
 - (void)loadData
 {
-    
+    [QTUserModel requestForFans:self.page userUUID:self.userUUID relationUserUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserModel *> *list, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
+            [self.tableView showFooter];
+            [self.tableView endFooterRefreshing];
+            [self.tableView endHeaderRefreshing];
+        } else {
+            [self.tableView showFooter];
+            if (list.count < 10) {
+                [self.tableView endRefreshingWithNoMoreData];
+            } else {
+                [self.tableView endFooterRefreshing];
+            }
+            [self.tableView endHeaderRefreshing];
+            [QTProgressHUD showHUDSuccess];
+            [self.dataList addObjectsFromArray:list];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
-
-
-#pragma mark - Private
+- (void)starOrUnStarAction:(NSInteger)index
+{
+    QTUserModel *model = self.dataList[index];
+    NSString *action = STAR_ACTION_FOR_STAR;
+    if (model.relationStatus == QTUserRelationStar) {
+        action = STAR_ACTION_FOR_UNSTAR;
+    }
+    [QTUserModel requestForStarOrUnStar:self.userUUID contentUUID:model.uuid action:action completionHandler:^(BOOL action, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
+        } else {
+            if (model.relationStatus == QTUserRelationStar) {
+                model.relationStatus = QTUserRelationDefault;
+            } else {
+                model.relationStatus = QTUserRelationStar;
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
 
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 30;//self.dataList.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.dataList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTTableViewCellMake(UITableViewCell, cell)
+    QTTableViewCellMake(QTUserCell, cell)
+    cell.tag = indexPath.row;
+    QTUserModel *model = self.dataList[indexPath.row];
+    [cell loadData:model.avatar nickname:model.nickname subname:nil];
+    if (model.relationStatus == QTUserRelationDefault) {
+        cell.relationStatus = QTViewRelationDefault;
+    } else {
+        cell.relationStatus = QTViewRelationStarAndBeStar;
+    }
     
+    __weak typeof(self) weakSelf = self;
+    [cell setOnAvatarHandler:^(NSInteger index) {
+        QTUserController *userController = [[QTUserController alloc] init];
+        QTUserModel *userModel = weakSelf.dataList[index];
+        userController.userUUID = userModel.uuid;
+        [weakSelf.navigationController pushViewController:userController animated:YES];
+    }];
+    [cell setOnActionHandler:^(NSInteger index) {
+        [weakSelf starOrUnStarAction:index];
+    }];
     return cell;
 }
 
@@ -122,7 +179,8 @@
             tableView.exclusiveTouch = YES;
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            QTTableViewCellRegister(tableView, UITableViewCell)
+            tableView.tableFooterView = [UIView new];
+            QTTableViewCellRegister(tableView, QTUserCell)
             tableView;
         });
     }
