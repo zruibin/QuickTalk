@@ -11,7 +11,7 @@
 #import "QTUserModel.h"
 #import "QTUserController.h"
 
-@interface QTUserSearchController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface QTUserSearchController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UITableView *tableView;
@@ -69,6 +69,8 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc]
                              initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(searchAction)];
     self.navigationItem.rightBarButtonItem = item;
+    
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)loadData
@@ -112,10 +114,20 @@
     }];
 }
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (self.navigationController.viewControllers.count <= 1) {
+        return NO;
+    }
+    [self.textField resignFirstResponder];
+    return YES;
+}
+
 #pragma mark - Action
 
 - (void)backButtonAction
 {
+    [self.textField resignFirstResponder];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

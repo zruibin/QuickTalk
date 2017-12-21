@@ -10,6 +10,9 @@
 #import "QTUserStarButton.h"
 #import "QTUserSearchController.h"
 #import "QTUserContactBookController.h"
+#import "QTUserCell.h"
+#import "QTUserModel.h"
+#import "QTUserController.h"
 
 
 @interface QTUserStarController () <UITableViewDataSource, UITableViewDelegate>
@@ -20,10 +23,8 @@
 @property (nonatomic, assign) NSInteger page;
 @property (nonatomic, strong) UIView *headerView;
 
-
 - (void)initViews;
 - (void)loadData;
-- (void)initSearch;
 
 @end
 
@@ -35,19 +36,20 @@
     // Do any additional setup after loading the view.
     [self initViews];
     
-//    __weak typeof(self) weakSelf = self;
-//    [self.tableView headerWithRefreshingBlock:^{
-//        weakSelf.errorView.hidden = YES;
-//        weakSelf.page = 1;
-//        weakSelf.dataList = [NSMutableArray array];
-//        [weakSelf loadData];
-//    }];
-//    [self.tableView beginHeaderRefreshing];
-//
-//    [self.tableView footerWithRefreshingBlock:^{
-//        weakSelf.page += 1;
-//        [weakSelf loadData];
-//    }];
+    __weak typeof(self) weakSelf = self;
+    [self.tableView headerWithRefreshingBlock:^{
+        weakSelf.errorView.hidden = YES;
+        weakSelf.page = 1;
+        weakSelf.dataList = [NSMutableArray array];
+        [weakSelf loadData];
+    }];
+    [self.tableView beginHeaderRefreshing];
+
+    [self.tableView footerWithRefreshingBlock:^{
+        weakSelf.page += 1;
+        [weakSelf loadData];
+    }];
+    [self.tableView hiddenFooter];
     
     self.errorView.hidden = YES;
 }
@@ -69,31 +71,56 @@
     [self.view addSubview:self.errorView];
     
     self.tableView.tableHeaderView = self.headerView;
-    
-    
 }
 
 - (void)loadData
 {
-
+    [QTProgressHUD showHUD:self.view];
+    [QTUserModel requestForStarUser:self.page userUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserModel *> *list, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
+        } else {
+            [self.tableView showFooter];
+            if (list.count < 10) {
+                [self.tableView endRefreshingWithNoMoreData];
+            } else {
+                [self.tableView endFooterRefreshing];
+            }
+            [self.tableView endHeaderRefreshing];
+            [QTProgressHUD showHUDSuccess];
+            [self.dataList addObjectsFromArray:list];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 30;//self.dataList.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.dataList.count;;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QTTableViewCellMake(UITableViewCell, cell)
-
+    QTTableViewCellMake(QTUserCell, cell)
+    cell.tag = indexPath.row;
+    QTUserModel *model = self.dataList[indexPath.row];
+    [cell loadData:model.avatar nickname:model.nickname subname:nil];
+    cell.relationStatus = QTViewRelationHidden;
+    
+    __weak typeof(self) weakSelf = self;
+    [cell setOnAvatarHandler:^(NSInteger index) {
+        QTUserController *userController = [[QTUserController alloc] init];
+        QTUserModel *userModel = weakSelf.dataList[index];
+        userController.userUUID = userModel.uuid;
+        [weakSelf.navigationController pushViewController:userController animated:YES];
+    }];
     return cell;
 }
 
@@ -105,7 +132,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    QTUserController *userController = [[QTUserController alloc] init];
+    QTUserModel *userModel = self.dataList[indexPath.row];
+    userController.userUUID = userModel.uuid;
+    [self.navigationController pushViewController:userController animated:YES];
 }
 
 #pragma mark - Action
@@ -141,7 +171,8 @@
             tableView.exclusiveTouch = YES;
             tableView.backgroundColor = [UIColor clearColor];
             tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            QTTableViewCellRegister(tableView, UITableViewCell)
+            tableView.tableFooterView = [UIView new];
+            QTTableViewCellRegister(tableView, QTUserCell)
             tableView;
         });
     }
