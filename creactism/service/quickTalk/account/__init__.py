@@ -27,6 +27,8 @@ from service.quickTalk.account import info
 from service.quickTalk.account import changeAvatar
 from service.quickTalk.account import changeInfo
 from service.quickTalk.account import userList
+from service.quickTalk.account import setting
+from service.quickTalk.account import settingList
 
 
 if __name__ == '__main__':
