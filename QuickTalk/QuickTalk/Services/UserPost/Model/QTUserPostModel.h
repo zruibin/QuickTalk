@@ -67,6 +67,10 @@
                                 action:(NSString *)action
                      completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
++ (void)requestUserForUserPostLikeData:(NSUInteger)page userUUID:(NSString *)userUUID
+                        relationUserUUID:(NSString *)relationUserUUID
+                     completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
+
 @end
 
 

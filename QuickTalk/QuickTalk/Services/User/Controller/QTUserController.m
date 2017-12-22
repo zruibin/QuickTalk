@@ -11,7 +11,7 @@
 #import "QTAccountInfoEditController.h"
 #import "RBImagebrowse.h"
 #import "QTUserModel.h"
-#import "QTMyNewsCommentController.h"
+#import "QTUserLikeListController.h"
 
 @interface QTUserController () <UIScrollViewDelegate>
 
@@ -67,12 +67,8 @@
 - (void)initViews
 {
     self.title = self.nickname;
-    self.count = 1;
-    self.headerHeight = 100; //144
-    if ([[QTUserInfo sharedInstance].uuid isEqualToString:self.userUUID]) {
-        self.count = 2;
-        self.headerHeight = 144;
-    }
+    self.count = 2;
+    self.headerHeight = 144;
     
     [self.view addSubview:self.scrollView];
     self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight-64);
@@ -178,17 +174,18 @@
     }
     if (index == 1) {
         if (self.childControllers.count == 1) {
-            QTMyNewsCommentController *myNewsCommentController = [[QTMyNewsCommentController alloc] init];
-            [myNewsCommentController setOnScrollingHandler:^(CGFloat offsetY) {
+            QTUserLikeListController *likeListController = [[QTUserLikeListController alloc] init];
+            likeListController.userUUID = self.userUUID;
+            [likeListController setOnScrollingHandler:^(CGFloat offsetY) {
                 [weakSelf calcuateOnScrolling:offsetY];
             }];
-            [self.childControllers addObject:myNewsCommentController];
-            myNewsCommentController.view.frame = CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
+            [self.childControllers addObject:likeListController];
+            likeListController.view.frame = CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
                                                             CGRectGetWidth(self.scrollView.bounds),
                                                             CGRectGetHeight(self.scrollView.bounds));
-            myNewsCommentController.view.userInteractionEnabled = YES;
-            [self.scrollView addSubview:myNewsCommentController.view];
-            [self addChildViewController:myNewsCommentController];
+            likeListController.view.userInteractionEnabled = YES;
+            [self.scrollView addSubview:likeListController.view];
+            [self addChildViewController:likeListController];
         }
         [self.scrollView scrollRectToVisible:CGRectMake(CGRectGetWidth(self.scrollView.bounds), 0,
                                                         CGRectGetWidth(self.scrollView.bounds),
@@ -323,7 +320,7 @@
                                                     initWithSectionTitles:@[@"快言"]];
             if (self.count > 1) {
                 segmentedControl = [[HMSegmentedControl alloc]
-                                    initWithSectionTitles:@[@"快言", @"新闻评论"]];
+                                    initWithSectionTitles:@[@"快言", @"赞"]];
             }
             segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
             segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;

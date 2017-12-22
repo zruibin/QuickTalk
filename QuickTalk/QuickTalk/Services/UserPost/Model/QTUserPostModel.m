@@ -273,4 +273,41 @@
     }];
 }
 
++ (void)requestUserForUserPostLikeData:(NSUInteger)page userUUID:(NSString *)userUUID
+                relationUserUUID:(NSString *)relationUserUUID
+          completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"index"];
+    [params setObject:@"2" forKey:@"type"];
+    if (userUUID.length > 0) {
+        [params setObject:userUUID forKey:@"user_uuid"];
+    }
+    if (relationUserUUID.length > 0) {
+        [params setObject:relationUserUUID forKey:@"relation_user_uuid"];
+    }
+    [QTNetworkAgent requestDataForLikeService:@"/likeList" method:SERVICE_REQUEST_GET params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserPostModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(listModel.data, error);
+            }
+        }
+    }];
+}
+
 @end
