@@ -103,7 +103,7 @@ def queryPackageUserPostLikeList(dataList, uuidList):
         FROM t_quickTalk_like INNER JOIN t_quickTalk_user
         ON type='%s' AND content_uuid IN (%s) 
         AND t_quickTalk_user.uuid=t_quickTalk_like.user_uuid
-        ORDER BY t_quickTalk_like.time DESC 
+        ORDER BY t_quickTalk_like.time ASC 
     """ % (Config.TYPE_MESSAGE_LIKE_USERPOST, inString)
     # print querySQL
 
