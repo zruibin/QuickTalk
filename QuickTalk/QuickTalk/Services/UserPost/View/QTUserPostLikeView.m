@@ -53,7 +53,7 @@ static const CGFloat paddingH = 6.0f;
     }
     
     __weak typeof(self) weakSelf = self;
-    [self.likeList enumerateObjectsUsingBlock:^(QTUserPostLikeModel * _Nonnull obj, NSUInteger index, BOOL * _Nonnull stop) {
+    [self.likeList enumerateObjectsUsingBlock:^(QTUserPostLikeModel * _Nonnull model, NSUInteger index, BOOL * _Nonnull stop) {
         NSInteger nowInLine = index / countOfEveryLine;
         CGFloat y = (singleWH + paddingH) * nowInLine + paddingH;
         CGFloat x = (singleWH + paddingH) * (index % countOfEveryLine + 1);
@@ -61,7 +61,8 @@ static const CGFloat paddingH = 6.0f;
         icon.tag = index;
         [icon addTarget:weakSelf action:@selector(iconTouchAction:) forControlEvents:UIControlEventTouchUpInside];
         icon.frame = CGRectMake(x, y, singleWH, singleWH);
-        [icon setBackgroundImage:QuickTalk_DEFAULT_IMAGE forState:UIControlStateNormal];
+//        [icon setBackgroundImage:QuickTalk_DEFAULT_IMAGE forState:UIControlStateNormal];
+        [icon cra_setBackgroundImage:model.avatar];
         [weakSelf addSubview:icon];
     }];
     

@@ -27,6 +27,14 @@
     return @{@"_id" : @"id", @"relationStatus":@"relation"};
 }
 
+- (NSString *)nickname
+{
+    if (_nickname.length == 0) {
+        _nickname = [NSString stringWithFormat:@"用户%@", self._id];
+    }
+    return _nickname;
+}
+
 + (void)requestUserInfo:(NSString *)userUUID
           completionHandler:(void (^)(QTUserModel *userModel, NSError * error))completionHandler
 {

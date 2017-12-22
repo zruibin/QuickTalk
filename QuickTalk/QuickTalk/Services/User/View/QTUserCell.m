@@ -85,7 +85,8 @@
 
 - (void)loadData:(NSString *)avatar nickname:(NSString *)nickname subname:(NSString *)subname
 {
-    [self.iconView setBackgroundImage:QuickTalk_DEFAULT_IMAGE forState:UIControlStateNormal];
+//    [self.iconView setBackgroundImage:QuickTalk_DEFAULT_IMAGE forState:UIControlStateNormal];
+    [self.iconView cra_setBackgroundImage:avatar];
     if (subname.length > 0) {
         self.titleLabel.text = [NSString stringWithFormat:@"%@(%@)", nickname, subname];
     } else {

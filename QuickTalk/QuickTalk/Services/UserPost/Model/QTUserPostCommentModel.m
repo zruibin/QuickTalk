@@ -27,6 +27,14 @@
     return @{@"_id" : @"id"};
 }
 
+- (NSString *)nickname
+{
+    if (_nickname.length == 0) {
+        _nickname = [NSString stringWithFormat:@"用户%ld", self._id];
+    }
+    return _nickname;
+}
+
 + (void)requestUserPostCommentData:(NSString *)userpostUUID page:(NSUInteger)page
               completionHandler:(void (^)(NSArray<QTUserPostCommentModel *> *list, NSError * error))completionHandler
 {

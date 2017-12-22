@@ -21,7 +21,13 @@
 
 
 @implementation QTUserPostLikeModel
-
+- (NSString *)nickname
+{
+    if (_nickname.length == 0) {
+        _nickname = [NSString stringWithFormat:@"用户%@", self.userId];
+    }
+    return _nickname;
+}
 @end
 
 @implementation QTUserPostModel
@@ -34,6 +40,14 @@
 + (NSDictionary *)modelContainerPropertyGenericClass
 {
     return @{@"likeList" : [QTUserPostLikeModel class]};
+}
+
+- (NSString *)nickname
+{
+    if (_nickname.length == 0) {
+        _nickname = [NSString stringWithFormat:@"用户%ld", self._id];
+    }
+    return _nickname;
 }
 
 
