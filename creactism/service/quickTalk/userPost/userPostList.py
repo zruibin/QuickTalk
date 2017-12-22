@@ -17,19 +17,21 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
+from service.quickTalk.like.queryLikeRelation import queryLikeRelation
 
 
 @userPost.route('/userPostList', methods=["GET", "POST"])
 def userPostList():
     userUUID = getValueFromRequestByKey("user_uuid")
+    relationUserUUID = getValueFromRequestByKey("relation_user_uuid")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
     size = getValueFromRequestByKey("size")
 
-    return __getUserPostFromStorage(index, size, userUUID)
+    return __getUserPostFromStorage(index, size, userUUID, relationUserUUID)
 
 
-def __getUserPostFromStorage(index, size, userUUID):
+def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         
@@ -63,11 +65,29 @@ def __getUserPostFromStorage(index, size, userUUID):
             userUUID = data["userUUID"]
             data["time"] = str(data["time"])
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
+        dataList = __queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
+
+
+def __queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID):
+    if len(dataList) == 0 or relationUserUUID == None:
+        return dataList
+
+    try: 
+        uuidList = queryLikeRelation(relationUserUUID, uuidList)
+        for data in dataList:
+            if data["uuid"] in uuidList:
+                data["liked"] = 1
+            else: 
+                data["liked"] = 0
+    except Exception as e:
+        Loger.error(e, __file__)
+
+    return dataList
 
 
 
@@ -124,8 +144,6 @@ def __packageUserPostLike(dataList, likeList):
                 data["likeList"] = value
         
     return dataList
-
-
 
     
     

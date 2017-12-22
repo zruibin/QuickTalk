@@ -47,7 +47,7 @@ def queryLikeRelationRequest():
 def queryLikeRelation(userUUID, uuidList):
     # print userUUID, uuidList
     dataList = []
-    if len(uuidList) == 0:
+    if len(uuidList) == 0 or userUUID == None:
         return dataList
 
     inString = "'" + "','".join(uuidList) + "'"

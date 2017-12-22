@@ -47,7 +47,7 @@ def queryStarUserRelationRequest():
 def queryStarUserRelation(userUUID, uuidList):
     # print userUUID, uuidList
     dataDict = {}
-    if len(uuidList) == 0:
+    if len(uuidList) == 0 or userUUID == None:
         return dataDict
 
     inString = "'" + "','".join(uuidList) + "'"

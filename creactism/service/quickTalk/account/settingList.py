@@ -22,7 +22,7 @@ from common.tools import getValueFromRequestByKey
 
 
 @account.route('/settingList', methods=["POST", "GET"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def settingList():
     userUUID = getValueFromRequestByKey("user_uuid")
 
@@ -42,7 +42,7 @@ def __getSettingStatus(userUUID):
         dataList = dbManager.executeSingleQueryWithArgs(querySQL, [userUUID])
         for data in dataList:
             dataDict[data["type"]] = data["status"]
-            
+        # print dataDict
         return RESPONSE_JSON(CODE_SUCCESS, data=dataDict)
     except Exception as e:
         Loger.error(e, __file__)
