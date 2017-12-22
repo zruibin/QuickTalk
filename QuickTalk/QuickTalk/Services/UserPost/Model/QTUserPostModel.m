@@ -38,16 +38,19 @@
 
 
 + (void)requestUserPostData:(NSUInteger)page userUUID:(NSString *)userUUID
+           relationUserUUID:(NSString *)relationUserUUID
        completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
 {
-    NSDictionary *params = @{@"index": [NSNumber numberWithInteger:page]};
-    if (userUUID.length > 0) {
-        params = @{
-                   @"index": [NSNumber numberWithInteger:page],
-                   @"user_uuid": userUUID
-                   };
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//  @{@"index": [NSNumber numberWithInteger:page]};
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"index"];
+    if (relationUserUUID.length > 0) {
+        [params setObject:relationUserUUID forKey:@"relation_user_uuid"];
     }
-    [QTNetworkAgent requestDataForUserPostService:@"/userPostList" method:SERVICE_REQUEST_GET params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+    if (userUUID.length > 0) {
+        [params setObject:userUUID forKey:@"user_uuid"];
+    }
+    [QTNetworkAgent requestDataForUserPostService:@"/userPostList" method:SERVICE_REQUEST_GET params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }
@@ -221,6 +224,36 @@
                 ;
             } @finally {
                 completionHandler(listModel.data, error);
+            }
+        }
+    }];
+}
+
++ (void)requestForUserPostLikeOrUnLike:(NSString *)userUUID
+                   contentUUID:(NSString *)contentUUID
+                        action:(NSString *)action
+             completionHandler:(void (^)(BOOL action, NSError * error))completionHandler
+{
+    NSDictionary *params = @{@"action": action, @"content_uuid":contentUUID, @"user_uuid": userUUID, @"type":@"2"};
+    [QTNetworkAgent requestDataForLikeService:@"/like" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = YES;
+                } else {
+                    error = [QTServiceCode error:code];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(action, error);
             }
         }
     }];

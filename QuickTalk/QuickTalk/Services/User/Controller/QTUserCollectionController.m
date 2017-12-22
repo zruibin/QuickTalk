@@ -25,6 +25,7 @@
 - (void)arrowHandlerAction:(NSInteger)index;
 - (void)unCollectionData:(QTUserPostModel *)model;
 - (void)addReadCountAction:(NSInteger)index;
+- (void)likeOrUnLikeAction:(NSInteger)index;
 
 @end
 
@@ -137,6 +138,26 @@
     [QTUserPostModel requestAddUserPostReadCount:model.uuid completionHandler:nil];
 }
 
+- (void)likeOrUnLikeAction:(NSInteger)index
+{
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+        return ;
+    }
+    QTUserPostModel *model = self.dataList[index];
+    NSString *action = LIKE_ACTION_AGREE;
+    if (model.liked == YES) {
+        action = LIKE_ACTION_DISAGREE;
+    }
+    [QTUserPostModel requestForUserPostLikeOrUnLike:[QTUserInfo sharedInstance].uuid contentUUID:model.uuid action:action completionHandler:^(BOOL action, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
+        } else {
+            model.liked = !model.liked;
+            [self.tableView reloadData];
+        }
+    }];
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -172,6 +193,17 @@
         userController.userUUID = userModel.userUUID;
         userController.nickname = userModel.nickname;
         [weakSelf.navigationController pushViewController:userController animated:YES];
+    }];
+    [cell setOnlikeIconTouchHandler:^(NSInteger index, NSInteger likeIndex) {
+        QTUserPostModel *userModel = weakSelf.dataList[index];
+        QTUserPostLikeModel *likeModel = userModel.likeList[likeIndex];
+        QTUserController *userController = [[QTUserController alloc] init];
+        userController.userUUID = likeModel.userUUID;
+        userController.nickname = likeModel.nickname;
+        [weakSelf.navigationController pushViewController:userController animated:YES];
+    }];
+    [cell setOnDidLikeHandler:^(NSInteger index) {
+        [weakSelf likeOrUnLikeAction:index];
     }];
     return cell;
 }

@@ -8,6 +8,7 @@
 
 #import "QTUserPostMainCell.h"
 #import "QTUserPostModel.h"
+#import "QTUserPostLikeView.h"
 
 @interface QTUserPostMainCell ()
 
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) UILabel *readLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 @property (nonatomic, strong) UIButton *arrowButton;
+@property (nonatomic, strong) QTUserPostLikeView *likeView;
+@property (nonatomic, strong) UIButton *likeButton;
 
 - (void)initSubviews;
 - (CGSize)sizeForString:(NSString *)string attributes:(NSDictionary *)attributes;
@@ -81,47 +84,57 @@
         make.top.equalTo(self.nicknameButton.mas_bottom);
         make.height.mas_equalTo(20);
     }];
-    
-    [self.contentView addSubview:self.detailLabel];
-    [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.timeLabel.mas_bottom).offset(5);
+    [self.contentView addSubview:self.likeView];
+    [self.likeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarButton.mas_right).offset(10);
-        make.right.equalTo(self.contentView).offset(-10);
-        make.height.mas_greaterThanOrEqualTo(30);
-    }];
-    
-    [self.contentView addSubview:self.webLabel];
-    [self.webLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.avatarButton.mas_right).offset(10);
-        make.right.equalTo(self.contentView).offset(-20);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-30);
-        make.height.mas_equalTo(55);
+        make.right.equalTo(self.contentView.mas_right).offset(-20);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.height.mas_equalTo(0);
     }];
     [self.contentView addSubview:self.readLabel];
     [self.readLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarButton.mas_right).offset(10);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.bottom.equalTo(self.likeView.mas_top).offset(-5);
         make.height.mas_equalTo(20);
         make.width.mas_greaterThanOrEqualTo(30);
     }];
     [self.contentView addSubview:self.commentLabel];
     [self.commentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.readLabel.mas_right).offset(10);
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+        make.bottom.equalTo(self.readLabel);
         make.height.mas_equalTo(20);
         make.width.mas_greaterThanOrEqualTo(30);
+    }];
+    [self.contentView addSubview:self.webLabel];
+    [self.webLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.avatarButton.mas_right).offset(10);
+        make.right.equalTo(self.contentView).offset(-20);
+        make.bottom.equalTo(self.readLabel.mas_top).offset(-5);
+        make.height.mas_equalTo(55);
+    }];
+    [self.contentView addSubview:self.detailLabel];
+    [self.detailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.timeLabel.mas_bottom).offset(5);
+        make.left.equalTo(self.avatarButton.mas_right).offset(10);
+        make.right.equalTo(self.contentView).offset(-10);
+        make.bottom.equalTo(self.webLabel.mas_top);
     }];
     
     [self.contentView addSubview:self.webButton];
     [self.webButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.and.right.and.bottom.equalTo(self.webLabel);
     }];
-    
     [self.contentView addSubview:self.arrowButton];
     [self.arrowButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).offset(2);
         make.right.equalTo(self.contentView).offset(-6);
         make.width.and.height.mas_equalTo(36);
+    }];
+    [self.contentView addSubview:self.likeButton];
+    [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.readLabel);
+        make.right.equalTo(self.contentView).offset(-20);
+        make.width.and.height.mas_equalTo(18);
     }];
 }
 
@@ -156,6 +169,54 @@
     self.webLabel.text = model.title;
     self.readLabel.text = [NSString stringWithFormat:@"阅读: %@", [Tools countTransition:model.readCount]];
     self.commentLabel.text = [NSString stringWithFormat:@"评论: %@", [Tools countTransition:model.commentCount]];
+    
+    UIImage *image = nil;
+    if (model.liked) {
+        image = [UIImage imageNamed:@"like"];
+    } else {
+        image = [UIImage imageNamed:@"unlike"];
+    }
+    [self.likeButton setBackgroundImage:image forState:UIControlStateNormal];
+    [self.likeButton setBackgroundImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
+                      forState:UIControlStateHighlighted];
+    
+    __weak typeof(self) weakSelf = self;
+    self.likeView.likeList = model.likeList;
+    [self.likeView setOnIconTouchHandler:^(NSInteger index) {
+        if (weakSelf.onlikeIconTouchHandler) {
+            weakSelf.onlikeIconTouchHandler(weakSelf.tag, index);
+        }
+    }];
+    CGFloat likeViewH = [self.likeView generateHeight:model.likeList];
+    if (model.likeList.count == 0) {
+        self.likeView.hidden = YES;
+        [self.likeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.avatarButton.mas_right).offset(10);
+            make.right.equalTo(self.contentView.mas_right).offset(-20);
+            make.bottom.equalTo(self.contentView.mas_bottom);
+            make.height.mas_equalTo(0);
+        }];
+        [self.readLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.avatarButton.mas_right).offset(10);
+            make.bottom.equalTo(self.likeView.mas_top).offset(-5);
+            make.height.mas_equalTo(20);
+            make.width.mas_greaterThanOrEqualTo(30);
+        }];
+    } else {
+        self.likeView.hidden = NO;
+        [self.likeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.avatarButton.mas_right).offset(10);
+            make.right.equalTo(self.contentView.mas_right).offset(-20);
+            make.bottom.equalTo(self.contentView.mas_bottom).offset(-5);
+            make.height.mas_equalTo(likeViewH);
+        }];
+        [self.readLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.avatarButton.mas_right).offset(10);
+            make.bottom.equalTo(self.likeView.mas_top).offset(-5);
+            make.height.mas_equalTo(20);
+            make.width.mas_greaterThanOrEqualTo(30);
+        }];
+    }
 }
 
 - (CGFloat)heightForCell:(QTUserPostModel *)model
@@ -165,7 +226,9 @@
         size = [self sizeForString:model.txt attributes:self.detailAttributes];
     }
     
-    CGFloat height = 60 + size.height + 90;
+    CGFloat likeViewH = [self.likeView generateHeight:model.likeList];
+    
+    CGFloat height = 60 + size.height + 90 + likeViewH;
 
     return  height;
 }
@@ -190,6 +253,13 @@
 {
     if (self.onInfoHandler) {
         self.onInfoHandler(self.tag);
+    }
+}
+
+- (void)didLikeHandlerAction
+{
+    if (self.onDidLikeHandler) {
+        self.onDidLikeHandler(self.tag);
     }
 }
 
@@ -361,6 +431,36 @@
         });
     }
     return _arrowButton;
+}
+
+- (QTUserPostLikeView *)likeView
+{
+    if (_likeView == nil) {
+        _likeView = ({
+            QTUserPostLikeView *likeView = [[QTUserPostLikeView alloc] init];
+//            likeView.backgroundColor = [UIColor colorFromHexValue:0xF3F3F5];
+            likeView;
+        });
+    }
+    return _likeView;
+}
+
+- (UIButton *)likeButton
+{
+    if (_likeButton == nil) {
+        _likeButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.translatesAutoresizingMaskIntoConstraints = NO;
+            UIImage *image = [UIImage imageNamed:@"like"];
+            [button setBackgroundImage:image forState:UIControlStateNormal];
+            [button setBackgroundImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
+                              forState:UIControlStateHighlighted];
+            button.userInteractionEnabled = YES;
+            [button addTarget:self action:@selector(didLikeHandlerAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _likeButton;
 }
 
 @end

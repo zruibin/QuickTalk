@@ -135,7 +135,9 @@ static BOOL isBackGroundActivateApplication;
                                   completionHandler:^(BOOL granted, NSError * _Nullable error) {
                                       // Enable or disable features based on authorization.
                                       if (granted) {
-                                          [application registerForRemoteNotifications];
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              [application registerForRemoteNotifications];
+                                          });
                                       }
                                   }];
         }

@@ -33,10 +33,11 @@
 @property (nonatomic, assign) NSInteger readCount;
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, copy) NSArray<QTUserPostLikeModel *> *likeList;
-@property (nonatomic, assign) BOOL likeStatus;
+@property (nonatomic, assign) BOOL liked;
 
 
 + (void)requestUserPostData:(NSUInteger)page userUUID:(NSString *)userUUID
+                relationUserUUID:(NSString *)relationUserUUID
           completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
 
 + (void)requestAddUserPost:(NSString *)userUUID
@@ -60,6 +61,11 @@
 + (void)requestCollectionData:(NSUInteger)page userUUID:(NSString *)userUUID
                 type:(NSString *)type
           completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
+
++ (void)requestForUserPostLikeOrUnLike:(NSString *)userUUID
+                           contentUUID:(NSString *)contentUUID
+                                action:(NSString *)action
+                     completionHandler:(void (^)(BOOL action, NSError * error))completionHandler;
 
 @end
 
