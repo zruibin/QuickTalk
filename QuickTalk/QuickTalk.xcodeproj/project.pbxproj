@@ -52,6 +52,8 @@
 		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
 		E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */; };
 		E084A9211FB5AA8500AE4AD2 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = E084A9201FB5AA8500AE4AD2 /* image.js */; };
+		E08560991FECACE000B4779E /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08560961FECACE000B4779E /* libBPush.a */; };
+		E085609A1FECACE000B4779E /* BPushCerResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08560971FECACE000B4779E /* BPushCerResource.bundle */; };
 		E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */; };
 		E088D6691FD64E0600038736 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6571FD64E0600038736 /* QTTopicController.m */; };
 		E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6591FD64E0600038736 /* QTTopicContentController.m */; };
@@ -232,6 +234,9 @@
 		E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBImagebrowse.h; sourceTree = "<group>"; };
 		E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBImagebrowse.m; sourceTree = "<group>"; };
 		E084A9201FB5AA8500AE4AD2 /* image.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = image.js; sourceTree = "<group>"; };
+		E08560951FECACE000B4779E /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
+		E08560961FECACE000B4779E /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
+		E08560971FECACE000B4779E /* BPushCerResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BPushCerResource.bundle; sourceTree = "<group>"; };
 		E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicGlobalSpeaker.h; sourceTree = "<group>"; };
 		E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicGlobalSpeaker.m; sourceTree = "<group>"; };
 		E088D6551FD64E0600038736 /* QTTopicContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
@@ -415,6 +420,7 @@
 				E093518C1FA30F3C000687BC /* libz.tbd in Frameworks */,
 				E093518A1FA30F2F000687BC /* libicucore.tbd in Frameworks */,
 				E09351791FA30EBE000687BC /* ShareSDK.framework in Frameworks */,
+				E08560991FECACE000B4779E /* libBPush.a in Frameworks */,
 				E09351831FA30EBE000687BC /* libWeiboSDK.a in Frameworks */,
 				E0233C5D1FC2C2290010D9DC /* iflyMSC.framework in Frameworks */,
 				E09351851FA30EBE000687BC /* libWeChatSDK.a in Frameworks */,
@@ -570,6 +576,16 @@
 				E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */,
 			);
 			path = RBImagebrowse;
+			sourceTree = "<group>";
+		};
+		E08560941FECACE000B4779E /* BPush */ = {
+			isa = PBXGroup;
+			children = (
+				E08560951FECACE000B4779E /* BPush.h */,
+				E08560961FECACE000B4779E /* libBPush.a */,
+				E08560971FECACE000B4779E /* BPushCerResource.bundle */,
+			);
+			path = BPush;
 			sourceTree = "<group>";
 		};
 		E088D64F1FD64C9800038736 /* UserPost */ = {
@@ -1053,6 +1069,7 @@
 		E0DF28C11F95A7CE00F1B8C8 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				E08560941FECACE000B4779E /* BPush */,
 				E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */,
 				E09351571FA30EBE000687BC /* ShareSDK */,
 			);
@@ -1295,6 +1312,7 @@
 				E093517A1FA30EBE000687BC /* ShareSDKConfigFile.bundle in Resources */,
 				E09351841FA30EBE000687BC /* WeiboSDK.bundle in Resources */,
 				E093517D1FA30EBE000687BC /* ShareSDKUI.bundle in Resources */,
+				E085609A1FECACE000B4779E /* BPushCerResource.bundle in Resources */,
 				E09351861FA30EBE000687BC /* README.txt in Resources */,
 				E07AF0D31FDAA365003639AF /* video.mp4 in Resources */,
 				E09351871FA30EBE000687BC /* ShareSDK.bundle in Resources */,
@@ -1742,6 +1760,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/WeChatSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/BPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1779,6 +1798,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/WeChatSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/BPush",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
