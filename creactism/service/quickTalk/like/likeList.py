@@ -17,12 +17,13 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList
+from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
 
 
 @like.route('/likeList', methods=["GET", "POST"])
 def likeList():
     userUUID = getValueFromRequestByKey("user_uuid")
+    relationUserUUID = getValueFromRequestByKey("relation_user_uuid")
     typeStr = getValueFromRequestByKey("type")
     index = getValueFromRequestByKey("index")
     index = parsePageIndex(index)
@@ -34,10 +35,10 @@ def likeList():
     if typeStr != Config.TYPE_MESSAGE_LIKE_USERPOST:
         return RESPONSE_JSON(CODE_ERROR_PARAM)
 
-    return __getLikeListFromStorage(userUUID, typeStr, index, size)
+    return __getLikeListFromStorage(userUUID, typeStr, index, size, relationUserUUID)
 
 
-def __getLikeListFromStorage(userUUID, typeStr, index, size):
+def __getLikeListFromStorage(userUUID, typeStr, index, size, relationUserUUID):
     limitSQL = limit(index)
     if size is not None: limitSQL = limit(index, int(size))
         
@@ -55,14 +56,14 @@ def __getLikeListFromStorage(userUUID, typeStr, index, size):
         userPostUUIDList = []
         for data in dataList:
             userPostUUIDList.append(data["content_uuid"])
-        dataList = __queryUserPostList(userPostUUIDList)
+        dataList = __queryUserPostList(userPostUUIDList, relationUserUUID)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     
 
-def __queryUserPostList(userPostUUIDList):
+def __queryUserPostList(userPostUUIDList, relationUserUUID):
     if len(userPostUUIDList) == 0:
         return []
     
@@ -87,6 +88,7 @@ def __queryUserPostList(userPostUUIDList):
             userUUID = data["userUUID"]
             data["time"] = str(data["time"])
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
+        dataList = queryTheUserPostIsLiked(dataList, userPostUUIDList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
         return dataList
     except Exception as e:

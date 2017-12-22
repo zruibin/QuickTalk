@@ -76,7 +76,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
 def queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID):
     if len(dataList) == 0 or relationUserUUID == None:
         return dataList
-
+    # print uuidList, relationUserUUID
     try: 
         uuidList = queryLikeRelation(relationUserUUID, uuidList)
         for data in dataList:
