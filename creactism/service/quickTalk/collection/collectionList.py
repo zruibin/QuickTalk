@@ -18,11 +18,11 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList
+from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
 
 
 @collection.route('/list', methods=["POST", "GET"])
-# @vertifyTokenHandle
+@vertifyTokenHandle
 def collectionList():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
@@ -60,6 +60,7 @@ def __collectionListForUserPost(userUUID, index, size):
         uuidList = []
         for data in dataList:
             uuidList.append(data["uuid"])
+        dataList = queryTheUserPostIsLiked(dataList, uuidList, userUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:

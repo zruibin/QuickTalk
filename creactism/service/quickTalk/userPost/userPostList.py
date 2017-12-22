@@ -65,7 +65,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
             userUUID = data["userUUID"]
             data["time"] = str(data["time"])
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
-        dataList = __queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID)
+        dataList = queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
@@ -73,7 +73,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def __queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID):
+def queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID):
     if len(dataList) == 0 or relationUserUUID == None:
         return dataList
 
