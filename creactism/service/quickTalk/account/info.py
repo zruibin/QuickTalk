@@ -41,7 +41,9 @@ def __getUserBaseInfo(userUUID):
             WHERE t_quickTalk_userPost.user_uuid=t_quickTalk_user.uuid
         ) AS userPostCount,
         (SELECT COUNT(id) FROM t_quickTalk_like 
-            WHERE t_quickTalk_like.user_uuid=t_quickTalk_user.uuid 
+            WHERE t_quickTalk_like.content_uuid 
+            IN (SELECT ALL t_quickTalk_userPost.uuid FROM t_quickTalk_userPost 
+                WHERE t_quickTalk_userPost.user_uuid=t_quickTalk_user.uuid) 
             AND t_quickTalk_like.type=%s
         ) AS userPostLikeCount,
         (SELECT COUNT(id) FROM t_quickTalk_user_user 
