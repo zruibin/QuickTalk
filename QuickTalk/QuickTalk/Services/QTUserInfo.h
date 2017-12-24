@@ -39,6 +39,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 - (void)loginInBackground;
 - (BOOL)checkLoginStatus:(UIViewController *)viewController;
 
+/*检查登录是否过时*/
 - (void)checkingObsolescence;
 
 + (void)requestChangeAvatar:(NSString *)userUUID avatarImage:(UIImage *)avatarImage

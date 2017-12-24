@@ -79,6 +79,8 @@
     if (_iconView == nil) {
         _iconView = ({
             UIImageView *imageView = [UIImageView new];
+            imageView.layer.cornerRadius = 4;
+            imageView.layer.masksToBounds = YES;
             imageView;
         });
     }

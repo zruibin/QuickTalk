@@ -141,9 +141,9 @@ static NSDate *refreshDate = nil;
 {
     NSDate *nowDate = [NSDate date];
     NSTimeInterval interval = [nowDate timeIntervalSinceDate:refreshDate];//获取某一时间与当前时间的间隔
-    if (interval > 300) {
+    if (interval > 3600) { /*token缓存时间为一小时，超过则重新登录*/
         [[NSNotificationCenter defaultCenter] postNotificationName:QTRefreshDataNotification object:nil];
-        refreshDate = [NSDate date];
+        [self loginInBackground];
     }
 }
 

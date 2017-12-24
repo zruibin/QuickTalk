@@ -40,7 +40,9 @@
                       NOTIFICATION_FOR_NEW_STAR: [NSNumber numberWithInteger:1],
                       NOTIFICATION_FOR_NEW_SHARE: [NSNumber numberWithInteger:0]
                       };
-    [self loadData];
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [self loadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,6 +77,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (![QTUserInfo sharedInstance].isLogin) {
+        return 1;
+    }
     return 2;
 }
 
@@ -151,7 +156,7 @@
 {
     if (section == 0) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, CGRectGetWidth(tableView.bounds)-20, 20)];
-        label.text = @"请在iPhone的“设置“-”通知“-”可行“中进行设置";
+        label.text = @"请在iPhone的“设置”-“通知”-“快言”中进行设置";
         label.font = [UIFont systemFontOfSize:13];
         label.textColor = [UIColor colorFromHexValue:0x999999];
         
