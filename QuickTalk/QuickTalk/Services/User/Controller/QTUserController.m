@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIButton *nicknameButton;
 @property (nonatomic, strong) UIImageView *genderView;
 @property (nonatomic, strong) UILabel *areaLabel;
+@property (nonatomic, strong) UILabel *countLabel;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -68,7 +69,7 @@
 {
     self.title = self.nickname;
     self.count = 2;
-    self.headerHeight = 144;
+    self.headerHeight = 144 + 40;
     
     [self.view addSubview:self.scrollView];
     self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight-64);
@@ -76,8 +77,6 @@
                                              CGRectGetHeight(self.scrollView.bounds)-64);
     
     [self.view addSubview:self.headerView];
-    self.segmentedControl.frame = CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 44);
-    [self.headerView addSubview:self.segmentedControl];
 }
 
 - (void)makeUserData
@@ -122,6 +121,30 @@
             make.top.equalTo(self.nicknameButton.mas_bottom).offset(8);
         }];
     }
+    
+    //关注
+    NSString *fowllowString = [Tools countTransition:self.userModel.followCount];
+    //粉丝
+    NSString *fowllowingString = [Tools countTransition:self.userModel.followingCount];
+    //获赞数
+    NSString *userPostLikeString = [Tools countTransition:self.userModel.userPostLikeCount];
+    NSString *string = [NSString stringWithFormat:@" %@ 关注  %@ 粉丝  %@ 获赞数",
+                        fowllowString, fowllowingString, userPostLikeString];
+    NSRange fowllowRange = [string rangeOfString:@"关注"];
+    NSRange fowllowingRange = [string rangeOfString:@"粉丝"];
+    NSRange userPostLikeRange = [string rangeOfString:@"获赞数"];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:18]
+                             range:NSMakeRange(0, string.length)];
+    UIFont *font = [UIFont systemFontOfSize:13];
+    UIColor *color = [UIColor colorFromHexValue:0x585858];
+    [attributedString addAttribute:NSFontAttributeName value:font range:fowllowRange];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:fowllowRange];
+    [attributedString addAttribute:NSFontAttributeName value:font range:fowllowingRange];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:fowllowingRange];
+    [attributedString addAttribute:NSFontAttributeName value:font range:userPostLikeRange];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:color range:userPostLikeRange];
+    self.countLabel.attributedText = [attributedString copy];
 }
 
 - (void)calcuateOnScrolling:(CGFloat)offsetY
@@ -248,7 +271,18 @@
                 make.width.mas_greaterThanOrEqualTo(100);
                 make.height.mas_equalTo(22);
             }];
-            
+            [view addSubview:self.countLabel];
+            [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(view).offset(10);
+                make.right.equalTo(view).offset(-10);
+                make.top.equalTo(self.avatarView.mas_bottom).offset(10);
+                make.height.mas_equalTo(40);
+            }];
+            [view addSubview:self.segmentedControl];
+            [self.segmentedControl mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.bottom.and.right.equalTo(view);
+                make.height.mas_equalTo(44);
+            }];
             view;
         });
     }
@@ -310,6 +344,20 @@
         });
     }
     return _areaLabel;
+}
+
+- (UILabel *)countLabel
+{
+    if (_countLabel == nil) {
+        _countLabel = ({
+            UILabel *label = [[UILabel alloc] init];
+//            label.font = [UIFont systemFontOfSize:14];
+//            label.backgroundColor = [UIColor redColor];
+            label.textAlignment = NSTextAlignmentLeft;
+            label;
+        });
+    }
+    return _countLabel;
 }
 
 - (HMSegmentedControl *)segmentedControl

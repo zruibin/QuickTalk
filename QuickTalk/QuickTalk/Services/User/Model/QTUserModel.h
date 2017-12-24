@@ -28,6 +28,10 @@ typedef NS_ENUM(NSInteger, QTUserRelationStatus) {
 @property (nonatomic, copy) NSString *weibo;
 @property (nonatomic, copy) NSString *area;
 @property (nonatomic, assign) NSInteger gender;
+@property (nonatomic, assign) NSInteger followCount;
+@property (nonatomic, assign) NSInteger followingCount;
+@property (nonatomic, assign) NSInteger userPostCount;
+@property (nonatomic, assign) NSInteger userPostLikeCount;
 @property (nonatomic, assign) QTUserRelationStatus relationStatus;
 
 
