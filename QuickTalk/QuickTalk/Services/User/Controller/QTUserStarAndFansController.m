@@ -73,6 +73,7 @@
         if (self.childControllers.count == 0) {
             QTUserStarController *userStarController = [[QTUserStarController alloc] init];
             userStarController.userUUID = self.userUUID;
+            userStarController.showHeader = YES;
             [self.childControllers addObject:userStarController];
             userStarController.view.frame = CGRectMake(0, 0,
                                                        CGRectGetWidth(self.scrollView.bounds),

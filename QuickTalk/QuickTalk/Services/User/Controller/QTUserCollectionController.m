@@ -111,7 +111,7 @@
         [weakSelf unCollectionData:model];
     };
     NSArray *items = @[
-                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
+                       MMItemMake(@"取消收藏", MMItemTypeHighlight, deleteHandler)
                        ];
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
                                                           items:items];
@@ -123,7 +123,7 @@
 {
     [QTUserPostModel requestUserCollectionAction:model.uuid userUUID:[QTUserInfo sharedInstance].uuid action:COLLECTION_ACTION_OFF completionHandler:^(BOOL action, NSError *error) {
         if (action) {
-            [QTProgressHUD showHUDText:@"删除成功" view:self.view];
+            [QTProgressHUD showHUDText:@"取消收藏成功" view:self.view];
             [self.dataList removeObject:model];
             [self.tableView reloadData];
         } else {

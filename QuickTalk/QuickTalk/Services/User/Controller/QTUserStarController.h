@@ -11,5 +11,6 @@
 @interface QTUserStarController : QTViewController
 
 @property (nonatomic, copy) NSString *userUUID;
+@property (nonatomic, assign) BOOL showHeader;
 
 @end

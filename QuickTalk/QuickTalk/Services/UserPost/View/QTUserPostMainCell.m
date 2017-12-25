@@ -174,7 +174,7 @@
     if (model.liked) {
         image = [UIImage imageNamed:@"like"];
     } else {
-        image = [UIImage imageNamed:@"unlike"];
+        image = [[UIImage imageNamed:@"unlike"] imageWithTintColor:[UIColor colorFromHexValue:0x999999]];
     }
     [self.likeButton setBackgroundImage:image forState:UIControlStateNormal];
     [self.likeButton setBackgroundImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]

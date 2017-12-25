@@ -12,6 +12,9 @@
 #import "RBImagebrowse.h"
 #import "QTUserModel.h"
 #import "QTUserLikeListController.h"
+#import "QTMessageController.h"
+#import "QTUserStarController.h"
+#import "QTUserFansController.h"
 
 @interface QTUserController () <UIScrollViewDelegate>
 
@@ -22,7 +25,10 @@
 @property (nonatomic, strong) UIButton *nicknameButton;
 @property (nonatomic, strong) UIImageView *genderView;
 @property (nonatomic, strong) UILabel *areaLabel;
-@property (nonatomic, strong) UILabel *countLabel;
+@property (nonatomic, strong) YYLabel *countLabel;
+@property (nonatomic, strong) UIView *messageView;
+@property (nonatomic, strong) UIButton *countView;
+@property (nonatomic, assign) NSInteger messageCount;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -33,6 +39,7 @@
 - (void)makeUserData;
 - (void)makeUserView;
 - (void)calcuateOnScrolling:(CGFloat)offsetY;
+- (void)calcuateHeaderView;
 
 @end
 
@@ -58,6 +65,9 @@
     [super viewDidAppear:animated];
     [Tools drawBorder:self.segmentedControl top:NO left:NO bottom:YES right:NO
           borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
+    [Tools drawBorder:self.messageView top:NO left:NO bottom:YES right:NO
+          borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
+    [self calcuateHeaderView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,14 +79,9 @@
 {
     self.title = self.nickname;
     self.count = 2;
-    self.headerHeight = 144 + 40;
-    
     [self.view addSubview:self.scrollView];
-    self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight-64);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
-                                             CGRectGetHeight(self.scrollView.bounds)-64);
-    
     [self.view addSubview:self.headerView];
+    [self calcuateHeaderView];
 }
 
 - (void)makeUserData
@@ -123,12 +128,16 @@
     }
     
     //关注
-    NSString *fowllowString = [Tools countTransition:self.userModel.followCount];
+    NSString *fowllowString = [[Tools countTransition:self.userModel.followCount]
+                               stringByAppendingString:@" 关注"];
     //粉丝
-    NSString *fowllowingString = [Tools countTransition:self.userModel.followingCount];
+    NSString *fowllowingString = [[Tools countTransition:self.userModel.followingCount]
+                                  stringByAppendingString:@" 粉丝"];
     //获赞数
-    NSString *userPostLikeString = [Tools countTransition:self.userModel.userPostLikeCount];
-    NSString *string = [NSString stringWithFormat:@" %@ 关注  %@ 粉丝  %@ 获赞数",
+    NSString *userPostLikeString = [[Tools countTransition:self.userModel.userPostLikeCount]
+                                    stringByAppendingString:@"  获赞数"];
+    
+    NSString *string = [NSString stringWithFormat:@" %@   %@   %@",
                         fowllowString, fowllowingString, userPostLikeString];
     NSRange fowllowRange = [string rangeOfString:@"关注"];
     NSRange fowllowingRange = [string rangeOfString:@"粉丝"];
@@ -144,7 +153,21 @@
     [attributedString addAttribute:NSForegroundColorAttributeName value:color range:fowllowingRange];
     [attributedString addAttribute:NSFontAttributeName value:font range:userPostLikeRange];
     [attributedString addAttribute:NSForegroundColorAttributeName value:color range:userPostLikeRange];
+    __weak typeof(self) weakSelf = self;
+    [attributedString yy_setTextHighlightRange:[string rangeOfString:fowllowString] color:nil backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+        DLog(@"关注");
+        QTUserStarController *userStarController = [[QTUserStarController alloc] init];
+        userStarController.userUUID = weakSelf.userModel.uuid;
+        [weakSelf.navigationController pushViewController:userStarController animated:YES];
+    }];
+    [attributedString yy_setTextHighlightRange:[string rangeOfString:fowllowingString] color:nil backgroundColor:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+        DLog(@"粉丝");
+        QTUserFansController *userFansController = [[QTUserFansController alloc] init];
+        userFansController.userUUID = weakSelf.userModel.uuid;
+        [weakSelf.navigationController pushViewController:userFansController animated:YES];
+    }];
     self.countLabel.attributedText = [attributedString copy];
+    
 }
 
 - (void)calcuateOnScrolling:(CGFloat)offsetY
@@ -152,22 +175,52 @@
 //    DLog(@"y: %f", offsetY);
     if (offsetY <= 0) {
         self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), self.headerHeight);
-        self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
-                                                 CGRectGetHeight(self.scrollView.bounds));
+        self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight);
     }
     if (offsetY > 0 && offsetY <= self.headerHeight) {
         self.headerView.frame = CGRectMake(0, -offsetY, CGRectGetWidth(self.view.bounds), self.headerHeight);
         self.scrollView.frame = CGRectMake(0, self.headerHeight-offsetY, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-64+offsetY);
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
-                                                 CGRectGetHeight(self.scrollView.bounds));
     }
     if (offsetY > self.headerHeight) {
         self.headerView.frame = CGRectMake(0, -self.headerHeight, CGRectGetWidth(self.view.bounds), self.headerHeight);
         self.scrollView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
-                                                 CGRectGetHeight(self.scrollView.bounds));
     }
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
+                                             CGRectGetHeight(self.scrollView.bounds)-64);
+}
+
+- (void)calcuateHeaderView
+{
+    self.headerHeight = 144 + 40;
+    if ([self.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        YYCache *cache = [YYCache cacheWithName:QTDataCache];
+        self.messageCount = [(NSNumber *)[cache objectForKey:QTMessageCount] integerValue];
+        if (self.messageCount > 0) {
+            self.headerHeight = 144 + 40 + 40;
+            self.messageView.hidden = NO;
+            [self.countView setTitle:[NSString stringWithFormat:@"  %@条新通知  ", [Tools countTransition:self.messageCount]] forState:UIControlStateNormal];
+            [self.messageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.and.right.equalTo(self.headerView);
+                make.height.mas_equalTo(40);
+            }];
+        } else {
+            self.messageView.hidden = YES;
+            [self.messageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.and.right.equalTo(self.headerView);
+                make.height.mas_equalTo(0);
+            }];
+        }
+    } else {
+        [self.messageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.and.top.and.right.equalTo(self.headerView);
+            make.height.mas_equalTo(0);
+        }];
+        self.messageView.hidden = YES;
+    }
+    self.headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), self.headerHeight);
+    self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight);
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
+                                             CGRectGetHeight(self.scrollView.bounds)-64);
 }
 
 #pragma mark - Private
@@ -214,6 +267,9 @@
                                                         CGRectGetWidth(self.scrollView.bounds),
                                                         CGRectGetHeight(self.scrollView.bounds)) animated:YES];
     }
+    [UIView animateWithDuration:.25f animations:^{
+        [self calcuateOnScrolling:0];
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -234,6 +290,12 @@
     [[RBImagebrowse createBrowseWithImages:@[self.userModel.avatar]] show];
 }
 
+- (void)messageAction
+{
+    QTMessageController *messageController = [[QTMessageController alloc] init];
+    [self.navigationController pushViewController:messageController animated:YES];
+}
+
 #pragma mark - getter and setter
 
 - (UIView *)headerView
@@ -245,11 +307,23 @@
             view.backgroundColor = [UIColor whiteColor];
             view.clipsToBounds = YES;
             
+            [view addSubview:self.messageView];
+            [self.messageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.and.right.equalTo(view);
+                make.height.mas_equalTo(40);
+            }];
+            [self.messageView addSubview:self.countView];
+            [self.countView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.and.centerY.equalTo(self.messageView);
+                make.height.mas_equalTo(30);
+                make.width.mas_greaterThanOrEqualTo(100);
+            }];
+            
             [view addSubview:self.avatarView];
             [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.and.height.mas_equalTo(80);
                 make.left.mas_equalTo(10);
-                make.top.equalTo(view).offset(10);
+                make.top.equalTo(self.messageView.mas_bottom).offset(10);
             }];
             [view addSubview:self.nicknameButton];
             [self.nicknameButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -346,18 +420,47 @@
     return _areaLabel;
 }
 
-- (UILabel *)countLabel
+- (YYLabel *)countLabel
 {
     if (_countLabel == nil) {
         _countLabel = ({
-            UILabel *label = [[UILabel alloc] init];
+            UILabel *label = [[YYLabel alloc] init];
 //            label.font = [UIFont systemFontOfSize:14];
-//            label.backgroundColor = [UIColor redColor];
+            label.userInteractionEnabled = YES;
             label.textAlignment = NSTextAlignmentLeft;
             label;
         });
     }
     return _countLabel;
+}
+
+- (UIView *)messageView
+{
+    if (_messageView == nil) {
+        _messageView = ({
+            UIView *view = [[UIView alloc] init];
+//            view.backgroundColor = [UIColor redColor];
+            view;
+        });
+    }
+    return _messageView;
+}
+
+- (UIButton *)countView
+{
+    if (_countView == nil) {
+        _countView = ({
+            UIButton *countView = [UIButton buttonWithType:UIButtonTypeCustom];
+            [countView setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0xFF4F4F]] forState:UIControlStateNormal];
+            countView.titleLabel.textColor = [UIColor whiteColor];
+            countView.titleLabel.font = [UIFont systemFontOfSize:12];
+            countView.layer.cornerRadius = 4;
+            countView.layer.masksToBounds = YES;
+            [countView addTarget:self action:@selector(messageAction) forControlEvents:UIControlEventTouchUpInside];
+            countView;
+        });
+    }
+    return _countView;
 }
 
 - (HMSegmentedControl *)segmentedControl

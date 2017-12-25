@@ -45,7 +45,7 @@
 - (NSString *)nickname
 {
     if (_nickname.length == 0) {
-        _nickname = [NSString stringWithFormat:@"用户%ld", self._id];
+        _nickname = [NSString stringWithFormat:@"用户%ld", self.userId];
     }
     return _nickname;
 }

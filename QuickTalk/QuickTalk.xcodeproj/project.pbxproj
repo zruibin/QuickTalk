@@ -56,6 +56,8 @@
 		E085609A1FECACE000B4779E /* BPushCerResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08560971FECACE000B4779E /* BPushCerResource.bundle */; };
 		E085609F1FECB69200B4779E /* QTUserPostLikeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E085609E1FECB69200B4779E /* QTUserPostLikeView.m */; };
 		E08560A21FECFC6600B4779E /* QTUserLikeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08560A11FECFC6600B4779E /* QTUserLikeListController.m */; };
+		E08693061FF0AB22001DC7FE /* QTMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693051FF0AB22001DC7FE /* QTMessageModel.m */; };
+		E08693091FF0B7CB001DC7FE /* QTMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693081FF0B7CB001DC7FE /* QTMessageController.m */; };
 		E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */; };
 		E088D6691FD64E0600038736 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6571FD64E0600038736 /* QTTopicController.m */; };
 		E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6591FD64E0600038736 /* QTTopicContentController.m */; };
@@ -244,6 +246,10 @@
 		E085609E1FECB69200B4779E /* QTUserPostLikeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostLikeView.m; sourceTree = "<group>"; };
 		E08560A01FECFC6600B4779E /* QTUserLikeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserLikeListController.h; sourceTree = "<group>"; };
 		E08560A11FECFC6600B4779E /* QTUserLikeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserLikeListController.m; sourceTree = "<group>"; };
+		E08693041FF0AB22001DC7FE /* QTMessageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageModel.h; sourceTree = "<group>"; };
+		E08693051FF0AB22001DC7FE /* QTMessageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageModel.m; sourceTree = "<group>"; };
+		E08693071FF0B7CB001DC7FE /* QTMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageController.h; sourceTree = "<group>"; };
+		E08693081FF0B7CB001DC7FE /* QTMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageController.m; sourceTree = "<group>"; };
 		E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicGlobalSpeaker.h; sourceTree = "<group>"; };
 		E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicGlobalSpeaker.m; sourceTree = "<group>"; };
 		E088D6551FD64E0600038736 /* QTTopicContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
@@ -592,6 +598,41 @@
 				E08560971FECACE000B4779E /* BPushCerResource.bundle */,
 			);
 			path = BPush;
+			sourceTree = "<group>";
+		};
+		E08693001FF0AB0F001DC7FE /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				E08693011FF0AB0F001DC7FE /* Controller */,
+				E08693021FF0AB0F001DC7FE /* Model */,
+				E08693031FF0AB0F001DC7FE /* View */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		E08693011FF0AB0F001DC7FE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08693071FF0B7CB001DC7FE /* QTMessageController.h */,
+				E08693081FF0B7CB001DC7FE /* QTMessageController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08693021FF0AB0F001DC7FE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E08693041FF0AB22001DC7FE /* QTMessageModel.h */,
+				E08693051FF0AB22001DC7FE /* QTMessageModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08693031FF0AB0F001DC7FE /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E088D64F1FD64C9800038736 /* UserPost */ = {
@@ -1064,6 +1105,7 @@
 		E0DF28B91F95A7CE00F1B8C8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E08693001FF0AB0F001DC7FE /* Message */,
 				E088D64F1FD64C9800038736 /* UserPost */,
 				E088D6531FD64E0600038736 /* News */,
 				E08AABEC1FE14129005B6DBB /* User */,
@@ -1589,9 +1631,11 @@
 				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,
 				E08AABFD1FE14129005B6DBB /* QTMyController.m in Sources */,
 				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
+				E08693091FF0B7CB001DC7FE /* QTMessageController.m in Sources */,
 				E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */,
 				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
 				E06F42DB1FEA459900F99A66 /* QTUserCollectionController.m in Sources */,
+				E08693061FF0AB22001DC7FE /* QTMessageModel.m in Sources */,
 				E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */,
 				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
 				E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */,

@@ -70,7 +70,9 @@
     
     [self.view addSubview:self.errorView];
     
-    self.tableView.tableHeaderView = self.headerView;
+    if (self.showHeader) {
+        self.tableView.tableHeaderView = self.headerView;
+    }
 }
 
 - (void)loadData

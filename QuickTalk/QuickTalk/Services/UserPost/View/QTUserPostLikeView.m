@@ -66,8 +66,8 @@ static const CGFloat paddingH = 6.0f;
         [weakSelf addSubview:icon];
     }];
     
-    UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"like"]];
-    likeIcon.frame = CGRectMake(paddingH+2, paddingH+5, singleWH-10, singleWH-10);
+    UIImageView *likeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unlike"]];
+    likeIcon.frame = CGRectMake(paddingH+4, paddingH+7, singleWH-14, singleWH-14);
     [self addSubview:likeIcon];
 }
 

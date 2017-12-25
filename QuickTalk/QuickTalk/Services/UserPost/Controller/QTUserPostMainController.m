@@ -14,6 +14,7 @@
 #import "QTUserPostCommentController.h"
 #import "QTIntroController.h"
 #import "QTUserController.h"
+#import "QTMessageModel.h"
 
 @interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -22,6 +23,11 @@
 @property (nonatomic, strong) NSMutableDictionary *cacheHeightDict;
 @property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UIImageView *arrowView;
+@property (nonatomic, strong) UIView *dotView;
 
 - (void)initViews;
 - (void)loadData;
@@ -32,6 +38,8 @@
 - (void)addReadCountAction:(NSInteger)index;
 - (void)checkPasteAction;
 - (void)likeOrUnLikeAction:(NSInteger)index;
+- (void)updateHeaderData;
+- (void)tapingToMyView;
 
 @end
 
@@ -40,6 +48,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:QTPasteBoardCheckingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTLoginStatusChangeNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -73,6 +82,16 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
                                                  name:QTPasteBoardCheckingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateHeaderData)
+                                                 name:QTLoginStatusChangeNotification object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.showHeader) {
+        [self updateHeaderData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,6 +115,10 @@
                                        initWithImage:[UIImage imageNamed:@"add"]
                                        style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
     self.navigationItem.rightBarButtonItem = addItem;
+    
+    if (self.showHeader) {
+        self.tableView.tableHeaderView = self.headerView;
+    } 
 }
 
 - (void)loadData
@@ -248,6 +271,43 @@
     }];
 }
 
+- (void)updateHeaderData
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [self.avatarView cra_setImage:[QTUserInfo sharedInstance].avatar];
+        self.nameLabel.text = @"我的快言";
+        self.arrowView.hidden = NO;
+        self.dotView.hidden = YES;
+        [QTMessageModel requestMessageCountData:[QTUserInfo sharedInstance].uuid type:nil completionHandler:^(QTMessageCountModel *model, NSError *error) {
+            YYCache *cache = [YYCache cacheWithName:QTDataCache];
+            if (error == nil) {
+                self.dotView.hidden = NO;
+                [cache setObject:[NSNumber numberWithInteger:model.count] forKey:QTMessageCount];
+            } else {
+                self.dotView.hidden = YES;
+                [cache setObject:[NSNumber numberWithInteger:0] forKey:QTMessageCount];
+            }
+        }];
+    } else {
+        self.avatarView.image = QuickTalk_DEFAULT_IMAGE;
+        self.nameLabel.text = @"您尚未登录";
+        self.arrowView.hidden = YES;
+        self.dotView.hidden = YES;
+    }
+}
+
+- (void)tapingToMyView
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        QTUserController *userController = [[QTUserController alloc] init];
+        userController.userUUID = [QTUserInfo sharedInstance].uuid;
+        userController.nickname = [QTUserInfo sharedInstance].nickname;
+        [self.navigationController pushViewController:userController animated:YES];
+    } else {
+        [[QTUserInfo sharedInstance] checkLoginStatus:self];
+    }
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -392,6 +452,106 @@
         });
     }
     return _errorView;
+}
+
+- (UIView *)headerView
+{
+    if (_headerView == nil) {
+        _headerView = ({
+            UIView *view = [[UIView alloc] init];
+            view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
+            view.backgroundColor = [UIColor clearColor];
+            
+            UIView *backgroundView = [[UIView alloc] init];
+            backgroundView.backgroundColor = [UIColor whiteColor];
+            [view addSubview:backgroundView];
+            [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.and.right.equalTo(view);
+                make.bottom.equalTo(view).offset(-5);
+            }];
+            
+            [backgroundView addSubview:self.avatarView];
+            [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(50);
+                make.left.mas_equalTo(10);
+                make.centerY.equalTo(backgroundView);
+            }];
+            [backgroundView addSubview:self.nameLabel];
+            [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.avatarView);
+                make.left.equalTo(self.avatarView.mas_right).offset(10);
+                make.width.mas_greaterThanOrEqualTo(100);
+                make.height.mas_equalTo(30);
+            }];
+            
+            [backgroundView addSubview:self.arrowView];
+            [self.arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(14);
+                make.centerY.equalTo(backgroundView);
+                make.right.equalTo(backgroundView).offset(-15);
+            }];
+            [backgroundView addSubview:self.dotView];
+            [self.dotView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(8);
+                make.centerY.equalTo(backgroundView);
+                make.right.equalTo(self.arrowView).offset(-18);
+            }];
+       
+            UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapingToMyView)];
+            [view addGestureRecognizer:gesture];
+            view;
+        });
+    }
+    return _headerView;
+}
+
+- (UIImageView *)avatarView
+{
+    if (_avatarView == nil) {
+        _avatarView = [[UIImageView alloc] init];
+        _avatarView.layer.cornerRadius = 4;
+        _avatarView.layer.masksToBounds = YES;
+    }
+    return _avatarView;
+}
+
+- (UILabel *)nameLabel
+{
+    if (_nameLabel == nil) {
+        _nameLabel = ({
+            UILabel *label = [[UILabel alloc] init];
+            label.textColor = [UIColor colorFromHexValue:0x5a6e97];
+            label.font = [UIFont systemFontOfSize:15];
+            label;
+        });
+    }
+    return _nameLabel;
+}
+
+- (UIImageView *)arrowView
+{
+    if (_arrowView == nil) {
+        _arrowView = ({
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.image = [[[UIImage imageNamed:@"left"] imageRotatedByDegrees:180]
+                               imageWithTintColor:[UIColor colorFromHexValue:0x999999]];
+            imageView;
+        });
+    }
+    return _arrowView;
+}
+
+- (UIView *)dotView
+{
+    if (_dotView == nil) {
+        _dotView = ({
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = [UIColor colorFromHexValue:0xFF4F4F];
+            view.layer.cornerRadius = 4;
+            view;
+        });
+    }
+    return _dotView;
 }
 
 

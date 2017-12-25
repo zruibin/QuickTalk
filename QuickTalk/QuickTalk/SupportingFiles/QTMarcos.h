@@ -87,6 +87,7 @@
 #define IFLY_PATH [NSString documentForPath:@"IFly"]
 #define QTDataCache @"QTDataCache"
 #define QTPasteboardURL @"QTPasteboardURL"
+#define QTMessageCount @"QTMessageCount"
 
 /*UITableView 系列使用*/
 #define QTTableViewCellMake(kTableViewCell, kName) kTableViewCell *kName = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([kTableViewCell class])];

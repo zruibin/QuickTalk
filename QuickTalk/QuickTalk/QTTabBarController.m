@@ -31,6 +31,7 @@
     QTNavigationController *newsNav = [[QTNavigationController alloc] initWithRootViewController:newsController];
     
     QTUserPostMainController *userPostController = [[QTUserPostMainController alloc] init];
+    userPostController.showHeader = YES;
     QTNavigationController *userPostNav = [[QTNavigationController alloc] initWithRootViewController:userPostController];
     
     QTMyController *myController = [[QTMyController alloc] init];
