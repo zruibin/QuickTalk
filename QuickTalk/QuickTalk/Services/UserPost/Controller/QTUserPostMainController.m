@@ -62,6 +62,9 @@
         weakSelf.dataList = [NSMutableArray array];
         weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
         [weakSelf loadData];
+        if (weakSelf.showHeader) {
+            [weakSelf updateHeaderData];
+        }
     }];
     [self.tableView beginHeaderRefreshing];
     
@@ -86,9 +89,9 @@
                                                  name:QTLoginStatusChangeNotification object:nil];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     if (self.showHeader) {
         [self updateHeaderData];
     }
@@ -282,6 +285,9 @@
             YYCache *cache = [YYCache cacheWithName:QTDataCache];
             if (error == nil) {
                 self.dotView.hidden = NO;
+                if (model.count == 0) {
+                    self.dotView.hidden = YES;
+                }
                 [cache setObject:[NSNumber numberWithInteger:model.count] forKey:QTMessageCount];
             } else {
                 self.dotView.hidden = YES;

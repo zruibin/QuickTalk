@@ -58,6 +58,7 @@
 		E08560A21FECFC6600B4779E /* QTUserLikeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08560A11FECFC6600B4779E /* QTUserLikeListController.m */; };
 		E08693061FF0AB22001DC7FE /* QTMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693051FF0AB22001DC7FE /* QTMessageModel.m */; };
 		E08693091FF0B7CB001DC7FE /* QTMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693081FF0B7CB001DC7FE /* QTMessageController.m */; };
+		E086930C1FF0DE06001DC7FE /* QTMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E086930B1FF0DE06001DC7FE /* QTMessageCell.m */; };
 		E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */; };
 		E088D6691FD64E0600038736 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6571FD64E0600038736 /* QTTopicController.m */; };
 		E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6591FD64E0600038736 /* QTTopicContentController.m */; };
@@ -250,6 +251,8 @@
 		E08693051FF0AB22001DC7FE /* QTMessageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageModel.m; sourceTree = "<group>"; };
 		E08693071FF0B7CB001DC7FE /* QTMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageController.h; sourceTree = "<group>"; };
 		E08693081FF0B7CB001DC7FE /* QTMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageController.m; sourceTree = "<group>"; };
+		E086930A1FF0DE06001DC7FE /* QTMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageCell.h; sourceTree = "<group>"; };
+		E086930B1FF0DE06001DC7FE /* QTMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageCell.m; sourceTree = "<group>"; };
 		E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicGlobalSpeaker.h; sourceTree = "<group>"; };
 		E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicGlobalSpeaker.m; sourceTree = "<group>"; };
 		E088D6551FD64E0600038736 /* QTTopicContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
@@ -631,6 +634,8 @@
 		E08693031FF0AB0F001DC7FE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E086930A1FF0DE06001DC7FE /* QTMessageCell.h */,
+				E086930B1FF0DE06001DC7FE /* QTMessageCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1601,6 +1606,7 @@
 				E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
 				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
+				E086930C1FF0DE06001DC7FE /* QTMessageCell.m in Sources */,
 				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
 				E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */,
 				E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */,

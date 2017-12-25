@@ -10,4 +10,6 @@
 
 @interface QTMessageController : QTViewController
 
+@property (nonatomic, copy) NSString *userUUID;
+
 @end

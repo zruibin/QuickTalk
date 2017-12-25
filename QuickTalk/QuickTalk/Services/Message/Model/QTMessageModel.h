@@ -17,8 +17,25 @@
 
 @interface QTMessageModel : NSObject
 
+@property (nonatomic, assign) NSInteger _id;
+@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, copy) NSString *userPostUUID;
+@property (nonatomic, copy) NSString *userUUID;
+@property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString *generatedUserUUID;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *time;
+@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSString *contentUUID;
+@property (nonatomic, copy) NSString *content;
+
+
 + (void)requestMessageCountData:(NSString *)userUUID
                            type:(NSString *)type
               completionHandler:(void (^)(QTMessageCountModel *model, NSError * error))completionHandler;
+
++ (void)requestMessageData:(NSUInteger)page userUUID:(NSString *)userUUID
+          completionHandler:(void (^)(NSArray<QTMessageModel *> *list, NSError * error))completionHandler;
 
 @end

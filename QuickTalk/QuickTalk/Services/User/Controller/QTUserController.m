@@ -82,6 +82,11 @@
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.headerView];
     [self calcuateHeaderView];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]
+                                initWithImage:[UIImage imageNamed:@"more"]
+                                style:UIBarButtonItemStylePlain target:self action:@selector(moreAction)];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)makeUserData
@@ -290,10 +295,36 @@
     [[RBImagebrowse createBrowseWithImages:@[self.userModel.avatar]] show];
 }
 
-- (void)messageAction
+- (void)moreAction
 {
-    QTMessageController *messageController = [[QTMessageController alloc] init];
-    [self.navigationController pushViewController:messageController animated:YES];
+    if ([self.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        QTMessageController *messageController = [[QTMessageController alloc] init];
+        messageController.userUUID = [QTUserInfo sharedInstance].uuid;
+        [self.navigationController pushViewController:messageController animated:YES];
+    } else if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
+        __weak typeof(self) weakSelf = self;
+        void(^reportHandler)(NSInteger index) = ^(NSInteger index){
+            [QTProgressHUD showHUD:weakSelf.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [QTProgressHUD showHUDWithText:@"举报成功" delay:2.0f];
+            });
+        };
+        void(^blockHandler)(NSInteger index) = ^(NSInteger index){
+            [QTProgressHUD showHUD:weakSelf.view];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [QTProgressHUD showHUDWithText:@"拉黑成功，系统将在24小时内处理" delay:2.0f];
+            });
+        };
+        
+        NSArray *items = @[
+                           MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
+                           ,MMItemMake(@"拉黑", MMItemTypeHighlight, blockHandler)
+                           ];
+        MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
+                                                              items:items];
+        sheetView.attachedView.mm_dimBackgroundBlurEnabled = NO;
+        [sheetView show];
+    }
 }
 
 #pragma mark - getter and setter
@@ -368,8 +399,8 @@
     if (_avatarView == nil) {
         _avatarView = ({
             UIButton *button = [UIButton new];
-//            button.layer.cornerRadius = 40;
-//            button.layer.masksToBounds = YES;
+            button.layer.cornerRadius = 4;
+            button.layer.masksToBounds = YES;
             button.userInteractionEnabled = YES;
             [button addTarget:self action:@selector(avatarAction) forControlEvents:UIControlEventTouchUpInside];
             button;
@@ -456,7 +487,7 @@
             countView.titleLabel.font = [UIFont systemFontOfSize:12];
             countView.layer.cornerRadius = 4;
             countView.layer.masksToBounds = YES;
-            [countView addTarget:self action:@selector(messageAction) forControlEvents:UIControlEventTouchUpInside];
+            [countView addTarget:self action:@selector(moreAction) forControlEvents:UIControlEventTouchUpInside];
             countView;
         });
     }

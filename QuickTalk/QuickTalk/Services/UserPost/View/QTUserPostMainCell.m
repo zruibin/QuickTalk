@@ -158,7 +158,7 @@
     if (model.nickname > 0) {
         [self.nicknameButton setTitle:model.nickname forState:UIControlStateNormal];
     } else {
-        [self.nicknameButton setTitle:[NSString stringWithFormat:@"用户%@", model.userId] forState:UIControlStateNormal];
+        [self.nicknameButton setTitle:[NSString stringWithFormat:@"用户%ld", model.userId] forState:UIControlStateNormal];
     }
     self.timeLabel.text = [Tools getDateStringFromTimeString:model.time andNeedTime:YES];
     if (model.txt.length > 0) {
