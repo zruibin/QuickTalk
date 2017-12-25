@@ -17,12 +17,10 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from common.auth import vertifyTokenHandle
 from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
 
 
 @star.route('/queryStarUser', methods=["GET", "POST"])
-@vertifyTokenHandle
 def queryStarUser():
     userUUID = getValueFromRequestByKey("user_uuid")
     relationUserUUID = getValueFromRequestByKey("relation_user_uuid")

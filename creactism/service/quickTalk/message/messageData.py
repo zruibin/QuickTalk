@@ -42,7 +42,7 @@ def __queryUserMessageFromStorage(userUUID, limitSQL, update):
     querySQL = """
         SELECT t_quickTalk_message.id, t_quickTalk_message.time, 
             content_uuid, generated_user_uuid, t_quickTalk_message.type,
-            t_quickTalk_user.id AS userID, t_quickTalk_user.uuid AS userUUID, 
+            t_quickTalk_user.id AS userId, t_quickTalk_user.uuid AS userUUID, 
             t_quickTalk_user.nickname, t_quickTalk_user.avatar,
             (CASE  
                 WHEN t_quickTalk_message.type={likeUserPost}
