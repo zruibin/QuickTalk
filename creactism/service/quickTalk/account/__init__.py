@@ -29,6 +29,8 @@ from service.quickTalk.account import changeInfo
 from service.quickTalk.account import userList
 from service.quickTalk.account import setting
 from service.quickTalk.account import settingList
+from service.quickTalk.account import addDevice
+from service.quickTalk.account import deleteDevice
 
 
 if __name__ == '__main__':
