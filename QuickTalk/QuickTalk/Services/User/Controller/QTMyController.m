@@ -9,7 +9,7 @@
 #import "QTMyController.h"
 #import "QTAccountInfoEditController.h"
 #import "QTSettingController.h"
-#import "QTUserPostMainController.h"
+#import "QTUserController.h"
 #import "QTUserCollectionController.h"
 #import "QTUserStarAndFansController.h"
 #import "RBImagebrowse.h"
@@ -197,7 +197,7 @@
                                ],
                        @"data": @[
                                @[@"users", @"关注与粉丝", height, NSStringFromClass([QTUserStarAndFansController class])],
-                               @[@"userPost", @"我的快言", height, NSStringFromClass([QTUserPostMainController class])],
+                               @[@"userPost", @"我的快言", height, NSStringFromClass([QTUserController class])],
                                @[@"collection", @"收藏", height, NSStringFromClass([QTUserCollectionController class])],
                                ],
                        @"setting": @[

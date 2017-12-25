@@ -133,6 +133,9 @@
     } else {
         cell.relationStatus = QTViewRelationStarAndBeStar;
     }
+    if ([model.uuid isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        cell.relationStatus = QTViewRelationHidden;
+    }
     
     __weak typeof(self) weakSelf = self;
     [cell setOnAvatarHandler:^(NSInteger index) {

@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UIView *messageView;
 @property (nonatomic, strong) UIButton *countView;
 @property (nonatomic, assign) NSInteger messageCount;
+@property (nonatomic, strong) UIButton *actionButton;
 
 @property (nonatomic, strong) HMSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -40,6 +41,8 @@
 - (void)makeUserView;
 - (void)calcuateOnScrolling:(CGFloat)offsetY;
 - (void)calcuateHeaderView;
+- (void)makeStarActionData;
+- (void)makeStarActionView;
 
 @end
 
@@ -99,6 +102,7 @@
             [self selectedOnSegment:0];
             self.userModel = userModel;
             [self makeUserView];
+            [self makeStarActionData];
         }
     }];
 }
@@ -172,7 +176,6 @@
         [weakSelf.navigationController pushViewController:userFansController animated:YES];
     }];
     self.countLabel.attributedText = [attributedString copy];
-    
 }
 
 - (void)calcuateOnScrolling:(CGFloat)offsetY
@@ -226,6 +229,39 @@
     self.scrollView.frame = CGRectMake(0, self.headerHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-self.headerHeight);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
                                              CGRectGetHeight(self.scrollView.bounds)-64);
+}
+
+- (void)makeStarActionData
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [QTUserModel requestStarRelation:[QTUserInfo sharedInstance].uuid uuidList:@[self.userModel.uuid] completionHandler:^(NSDictionary *dict, NSError *error) {
+            if ([dict.allKeys containsObject:self.userModel.uuid]) {
+                self.userModel.relationStatus = QTUserRelationStar;
+            }
+            [self makeStarActionView];
+        }];
+    } else {
+        [self makeStarActionView];
+    }
+}
+
+- (void)makeStarActionView
+{
+    if ([self.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+        self.actionButton.hidden = YES;
+    } else {
+        if (self.userModel.relationStatus == QTUserRelationStar) {
+            self.actionButton.hidden = NO;
+            self.actionButton.layer.borderColor = [QuickTalk_SECOND_COLOR CGColor];
+            [self.actionButton setTitleColor:QuickTalk_SECOND_COLOR forState:UIControlStateNormal];
+            [self.actionButton setTitle:@"已关注" forState:UIControlStateNormal];
+        } else {
+            self.actionButton.hidden = NO;
+            self.actionButton.layer.borderColor = [QuickTalk_MAIN_COLOR CGColor];
+            [self.actionButton setTitleColor:QuickTalk_MAIN_COLOR forState:UIControlStateNormal];
+            [self.actionButton setTitle:@"关注" forState:UIControlStateNormal];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -327,6 +363,29 @@
     }
 }
 
+- (void)starOrUnStarAction
+{
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+        return;
+    }
+    NSString *action = STAR_ACTION_FOR_STAR;
+    if (self.userModel.relationStatus == QTUserRelationStar) {
+        action = STAR_ACTION_FOR_UNSTAR;
+    }
+    [QTUserModel requestForStarOrUnStar:[QTUserInfo sharedInstance].uuid contentUUID:self.userModel.uuid action:action completionHandler:^(BOOL action, NSError *error) {
+        if (error) {
+            [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
+        } else {
+            if (self.userModel.relationStatus == QTUserRelationStar) {
+                self.userModel.relationStatus = QTUserRelationDefault;
+            } else {
+                self.userModel.relationStatus = QTUserRelationStar;
+            }
+            [self makeStarActionView];
+        }
+    }];
+}
+
 #pragma mark - getter and setter
 
 - (UIView *)headerView
@@ -375,6 +434,13 @@
                 make.left.equalTo(self.genderView.mas_right).offset(8);
                 make.width.mas_greaterThanOrEqualTo(100);
                 make.height.mas_equalTo(22);
+            }];
+            [view addSubview:self.actionButton];
+            [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(70);
+                make.height.mas_equalTo(32);
+                make.centerY.equalTo(self.avatarView);
+                make.right.equalTo(view).offset(-15);
             }];
             [view addSubview:self.countLabel];
             [self.countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -455,7 +521,7 @@
 {
     if (_countLabel == nil) {
         _countLabel = ({
-            UILabel *label = [[YYLabel alloc] init];
+            YYLabel *label = [[YYLabel alloc] init];
 //            label.font = [UIFont systemFontOfSize:14];
             label.userInteractionEnabled = YES;
             label.textAlignment = NSTextAlignmentLeft;
@@ -492,6 +558,27 @@
         });
     }
     return _countView;
+}
+
+- (UIButton *)actionButton
+{
+    if (_actionButton == nil) {
+        _actionButton = ({
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0x000 withAlpha:.4]]
+                              forState:UIControlStateHighlighted];
+            button.titleLabel.font = [UIFont systemFontOfSize:14];
+            button.userInteractionEnabled = YES;
+            button.layer.borderWidth = 1;
+            button.layer.cornerRadius = 2;
+            button.layer.borderColor = [QuickTalk_MAIN_COLOR CGColor];
+            [button setTitleColor:QuickTalk_MAIN_COLOR forState:UIControlStateNormal];
+            [button setTitle:@"关注" forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(starOrUnStarAction) forControlEvents:UIControlEventTouchUpInside];
+            button;
+        });
+    }
+    return _actionButton;
 }
 
 - (HMSegmentedControl *)segmentedControl
