@@ -25,33 +25,34 @@ from common.auth import vertifyTokenHandle
 def addDeviceRequest():
     userUUID = getValueFromRequestByKey("user_uuid")
     deviceId = getValueFromRequestByKey("deviceId")
+    typeStr = getValueFromRequestByKey("type")
 
     # 参数没有直接报错返回
-    if userUUID == None or deviceId == None:
+    if userUUID == None or deviceId == None or typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __addDevice(userUUID, deviceId)
+    return __addDevice(userUUID, deviceId, typeStr)
         
 
-def __addDevice(userUUID, deviceId):
-    if __queryWhetherDevice(userUUID, deviceId):
+def __addDevice(userUUID, deviceId, typeStr):
+    if __queryWhetherDevice(userUUID, deviceId, typeStr):
         return RESPONSE_JSON(CODE_ERROR_ALREADY_REGISTER_DEVICE)
 
     time = generateCurrentTime()
     insertSQL = """
-        INSERT INTO t_quickTalk_notification_device (user_uuid, deviceId, time) VALUES (%s, %s, %s)
+        INSERT INTO t_quickTalk_notification_device (user_uuid, deviceId, type, time) VALUES (%s, %s, %s, %s)
     """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeSingleDmlWithArgs(insertSQL, [userUUID, deviceId, time])
+        result = dbManager.executeSingleDmlWithArgs(insertSQL, [userUUID, deviceId, typeStr, time])
         return RESPONSE_JSON(CODE_SUCCESS)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
 
 
-def __queryWhetherDevice(userUUID, deviceId):
-    querySQL = """SELECT user_uuid FROM t_quickTalk_notification_device WHERE deviceId='%s' AND user_uuid='%s'; """ % (deviceId, userUUID)
+def __queryWhetherDevice(userUUID, deviceId, typeStr):
+    querySQL = """SELECT user_uuid FROM t_quickTalk_notification_device WHERE deviceId='%s' AND user_uuid='%s' AND type=%s; """ % (deviceId, userUUID, typeStr)
     dbManager = DB.DBManager.shareInstanced()
     try:
         resultList = dbManager.executeSingleQuery(querySQL)

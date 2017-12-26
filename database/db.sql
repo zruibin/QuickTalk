@@ -242,3 +242,5 @@ ALTER TABLE `t_quickTalk_notification_device` ADD INDEX t_notification_device_us
 -- Create By Ruibin.Chow
 INSERT INTO t_quickTalk_user_user (user_uuid, type, other_user_uuid, time) 
 SELECT uuid AS user_uuid, 0, 'cfb43f1df01c74f24d1a68f583b36613', time FROM t_quickTalk_user
+
+ALTER TABLE `t_quickTalk_notification_device` ADD type TINYINT NOT NULL Default 0;

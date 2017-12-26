@@ -26,7 +26,7 @@ CELERY_TIMEZONE="Asia/Shanghai"                     ##指定时区，默认是 U
 
 # import
 CELERY_IMPORTS = (                                  ##指定导入的任务模块   
-    # "dispatch.tasks",
+    "dispatch.notification",
     "dispatch.BackupTask" 
 )
 

@@ -17,6 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from dispatch.notification import dispatchNotificationCommentForUserPost
 
 
 @userPost.route('/addUserPostComment', methods=["POST"])
@@ -72,6 +73,8 @@ def __storageUserPostComment(userPostUUID, content, userUUID, isReply, replyUUID
     dbManager = DB.DBManager.shareInstanced()
     try: 
         result = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
+        # 远程通知
+        dispatchNotificationCommentForUserPost.delay(userUUID, reciveUserUUID)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

@@ -25,22 +25,23 @@ from common.auth import vertifyTokenHandle
 def deleteDeviceRequest():
     userUUID = getValueFromRequestByKey("user_uuid")
     deviceId = getValueFromRequestByKey("deviceId")
+    typeStr = getValueFromRequestByKey("type")
 
     # 参数没有直接报错返回
-    if userUUID == None or deviceId == None:
+    if userUUID == None or deviceId == None or typeStr == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __deleteDevice(userUUID, deviceId)
+    return __deleteDevice(userUUID, deviceId, typeStr)
         
 
-def __deleteDevice(userUUID, deviceId):
+def __deleteDevice(userUUID, deviceId, typeStr):
 
     deleteSQL = """
-        DELETE FROM t_quickTalk_notification_device WHERE deviceId=%s AND user_uuid=%s;  
+        DELETE FROM t_quickTalk_notification_device WHERE deviceId=%s AND user_uuid=%s  AND type=%s
     """
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeSingleDmlWithArgs(deleteSQL, [deviceId, userUUID])
+        result = dbManager.executeSingleDmlWithArgs(deleteSQL, [deviceId, userUUID, typeStr])
         return RESPONSE_JSON(CODE_SUCCESS)
     except Exception as e:
         Loger.error(e, __file__)

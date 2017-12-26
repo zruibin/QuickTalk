@@ -17,6 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from dispatch.notification import dispatchNotificationNewShare
 
 
 @userPost.route('/addUserPost', methods=["POST"])
@@ -41,6 +42,8 @@ def __storageUserPost(title, content, userUUID, txt):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         result = dbManager.executeTransactionDmlWithArgs(insertSQL, args)
+        # 远程通知
+        dispatchNotificationNewShare.delay(userUUID)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)

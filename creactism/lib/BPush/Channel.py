@@ -24,13 +24,13 @@ from valid import validOptDict,validParam,nullOk
 class Channel(object):
 
     #baidu push 域名
-    HOST = 'host'
+    HOST = 'api.push.baidu.com'
 
     #应用key，从百度开发者中心获得,是创建Channel的必须参数
-    API_KEY = 'apikey'
+    API_KEY = 'yORLvhoD8cNEVFqglaOGKxAd'
 
     #从百度开发者中心获得，是创建Channel的必须参数
-    SECRET_KEY = 'secret_key'
+    SECRET_KEY = 'yORLvhoD8cNEVFqglaOGKxAd'
 
     #设备类型，3:android, 4:ios
     DEVICE_TYPE = 'device_type'

@@ -18,6 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from dispatch.notification import dispatchNotificationLikeForUserPost
 
 
 @like.route('/like', methods=["GET", "POST"])
@@ -73,6 +74,8 @@ def __likeUserPostMethod(typeStr, userUUID, contentUUID):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         result = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
+        # 远程通知
+        dispatchNotificationLikeForUserPost.delay(userUUID, reciveUserUUID)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
