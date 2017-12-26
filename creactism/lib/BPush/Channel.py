@@ -27,10 +27,10 @@ class Channel(object):
     HOST = 'api.push.baidu.com'
 
     #应用key，从百度开发者中心获得,是创建Channel的必须参数
-    API_KEY = 'yORLvhoD8cNEVFqglaOGKxAd'
+    API_KEY = 'apikey'
 
     #从百度开发者中心获得，是创建Channel的必须参数
-    SECRET_KEY = 'yORLvhoD8cNEVFqglaOGKxAd'
+    SECRET_KEY = 'secret_key'
 
     #设备类型，3:android, 4:ios
     DEVICE_TYPE = 'device_type'
@@ -57,10 +57,20 @@ class Channel(object):
     #配置文件加载情况
     CONF_ERR = False;
 
-    def __init__(self):
+    def __init__(self, deviceType):
         """init 获得运行linux平台版本信息, 加载conf"""
 
+        # 3:android, 4:ios
+        if deviceType == "3":
+            Channel.API_KEY= "yyBSqRq9FqN5QhbG8ymdmRjI"
+            Channel.SECRET_KEY = "XuBf9LtwuC7SuSEliGMBbkco8HM74UtE"
+        else:
+            Channel.API_KEY= "yORLvhoD8cNEVFqglaOGKxAd"
+            Channel.SECRET_KEY = "VBCg2qv7PsBNgls0HjIa8Ik5O1PleH8p"
+        Channel.DEVICE_TYPE = deviceType
         Channel.SYSTEM_INFO = str(platform.uname())
+        self._curlOpts = dict(TIMEOUT = Channel.CURL_TIMEOUT,
+                                  CONNECTTIMEOUT = Channel.CURL_CONNECTTIMEOUT)
         # self._loadConf()
 
     def _loadConf(self):
@@ -135,7 +145,6 @@ class Channel(object):
             参数错误或者http错误，会抛出此异常，异常信息详见说明文档"""
 
         self._checkConf()
-
         validOptDict(opts, 'pushMsgToSingleDevice')
         args = self._commonSet()
         args['channel_id'] = channel_id
@@ -585,7 +594,7 @@ class Channel(object):
 
     def _commonProcess(self, paramOpt):
         """返回结果处理"""
-
+        print "_commonProcess.. %s" % paramOpt
         ret = self._baseControl(paramOpt)
         if( ret is None):
             raise ChannelException('base control returned None object',\
