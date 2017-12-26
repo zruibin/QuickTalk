@@ -25,7 +25,7 @@
 {
     [super viewWillAppear:animated];
     
-    if (self.presentingViewController) {
+    if (self.presentingViewController && !self.hiddenBack) {
         if (self.viewControllers.count > 0) {
             UIViewController *rootController = [self.viewControllers objectAtIndex:0];
             rootController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]

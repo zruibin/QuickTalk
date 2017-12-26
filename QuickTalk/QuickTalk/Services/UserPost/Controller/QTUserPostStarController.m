@@ -15,6 +15,10 @@
 #import "QTIntroController.h"
 #import "QTUserController.h"
 #import "QTMessageModel.h"
+#import "QQPopMenuView.h"
+#import "QTUserSearchController.h"
+#import "QTUserStarController.h"
+
 
 @interface QTUserPostStarController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -28,18 +32,19 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIImageView *arrowView;
 @property (nonatomic, strong) UIView *dotView;
+@property (nonatomic, strong) UIView *footerView;
 
 - (void)initViews;
 - (void)loadData;
 - (void)arrowHandlerAction:(NSInteger)index;
 - (void)deleteData:(QTUserPostModel *)model;
-- (void)shareData:(QTUserPostModel *)model;
 - (void)collectionData:(QTUserPostModel *)model;
 - (void)addReadCountAction:(NSInteger)index;
 - (void)checkPasteAction;
 - (void)likeOrUnLikeAction:(NSInteger)index;
 - (void)updateHeaderData;
 - (void)tapingToMyView;
+- (void)loginStatusAction;
 
 @end
 
@@ -57,18 +62,30 @@
     
     __weak typeof(self) weakSelf = self;
     [self.tableView headerWithRefreshingBlock:^{
-        weakSelf.errorView.hidden = YES;
-        weakSelf.page = 1;
-        weakSelf.dataList = [NSMutableArray array];
-        weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
-        [weakSelf loadData];
-        [weakSelf updateHeaderData];
+        if ([QTUserInfo sharedInstance].isLogin) {
+            [weakSelf.tableView showFooter];
+            weakSelf.errorView.hidden = YES;
+            weakSelf.page = 1;
+            weakSelf.dataList = [NSMutableArray array];
+            weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
+            [weakSelf loadData];
+            [weakSelf updateHeaderData];
+        } else {
+            [weakSelf.tableView endHeaderRefreshing];
+            [weakSelf.tableView hiddenFooter];
+        }
     }];
     [self.tableView beginHeaderRefreshing];
     
     [self.tableView footerWithRefreshingBlock:^{
-        weakSelf.page += 1;
-        [weakSelf loadData];
+        if ([QTUserInfo sharedInstance].isLogin) {
+            [weakSelf.tableView showFooter];
+            weakSelf.page += 1;
+            [weakSelf loadData];
+        } else {
+            [weakSelf.tableView endFooterRefreshing];
+            [weakSelf.tableView hiddenFooter];
+        }
     }];
     
     self.errorView.hidden = YES;
@@ -83,8 +100,7 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
                                                  name:QTPasteBoardCheckingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateHeaderData)
-                                                 name:QTLoginStatusChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginStatusAction) name:QTLoginStatusChangeNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,6 +132,7 @@
     self.navigationItem.rightBarButtonItem = addItem;
     
     self.tableView.tableHeaderView = self.headerView;
+    self.tableView.tableFooterView = self.footerView;
 }
 
 - (void)loadData
@@ -125,11 +142,12 @@
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
-                self.errorView.hidden = NO;
+//                self.errorView.hidden = NO;
             }
             [self.tableView endHeaderRefreshing];
             [self.tableView endFooterRefreshing];
         } else {
+            [self.tableView showFooter];
             self.errorView.hidden = YES;
             [self.dataList addObjectsFromArray:[list copy]];
             if (self.page == 1) {
@@ -203,11 +221,6 @@
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         }
     }];
-}
-
-- (void)shareData:(QTUserPostModel *)model
-{
-    
 }
 
 - (void)collectionData:(QTUserPostModel *)model
@@ -309,6 +322,17 @@
     }
 }
 
+- (void)loginStatusAction
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [self.tableView beginHeaderRefreshing];
+    } else {
+        [self updateHeaderData];
+        [self.dataList removeAllObjects];
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - TableView Delegate And DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -399,11 +423,37 @@
 
 - (void)addAction
 {
-    if ([[QTUserInfo sharedInstance] checkLoginStatus:self]) {
-        QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
-        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
-        [self presentViewController:nav animated:YES completion:nil];
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+        return ;
     }
+    NSArray *item = @[
+                      @{@"title":@"发起分享",@"imageName": [[UIImage imageNamed:@"link"] imageWithTintColor:[UIColor blackColor]]},
+                      @{@"title":@"搜索用户",@"imageName": [[UIImage imageNamed:@"search"] imageWithTintColor:[UIColor blackColor]]}];
+    [QQPopMenuView showWithItems:item width:130 triangleLocation:CGPointMake([UIScreen mainScreen].bounds.size.width-30, 64+5) action:^(NSInteger index) {
+        if (index == 0) {
+            QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
+            QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
+            [self presentViewController:nav animated:YES completion:nil];
+        }
+        if (index == 1) {
+            QTUserSearchController *searchController = [[QTUserSearchController alloc] init];
+            QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:searchController];
+            nav.hiddenBack = YES;
+            [self presentViewController:nav animated:YES completion:nil];
+        }
+    }];
+}
+
+- (void)addUserAction
+{
+    if ([[QTUserInfo sharedInstance] checkLoginStatus:self] == NO) {
+        return ;
+    }
+    QTUserStarController *userStarController = [[QTUserStarController alloc] init];
+    userStarController.userUUID = [QTUserInfo sharedInstance].uuid;
+    userStarController.showHeader = YES;
+    QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:userStarController];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - getter and setter
@@ -547,5 +597,49 @@
 }
 
 
+- (UIView *)footerView
+{
+    if (_footerView == nil) {
+        _footerView = ({
+            UIView *view = [[UIView alloc] init];
+            view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 140);
+            view.backgroundColor = [UIColor clearColor];
+            
+            UILabel *label = [[UILabel alloc] init];
+            label.numberOfLines = 2;
+            label.font = [UIFont systemFontOfSize:12];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = [UIColor colorFromHexValue:0x999999];
+            label.text = @"没有内容了哦，尝试自己分享内容，或者添加关注吧";
+            [view addSubview:label];
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.equalTo(view).offset(20);
+                make.right.equalTo(view).offset(-10);
+                make.height.mas_equalTo(60);
+            }];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:@selector(addUserAction) forControlEvents:UIControlEventTouchUpInside];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+            [button setTitleColor:QuickTalk_MAIN_COLOR forState:UIControlStateHighlighted];
+            [button setTitle:@"添加关注" forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]]
+                              forState:UIControlStateNormal];
+            button.layer.cornerRadius = 4;
+            button.layer.masksToBounds = YES;
+            [view addSubview:button];
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(view);
+                make.top.equalTo(label.mas_bottom).offset(10);
+                make.width.mas_equalTo(140);
+                make.height.mas_equalTo(40);
+            }];
+            
+            view;
+        });
+    }
+    return _footerView;
+}
 
 @end

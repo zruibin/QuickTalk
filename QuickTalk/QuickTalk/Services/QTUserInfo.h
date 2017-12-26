@@ -10,7 +10,6 @@
 
 @class QTAccountInfo;
 
-extern NSString * const QTRefreshDataNotification;
 extern NSString * const QTLoginStatusChangeNotification;
 
 @interface QTUserInfo : NSObject

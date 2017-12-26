@@ -128,7 +128,11 @@
 - (void)backButtonAction
 {
     [self.textField resignFirstResponder];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.presentingViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)searchAction
@@ -175,7 +179,7 @@
     if (model.relationStatus == QTUserRelationDefault) {
         cell.relationStatus = QTViewRelationDefault;
     } else {
-        cell.relationStatus = QTViewRelationStarAndBeStar;
+        cell.relationStatus = QTViewRelationStar;
     }
 
     __weak typeof(self) weakSelf = self;

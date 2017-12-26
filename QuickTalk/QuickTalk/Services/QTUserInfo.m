@@ -16,7 +16,6 @@ static NSString * const kQTLoginAccount = @"QTLoginAccount";
 static NSString * const kQTLoginPassword = @"QTLoginPassword";
 static NSString * const kQTLoginOpenId = @"QTLoginOpenId";
 static NSString * const kQTLoginType = @"QTLoginType";
-NSString * const QTRefreshDataNotification = @"kkQTRefreshDataNotification";
 NSString * const QTLoginStatusChangeNotification = @"kQTLoginStatusChangeNotification";
 
 static NSDate *refreshDate = nil;
@@ -82,7 +81,9 @@ static NSDate *refreshDate = nil;
     [SAMKeychain setPassword:userInfo.phone forService:kQTLoginServiceName account:kQTLoginAccount];
     [SAMKeychain setPassword:password forService:kQTLoginServiceName account:kQTLoginPassword];
     [SAMKeychain setPassword:type forService:kQTLoginServiceName account:kQTLoginType];
-    [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+    });
     [self bindNotificationDevice];
 }
 
@@ -102,7 +103,9 @@ static NSDate *refreshDate = nil;
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginType];
     self.uuid = nil;
     self.avatar = nil;
-    [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+    });
 }
 
 - (void)loginInBackground
@@ -146,7 +149,6 @@ static NSDate *refreshDate = nil;
     NSDate *nowDate = [NSDate date];
     NSTimeInterval interval = [nowDate timeIntervalSinceDate:refreshDate];//获取某一时间与当前时间的间隔
     if (interval > 3600) { /*token缓存时间为一小时，超过则重新登录*/
-        [[NSNotificationCenter defaultCenter] postNotificationName:QTRefreshDataNotification object:nil];
         [self loginInBackground];
     }
 }

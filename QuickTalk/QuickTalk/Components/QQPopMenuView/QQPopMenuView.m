@@ -36,7 +36,7 @@ static CGFloat const kCellHeight = 44;
     if (array.count == 0) return nil;
     if (self = [super init]) {
         self.frame = [UIScreen mainScreen].bounds;
-        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
         self.alpha = 0;
         _tableData = [array copy];
         _trianglePoint = point;
@@ -143,7 +143,7 @@ static CGFloat const kCellHeight = 44;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PopMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PopMenuTableViewCell" forIndexPath:indexPath];
     NSDictionary *dic = _tableData[indexPath.row];
-    cell.leftImageView.image = [UIImage imageNamed:dic[@"imageName"]];
+    cell.leftImageView.image = dic[@"imageName"];
     cell.titleLabel.text = dic[@"title"];
     [cell.titleLabel sizeToFit];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

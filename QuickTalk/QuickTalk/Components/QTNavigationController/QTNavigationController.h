@@ -10,4 +10,6 @@
 
 @interface QTNavigationController : UINavigationController
 
+@property (nonatomic, assign) BOOL hiddenBack;
+
 @end
