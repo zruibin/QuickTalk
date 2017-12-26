@@ -126,6 +126,14 @@ def  __operationDataStorage(userUUID, password="", time="", phone="", email="", 
         sqlList.append(userSettingSQL)
         argsList.append(settingArgsList)
 
+        defaultStarSQL = """
+            INSERT INTO t_quickTalk_user_user (user_uuid, type, other_user_uuid, time) VALUES (%s, %s, %s, %s);
+        """
+        # id: 10001     uuid: cfb43f1df01c74f24d1a68f583b36613
+        defaultStarArgs = [userUUID, Config.TYPE_STAR_FOR_USER_RELATION, "cfb43f1df01c74f24d1a68f583b36613", time]
+        sqlList.append(defaultStarSQL)
+        argsList.append(defaultStarArgs)
+
         dbManager = DB.DBManager.shareInstanced()
         results = dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)  
     except Exception as e:
