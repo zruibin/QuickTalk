@@ -158,7 +158,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    QTUserController *userController = [[QTUserController alloc] init];
+    QTUserModel *userModel = self.dataList[indexPath.row];
+    userController.userUUID = userModel.uuid;
+    [self.navigationController pushViewController:userController animated:YES];
 }
 
 #pragma mark - Action

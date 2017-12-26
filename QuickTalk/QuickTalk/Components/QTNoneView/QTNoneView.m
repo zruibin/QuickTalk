@@ -1,14 +1,14 @@
 //
-//  QTErrorView.m
+//  QTNoneView.m
 //  QuickTalk
 //
 //  Created by  Ruibin.Chow on 2017/11/10.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTErrorView.h"
+#import "QTNoneView.h"
 
-@interface QTErrorView ()
+@interface QTNoneView ()
 
 @property (nonatomic, strong) UIButton *button;
 
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation QTErrorView
+@implementation QTNoneView
 
 - (instancetype) init
 {
@@ -76,6 +76,12 @@
         });
     }
     return _button;
+}
+
+- (void)setTitle:(NSString *)title
+{
+    _title = title;
+    [self.button setTitle:title forState:UIControlStateNormal];
 }
 
 @end

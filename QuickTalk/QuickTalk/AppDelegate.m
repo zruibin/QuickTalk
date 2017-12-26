@@ -202,6 +202,7 @@ static BOOL isBackGroundActivateApplication;
                 return;
             }
             DLog(@"channelId: %@", [BPush getChannelId]);
+            [QTUserInfo sharedInstance].deviceId = [BPush getChannelId];
 //            [BPush setTag:@"Mytag" withCompleteHandler:^(id result, NSError *error) {
 //                if (result) {
 //                    DLog(@"设置tag成功");

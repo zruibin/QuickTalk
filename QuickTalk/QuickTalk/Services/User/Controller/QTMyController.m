@@ -14,6 +14,7 @@
 #import "QTUserStarAndFansController.h"
 #import "RBImagebrowse.h"
 #import "QTMyCell.h"
+#import "QTAccountLoginController.h"
 
 @interface QTMyController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -97,7 +98,7 @@
     }
     cell.titleLabel.text = data[1];
     
-    if ([key isEqualToString:@"user"]) {
+    if ([key isEqualToString:@"user"] || [key isEqualToString:@"unLogin"]) {
         cell.titleLabel.font = [UIFont systemFontOfSize:18];
         cell.multiplie = 0.8;
     } else {
@@ -132,6 +133,10 @@
     NSArray *data = self.dataDict[key][indexPath.row];
     
     UIViewController *viewController = [[NSClassFromString(data[3]) alloc] init];
+    if ([viewController isKindOfClass:[QTAccountLoginController class]]) {
+        [[QTUserInfo sharedInstance] checkLoginStatus:self];
+        return;
+    }
     
     unsigned int outCount = 0;
     objc_property_t * properties = class_copyPropertyList(NSClassFromString(data[3]), &outCount);
@@ -180,7 +185,7 @@
 {
     NSArray *list = @[@"user", @"data", @"setting"];
     if ([QTUserInfo sharedInstance].isLogin == NO) {
-        list = @[@"setting"];
+        list = @[@"unLogin", @"setting"];
     }
     return list;
 }
@@ -194,6 +199,9 @@
         _dataDict = @{
                        @"user": @[
                                @[avatar, nickname, @"88", NSStringFromClass([QTAccountInfoEditController class])]
+                               ],
+                       @"unLogin": @[
+                               @[@"avatar_default", @"您尚未登录", @"88", NSStringFromClass([QTAccountLoginController class])]
                                ],
                        @"data": @[
                                @[@"users", @"关注与粉丝", height, NSStringFromClass([QTUserStarAndFansController class])],

@@ -40,6 +40,10 @@
                 relationUserUUID:(NSString *)relationUserUUID
           completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
 
++ (void)requestStarUserPostData:(NSUInteger)page userUUID:(NSString *)userUUID
+               relationUserUUID:(NSString *)relationUserUUID
+              completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler;
+
 + (void)requestAddUserPost:(NSString *)userUUID
                      title:(NSString *)title
                    content:(NSString *)content

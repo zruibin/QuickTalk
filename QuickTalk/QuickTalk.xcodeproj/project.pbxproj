@@ -27,6 +27,9 @@
 		E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D921FEA7DC800217D9F /* QTUserStarButton.m */; };
 		E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */; };
 		E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D981FEA889100217D9F /* QTUserSearchController.m */; };
+		E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */; };
+		E03BBDF11FF1F3B8000F93E8 /* QTUserPostStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */; };
+		E03BBDF51FF20633000F93E8 /* QTNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF31FF20633000F93E8 /* QTNoneView.m */; };
 		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
 		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
 		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
@@ -46,7 +49,6 @@
 		E08131711FE23117001A6E3D /* QTUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131701FE23117001A6E3D /* QTUserController.m */; };
 		E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131771FE248AB001A6E3D /* QTUserModel.m */; };
 		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
-		E081812D1F9995AD0035DEF4 /* code.json in Resources */ = {isa = PBXBuildFile; fileRef = E081812A1F9995AD0035DEF4 /* code.json */; };
 		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
 		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
 		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
@@ -195,6 +197,12 @@
 		E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserContactBookController.m; sourceTree = "<group>"; };
 		E0256D971FEA889100217D9F /* QTUserSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserSearchController.h; sourceTree = "<group>"; };
 		E0256D981FEA889100217D9F /* QTUserSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserSearchController.m; sourceTree = "<group>"; };
+		E03BBDEC1FF1F2B0000F93E8 /* QQPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQPopMenuView.h; sourceTree = "<group>"; };
+		E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQPopMenuView.m; sourceTree = "<group>"; };
+		E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostStarController.h; sourceTree = "<group>"; };
+		E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostStarController.m; sourceTree = "<group>"; };
+		E03BBDF31FF20633000F93E8 /* QTNoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTNoneView.m; sourceTree = "<group>"; };
+		E03BBDF41FF20633000F93E8 /* QTNoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTNoneView.h; sourceTree = "<group>"; };
 		E045AD911FC417D800A16A40 /* QTCleaner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCleaner.h; sourceTree = "<group>"; };
 		E045AD921FC417D800A16A40 /* QTCleaner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCleaner.m; sourceTree = "<group>"; };
 		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
@@ -230,7 +238,6 @@
 		E08131761FE248AB001A6E3D /* QTUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserModel.h; sourceTree = "<group>"; };
 		E08131771FE248AB001A6E3D /* QTUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserModel.m; sourceTree = "<group>"; };
 		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E081812A1F9995AD0035DEF4 /* code.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = code.json; sourceTree = "<group>"; };
 		E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E08181311F99A01E0035DEF4 /* QTUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserInfo.h; sourceTree = "<group>"; };
 		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
@@ -518,6 +525,24 @@
 			path = Speaker;
 			sourceTree = "<group>";
 		};
+		E03BBDEB1FF1F2B0000F93E8 /* QQPopMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				E03BBDEC1FF1F2B0000F93E8 /* QQPopMenuView.h */,
+				E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */,
+			);
+			path = QQPopMenuView;
+			sourceTree = "<group>";
+		};
+		E03BBDF21FF20633000F93E8 /* QTNoneView */ = {
+			isa = PBXGroup;
+			children = (
+				E03BBDF41FF20633000F93E8 /* QTNoneView.h */,
+				E03BBDF31FF20633000F93E8 /* QTNoneView.m */,
+			);
+			path = QTNoneView;
+			sourceTree = "<group>";
+		};
 		E045AD901FC417C500A16A40 /* Cleaner */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,7 +593,6 @@
 				E0463BB31FAABB9B00849101 /* userAgreement.txt */,
 				E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */,
 				E08181291F9995AD0035DEF4 /* Assets.xcassets */,
-				E081812A1F9995AD0035DEF4 /* code.json */,
 				E084A9201FB5AA8500AE4AD2 /* image.js */,
 				E07AF0D21FDAA365003639AF /* video.mp4 */,
 			);
@@ -730,6 +754,8 @@
 		E088D6741FD6650000038736 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */,
+				E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */,
 				E088D6761FD6650000038736 /* QTUserPostMainController.h */,
 				E088D6751FD6650000038736 /* QTUserPostMainController.m */,
 				E088D6781FD6651B00038736 /* QTUserPostAddController.h */,
@@ -1171,6 +1197,8 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E03BBDF21FF20633000F93E8 /* QTNoneView */,
+				E03BBDEB1FF1F2B0000F93E8 /* QQPopMenuView */,
 				E081315F1FE21701001A6E3D /* CRAPickerView */,
 				E08AABC61FE0CDBB005B6DBB /* RBButton */,
 				E088D67F1FD6875A00038736 /* RBLabel */,
@@ -1361,7 +1389,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E081812D1F9995AD0035DEF4 /* code.json in Resources */,
 				E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */,
 				E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */,
 				E081316A1FE21701001A6E3D /* CRALocation.json in Resources */,
@@ -1595,6 +1622,7 @@
 				E08AABF61FE14129005B6DBB /* QTInfoEditController.m in Sources */,
 				E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */,
 				E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */,
+				E03BBDF11FF1F3B8000F93E8 /* QTUserPostStarController.m in Sources */,
 				E08AABDB1FE113F2005B6DBB /* QTAccountPhoneController.m in Sources */,
 				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
 				E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */,
@@ -1628,6 +1656,7 @@
 				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
 				E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */,
 				E081316D1FE21701001A6E3D /* CRABasePickerView.m in Sources */,
+				E03BBDF51FF20633000F93E8 /* QTNoneView.m in Sources */,
 				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
 				E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */,
 				E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */,
@@ -1647,6 +1676,7 @@
 				E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */,
 				E088D6821FD6875B00038736 /* RBLabel.m in Sources */,
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
+				E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
 				E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,

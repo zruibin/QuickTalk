@@ -419,7 +419,7 @@
             [self.nicknameButton mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.avatarView).offset(10);
                 make.left.equalTo(self.avatarView.mas_right).offset(10);
-                make.right.equalTo(view).offset(-40);
+                make.right.equalTo(view).offset(-90);
                 make.height.mas_equalTo(30);
             }];
             [view addSubview:self.genderView];
@@ -485,6 +485,7 @@
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
             button;
         });
     }

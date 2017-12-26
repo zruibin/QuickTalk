@@ -1,12 +1,12 @@
 //
-//  QTUserPostMainController.m
+//  QTUserPostStarController.m
 //  QuickTalk
 //
-//  Created by  Ruibin.Chow on 2017/12/5.
+//  Created by  Ruibin.Chow on 2017/12/26.
 //  Copyright © 2017年 www.creactism.com. All rights reserved.
 //
 
-#import "QTUserPostMainController.h"
+#import "QTUserPostStarController.h"
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
 #import "QTUserPostMainCell.h"
@@ -16,13 +16,18 @@
 #import "QTUserController.h"
 #import "QTMessageModel.h"
 
-@interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
+@interface QTUserPostStarController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, strong) NSMutableDictionary *cacheHeightDict;
 @property (nonatomic, strong) QTErrorView *errorView;
 @property (nonatomic, assign) NSInteger page;
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIImageView *avatarView;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UIImageView *arrowView;
+@property (nonatomic, strong) UIView *dotView;
 
 - (void)initViews;
 - (void)loadData;
@@ -33,10 +38,12 @@
 - (void)addReadCountAction:(NSInteger)index;
 - (void)checkPasteAction;
 - (void)likeOrUnLikeAction:(NSInteger)index;
+- (void)updateHeaderData;
+- (void)tapingToMyView;
 
 @end
 
-@implementation QTUserPostMainController
+@implementation QTUserPostStarController
 
 - (void)dealloc
 {
@@ -55,6 +62,7 @@
         weakSelf.dataList = [NSMutableArray array];
         weakSelf.cacheHeightDict = [NSMutableDictionary dictionary];
         [weakSelf loadData];
+        [weakSelf updateHeaderData];
     }];
     [self.tableView beginHeaderRefreshing];
     
@@ -82,6 +90,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self updateHeaderData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,14 +111,17 @@
     [self.view addSubview:self.errorView];
     
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc]
-                                       initWithImage:[UIImage imageNamed:@"add"]
-                                       style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
+                                initWithImage:[UIImage imageNamed:@"add"]
+                                style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
     self.navigationItem.rightBarButtonItem = addItem;
+    
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)loadData
 {
-    [QTUserPostModel requestUserPostData:self.page userUUID:self.userUUID relationUserUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
+    NSString *userUUID = [QTUserInfo sharedInstance].uuid;
+    [QTUserPostModel requestStarUserPostData:self.page userUUID:userUUID relationUserUUID:userUUID completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
@@ -154,25 +166,25 @@
             [weakSelf deleteData:model];
         };
         NSArray *items = @[MMItemMake(@"删除", MMItemTypeHighlight, block),
-                                    MMItemMake(@"取消", MMItemTypeNormal, nil)];
+                           MMItemMake(@"取消", MMItemTypeNormal, nil)];
         MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
         [view show];
     };
     void(^collectionHandler)(NSInteger index) = ^(NSInteger index){
         [weakSelf collectionData:model];
     };
-
+    
     NSArray *items = @[];
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         items = @[
-                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
-                       ];
+                  MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
+                  ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
+                  ];
     } else {// if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
         items = @[
-                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
-                       ];
+                  MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
+                  ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
+                  ];
     }
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
                                                           items:items];
@@ -255,6 +267,46 @@
             [self.tableView reloadData];
         }
     }];
+}
+
+- (void)updateHeaderData
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        [self.avatarView cra_setImage:[QTUserInfo sharedInstance].avatar];
+        self.nameLabel.text = @"我的快言";
+        self.arrowView.hidden = NO;
+        self.dotView.hidden = YES;
+        [QTMessageModel requestMessageCountData:[QTUserInfo sharedInstance].uuid type:nil completionHandler:^(QTMessageCountModel *model, NSError *error) {
+            YYCache *cache = [YYCache cacheWithName:QTDataCache];
+            if (error == nil) {
+                self.dotView.hidden = NO;
+                if (model.count == 0) {
+                    self.dotView.hidden = YES;
+                }
+                [cache setObject:[NSNumber numberWithInteger:model.count] forKey:QTMessageCount];
+            } else {
+                self.dotView.hidden = YES;
+                [cache setObject:[NSNumber numberWithInteger:0] forKey:QTMessageCount];
+            }
+        }];
+    } else {
+        self.avatarView.image = QuickTalk_DEFAULT_IMAGE;
+        self.nameLabel.text = @"您尚未登录";
+        self.arrowView.hidden = YES;
+        self.dotView.hidden = YES;
+    }
+}
+
+- (void)tapingToMyView
+{
+    if ([QTUserInfo sharedInstance].isLogin) {
+        QTUserController *userController = [[QTUserController alloc] init];
+        userController.userUUID = [QTUserInfo sharedInstance].uuid;
+        userController.nickname = [QTUserInfo sharedInstance].nickname;
+        [self.navigationController pushViewController:userController animated:YES];
+    } else {
+        [[QTUserInfo sharedInstance] checkLoginStatus:self];
+    }
 }
 
 #pragma mark - TableView Delegate And DataSource
@@ -343,15 +395,6 @@
     [self addReadCountAction:indexPath.section];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.onScrollingHandler && self.dataList.count >= 10) {
-        self.onScrollingHandler(scrollView.contentOffset.y);
-    }
-}
-
 #pragma mark - Action
 
 - (void)addAction
@@ -403,6 +446,106 @@
     return _errorView;
 }
 
+- (UIView *)headerView
+{
+    if (_headerView == nil) {
+        _headerView = ({
+            UIView *view = [[UIView alloc] init];
+            view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 100);
+            view.backgroundColor = [UIColor clearColor];
+            
+            UIView *backgroundView = [[UIView alloc] init];
+            backgroundView.backgroundColor = [UIColor whiteColor];
+            [view addSubview:backgroundView];
+            [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.and.top.and.right.equalTo(view);
+                make.bottom.equalTo(view).offset(-5);
+            }];
+            
+            [backgroundView addSubview:self.avatarView];
+            [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(50);
+                make.left.mas_equalTo(10);
+                make.centerY.equalTo(backgroundView);
+            }];
+            [backgroundView addSubview:self.nameLabel];
+            [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.avatarView);
+                make.left.equalTo(self.avatarView.mas_right).offset(10);
+                make.width.mas_greaterThanOrEqualTo(100);
+                make.height.mas_equalTo(30);
+            }];
+            
+            [backgroundView addSubview:self.arrowView];
+            [self.arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(14);
+                make.centerY.equalTo(backgroundView);
+                make.right.equalTo(backgroundView).offset(-15);
+            }];
+            [backgroundView addSubview:self.dotView];
+            [self.dotView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.and.height.mas_equalTo(8);
+                make.centerY.equalTo(backgroundView);
+                make.right.equalTo(self.arrowView).offset(-18);
+            }];
+            
+            UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapingToMyView)];
+            [view addGestureRecognizer:gesture];
+            view;
+        });
+    }
+    return _headerView;
+}
+
+- (UIImageView *)avatarView
+{
+    if (_avatarView == nil) {
+        _avatarView = [[UIImageView alloc] init];
+        _avatarView.layer.cornerRadius = 4;
+        _avatarView.layer.masksToBounds = YES;
+    }
+    return _avatarView;
+}
+
+- (UILabel *)nameLabel
+{
+    if (_nameLabel == nil) {
+        _nameLabel = ({
+            UILabel *label = [[UILabel alloc] init];
+            label.textColor = [UIColor colorFromHexValue:0x5a6e97];
+            label.font = [UIFont systemFontOfSize:15];
+            label;
+        });
+    }
+    return _nameLabel;
+}
+
+- (UIImageView *)arrowView
+{
+    if (_arrowView == nil) {
+        _arrowView = ({
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.image = [[[UIImage imageNamed:@"left"] imageRotatedByDegrees:180]
+                               imageWithTintColor:[UIColor colorFromHexValue:0x999999]];
+            imageView;
+        });
+    }
+    return _arrowView;
+}
+
+- (UIView *)dotView
+{
+    if (_dotView == nil) {
+        _dotView = ({
+            UIView *view = [[UIView alloc] init];
+            view.backgroundColor = [UIColor colorFromHexValue:0xFF4F4F];
+            view.layer.cornerRadius = 4;
+            view;
+        });
+    }
+    return _dotView;
+}
+
+
+
 @end
-
-

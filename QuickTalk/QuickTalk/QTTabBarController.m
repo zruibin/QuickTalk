@@ -8,7 +8,7 @@
 
 #import "QTTabBarController.h"
 #import "QTNewsController.h"
-#import "QTUserPostMainController.h"
+#import "QTUserPostStarController.h"
 #import "QTMyController.h"
 
 @interface QTTabBarController () <UITabBarControllerDelegate>
@@ -30,8 +30,7 @@
     QTNewsController *newsController = [[QTNewsController alloc] init];
     QTNavigationController *newsNav = [[QTNavigationController alloc] initWithRootViewController:newsController];
     
-    QTUserPostMainController *userPostController = [[QTUserPostMainController alloc] init];
-    userPostController.showHeader = YES;
+    QTUserPostStarController *userPostController = [[QTUserPostStarController alloc] init];
     QTNavigationController *userPostNav = [[QTNavigationController alloc] initWithRootViewController:userPostController];
     
     QTMyController *myController = [[QTMyController alloc] init];

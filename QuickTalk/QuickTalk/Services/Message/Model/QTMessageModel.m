@@ -62,7 +62,7 @@
                 if (code == CODE_SUCCESS) {
                     model = [QTMessageCountModel yy_modelWithJSON:responseObject[@"data"]];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -96,7 +96,7 @@
                 if (code == CODE_SUCCESS) {
                     listModel = [QTMessageListModel yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;

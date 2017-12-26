@@ -34,7 +34,7 @@
                 if (code == CODE_SUCCESS) {
                     userInfo = [QTAccountInfo yy_modelWithJSON:responseObject[@"data"]];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -63,7 +63,7 @@
                 if (code == CODE_SUCCESS) {
                     userInfo = [QTAccountInfo yy_modelWithJSON:responseObject[@"data"]];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -100,7 +100,7 @@
                 if (code == CODE_SUCCESS) {
                     accountInfo = [QTAccountInfo yy_modelWithJSON:responseObject[@"data"]];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -137,7 +137,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -175,7 +175,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -213,7 +213,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -254,7 +254,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -289,7 +289,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -324,7 +324,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -353,7 +353,7 @@
                 if (code == CODE_SUCCESS) {
                     dict = responseObject[@"data"];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;

@@ -27,6 +27,8 @@ static NSDate *refreshDate = nil;
 @property (nonatomic, assign, readwrite) BOOL hiddenData;
 
 - (void)checkHidden;
+- (void)bindNotificationDevice;
+- (void)unBindNotificationDevice;
 
 @end
 
@@ -81,6 +83,7 @@ static NSDate *refreshDate = nil;
     [SAMKeychain setPassword:password forService:kQTLoginServiceName account:kQTLoginPassword];
     [SAMKeychain setPassword:type forService:kQTLoginServiceName account:kQTLoginType];
     [[NSNotificationCenter defaultCenter] postNotificationName:QTLoginStatusChangeNotification object:nil];
+    [self bindNotificationDevice];
 }
 
 - (void)loginWithThirdPart:(QTAccountInfo *)userInfo openId:(NSString *)openId type:(NSString *)type
@@ -91,6 +94,7 @@ static NSDate *refreshDate = nil;
 
 - (void)logout
 {
+    [self unBindNotificationDevice];
     self.loginStatus = NO;
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginAccount];
     [SAMKeychain deletePasswordForService:kQTLoginServiceName account:kQTLoginPassword];
@@ -167,7 +171,7 @@ static NSDate *refreshDate = nil;
             if (code == CODE_SUCCESS) {
                 avatar = responseObject[@"data"][@"avatar"];
             } else {
-                error = [QTServiceCode error:code];
+                error = [QTServiceCode error:code message:responseObject[@"message"]];
             }
         } @catch (NSException *exception) {
             ;
@@ -179,29 +183,6 @@ static NSDate *refreshDate = nil;
             return;
         }
         completionHandler(nil, error);
-    }];
-}
-
-#pragma mark - Private
-
-- (void)checkHidden
-{
-    [QTNetworkAgent requestDataForQuickTalkService:@"/hidden" method:SERVICE_REQUEST_POST params:nil completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
-        if (error == nil) {
-            BOOL action = NO;
-            @try {
-                NSUInteger code = [responseObject[@"code"] integerValue];
-                if (code == CODE_SUCCESS) {
-                    action = [responseObject[@"data"][@"hidden"] boolValue];;
-                } else {
-                    error = [QTServiceCode error:code];
-                }
-            } @catch (NSException *exception) {
-                ;
-            } @finally {
-                self.hiddenData = action;
-            }
-        }
     }];
 }
 
@@ -228,7 +209,7 @@ static NSDate *refreshDate = nil;
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -239,6 +220,84 @@ static NSDate *refreshDate = nil;
     }];
 }
 
+#pragma mark - Private
+
+- (void)checkHidden
+{
+    [QTNetworkAgent requestDataForQuickTalkService:@"/hidden" method:SERVICE_REQUEST_POST params:nil completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error == nil) {
+            BOOL action = NO;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    action = [responseObject[@"data"][@"hidden"] boolValue];;
+                } else {
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                self.hiddenData = action;
+            }
+        }
+    }];
+}
+
+- (void)bindNotificationDevice
+{
+    if (self.uuid.length == 0 || self.deviceId.length == 0) {
+        return ;
+    }
+    DLog(@"bindNotificationDevice...");
+    DLog(@"uuid: %@, deviceId: %@", self.uuid, self.deviceId);
+    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId};
+    [QTNetworkAgent requestDataForAccountService:@"/addDevice" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error == nil) {
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    DLog(@"bind device success...");
+                } else {
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
+                    DLog(@"error: %@", error.userInfo[ERROR_MESSAGE]);
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                ;
+            }
+        }
+    }];
+}
+
+- (void)unBindNotificationDevice
+{
+    if (self.uuid.length == 0 || self.deviceId.length == 0) {
+        return ;
+    }
+    DLog(@"unBindNotificationDevice...");
+    DLog(@"uuid: %@, deviceId: %@", self.uuid, self.deviceId);
+    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId};
+    [QTNetworkAgent requestDataForAccountService:@"/deleteDevice" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (error == nil) {
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    DLog(@"unbind device success...");
+                } else {
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
+                    DLog(@"error: %@", error.userInfo[ERROR_MESSAGE]);
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                ;
+            }
+        }
+    }];
+}
+
+
 #pragma mark - setter and getter
 
 - (NSString *)nickname
@@ -247,6 +306,12 @@ static NSDate *refreshDate = nil;
         _nickname = [NSString stringWithFormat:@"用户%@", self._id];
     }
     return _nickname;
+}
+
+- (void)setDeviceId:(NSString *)deviceId
+{
+    _deviceId = deviceId;
+    [self bindNotificationDevice];
 }
 
 @end

@@ -52,7 +52,7 @@
                 if (code == CODE_SUCCESS) {
                     userInfo = [QTUserModel yy_modelWithJSON:responseObject[@"data"]];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -81,7 +81,7 @@
                 if (code == CODE_SUCCESS) {
                     list = [QTUserListModel yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -110,7 +110,7 @@
                 if (code == CODE_SUCCESS) {
                     tempDict = [responseObject[@"data"] copy];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -139,7 +139,7 @@
                 if (code == CODE_SUCCESS) {
                     tempDict = [responseObject[@"data"] copy];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -169,7 +169,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -201,7 +201,7 @@
                 if (code == CODE_SUCCESS) {
                     list = [QTUserListModel yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -238,7 +238,7 @@
                 if (code == CODE_SUCCESS) {
                     list = [QTUserListModel yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -275,7 +275,7 @@
                 if (code == CODE_SUCCESS) {
                     list = [QTUserListModel yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;

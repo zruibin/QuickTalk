@@ -12,6 +12,5 @@
 
 @property (nonatomic, copy) NSString *userUUID;
 @property (nonatomic, copy) void (^onScrollingHandler)(CGFloat offsetY);
-@property (nonatomic, assign) BOOL showHeader;
 
 @end

@@ -56,7 +56,6 @@
        completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//  @{@"index": [NSNumber numberWithInteger:page]};
     [params setObject:[NSNumber numberWithInteger:page] forKey:@"index"];
     if (relationUserUUID.length > 0) {
         [params setObject:relationUserUUID forKey:@"relation_user_uuid"];
@@ -77,7 +76,7 @@
                 if (code == CODE_SUCCESS) {
                     listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -88,6 +87,41 @@
     }];
 }
 
++ (void)requestStarUserPostData:(NSUInteger)page userUUID:(NSString *)userUUID
+           relationUserUUID:(NSString *)relationUserUUID
+          completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"index"];
+    if (relationUserUUID.length > 0) {
+        [params setObject:relationUserUUID forKey:@"relation_user_uuid"];
+    }
+    if (userUUID.length > 0) {
+        [params setObject:userUUID forKey:@"user_uuid"];
+    }
+    [QTNetworkAgent requestDataForUserPostService:@"/starUserPostList" method:SERVICE_REQUEST_GET params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserPostModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(listModel.data, error);
+            }
+        }
+    }];
+}
 
 + (void)requestAddUserPost:(NSString *)userUUID
                                   title:(NSString *)title
@@ -112,7 +146,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -141,7 +175,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -169,7 +203,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -199,7 +233,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -232,7 +266,7 @@
                 if (code == CODE_SUCCESS) {
                     listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -262,7 +296,7 @@
                 if (code == CODE_SUCCESS) {
                     action = YES;
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;
@@ -299,7 +333,7 @@
                 if (code == CODE_SUCCESS) {
                     listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
                 } else {
-                    error = [QTServiceCode error:code];
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
                 }
             } @catch (NSException *exception) {
                 ;

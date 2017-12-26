@@ -30,6 +30,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 @property (nonatomic, copy) NSString *weibo;
 @property (nonatomic, copy) NSString *area;
 @property (nonatomic, assign) NSInteger gender;
+@property (nonatomic, copy) NSString *deviceId;
 
 + (instancetype)sharedInstance;
 
