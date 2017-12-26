@@ -253,10 +253,14 @@
             if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
                 NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
                 if (![urlString isEqualToString:board.string]) {
-                    [self addAction];
+                    QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
+                    QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
+                    [self presentViewController:nav animated:YES completion:nil];
                 }
             } else {
-                [self addAction];
+                QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
+                QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
+                [self presentViewController:nav animated:YES completion:nil];
             }
         }
     });

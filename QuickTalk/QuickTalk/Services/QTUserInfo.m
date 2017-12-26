@@ -252,7 +252,7 @@ static NSDate *refreshDate = nil;
     }
     DLog(@"bindNotificationDevice...");
     DLog(@"uuid: %@, deviceId: %@", self.uuid, self.deviceId);
-    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId};
+    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId, @"type": @"4"};
     [QTNetworkAgent requestDataForAccountService:@"/addDevice" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (error == nil) {
             @try {
@@ -279,7 +279,7 @@ static NSDate *refreshDate = nil;
     }
     DLog(@"unBindNotificationDevice...");
     DLog(@"uuid: %@, deviceId: %@", self.uuid, self.deviceId);
-    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId};
+    NSDictionary *params = @{@"user_uuid": self.uuid, @"deviceId": self.deviceId, @"type": @"4"};
     [QTNetworkAgent requestDataForAccountService:@"/deleteDevice" method:SERVICE_REQUEST_POST params:params completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (error == nil) {
             @try {
