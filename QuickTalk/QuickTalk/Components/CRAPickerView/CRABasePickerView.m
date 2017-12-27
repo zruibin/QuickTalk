@@ -103,7 +103,7 @@ const NSUInteger kTopViewHeight = 44;
         _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.0f];
         [_rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_rightBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        [_rightBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [_rightBtn setTitle:@"保存" forState:UIControlStateNormal];
         [_rightBtn addTarget:self action:@selector(clickRightBtn) forControlEvents:UIControlEventTouchUpInside];
     }
     return _rightBtn;
