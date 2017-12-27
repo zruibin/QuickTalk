@@ -21,7 +21,7 @@ from lib.BPush.Channel import *
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
-DEPLOY_STATUS = 1
+DEPLOY_STATUS = 1 # int 可取值1（开发状态）和2（生产状态）仅iOS推送使用。
 
 @celery.task
 def dispatchNotificationLikeForUserPost(userUUID, reciveUserUUID):
@@ -31,7 +31,7 @@ def dispatchNotificationLikeForUserPost(userUUID, reciveUserUUID):
     if dataDict != None:
         if dataDict["status"] == Config.STATUS_ON: 
             msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_LIKE)
-            __pushMsgToSingleDevice(dataDict, msg)
+            __pushNotification(dataDict, msg)
     pass
 
 
@@ -43,7 +43,7 @@ def dispatchNotificationUserStar(userUUID, reciveUserUUID):
     if dataDict != None:
         if dataDict["status"] == Config.STATUS_ON:
             msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_NEW_STAR)
-            __pushMsgToSingleDevice(dataDict, msg)
+            __pushNotification(dataDict, msg)
     pass
 
 
@@ -55,7 +55,7 @@ def dispatchNotificationCommentForUserPost(userUUID, reciveUserUUID):
     if dataDict != None:
         if dataDict["status"] == Config.STATUS_ON: 
             msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_COMMENT)
-            __pushMsgToSingleDevice(dataDict, msg)
+            __pushNotification(dataDict, msg)
     pass
 
 
@@ -65,8 +65,10 @@ def dispatchNotificationNewShare(userUUID):
     print "%s发表了新分享" % (userUUID)
     dataList = __queryNewShareDataList(userUUID)
     if len(dataList) > 0:
-        __pushBatchUniMsg(dataList)
+        msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_NEW_SHARE)
+        __pushNotification(dataList, msg)
     pass
+
 
 
 def __querySingleData(userUUID, reciveUserUUID, typeStr):
@@ -114,6 +116,19 @@ def __queryNewShareDataList(userUUID):
     return dataList
 
 
+def __pushNotification(typeData, msg):
+    if type(typeData) == dict:
+        __pushMsgToSingleDevice(typeData, msg)
+    if type(typeData) == list:
+        # if len(typeData) == 1:
+        #     __pushMsgToSingleDevice(typeData[0], msg)
+        # else:
+        # __pushBatchUniMsg(typeData, msg)
+        for data in typeData:
+            __pushMsgToSingleDevice(data, msg)
+    pass
+
+
 def __pushMsgToSingleDevice(dataDict, msg):
     """
         根据channel_id，向单个设备推送消息
@@ -122,9 +137,9 @@ def __pushMsgToSingleDevice(dataDict, msg):
         msg: 创建消息内容
     """
     # 消息控制选项。
-    opts = {'msg_type':1, 'expires':300}
+    opts = {'msg_type':1, 'expires':3600}
     if str(dataDict["type"]) == "4":
-        opts = {'msg_type':1, 'expires':300, 'deploy_status':DEPLOY_STATUS}
+        opts = {'msg_type':1, 'expires':3600, 'deploy_status':DEPLOY_STATUS}
     print opts
     # 服务端唯一分配的channel id
     channelId = dataDict["deviceId"]
@@ -142,21 +157,11 @@ def __pushMsgToSingleDevice(dataDict, msg):
         print e.getLastErrorMsg()
 
 
-def __pushBatchUniMsg(dataList):
+def __pushBatchUniMsg(dataList, msg):
     """ 
         批量单播，向一组指定的设备(channel_id)，发送一条消息
         参考：http://push.baidu.com/doc/python/api
     """
-    # 创建消息内容
-    msg = "发表了新分享"
-
-    userId = dataList[0]["id"]
-    nickname = dataList[0]["nickname"]
-    if nickname == None:
-        msg = "%s发表了新分享" % ("用户"+str(userId))
-    else:
-        msg = "%s发表了新分享" % nickname
-
     # channel_id列表
     androidChannelIds = []
     iOSChannelIds = []
@@ -170,7 +175,7 @@ def __pushBatchUniMsg(dataList):
     msg = __covertMsg(msg, data["type"])
 
     # 消息控制选项
-    androidOpts = {'msg_type':1, 'expires':300}
+    androidOpts = {'msg_type':1, 'expires':3600}
     iOSOpts = androidOpts #{'msg_type':1, 'expires':300, 'deploy_status':DEPLOY_STATUS}
     androidChannel = Channel("3")
     iOSChannel = Channel("4")
@@ -186,6 +191,7 @@ def __pushBatchUniMsg(dataList):
     except ChannelException as e:
         print e.getLastErrorCode()
         print e.getLastErrorMsg()
+    
 
 
 def __packageMsg(dataDict, typeStr):
@@ -199,6 +205,8 @@ def __packageMsg(dataDict, typeStr):
         subMsg = "关注了你"
     if typeStr == Config.NOTIFICATION_FOR_COMMENT:
         subMsg = "评论了你的分享"
+    if typeStr == Config.NOTIFICATION_FOR_NEW_SHARE:
+        subMsg = "发表了新分享"
 
     msg = "notification..."
     if nickname == None:

@@ -24,7 +24,7 @@ from valid import validOptDict,validParam,nullOk
 class Channel(object):
 
     #baidu push 域名
-    HOST = 'api.push.baidu.com'
+    HOST = 'api.tuisong.baidu.com'
 
     #应用key，从百度开发者中心获得,是创建Channel的必须参数
     API_KEY = 'apikey'
