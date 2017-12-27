@@ -192,8 +192,30 @@
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         } else {
-            if (model.liked) {
-                [self.dataList removeObject:model];
+            if ([self.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
+                if (model.liked) {
+                    [self.dataList removeObject:model];
+                }
+            } else {
+                if (model.liked) {
+                    NSMutableArray *likeList = [NSMutableArray array];
+                    for (QTUserPostLikeModel *likeMode in model.likeList) {
+                        if ([likeMode.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid] == NO) {
+                            [likeList addObject:likeMode];
+                        }
+                    }
+                    model.likeList = [likeList copy];
+                } else {
+                    QTUserPostLikeModel *likeMode = [[QTUserPostLikeModel alloc] init];
+                    likeMode.userUUID = [QTUserInfo sharedInstance].uuid;
+                    likeMode.nickname = [QTUserInfo sharedInstance].nickname;
+                    likeMode.avatar = [QTUserInfo sharedInstance].avatar;
+                    likeMode.userId = [QTUserInfo sharedInstance]._id;
+                    NSMutableArray *likeList = [NSMutableArray arrayWithArray:model.likeList];
+                    [likeList addObject:likeMode];
+                    model.likeList = [likeList copy];
+                }
+                [self.cacheHeightDict removeAllObjects];
             }
             model.liked = !model.liked;
             [self.tableView reloadData];

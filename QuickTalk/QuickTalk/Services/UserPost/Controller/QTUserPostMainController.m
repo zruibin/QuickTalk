@@ -269,6 +269,7 @@
                 [likeList addObject:likeMode];
                 model.likeList = [likeList copy];
             }
+            [self.cacheHeightDict removeAllObjects];
             model.liked = !model.liked;
             [self.tableView reloadData];
         }
