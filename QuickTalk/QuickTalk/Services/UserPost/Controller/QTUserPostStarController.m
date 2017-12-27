@@ -247,20 +247,22 @@
 {
     //防止登录延时问题
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        UIPasteboard *board = [UIPasteboard generalPasteboard];
-        YYCache *cache = [YYCache cacheWithName:QTDataCache];
-        if ([board.string isValidUrl]) {
-            if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
-                NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
-                if (![urlString isEqualToString:board.string]) {
+        if ([QTUserInfo sharedInstance].isLogin) {
+            UIPasteboard *board = [UIPasteboard generalPasteboard];
+            YYCache *cache = [YYCache cacheWithName:QTDataCache];
+            if ([board.string isValidUrl]) {
+                if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
+                    NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
+                    if (![urlString isEqualToString:board.string]) {
+                        QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
+                        QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
+                        [self presentViewController:nav animated:YES completion:nil];
+                    }
+                } else {
                     QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
                     QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
                     [self presentViewController:nav animated:YES completion:nil];
                 }
-            } else {
-                QTUserPostAddController *addController = [[QTUserPostAddController alloc] init];
-                QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:addController];
-                [self presentViewController:nav animated:YES completion:nil];
             }
         }
     });
@@ -280,6 +282,24 @@
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         } else {
+            if (model.liked) {
+                NSMutableArray *likeList = [NSMutableArray array];
+                for (QTUserPostLikeModel *likeMode in model.likeList) {
+                    if ([likeMode.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid] == NO) {
+                        [likeList addObject:likeMode];
+                    }
+                }
+                model.likeList = [likeList copy];
+            } else {
+                QTUserPostLikeModel *likeMode = [[QTUserPostLikeModel alloc] init];
+                likeMode.userUUID = [QTUserInfo sharedInstance].uuid;
+                likeMode.nickname = [QTUserInfo sharedInstance].nickname;
+                likeMode.avatar = [QTUserInfo sharedInstance].avatar;
+                likeMode.userId = [QTUserInfo sharedInstance]._id;
+                NSMutableArray *likeList = [NSMutableArray arrayWithArray:model.likeList];
+                [likeList addObject:likeMode];
+                model.likeList = [likeList copy];
+            }
             model.liked = !model.liked;
             [self.tableView reloadData];
         }

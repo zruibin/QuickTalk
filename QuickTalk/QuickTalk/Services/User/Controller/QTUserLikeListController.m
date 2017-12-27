@@ -192,6 +192,9 @@
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
         } else {
+            if (model.liked) {
+                [self.dataList removeObject:model];
+            }
             model.liked = !model.liked;
             [self.tableView reloadData];
         }

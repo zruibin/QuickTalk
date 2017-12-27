@@ -134,8 +134,9 @@
     [self.likeButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.readLabel);
         make.right.equalTo(self.contentView).offset(-20);
-        make.width.and.height.mas_equalTo(18);
+        make.width.and.height.mas_equalTo(30);
     }];
+    self.likeButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
 #pragma mark - Private
@@ -176,8 +177,8 @@
     } else {
         image = [[UIImage imageNamed:@"unlike"] imageWithTintColor:[UIColor colorFromHexValue:0x999999]];
     }
-    [self.likeButton setBackgroundImage:image forState:UIControlStateNormal];
-    [self.likeButton setBackgroundImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
+    [self.likeButton setImage:image forState:UIControlStateNormal];
+    [self.likeButton setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
                       forState:UIControlStateHighlighted];
     
     __weak typeof(self) weakSelf = self;
@@ -452,10 +453,11 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.translatesAutoresizingMaskIntoConstraints = NO;
             UIImage *image = [UIImage imageNamed:@"like"];
-            [button setBackgroundImage:image forState:UIControlStateNormal];
-            [button setBackgroundImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
+            [button setImage:image forState:UIControlStateNormal];
+            [button setImage:[image imageWithTintColor:QuickTalk_MAIN_COLOR]
                               forState:UIControlStateHighlighted];
             button.userInteractionEnabled = YES;
+//            button.backgroundColor = [UIColor yellowColor];
             [button addTarget:self action:@selector(didLikeHandlerAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
