@@ -36,12 +36,24 @@ def addUserPost():
 def __storageUserPost(title, content, userUUID, txt):
     uuid = generateUUID()
     time = generateCurrentTime()
+    sqlList = []
+    argsList = []
+
     insertSQL = "INSERT INTO t_quickTalk_userPost (uuid, user_uuid, title, txt, content, time) VALUES (%s, %s, %s, %s, %s, %s)"
     args = [uuid, userUUID, title, txt, content, time]
+    sqlList.append(insertSQL)
+    argsList.append(args)
+
+    if txt != None or len(txt) != 0:
+        commentUUID = generateUUID()
+        insertFirstCommentSQL = "INSERT INTO t_quickTalk_userPost_comment (uuid, user_uuid, userPost_uuid, content, isReply, reply_uuid, time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        firstCommentArgs = [commentUUID, userUUID, uuid, txt, Config.TYPE_FOR_COMMENT_DEFAULT, "", time]
+        sqlList.append(insertFirstCommentSQL)
+        argsList.append(firstCommentArgs)
         
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        result = dbManager.executeTransactionDmlWithArgs(insertSQL, args)
+        dbManager.executeTransactionMutltiDmlWithArgsList(sqlList, argsList)
         # 远程通知
         dispatchNotificationNewShare.delay(userUUID)
     except Exception as e:
