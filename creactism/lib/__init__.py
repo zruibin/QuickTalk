@@ -3,8 +3,8 @@
 #
 # __init__.py
 #
-# Created by ruibin.chow on 2017/12/19.
-# Copyright (c) 2017年 ruibin.chow All rights reserved.
+# Created by zruibin on 2017/07/24.
+# Copyright (c) 2017年 zruibin All rights reserved.
 # 
 
 """

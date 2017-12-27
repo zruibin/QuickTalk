@@ -16,53 +16,50 @@ from dispatch import celery
 from config import *
 from module.database import DB
 from module.log.Log import Loger
-from lib.BPush.Channel import *
+from lib.CreactismPush import pushMessageToList
 
-reload(sys)  
-sys.setdefaultencoding('utf8')
-
-DEPLOY_STATUS = 1 # int 可取值1（开发状态）和2（生产状态）仅iOS推送使用。
 
 @celery.task
 def dispatchNotificationLikeForUserPost(userUUID, reciveUserUUID):
     """赞，xx赞了你的分享"""
-    print "%s赞了你的分享(%s)" % (userUUID, reciveUserUUID)
-    dataDict = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_LIKE)
-    if dataDict != None:
-        if dataDict["status"] == Config.STATUS_ON: 
-            msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_LIKE)
-            __pushNotification(dataDict, msg)
+    if Config.DEBUG:
+        print "%s赞了你的分享(%s)" % (userUUID, reciveUserUUID)
+    dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_LIKE)
+    if len(dataList) > 0:
+        msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_LIKE)
+        __pushNotification(dataList, msg)
     pass
 
 
 @celery.task
 def dispatchNotificationUserStar(userUUID, reciveUserUUID):
     """关注，xx关注了你"""
-    print "%s关注了你(%s)" % (userUUID, reciveUserUUID)
-    dataDict = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_NEW_STAR)
-    if dataDict != None:
-        if dataDict["status"] == Config.STATUS_ON:
-            msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_NEW_STAR)
-            __pushNotification(dataDict, msg)
+    if Config.DEBUG:
+        print "%s关注了你(%s)" % (userUUID, reciveUserUUID)
+    dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_NEW_STAR)
+    if len(dataList) > 0:
+        msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_NEW_STAR)
+        __pushNotification(dataList, msg)
     pass
 
 
 @celery.task
 def dispatchNotificationCommentForUserPost(userUUID, reciveUserUUID):
     """评论，xx评论了你"""
-    print "%s评论了你(%s)" % (userUUID, reciveUserUUID)
-    dataDict = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_COMMENT)
-    if dataDict != None:
-        if dataDict["status"] == Config.STATUS_ON: 
-            msg = __packageMsg(dataDict, Config.NOTIFICATION_FOR_COMMENT)
-            __pushNotification(dataDict, msg)
+    if Config.DEBUG:
+        print "%s评论了你(%s)" % (userUUID, reciveUserUUID)
+    dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_COMMENT)
+    if len(dataList) > 0:
+        msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_COMMENT)
+        __pushNotification(dataList, msg)
     pass
 
 
 @celery.task
 def dispatchNotificationNewShare(userUUID):
     """关注的人新的分享，xx发表了新分享"""
-    print "%s发表了新分享" % (userUUID)
+    if Config.DEBUG:
+        print "%s发表了新分享" % (userUUID)
     dataList = __queryNewShareDataList(userUUID)
     if len(dataList) > 0:
         msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_NEW_SHARE)
@@ -82,15 +79,14 @@ def __querySingleData(userUUID, reciveUserUUID, typeStr):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid='%s'
     """ % (userUUID, reciveUserUUID, str(typeStr), reciveUserUUID)
-    dataDict = None
+    # print querySQL
+    dataList = None
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataList = dbManager.executeSingleQuery(querySQL)
-        if len(dataList) > 0:
-            dataDict = dataList[0]
     except Exception as e:
         print e
-    return dataDict
+    return dataList
 
 
 def __queryNewShareDataList(userUUID):
@@ -107,6 +103,7 @@ def __queryNewShareDataList(userUUID):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid=t_quickTalk_user_user.user_uuid
     """ % (userUUID, Config.NOTIFICATION_FOR_NEW_SHARE)
+    # print querySQL
     dataList = []
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -116,81 +113,14 @@ def __queryNewShareDataList(userUUID):
     return dataList
 
 
-def __pushNotification(typeData, msg):
-    if type(typeData) == dict:
-        __pushMsgToSingleDevice(typeData, msg)
-    if type(typeData) == list:
-        # if len(typeData) == 1:
-        #     __pushMsgToSingleDevice(typeData[0], msg)
-        # else:
-        # __pushBatchUniMsg(typeData, msg)
-        for data in typeData:
-            __pushMsgToSingleDevice(data, msg)
-    pass
-
-
-def __pushMsgToSingleDevice(dataDict, msg):
-    """
-        根据channel_id，向单个设备推送消息
-        参考：http://push.baidu.com/doc/python/api
-
-        msg: 创建消息内容
-    """
-    # 消息控制选项。
-    opts = {'msg_type':1, 'expires':3600}
-    if str(dataDict["type"]) == "4":
-        opts = {'msg_type':1, 'expires':3600, 'deploy_status':DEPLOY_STATUS}
-    print opts
-    # 服务端唯一分配的channel id
-    channelId = dataDict["deviceId"]
-
-    msg = __covertMsg(msg, dataDict["type"])
-
-    c = Channel(str(dataDict["type"]))
-    # 发送
-    try:
-        # print channelId, msg
-        ret = c.pushMsgToSingleDevice(str(channelId), msg, opts)
-        print ret # 将打印出 msg_id 及 send_time 的 timestamp
-    except ChannelException as e:
-        print e.getLastErrorCode()
-        print e.getLastErrorMsg()
-
-
-def __pushBatchUniMsg(dataList, msg):
-    """ 
-        批量单播，向一组指定的设备(channel_id)，发送一条消息
-        参考：http://push.baidu.com/doc/python/api
-    """
-    # channel_id列表
-    androidChannelIds = []
-    iOSChannelIds = []
+def __pushNotification(dataList, msg):
+    deviceIdList = []
     for data in dataList:
         if data["status"] == Config.STATUS_ON: 
-            if str(data["type"]) == "3":
-                androidChannelIds.append(str(data["deviceId"]))
-            else:
-                iOSChannelIds.append(str(data["deviceId"]))
-
-    msg = __covertMsg(msg, data["type"])
-
-    # 消息控制选项
-    androidOpts = {'msg_type':1, 'expires':3600}
-    iOSOpts = androidOpts #{'msg_type':1, 'expires':300, 'deploy_status':DEPLOY_STATUS}
-    androidChannel = Channel("3")
-    iOSChannel = Channel("4")
-    # 发送
-    try:
-        if len(androidChannelIds) > 0:
-            androidRet = androidChannel.pushBatchUniMsg(androidChannelIds, msg, androidOpts)
-            print androidRet # 将打印出 msg_id 及 send_time 的 timestamp
-        if len(iOSChannelIds) > 0:
-            iOSRet = iOSChannel.pushBatchUniMsg(iOSChannelIds, msg, iOSOpts)
-            print iOSRet # 将打印出 msg_id 及 send_time 的 timestamp
-            print iOSChannel.queryMsgStatus(iOSRet["msg_id"])
-    except ChannelException as e:
-        print e.getLastErrorCode()
-        print e.getLastErrorMsg()
+            deviceIdList.append(data["deviceId"])
+    if len(deviceIdList) > 0:
+        pushMessageToList(deviceIdList, msg)
+    pass
     
 
 
@@ -225,6 +155,8 @@ def __covertMsg(msg, typeStr):
         msgDict = {"aps": {"alert": msg, "sound":"default"}}
     msg = json.dumps(msgDict)
     return msg
+
+
 
 
 if __name__ == '__main__':

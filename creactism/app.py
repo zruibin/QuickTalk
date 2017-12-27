@@ -11,15 +11,20 @@
 
 """
 
+import sys, os
+reload(sys) # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入 
+sys.setdefaultencoding('utf-8') 
+
+# 第三方库
+# sys.path.append(sys.path[0] + "/lib/pygetui")
+sys.path.append("./lib")
+sys.path.append("./lib/pygetui")
+
 from flask import Flask, make_response, request
 from flask_cors import CORS, cross_origin
 from config import *
 import register
 from common.tools import jsonTool
-
-import sys 
-reload(sys) # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入 
-sys.setdefaultencoding('utf-8') 
 
 
 app = Flask(__name__)

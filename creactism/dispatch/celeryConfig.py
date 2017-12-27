@@ -15,6 +15,10 @@ from config import *
 from datetime import timedelta
 from celery.schedules import crontab
 
+import sys
+# 第三方库
+sys.path.append("./lib")
+sys.path.append("./lib/pygetui")
 
 CeleryDB = Config.CACHE_DB + "://:" + Config.CACHE_PASSWORD + "@" + Config.CACHE_HOST + ":" + str(Config.CACHE_PORT)
 
