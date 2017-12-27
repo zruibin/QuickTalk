@@ -12,7 +12,6 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-static BOOL isBackGroundActivateApplication;
 
 @interface AppDelegate ()
 
@@ -127,7 +126,24 @@ static BOOL isBackGroundActivateApplication;
                                  }
                              }];
     
-    /*百度推送*/
+    /*个推推送*/
+#if DEBUG
+    NSString *kGTAppId = @"kYv84fJnrV5bv5YFpU6sP";
+    NSString *kGTAppKey = @"jyZbxI4IwJ8Qj3DQkPIZi2";
+    NSString *kGTAppSecret = @"wKnEQCeRXxAqkEUThku0n8";
+#else
+    NSString *kGTAppId = @"l0QOBnBOQv5XM1T2nLtNa8";
+    NSString *kGTAppKey = @"N97fhuONXk9tCgUnuXyg52";
+    NSString *kGTAppSecret = @"aypFVAwzmRAoXG9BALwS29";
+#endif
+    // [ GTSdk ]：是否允许APP后台运行
+//        [GeTuiSdk runBackgroundEnable:YES];
+    // [ GTSdk ]：是否运行电子围栏Lbs功能和是否SDK主动请求用户定位
+//    [GeTuiSdk lbsLocationEnable:YES andUserVerify:YES];
+    // [ GTSdk ]：自定义渠道
+//    [GeTuiSdk setChannelId:@"GT-Channel"];
+    // [ GTSdk ]：使用APPID/APPKEY/APPSECRENT启动个推
+    [GeTuiSdk startSdkWithAppId:kGTAppId appKey:kGTAppKey appSecret:kGTAppSecret delegate:self];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
         if (@available(iOS 10.0, *)) {
             UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
@@ -140,104 +156,107 @@ static BOOL isBackGroundActivateApplication;
                                           });
                                       }
                                   }];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
         }
     } else {
         UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
-    
-#if DEBUG
-    BPushMode pushMode = BPushModeDevelopment;
-#else
-    BPushMode pushMode = BPushModeProduction;
-#endif
-    // 在 App 启动时注册百度云推送服务，需要提供 Apikey
-    [BPush registerChannel:launchOptions apiKey:@"yORLvhoD8cNEVFqglaOGKxAd" pushMode:pushMode withFirstAction:nil withSecondAction:nil withCategory:nil useBehaviorTextInput:YES isDebug:YES];
-    // App 是用户点击推送消息启动
-    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (userInfo) {
-        DLog(@"从消息启动:%@",userInfo);
-        [BPush handleNotification:userInfo];
-    }
-    //角标清0
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
-/*此方法是用户点击了通知，应用在前台或者开启后台并且应用在后台时调起*/
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-        fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    //杀死状态下，直接跳转到跳转页面。
-    if (application.applicationState == UIApplicationStateInactive && !isBackGroundActivateApplication) {
-        DLog(@"applacation is unactive ===== %@",userInfo);
-    }
-    // 应用在后台。当后台设置aps字段里的 content-available 值为 1 并开启远程通知激活应用的选项
-    if (application.applicationState == UIApplicationStateBackground) {
-        isBackGroundActivateApplication = YES;
-        DLog(@"background is Activated Application ");
-    }
-    completionHandler(UIBackgroundFetchResultNewData);
-    DLog(@"backgroud : %@", userInfo);
-}
+#pragma mark - 远程通知(推送)回调
 
-/*在 iOS8 系统中，还需要添加这个方法。通过新的 API 注册推送服务*/
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-    [application registerForRemoteNotifications];
-}
-
+/** 远程通知注册成功委托 */
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    DLog(@"deviceToken:%@", deviceToken);
-    [BPush registerDeviceToken:deviceToken];
-    [BPush bindChannelWithCompleteHandler:^(id result, NSError *error) {
-        // 需要在绑定成功后进行 settag listtag deletetag unbind 操作否则会失败
-        if (error) { // 网络错误
-            return ;
-        }
-        if (result) {
-            // 确认绑定成功
-            if ([result[@"error_code"]intValue] != 0) {
-                return;
-            }
-            DLog(@"channelId: %@", [BPush getChannelId]);
-            [QTUserInfo sharedInstance].deviceId = [BPush getChannelId];
-//            [BPush setTag:@"Mytag" withCompleteHandler:^(id result, NSError *error) {
-//                if (result) {
-//                    DLog(@"设置tag成功");
-//                }
-//            }];
-        }
-    }];
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    DLog(@"\n>>>[DeviceToken Success]:%@\n\n", token);
+    // [ GTSdk ]：向个推服务器注册deviceToken
+    [GeTuiSdk registerDeviceToken:token];
 }
 
-/*当DeviceToken 获取失败时，系统会回调此方法*/
+/** 远程通知注册失败委托 */
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    DLog(@"DeviceToken 获取失败，原因：%@",error);
+    DLog(@"%@", [NSString stringWithFormat:@"didFailToRegisterForRemoteNotificationsWithError:%@", [error localizedDescription]]);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+#pragma mark - APP运行中接收到通知(推送)处理 - iOS 10以下版本收到推送
+
+/** APP已经接收到“远程”通知(推送) - (App运行在后台)  */
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    // App 收到推送的通知
-    [BPush handleNotification:userInfo];
-    // 应用在前台 或者后台开启状态下，不跳转页面，让用户选择。
-    if (application.applicationState == UIApplicationStateActive || application.applicationState == UIApplicationStateBackground) {
-        DLog(@"acitve or background");
-    }
-    else {//杀死状态下，直接跳转到跳转页面。
-
-    }
-    DLog(@"%@",userInfo);
+    // [ GTSdk ]：将收到的APNs信息传给个推统计
+    [GeTuiSdk handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+#pragma mark - iOS 10中收到推送消息
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+//  iOS 10: App在前台获取到通知
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
-    DLog(@"接收本地通知啦！！！");
-    [BPush showLocalNotificationAtFront:notification identifierKey:nil];
+    DLog(@"willPresentNotification：%@", notification.request.content.userInfo);
+    // 根据APP需要，判断是否要提示用户Badge、Sound、Alert
+    completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
 }
 
+//  iOS 10: 点击通知进入App时触发
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    DLog(@"didReceiveNotification：%@", response.notification.request.content.userInfo);
+    // [ GTSdk ]：将收到的APNs信息传给个推统计
+    [GeTuiSdk handleRemoteNotification:response.notification.request.content.userInfo];
+    completionHandler();
+}
+#endif
+
+
+#pragma mark - GeTuiSdkDelegate
+
+/** SDK启动成功返回cid */
+- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId
+{
+    // [ GTSdk ]：个推SDK已注册，返回clientId
+    DLog(@">>[GTSdk RegisterClient]:%@", clientId);
+    [QTUserInfo sharedInstance].deviceId = clientId;
+}
+
+/** SDK收到透传消息回调 */
+- (void)GeTuiSdkDidReceivePayloadData:(NSData *)payloadData andTaskId:(NSString *)taskId andMsgId:(NSString *)msgId andOffLine:(BOOL)offLine fromGtAppId:(NSString *)appId
+{
+    // [ GTSdk ]：汇报个推自定义事件(反馈透传消息)
+//    [GeTuiSdk sendFeedbackMessage:90001 andTaskId:taskId andMsgId:msgId];
+}
+
+/** SDK收到sendMessage消息回调 */
+- (void)GeTuiSdkDidSendMessage:(NSString *)messageId result:(int)result
+{
+    // 页面显示：上行消息结果反馈
+}
+
+/** SDK遇到错误回调 */
+- (void)GeTuiSdkDidOccurError:(NSError *)error
+{
+    // 页面显示：个推错误报告，集成步骤发生的任何错误都在这里通知，如果集成后，无法正常收到消息，查看这里的通知。
+    DLog(@"%@", [NSString stringWithFormat:@">>>[GexinSdk error]:%@", [error localizedDescription]]);
+}
+
+/** SDK运行状态通知 */
+- (void)GeTuiSDkDidNotifySdkState:(SdkStatus)aStatus
+{
+    // 页面显示更新通知SDK运行状态
+}
+
+/** SDK设置推送模式回调  */
+- (void)GeTuiSdkDidSetPushMode:(BOOL)isModeOff error:(NSError *)error
+{
+    DLog(@"%@", [NSString stringWithFormat:@">>>[SetModeOff error]: %@", [error localizedDescription]]);
+}
 
 @end
 
