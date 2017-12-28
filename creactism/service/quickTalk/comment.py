@@ -17,9 +17,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
+from common.auth import vertifyTokenHandle
 
 
 @quickTalk.route('/comment', methods=["GET", "POST"])
+@vertifyTokenHandle
 def comment():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     userUUID = getValueFromRequestByKey("user_uuid")

@@ -18,9 +18,11 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from dispatch.notification import dispatchNotificationNewShare
+from common.auth import vertifyTokenHandle
 
 
 @userPost.route('/addUserPost', methods=["POST"])
+@vertifyTokenHandle
 def addUserPost():
     title = getValueFromRequestByKey("title")
     content = getValueFromRequestByKey("content")

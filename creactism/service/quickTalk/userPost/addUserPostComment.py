@@ -18,9 +18,11 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from dispatch.notification import dispatchNotificationCommentForUserPost
+from common.auth import vertifyTokenHandle
 
 
 @userPost.route('/addUserPostComment', methods=["POST"])
+@vertifyTokenHandle
 def addUserPostComment():
     userPostUUID = getValueFromRequestByKey("userPost_uuid")
     userUUID = getValueFromRequestByKey("user_uuid")
