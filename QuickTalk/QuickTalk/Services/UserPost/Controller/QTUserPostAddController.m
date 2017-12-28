@@ -180,7 +180,7 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
+    [QTProgressHUD hide];
     self.hrefLabel.hidden = YES;
     self.pasteButton.hidden = NO;
     self.deleteButton.hidden = YES;
