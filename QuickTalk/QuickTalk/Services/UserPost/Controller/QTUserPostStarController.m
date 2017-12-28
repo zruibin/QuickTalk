@@ -44,7 +44,6 @@
 - (void)likeOrUnLikeAction:(NSInteger)index;
 - (void)updateHeaderData;
 - (void)tapingToMyView;
-- (void)loginStatusAction;
 
 @end
 
@@ -54,6 +53,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:QTPasteBoardCheckingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:QTLoginStatusChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTUserPostAddNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -100,7 +100,18 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
                                                  name:QTPasteBoardCheckingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginStatusAction) name:QTLoginStatusChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTLoginStatusChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        if ([QTUserInfo sharedInstance].isLogin) {
+            [weakSelf.tableView beginHeaderRefreshing];
+        } else {
+            [weakSelf updateHeaderData];
+            [weakSelf.dataList removeAllObjects];
+            [weakSelf.tableView reloadData];
+        }
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:QTUserPostAddNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        [weakSelf.tableView beginHeaderRefreshing];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -132,7 +143,6 @@
     self.navigationItem.rightBarButtonItem = addItem;
     
     self.tableView.tableHeaderView = self.headerView;
-    self.tableView.tableFooterView = self.footerView;
 }
 
 - (void)loadData
@@ -149,16 +159,19 @@
         } else {
             [self.tableView showFooter];
             self.errorView.hidden = YES;
+            self.tableView.tableFooterView = nil;
             [self.dataList addObjectsFromArray:[list copy]];
             if (self.page == 1) {
                 [self.tableView endHeaderRefreshing];
                 if (list.count < 10) {
                     [self.tableView hiddenFooter];
+                    self.tableView.tableFooterView = self.footerView;
                 }
                 [self.tableView endFooterRefreshing];
             } else {
                 if (list.count < 10) {
                     [self.tableView endRefreshingWithNoMoreData];
+                    self.tableView.tableFooterView = self.footerView;
                 } else {
                     [self.tableView endFooterRefreshing];
                 }
@@ -344,17 +357,6 @@
         [self.navigationController pushViewController:userController animated:YES];
     } else {
         [[QTUserInfo sharedInstance] checkLoginStatus:self];
-    }
-}
-
-- (void)loginStatusAction
-{
-    if ([QTUserInfo sharedInstance].isLogin) {
-        [self.tableView beginHeaderRefreshing];
-    } else {
-        [self updateHeaderData];
-        [self.dataList removeAllObjects];
-        [self.tableView reloadData];
     }
 }
 

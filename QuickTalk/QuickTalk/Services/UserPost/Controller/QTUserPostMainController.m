@@ -75,8 +75,6 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
                                                  name:QTPasteBoardCheckingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateHeaderData)
-                                                 name:QTLoginStatusChangeNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

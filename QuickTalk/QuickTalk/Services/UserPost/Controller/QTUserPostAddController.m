@@ -9,6 +9,8 @@
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
 
+NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
+
 @interface QTUserPostAddController ()
 
 @property (nonatomic, strong) UITextView *textView;
@@ -194,8 +196,11 @@
     [QTProgressHUD showHUD:self.view];
     [QTUserPostModel requestAddUserPost:userUUID title:self.webTitle content:self.webHref txt:self.textView.text completionHandler:^(BOOL action, NSError *error) {
         if (action) {
-            [QTProgressHUD showHUDSuccess];
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:QTUserPostAddNotification object:nil];
+                [QTProgressHUD showHUDSuccess];
+                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            });
         } else {
             [QTProgressHUD showHUDWithText:error.userInfo[ERROR_MESSAGE]];
         }

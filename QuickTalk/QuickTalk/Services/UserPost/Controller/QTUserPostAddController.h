@@ -8,6 +8,8 @@
 
 #import "QTViewController.h"
 
+extern NSString * const QTUserPostAddNotification;
+
 @interface QTUserPostAddController : QTViewController
 
 @end
