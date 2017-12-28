@@ -44,7 +44,7 @@ def __storageUserPost(title, content, userUUID, txt):
     sqlList.append(insertSQL)
     argsList.append(args)
 
-    if txt != None or len(txt) != 0:
+    if txt != None and len(txt) != 0:
         commentUUID = generateUUID()
         insertFirstCommentSQL = "INSERT INTO t_quickTalk_userPost_comment (uuid, user_uuid, userPost_uuid, content, isReply, reply_uuid, time) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         firstCommentArgs = [commentUUID, userUUID, uuid, txt, Config.TYPE_FOR_COMMENT_DEFAULT, "", time]

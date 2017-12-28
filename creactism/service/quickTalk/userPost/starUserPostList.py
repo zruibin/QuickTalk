@@ -53,9 +53,12 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
                 SELECT t_quickTalk_user_user.other_user_uuid 
                 FROM t_quickTalk_user_user 
                 WHERE t_quickTalk_user_user.user_uuid='%s'
+                UNION
+                SELECT t_quickTalk_user.uuid AS uuid FROM t_quickTalk_user 
+                WHERE t_quickTalk_user.uuid='%s'
             ) 
             ORDER BY time DESC %s
-        """ % (userUUID, limitSQL)
+        """ % (userUUID, userUUID, limitSQL)
         
     # print querySQL 
 
