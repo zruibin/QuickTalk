@@ -86,9 +86,10 @@
     
     /*分享SDK*/
     [ShareSDK registerActivePlatforms:@[
-                                        @(SSDKPlatformTypeSinaWeibo),
-                                        @(SSDKPlatformTypeWechat),
-                                        @(SSDKPlatformTypeQQ)
+                                        @(SSDKPlatformSubTypeQQFriend),
+                                        @(SSDKPlatformSubTypeWechatSession),
+                                        @(SSDKPlatformSubTypeWechatTimeline),
+                                        @(SSDKPlatformTypeSinaWeibo)
                                         ]
                              onImport:^(SSDKPlatformType platformType) {
                                  switch (platformType) {
@@ -119,7 +120,9 @@
                                      case SSDKPlatformTypeQQ:
                                          [appInfo SSDKSetupQQByAppId:@"1106426421"
                                                               appKey:@"cHVFNyHxCyCyNEur"
-                                                            authType:SSDKAuthTypeBoth];
+                                                            authType:SSDKAuthTypeBoth
+                                                              useTIM:NO
+                                                         backUnionID:NO];
                                          break;
                                      default:
                                            break;

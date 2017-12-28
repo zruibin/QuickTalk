@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UIButton *logoutButton;
 
 - (void)initViews;
+- (void)shareAction;
 
 @end
 
@@ -112,7 +113,7 @@
     if (section == 0) {
         return 2;
     }
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -150,6 +151,10 @@
             cell.textLabel.text = @"意见反馈";
         }
         if (indexPath.row == 3) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.text = @"推荐一下";
+        }
+        if (indexPath.row == 4) {
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"清除缓存";
         }
@@ -206,6 +211,9 @@
         [self.navigationController pushViewController:feedbackController animated:YES];
     }
     if (indexPath.row == 3) {
+        [self shareAction];
+    }
+    if (indexPath.row == 4) {
         __weak typeof(self) weakSelf = self;
         void(^handler)(NSInteger index) = ^(NSInteger index){
             if (index == 0) {
@@ -234,6 +242,27 @@
     }
 }
 
+- (void)shareAction
+{
+    NSArray* imageArray = @[[UIImage imageNamed:@"AppIcon"]];
+    //1、构造分享内容
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params SSDKSetupShareParamsByText:@"快言"
+                                images:imageArray
+                                   url:[NSURL URLWithString:@"http://www.creactism.com"]
+                                 title:@"分享标题"
+                                  type:SSDKContentTypeAuto];
+    [params SSDKEnableUseClientShare];
+    
+    [SSUIShareActionSheetStyle setShareActionSheetStyle:ShareActionSheetStyleSimple];
+    //2、弹出分享菜单栏
+    [ShareSDK showShareActionSheet:nil
+                             items:nil
+                       shareParams:params
+               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+               }];
+}
+
 #pragma mark - setter and getter
 
 - (UITableView *)tableView
@@ -258,3 +287,4 @@
 }
 
 @end
+

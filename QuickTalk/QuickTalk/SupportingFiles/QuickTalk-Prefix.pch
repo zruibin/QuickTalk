@@ -1,0 +1,92 @@
+//
+//  QuickTalk-Prefix.pch
+//  QuickTalk
+//
+//  Created by  Ruibin.Chow on 2017/8/29.
+//  Copyright © 2017年  Ruibin.Chow. All rights reserved.
+//
+
+#ifndef QuickTalk_Prefix_pch
+#define QuickTalk_Prefix_pch
+
+#import <Availability.h>
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <AVFoundation/AVFoundation.h>
+#import <SafariServices/SafariServices.h>
+
+#import <Masonry.h>
+#import <Aspects.h>
+#import <UIScrollView+EmptyDataSet.h>
+#import <KVOController.h>
+#import <MJRefresh.h>
+#import <Aspects.h>
+#import <MLeaksFinder.h>
+#import <MMAlertView.h>
+#import <MMSheetView.h>
+#import <MBProgressHUD.h>
+#import <TSMessage.h>
+#import <YYCache.h>
+#import <YYModel.h>
+#import <YYText.h>
+#import <SDWebImage/UIImage+GIF.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
+#import <HMSegmentedControl.h>
+#import <RBScheduler.h>
+
+#import "UIColor+Additions.h"
+#import "UIImage+RBImage.h"
+#import "UIButton+NetworkImage.h"
+#import "UIImageView+NetworkImage.h"
+#import "Tools.h"
+
+#import "QTMarcos.h"
+#import "QTNavigationController.h"
+#import "QTRefresh.h"
+#import "QTProgressHUD.h"
+#import "QTMessage.h"
+#import "QTNetworking.h"
+#import "QTNetworkAgent.h"
+#import "QTServiceCode.h"
+#import "QTUserInfo.h"
+#import "Tools.h"
+#import "NSObject+Obj.h"
+#import "NSString+QuickTalk.h"
+#import "NSString+Emoji.h"
+#import "QTErrorView.h"
+#import "QTCleaner.h"
+#import "Reachability.h"
+#import "RBLabel.h"
+
+////第三方服务
+#import <Bugly/Bugly.h>
+#import <SMS_SDK/SMSSDK.h>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKExtension/SSEThirdPartyLoginHelper.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import <ShareSDKUI/ShareSDKUI.h>
+#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+#import <ShareSDKUI/SSUIShareActionSheetStyle.h>
+#import <ShareSDKUI/SSUIEditorViewStyle.h>
+//腾讯开放平台（对应QQ和QQ空间）SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+//微信SDK头文件
+#import "WXApi.h"
+//新浪微博SDK头文件
+#import "WeiboSDK.h"
+//科大讯飞语音
+#import <iflyMSC/IFlyMSC.h>
+//个推推送
+#import <GTSDK/GeTuiSdk.h>
+
+
+
+#endif
+
+#endif /* QuickTalk_Prefix_pch */
