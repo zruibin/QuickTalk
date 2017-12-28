@@ -11,7 +11,7 @@
 
 NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
-@interface QTUserPostAddController ()
+@interface QTUserPostAddController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIView *panel;
@@ -22,6 +22,8 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
 @property (nonatomic, copy) NSString *webHref;
 @property (nonatomic, copy) NSString *webTitle;
+
+@property (nonatomic, strong) UIWebView *webView;
 
 - (void)initViews;
 - (void)getPasteboardData;
@@ -110,6 +112,9 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
     self.hrefLabel.hidden = YES;
     self.pasteButton.hidden = NO;
     self.deleteButton.hidden = YES;
+    
+    self.webView = [[UIWebView alloc] init];
+    self.webView.delegate = self;
 }
 
 #pragma mark - Private
@@ -128,49 +133,57 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
 - (void)getPasteboardData
 {
-    __weak typeof(self) weakSelf = self;
     [QTProgressHUD showHUD:self.view];
-    [[RBScheduler sharedInstance] runTask:^{
-        UIPasteboard *board = [UIPasteboard generalPasteboard];
-        NSURL *url =[NSURL URLWithString:board.string] ;
-        NSError *err = nil;
-        NSString *str =   [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&err];
-        NSString *re = @"<title>[^<]*</title>";
-        NSRange range = [str rangeOfString:re options:NSRegularExpressionSearch];
-        if (range.location == NSNotFound) {
-            re = @"<title[^<]*</title>";
-            range = [str rangeOfString:re options:NSRegularExpressionSearch];
-        }
-        if (err == nil && range.location != NSNotFound) {
-            NSString *title = [str substringWithRange:range];
-            title = [title stringByReplacingOccurrencesOfString:@"<title>" withString:@""];
-            title = [title stringByReplacingOccurrencesOfString:@"<title data-vue-meta=\"true\">" withString:@""];
-            title = [title stringByReplacingOccurrencesOfString:@"</title>" withString:@""];
-            title = [title stringByReplacingOccurrencesOfString:@" " withString:@""];
-            title = [title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//            DLog(@"title: %@", title);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDSuccess];
-                weakSelf.webHref = board.string;
-                if (title.length == 0) {
-                    weakSelf.webTitle = weakSelf.webHref;
-                } else {
-                    weakSelf.webTitle = title;
-                }
-                weakSelf.hrefLabel.hidden = NO;
-                weakSelf.pasteButton.hidden = YES;
-                weakSelf.hrefLabel.text = weakSelf.webTitle;
-                weakSelf.deleteButton.hidden = NO;
-            });
+    UIPasteboard *board = [UIPasteboard generalPasteboard];
+    NSURL *url =[NSURL URLWithString:board.string] ;
+    [self.webView loadRequest:[[NSURLRequest alloc] initWithURL:url]];
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *jsToGetHTMLSource = @"document.documentElement.innerHTML";
+    NSString *str = [webView stringByEvaluatingJavaScriptFromString:jsToGetHTMLSource];
+    NSError *err = nil;
+    NSString *re = @"<title>[^<]*</title>";
+    NSRange range = [str rangeOfString:re options:NSRegularExpressionSearch];
+    if (range.location == NSNotFound) {
+        re = @"<title[^<]*</title>";
+        range = [str rangeOfString:re options:NSRegularExpressionSearch];
+    }
+    if (err == nil && range.location != NSNotFound) {
+        NSString *title = [str substringWithRange:range];
+        title = [title stringByReplacingOccurrencesOfString:@"<title>" withString:@""];
+        title = [title stringByReplacingOccurrencesOfString:@"<title data-vue-meta=\"true\">" withString:@""];
+        title = [title stringByReplacingOccurrencesOfString:@"</title>" withString:@""];
+        title = [title stringByReplacingOccurrencesOfString:@" " withString:@""];
+        title = [title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        [QTProgressHUD showHUDSuccess];
+        self.webHref = webView.request.URL.absoluteString;
+        if (title.length == 0) {
+            self.webTitle = self.webHref;
         } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
-                weakSelf.hrefLabel.hidden = YES;
-                weakSelf.pasteButton.hidden = NO;
-                weakSelf.deleteButton.hidden = YES;
-            });
+            self.webTitle = title;
         }
-    }];
+        self.hrefLabel.hidden = NO;
+        self.pasteButton.hidden = YES;
+        self.hrefLabel.text = self.webTitle;
+        self.deleteButton.hidden = NO;
+    } else {
+        [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
+        self.hrefLabel.hidden = YES;
+        self.pasteButton.hidden = NO;
+        self.deleteButton.hidden = YES;
+    }
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
+    self.hrefLabel.hidden = YES;
+    self.pasteButton.hidden = NO;
+    self.deleteButton.hidden = YES;
 }
 
 #pragma mark - Action
