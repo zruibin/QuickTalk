@@ -115,8 +115,7 @@
     [cell setOnHrefHandler:^(NSInteger index) {
         QTMessageModel *hrefModel = weakSelf.dataList[index];
         NSString *url = hrefModel.content;
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-        [weakSelf presentViewController:safariController animated:YES completion:nil];
+        [Tools openWeb:url viewController:weakSelf];
     }];
     [cell setOnInfoHandler:^(NSInteger index) {
         QTMessageModel *userModel = weakSelf.dataList[index];

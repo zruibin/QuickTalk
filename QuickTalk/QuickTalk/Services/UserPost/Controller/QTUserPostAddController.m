@@ -8,7 +8,6 @@
 
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
-#import <SafariServices/SafariServices.h>
 
 NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
@@ -186,8 +185,7 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 {
     if (self.action) {
         NSString *url = self.webHref;
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-        [self presentViewController:safariController animated:YES completion:nil];
+        [Tools openWeb:url viewController:self];
     } else {
         [self.textView resignFirstResponder];
         [self getPasteboardData];

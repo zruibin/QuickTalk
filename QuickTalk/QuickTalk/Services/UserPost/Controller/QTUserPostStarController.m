@@ -10,7 +10,6 @@
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
 #import "QTUserPostMainCell.h"
-#import <SafariServices/SafariServices.h>
 #import "QTUserPostCommentController.h"
 #import "QTIntroController.h"
 #import "QTUserController.h"
@@ -382,8 +381,7 @@
     [cell setOnHrefHandler:^(NSInteger index) {
         QTUserPostModel *hrefModel = weakSelf.dataList[index];
         NSString *url = hrefModel.content;
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
-        [weakSelf presentViewController:safariController animated:YES completion:nil];
+        [Tools openWeb:url viewController:weakSelf];
         [weakSelf addReadCountAction:index];
     }];
     [cell setOnArrowHandler:^(NSInteger index) {

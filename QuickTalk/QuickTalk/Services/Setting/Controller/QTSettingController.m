@@ -19,7 +19,6 @@
 @property (nonatomic, strong) UIButton *logoutButton;
 
 - (void)initViews;
-- (void)shareAction;
 
 @end
 
@@ -113,7 +112,7 @@
     if (section == 0) {
         return 2;
     }
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,15 +141,18 @@
     } else {
         if (indexPath.row == 0) {
             NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-            cell.textLabel.text = [NSString stringWithFormat:@"引导页(%@)", version];
+            cell.textLabel.text = [NSString stringWithFormat:@"欢迎页(%@)", version];
         }
         if (indexPath.row == 1) {
-            cell.textLabel.text = @"声明及用户协议协议";
+            cell.textLabel.text = @"教程";
         }
         if (indexPath.row == 2) {
-            cell.textLabel.text = @"意见反馈";
+            cell.textLabel.text = @"声明及用户协议协议";
         }
         if (indexPath.row == 3) {
+            cell.textLabel.text = @"意见反馈";
+        }
+        if (indexPath.row == 4) {
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.textLabel.text = @"清除缓存";
         }
@@ -199,14 +201,17 @@
         [self presentViewController:introController animated:YES completion:nil];
     }
     if (indexPath.row == 1) {
+        [Tools openWeb:@"http://www.creactism.com/userGuide.html" viewController:self];
+    }
+    if (indexPath.row == 2) {
         QTUserAgreementController *userAgreementController = [QTUserAgreementController new];
         [self.navigationController pushViewController:userAgreementController animated:YES];
     }
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         QTFeedbackController *feedbackController = [QTFeedbackController new];
         [self.navigationController pushViewController:feedbackController animated:YES];
     }
-    if (indexPath.row == 3) {
+    if (indexPath.row == 4) {
         __weak typeof(self) weakSelf = self;
         void(^handler)(NSInteger index) = ^(NSInteger index){
             if (index == 0) {

@@ -7,6 +7,8 @@
 //
 
 #import "Tools.h"
+#import <SafariServices/SafariServices.h>
+#import "NBLWebViewController.h"
 
 @interface Tools ()
 
@@ -276,4 +278,16 @@
     }
 }
 
++ (void)openWeb:(NSString *)urlString viewController:(UIViewController *)viewController
+{
+    NBLWebViewController *webVC = [[NBLWebViewController alloc] initWithURLString:urlString];
+    [viewController.navigationController pushViewController:webVC animated:YES];
+    
+//    SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:urlString]];
+//    [viewController presentViewController:safariController animated:YES completion:nil];
+}
+
 @end
+
+
+

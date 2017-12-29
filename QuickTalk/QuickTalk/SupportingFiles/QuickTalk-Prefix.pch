@@ -17,7 +17,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <AVFoundation/AVFoundation.h>
-#import <SafariServices/SafariServices.h>
 
 #import <Masonry.h>
 #import <Aspects.h>

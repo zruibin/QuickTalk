@@ -168,7 +168,7 @@
 
 - (void)shareAction
 {
-    NSArray* imageArray = @[[UIImage imageNamed:@"AppIcon"]];
+    NSArray* imageArray = @[[UIImage imageNamed:@"logo"]];
     //1、构造分享内容
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params SSDKSetupShareParamsByText:@"快言：分享和收藏你在网络上的所见所闻。"

@@ -122,6 +122,8 @@
 		E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */ = {isa = PBXBuildFile; fileRef = E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */; };
 		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
 		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
+		E0A834471FF6433600E03EDE /* NBLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A834421FF6433600E03EDE /* NBLMessage.m */; };
+		E0A834481FF6433600E03EDE /* NBLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A834461FF6433600E03EDE /* NBLWebViewController.m */; };
 		E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147521FEB574D0069AC6D /* QTUserCell.m */; };
 		E0C1475A1FEBCDC20069AC6D /* QTAccountNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */; };
 		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
@@ -363,6 +365,11 @@
 		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
 		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
 		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
+		E0A834421FF6433600E03EDE /* NBLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLMessage.m; sourceTree = "<group>"; };
+		E0A834431FF6433600E03EDE /* NBLWebViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLWebViewHeader.h; sourceTree = "<group>"; };
+		E0A834441FF6433600E03EDE /* NBLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLWebViewController.h; sourceTree = "<group>"; };
+		E0A834451FF6433600E03EDE /* NBLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLMessage.h; sourceTree = "<group>"; };
+		E0A834461FF6433600E03EDE /* NBLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLWebViewController.m; sourceTree = "<group>"; };
 		E0C147511FEB574D0069AC6D /* QTUserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCell.h; sourceTree = "<group>"; };
 		E0C147521FEB574D0069AC6D /* QTUserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCell.m; sourceTree = "<group>"; };
 		E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountNotificationController.h; sourceTree = "<group>"; };
@@ -1026,6 +1033,18 @@
 			path = QTPopoverView;
 			sourceTree = "<group>";
 		};
+		E0A834411FF6433600E03EDE /* NBLWebView */ = {
+			isa = PBXGroup;
+			children = (
+				E0A834451FF6433600E03EDE /* NBLMessage.h */,
+				E0A834421FF6433600E03EDE /* NBLMessage.m */,
+				E0A834431FF6433600E03EDE /* NBLWebViewHeader.h */,
+				E0A834441FF6433600E03EDE /* NBLWebViewController.h */,
+				E0A834461FF6433600E03EDE /* NBLWebViewController.m */,
+			);
+			path = NBLWebView;
+			sourceTree = "<group>";
+		};
 		E0DBAD1C1FAC13F2005B22A9 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -1180,6 +1199,7 @@
 		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E0A834411FF6433600E03EDE /* NBLWebView */,
 				E03BBDF21FF20633000F93E8 /* QTNoneView */,
 				E03BBDEB1FF1F2B0000F93E8 /* QQPopMenuView */,
 				E081315F1FE21701001A6E3D /* CRAPickerView */,
@@ -1596,6 +1616,7 @@
 				E08AABD81FE10A55005B6DBB /* QTAccountThirdPartController.m in Sources */,
 				E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */,
 				E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */,
+				E0A834471FF6433600E03EDE /* NBLMessage.m in Sources */,
 				E088D66E1FD64E0600038736 /* QTTopicModel.m in Sources */,
 				E08AABF81FE14129005B6DBB /* QTUserAgreementController.m in Sources */,
 				E08AABF91FE14129005B6DBB /* QTIntroController.m in Sources */,
@@ -1660,6 +1681,7 @@
 				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
 				E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */,
 				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
+				E0A834481FF6433600E03EDE /* NBLWebViewController.m in Sources */,
 				E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */,
 				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
 				E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */,

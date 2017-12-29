@@ -137,8 +137,7 @@
     if (([[requestURL scheme] isEqualToString: @"http"]
          || [[requestURL scheme] isEqualToString: @"https"])
         && (navigationType == UIWebViewNavigationTypeLinkClicked)) {
-        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:requestURL];
-        [self presentViewController:safariController animated:YES completion:nil];
+        [Tools openWeb:requestURL.absoluteString viewController:self];
         return NO;
     }
     if ([[requestURL scheme] isEqualToString: @"image"]

@@ -70,4 +70,6 @@
                top:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right
        borderColor:(UIColor *)color borderWidth:(CGFloat)width;
 
++ (void)openWeb:(NSString *)urlString viewController:(UIViewController *)viewController;
+
 @end
