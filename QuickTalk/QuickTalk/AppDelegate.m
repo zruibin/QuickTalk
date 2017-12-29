@@ -140,7 +140,7 @@
     NSString *kGTAppSecret = @"aypFVAwzmRAoXG9BALwS29";
 #endif
     // [ GTSdk ]：是否允许APP后台运行
-//        [GeTuiSdk runBackgroundEnable:YES];
+        [GeTuiSdk runBackgroundEnable:YES];
     // [ GTSdk ]：是否运行电子围栏Lbs功能和是否SDK主动请求用户定位
 //    [GeTuiSdk lbsLocationEnable:YES andUserVerify:YES];
     // [ GTSdk ]：自定义渠道

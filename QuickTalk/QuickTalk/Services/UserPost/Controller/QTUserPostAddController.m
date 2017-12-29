@@ -8,6 +8,7 @@
 
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
+#import <SafariServices/SafariServices.h>
 
 NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
@@ -16,14 +17,13 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIView *panel;
 @property (nonatomic, strong) RBLabel *hrefLabel;
-@property (nonatomic, strong) UIButton *pasteButton;
+@property (nonatomic, strong) UIButton *actionButton;
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *deleteButton;
-
 @property (nonatomic, copy) NSString *webHref;
 @property (nonatomic, copy) NSString *webTitle;
-
 @property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, assign) BOOL action;
 
 - (void)initViews;
 - (void)getPasteboardData;
@@ -88,17 +88,14 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
         make.top.equalTo(self.textView.mas_bottom).offset(20);
         make.height.mas_equalTo(60);
     }];
-    [self.view addSubview:self.pasteButton];
-    [self.pasteButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(10);
-        make.right.equalTo(self.view).offset(-10);
-        make.top.equalTo(self.textView.mas_bottom).offset(20);
-        make.height.mas_equalTo(60);
+    [self.view addSubview:self.actionButton];
+    [self.actionButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.top.and.right.and.bottom.equalTo(self.hrefLabel);
     }];
     [self.view addSubview:self.saveButton];
     [self.saveButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(10);
-        make.right.equalTo(self.view).offset(-10);
+        make.left.equalTo(self.view).offset(16);
+        make.right.equalTo(self.view).offset(-16);
         make.top.equalTo(self.panel.mas_bottom).offset(20);
         make.height.mas_equalTo(44);
     }];
@@ -109,8 +106,6 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
         make.height.and.with.mas_equalTo(40);
     }];
 
-    self.hrefLabel.hidden = YES;
-    self.pasteButton.hidden = NO;
     self.deleteButton.hidden = YES;
     
     self.webView = [[UIWebView alloc] init];
@@ -166,23 +161,22 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
         } else {
             self.webTitle = title;
         }
-        self.hrefLabel.hidden = NO;
-        self.pasteButton.hidden = YES;
+        self.action = YES;
         self.hrefLabel.text = self.webTitle;
         self.deleteButton.hidden = NO;
     } else {
         [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
-        self.hrefLabel.hidden = YES;
-        self.pasteButton.hidden = NO;
+        self.hrefLabel.text = nil;
+        self.action = NO;
         self.deleteButton.hidden = YES;
     }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [QTProgressHUD hide];
-    self.hrefLabel.hidden = YES;
-    self.pasteButton.hidden = NO;
+    [QTProgressHUD showHUDWithText:@"获取失败，请复制正确链接"];
+    self.hrefLabel.text = nil;
+    self.action = NO;
     self.deleteButton.hidden = YES;
 }
 
@@ -190,8 +184,14 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
 - (void)changeButtonAction
 {
-    [self.textView resignFirstResponder];
-    [self getPasteboardData];
+    if (self.action) {
+        NSString *url = self.webHref;
+        SFSafariViewController *safariController = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+        [self presentViewController:safariController animated:YES completion:nil];
+    } else {
+        [self.textView resignFirstResponder];
+        [self getPasteboardData];
+    }
 }
 
 - (void)saveButtonAction
@@ -224,8 +224,8 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 {
     self.webHref = nil;
     self.webTitle = nil;
-    self.hrefLabel.hidden = YES;
-    self.pasteButton.hidden = NO;
+    self.hrefLabel.text = nil;
+    self.action = NO;
     self.deleteButton.hidden = YES;
 }
 
@@ -247,25 +247,25 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
     return _textView;
 }
 
-- (UIButton *)pasteButton
+- (UIButton *)actionButton
 {
-    if (_pasteButton == nil) {
-        _pasteButton = ({
+    if (_actionButton == nil) {
+        _actionButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.translatesAutoresizingMaskIntoConstraints = NO;
             [button setTitle:@"点击粘贴链接" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:16];
             button.layer.cornerRadius = 4;
-            button.layer.borderWidth = 0.5f;
-            button.layer.borderColor = [[UIColor colorFromHexValue:0x999999] CGColor];
+//            button.layer.borderWidth = 0.5f;
+//            button.layer.borderColor = [[UIColor colorFromHexValue:0x999999] CGColor];
             button.layer.masksToBounds = YES;
-            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexValue:0xF3F3F5]] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage createImageWithColor:[UIColor colorWithWhite:0 alpha:0.2f]] forState:UIControlStateHighlighted];
             [button addTarget:self action:@selector(changeButtonAction) forControlEvents:UIControlEventTouchUpInside];
             button;
         });
     }
-    return _pasteButton;
+    return _actionButton;
 }
 
 - (UIView *)panel
@@ -334,6 +334,16 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
         });
     }
     return _deleteButton;
+}
+
+- (void)setAction:(BOOL)action
+{
+    _action = action;
+    if (_action) {
+        [self.actionButton setTitle:@"" forState:UIControlStateNormal];
+    } else {
+        [self.actionButton setTitle:@"点击粘贴链接" forState:UIControlStateNormal];
+    }
 }
 
 

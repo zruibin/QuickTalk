@@ -831,6 +831,8 @@
 		E08AABDD1FE14129005B6DBB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E08AABE21FE14129005B6DBB /* QTSettingController.h */,
+				E08AABE81FE14129005B6DBB /* QTSettingController.m */,
 				E08AABDF1FE14129005B6DBB /* QTIntroController.h */,
 				E08AABE41FE14129005B6DBB /* QTIntroController.m */,
 				E08AABE61FE14129005B6DBB /* QTAvatarEditController.h */,
@@ -841,8 +843,6 @@
 				E08AABDE1FE14129005B6DBB /* QTInfoEditController.m */,
 				E08AABE01FE14129005B6DBB /* QTFeedbackController.h */,
 				E08AABE71FE14129005B6DBB /* QTFeedbackController.m */,
-				E08AABE21FE14129005B6DBB /* QTSettingController.h */,
-				E08AABE81FE14129005B6DBB /* QTSettingController.m */,
 				E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */,
 				E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */,
 			);

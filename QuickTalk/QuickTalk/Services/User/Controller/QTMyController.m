@@ -102,8 +102,13 @@
         cell.titleLabel.font = [UIFont systemFontOfSize:18];
         cell.multiplie = 0.8;
     } else {
-        cell.titleLabel.font = [UIFont systemFontOfSize:16];
+        cell.titleLabel.font = [UIFont systemFontOfSize:15];
         cell.multiplie = 0.5;
+    }
+    
+    if ([data[3] isEqualToString:@"share"]) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.multiplie = 0.55;
     }
     
     return cell;
@@ -131,8 +136,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *key = self.dataList[indexPath.section];
     NSArray *data = self.dataDict[key][indexPath.row];
+    NSString *action = data[3];
     
-    UIViewController *viewController = [[NSClassFromString(data[3]) alloc] init];
+    if ([action isEqualToString:@"share"]) {
+        [self shareAction];
+        return;
+    }
+    
+    UIViewController *viewController = [[NSClassFromString(action) alloc] init];
     if ([viewController isKindOfClass:[QTAccountLoginController class]]) {
         [[QTUserInfo sharedInstance] checkLoginStatus:self];
         return;
@@ -155,7 +166,26 @@
 
 #pragma mark - Action
 
-
+- (void)shareAction
+{
+    NSArray* imageArray = @[[UIImage imageNamed:@"AppIcon"]];
+    //1、构造分享内容
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params SSDKSetupShareParamsByText:@"快言：分享和收藏你在网络上的所见所闻。"
+                                images:imageArray
+                                   url:[NSURL URLWithString:@"http://www.creactism.com"]
+                                 title:@"你也来快言上读一下吧"
+                                  type:SSDKContentTypeAuto];
+    [params SSDKEnableUseClientShare];
+    
+    [SSUIShareActionSheetStyle setShareActionSheetStyle:ShareActionSheetStyleSimple];
+    //2、弹出分享菜单栏
+    [ShareSDK showShareActionSheet:nil
+                             items:nil
+                       shareParams:params
+               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+               }];
+}
 
 #pragma mark - setter and getter
 
@@ -185,7 +215,7 @@
 {
     NSArray *list = @[@"user", @"data", @"setting"];
     if ([QTUserInfo sharedInstance].isLogin == NO) {
-        list = @[@"unLogin", @"setting"];
+        list = @[@"unLogin", @"unLoginData", @"setting"];
     }
     return list;
 }
@@ -207,6 +237,10 @@
                                @[@"users", @"关注与粉丝", height, NSStringFromClass([QTUserStarAndFansController class])],
                                @[@"userPost", @"我的快言", height, NSStringFromClass([QTUserController class])],
                                @[@"collection", @"收藏", height, NSStringFromClass([QTUserCollectionController class])],
+                               @[@"share", @"分享快言App", height, @"share"]
+                               ],
+                       @"unLoginData": @[
+                               @[@"share", @"分享快言App", height, @"share"]
                                ],
                        @"setting": @[
                                @[@"setting", @"设置", height, NSStringFromClass([QTSettingController class])]
