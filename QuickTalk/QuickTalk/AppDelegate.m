@@ -139,14 +139,8 @@
     NSString *kGTAppKey = @"N97fhuONXk9tCgUnuXyg52";
     NSString *kGTAppSecret = @"aypFVAwzmRAoXG9BALwS29";
 #endif
-    // [ GTSdk ]：是否允许APP后台运行
-        [GeTuiSdk runBackgroundEnable:YES];
-    // [ GTSdk ]：是否运行电子围栏Lbs功能和是否SDK主动请求用户定位
-//    [GeTuiSdk lbsLocationEnable:YES andUserVerify:YES];
-    // [ GTSdk ]：自定义渠道
-//    [GeTuiSdk setChannelId:@"GT-Channel"];
-    // [ GTSdk ]：使用APPID/APPKEY/APPSECRENT启动个推
     [GeTuiSdk startSdkWithAppId:kGTAppId appKey:kGTAppKey appSecret:kGTAppSecret delegate:self];
+    [GeTuiSdk runBackgroundEnable:YES];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0) {
         if (@available(iOS 10.0, *)) {
             UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
@@ -167,6 +161,7 @@
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
+     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 #pragma mark - 远程通知(推送)回调
@@ -192,6 +187,7 @@
 /** APP已经接收到“远程”通知(推送) - (App运行在后台)  */
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
+    DLog(@"didReceiveRemoteNotification....");
     // [ GTSdk ]：将收到的APNs信息传给个推统计
     [GeTuiSdk handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
@@ -232,8 +228,17 @@
 /** SDK收到透传消息回调 */
 - (void)GeTuiSdkDidReceivePayloadData:(NSData *)payloadData andTaskId:(NSString *)taskId andMsgId:(NSString *)msgId andOffLine:(BOOL)offLine fromGtAppId:(NSString *)appId
 {
+    NSString *string = [[NSString alloc] initWithData:payloadData encoding:NSUTF8StringEncoding];
+    DLog(@"GeTuiSdkDidReceivePayloadData...: %@", string);
     // [ GTSdk ]：汇报个推自定义事件(反馈透传消息)
 //    [GeTuiSdk sendFeedbackMessage:90001 andTaskId:taskId andMsgId:msgId];
+    NSInteger count = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+    UILocalNotification *localNote = [[UILocalNotification alloc] init];
+    localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+    localNote.alertBody = string;
+    localNote.soundName = @"default.wav";
+    localNote.applicationIconBadgeNumber = count;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
 }
 
 /** SDK收到sendMessage消息回调 */
