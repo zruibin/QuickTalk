@@ -38,8 +38,8 @@ MASTERSECRET = "oBPnACAomY9VXtuYWJOPM2"
 # MASTERSECRET = "j8qIilGpHZ9EZrSXxDXOP9"
 
 
-def pushMessageToSingle(deviceId, msg):
-    """推送单台设备"""
+def pushMessageToSingleForIOS(deviceId, msg):
+    """推送单台iOS设备"""
     # 消息模版：
     # 1.TransmissionTemplate:透传功能模板
     # 2.LinkTemplate:通知打开链接功能模板
@@ -48,7 +48,7 @@ def pushMessageToSingle(deviceId, msg):
 
     # template = NotificationTemplateDemo()
     # template = LinkTemplateDemo()
-    template = _transmissionTemplate(msg)
+    template = __transmissionTemplate(msg)
     # template = NotyPopLoadTemplateDemo()
     
     message = IGtSingleMessage()
@@ -64,21 +64,43 @@ def pushMessageToSingle(deviceId, msg):
     target.clientId = deviceId
 
     push = IGeTui(HOST, APPKEY, MASTERSECRET, True)
-    # push.connect()
     try:
         ret = push.pushMessageToSingle(message, target)
         print ret
     except RequestException, e:
-        print "pushMessageToSingle error：", e
+        print "pushMessageToSingleForIOS error：", e
         requstId = e.getRequestId()
         ret = push.pushMessageToSingle(message, target, requstId)
         print ret
-    # push.close()
 
 
-def pushMessageToList(deviceIdList, msg):
-    """推送多台设备"""
-    template = _transmissionTemplate(msg)
+def pushMessageToSingleForAndroid(deviceId, msg):
+    """推送单台Android设备"""
+    template = __notificationTemplate(msg)
+    
+    message = IGtSingleMessage()
+    message.isOffline = True
+    message.offlineExpireTime = 1000 * 3600 * 12
+    message.data = template
+    message.pushNetWorkType = 0
+    target = Target()
+    target.appId = APPID
+    target.clientId = deviceId
+
+    push = IGeTui(HOST, APPKEY, MASTERSECRET, True)
+    try:
+        ret = push.pushMessageToSingle(message, target)
+        print ret
+    except RequestException, e:
+        print "pushMessageToSingleForAndroid error：", e
+        requstId = e.getRequestId()
+        ret = push.pushMessageToSingle(message, target, requstId)
+        print ret
+
+
+def pushMessageToListForIOS(deviceIdList, msg):
+    """推送多台iOS设备"""
+    template = __transmissionTemplate(msg)
 
     message = IGtListMessage()
     message.data = template
@@ -91,23 +113,46 @@ def pushMessageToList(deviceIdList, msg):
         target = Target()
         target.appId = APPID
         target.clientId = deviceId
-        # target.alias = Alias
         array.append(target)
 
     try:
         push = IGeTui(HOST, APPKEY, MASTERSECRET, True)
-        # push.connect()
         contentId = push.getContentId(message, '')
         ret = push.pushMessageToList(contentId, array)
-        print ret
-        # push.close()
+        print "pushMessageToListForIOS ", ret
     except RequestException, e:
-        print "pushMessageToList error：", e
+        print "pushMessageToListForIOS error：", e
 
 
-def pushMessageToApp(msg):
-    """推送整个平台"""
-    template = _transmissionTemplate(msg)
+def pushMessageToListForAndroid(deviceIdList, msg):
+    """推送多台Android设备"""
+    template = __notificationTemplate(msg)
+
+    message = IGtListMessage()
+    message.data = template
+    message.isOffline = True
+    message.offlineExpireTime = 1000 * 3600 * 12
+    message.pushNetWorkType = 0
+
+    array = []
+    for deviceId in deviceIdList:
+        target = Target()
+        target.appId = APPID
+        target.clientId = deviceId
+        array.append(target)
+
+    try:
+        push = IGeTui(HOST, APPKEY, MASTERSECRET, True)
+        contentId = push.getContentId(message, '')
+        ret = push.pushMessageToList(contentId, array)
+        print "pushMessageToListForAndroid", ret
+    except RequestException, e:
+        print "pushMessageToListForAndroid error：", e
+
+
+def pushMessageToAppForIOS(msg):
+    """推送整个iOS平台"""
+    template = __transmissionTemplate(msg)
 
     message = IGtAppMessage()
     message.data = template
@@ -135,18 +180,33 @@ def pushMessageToApp(msg):
         print ret
         # push.close()
     except RequestException, e:
-        print "pushMessageToApp error：", e
+        print "pushMessageToAppForIOS error：", e
         
 
+def pushMessageToAppForAndroid(msg):
+    """推送整个Android平台"""
+    template = __notificationTemplate(msg)
+
+    message = IGtAppMessage()
+    message.data = template
+    message.isOffline = True
+    message.offlineExpireTime = 1000 * 3600 * 12
+    message.appIdList.extend([APPID])
+    try:
+        push = IGeTui(HOST, APPKEY, MASTERSECRET, True)
+        ret = push.pushMessageToApp(message, '')
+        print ret
+    except RequestException, e:
+        print "pushMessageToAppForAndroid error：", e
 
 
 # 透传模板动作内容
-def _transmissionTemplate(msg):
+def __transmissionTemplate(msg):
     template = TransmissionTemplate()
     template.transmissionType = 1
     template.appId = APPID
     template.appKey = APPKEY
-    # template.transmissionContent = '请填入透传内容'
+    template.transmissionContent = msg
     # iOS 推送需要的PushInfo字段 前三项必填，后四项可以填空字符串
     # template.setPushInfo(actionLocKey, badge, message, sound, payload, locKey, locArgs, launchImage)
 #     template.setPushInfo("", 0, "", "com.gexin.ios.silence", "", "", "", "")
@@ -182,8 +242,31 @@ def _transmissionTemplate(msg):
     # alertMsg.titleLocKey = 'TitleLocKey'
     # apnpayload.alertMsg=alertMsg
     # template.setApnInfo(apnpayload)
-    
     return template
+
+
+def __notificationTemplate(msg):
+    template = NotificationTemplate()
+    template.appId = APPID
+    template.appKey = APPKEY
+    template.transmissionType = 2
+    template.transmissionContent = msg
+    template.title = u"快言"
+    template.text = msg
+    # template.logo = "icon.png"
+    # template.logoURL = ""
+    # template.isRing = True
+    # template.isVibrate = True
+    # template.isClearable = True
+    # begin = "2015-03-04 17:40:22"
+    # end = "2015-03-04 17:47:24"
+    # template.setDuration(begin, end)
+    # template.isActive = False
+    return template
+    
+
+
+
 
 
 

@@ -63,6 +63,8 @@ Pods
 
 #Python
 *.pyc
+celerybeat-schedule.db
+
 
 #Java
 *.class

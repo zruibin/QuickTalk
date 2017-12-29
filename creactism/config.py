@@ -97,6 +97,8 @@ class Config(object):
   TYPE_MESSAGE_NEW_STAR = "6"
   TYPE_MESSAGE_NEW_SHARE = "7"
 
+  NOTIFICATION_TYPE_FOR_Android = 3
+  NOTIFICATION_TYPE_FOR_iOS = 4
 
   # 赞(第一次赞就有通知)
   NOTIFICATION_FOR_LIKE = 1 

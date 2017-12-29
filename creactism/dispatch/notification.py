@@ -16,7 +16,7 @@ from dispatch import celery
 from config import *
 from module.database import DB
 from module.log.Log import Loger
-from lib.CreactismPush import pushMessageToList
+from lib.CreactismPush import pushMessageToListForIOS, pushMessageToListForAndroid
 
 
 @celery.task
@@ -85,7 +85,7 @@ def __querySingleData(userUUID, reciveUserUUID, typeStr):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid='%s'
     """ % (userUUID, reciveUserUUID, str(typeStr), reciveUserUUID)
-    print querySQL
+    # print querySQL
     dataList = None
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -109,7 +109,7 @@ def __queryNewShareDataList(userUUID):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid=t_quickTalk_user_user.user_uuid
     """ % (userUUID, Config.NOTIFICATION_FOR_NEW_SHARE)
-    print querySQL
+    # print querySQL
     dataList = []
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -120,12 +120,18 @@ def __queryNewShareDataList(userUUID):
 
 
 def __pushNotification(dataList, msg):
-    deviceIdList = []
+    iOSDeviceIdList = []
+    androidDeviceIdList = []
     for data in dataList:
         if data["status"] == Config.STATUS_ON: 
-            deviceIdList.append(data["deviceId"])
-    if len(deviceIdList) > 0:
-        pushMessageToList(deviceIdList, msg)
+            if data["type"] == Config.NOTIFICATION_TYPE_FOR_iOS:
+                iOSDeviceIdList.append(data["deviceId"])
+            else:
+                androidDeviceIdList.append(data["deviceId"])
+    if len(iOSDeviceIdList) > 0:
+        pushMessageToListForIOS(iOSDeviceIdList, msg)
+    if len(androidDeviceIdList) > 0:
+        pushMessageToListForAndroid(androidDeviceIdList, msg)
     pass
     
 
