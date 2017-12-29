@@ -14,4 +14,4 @@ front为前端静态资源，nginx直接访问
 python compile.py -rootDir=creactism/
 scp -r build/ root@39.108.174.16:/home/
 ssh root@39.108.174.16
-
+scp root@39.108.174.16:/home/creactism_bak/creactism_20171228-020000.tar.bz2 ./

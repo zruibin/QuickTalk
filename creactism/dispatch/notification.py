@@ -24,6 +24,8 @@ def dispatchNotificationLikeForUserPost(userUUID, reciveUserUUID):
     """赞，xx赞了你的分享"""
     if Config.DEBUG:
         print "%s赞了你的分享(%s)" % (userUUID, reciveUserUUID)
+    if userUUID == reciveUserUUID:
+        return
     dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_LIKE)
     if len(dataList) > 0:
         msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_LIKE)
@@ -36,6 +38,8 @@ def dispatchNotificationUserStar(userUUID, reciveUserUUID):
     """关注，xx关注了你"""
     if Config.DEBUG:
         print "%s关注了你(%s)" % (userUUID, reciveUserUUID)
+    if userUUID == reciveUserUUID:
+        return
     dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_NEW_STAR)
     if len(dataList) > 0:
         msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_NEW_STAR)
@@ -48,6 +52,8 @@ def dispatchNotificationCommentForUserPost(userUUID, reciveUserUUID):
     """评论，xx评论了你"""
     if Config.DEBUG:
         print "%s评论了你(%s)" % (userUUID, reciveUserUUID)
+    if userUUID == reciveUserUUID:
+        return
     dataList = __querySingleData(userUUID, reciveUserUUID, Config.NOTIFICATION_FOR_COMMENT)
     if len(dataList) > 0:
         msg = __packageMsg(dataList[0], Config.NOTIFICATION_FOR_COMMENT)
@@ -79,7 +85,7 @@ def __querySingleData(userUUID, reciveUserUUID, typeStr):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid='%s'
     """ % (userUUID, reciveUserUUID, str(typeStr), reciveUserUUID)
-    # print querySQL
+    print querySQL
     dataList = None
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -103,7 +109,7 @@ def __queryNewShareDataList(userUUID):
         AND t_quickTalk_user_setting.type=%s
         AND t_quickTalk_notification_device.user_uuid=t_quickTalk_user_user.user_uuid
     """ % (userUUID, Config.NOTIFICATION_FOR_NEW_SHARE)
-    # print querySQL
+    print querySQL
     dataList = []
     dbManager = DB.DBManager.shareInstanced()
     try: 
