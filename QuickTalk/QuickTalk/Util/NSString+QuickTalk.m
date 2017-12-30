@@ -178,9 +178,9 @@
     return sizeText;
 }
 
-- (unsigned long long)fileSize
+- (NSUInteger)fileSize
 {
-    unsigned long long size = 0;
+    NSUInteger size = 0;
     // 文件管理者
     NSFileManager *mgr = [NSFileManager defaultManager];
     
@@ -198,7 +198,7 @@
             size += [mgr attributesOfItemAtPath:fullSubpath error:nil].fileSize;
         }
     } else { // 如果是文件
-        size = attrs.fileSize;
+        size = (NSUInteger)attrs.fileSize;
     }
     return size;
 }

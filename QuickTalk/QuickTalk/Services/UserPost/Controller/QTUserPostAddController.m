@@ -66,7 +66,7 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
 
 - (void)initViews
 {
-    self.title = @"发表";
+    self.title = @"分享";
     
     [self.view addSubview:self.panel];
     [self.panel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -303,7 +303,7 @@ NSString * const QTUserPostAddNotification = @"QTUserPostAddNotification";
         _saveButton = ({
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.translatesAutoresizingMaskIntoConstraints = NO;
-            [button setTitle:@"发表" forState:UIControlStateNormal];
+            [button setTitle:@"发送" forState:UIControlStateNormal];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:14];
             button.layer.cornerRadius = 4;

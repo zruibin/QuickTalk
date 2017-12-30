@@ -51,9 +51,22 @@
 
 #pragma mark - Public
 
+- (NSUInteger)cacheSize
+{
+    NSUInteger iFlySize = [IFLY_PATH fileSize];
+    NSUInteger imageCacheSize = [[SDImageCache sharedImageCache] getSize];
+    NSUInteger size = iFlySize + imageCacheSize;
+    return size;
+}
+
+- (NSString *)cacheSizeString
+{
+    return [Tools fileSizeToString:[self cacheSize]];
+}
+
 - (void)checkingCache
 {
-    unsigned long long size = [IFLY_PATH fileSize];
+    NSUInteger size = [self cacheSize];
     if (size > 1000 * 1000 * 200) {
         [self asynchronousCleanUpCache];
     }
@@ -65,6 +78,7 @@
         YYCache *cache = [YYCache cacheWithName:QTDataCache];
         [cache removeAllObjects];
         [self cleanUpPath:IFLY_PATH];
+        [[SDImageCache sharedImageCache] clearDiskOnCompletion:nil];
     }];
 }
 

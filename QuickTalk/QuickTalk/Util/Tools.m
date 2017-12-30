@@ -287,6 +287,25 @@
 //    [viewController presentViewController:safariController animated:YES completion:nil];
 }
 
++ (NSString *)fileSizeToString:(NSUInteger)size
+{
+    NSString *sizeText = nil;
+    if (size == 0) {
+        return sizeText;
+    }
+    if (size >= pow(10, 9)) { // size >= 1GB
+        sizeText = [NSString stringWithFormat:@"%.2fGB", size / pow(10, 9)];
+    } else if (size >= pow(10, 6)) { // 1GB > size >= 1MB
+        sizeText = [NSString stringWithFormat:@"%.2fMB", size / pow(10, 6)];
+    } else if (size >= pow(10, 3)) { // 1MB > size >= 1KB
+        sizeText = [NSString stringWithFormat:@"%.2fKB", size / pow(10, 3)];
+    } else { // 1KB > size
+        sizeText = [NSString stringWithFormat:@"%zdB", size];
+    }
+
+    return sizeText;
+}
+
 @end
 
 

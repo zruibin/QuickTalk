@@ -12,6 +12,7 @@
 
 + (instancetype)sharedInstance;
 
+- (NSString *)cacheSizeString;
 - (void)checkingCache;
 - (void)asynchronousCleanUpCache;
 

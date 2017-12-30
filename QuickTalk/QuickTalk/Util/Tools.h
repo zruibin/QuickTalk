@@ -70,6 +70,10 @@
                top:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right
        borderColor:(UIColor *)color borderWidth:(CGFloat)width;
 
+/*打开网页*/
 + (void)openWeb:(NSString *)urlString viewController:(UIViewController *)viewController;
+
+/*文件大小转化为文字*/
++ (NSString *)fileSizeToString:(NSUInteger)size;
 
 @end

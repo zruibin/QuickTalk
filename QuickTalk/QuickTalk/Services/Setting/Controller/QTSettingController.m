@@ -220,9 +220,10 @@
                 [QTProgressHUD showHUDText:@"清除成功" view:weakSelf.view];
             }
         };
-        NSString *sizeStr = [IFLY_PATH fileSizeString];
+        NSString *sizeStr = [[QTCleaner sharedInstance] cacheSizeString];
+        
         if (sizeStr != nil) {
-            sizeStr = [NSString stringWithFormat:@"共%@", [IFLY_PATH fileSizeString]];
+            sizeStr = [NSString stringWithFormat:@"共%@", sizeStr];
             NSArray *items =
             @[MMItemMake(@"清除", MMItemTypeHighlight, handler)];
             MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:sizeStr

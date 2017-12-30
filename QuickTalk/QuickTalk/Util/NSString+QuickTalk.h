@@ -32,7 +32,7 @@
 
 /*文件或文件夹大小*/
 - (NSString *)fileSizeString;
-- (unsigned long long)fileSize;
+- (NSUInteger)fileSize;
 
 
 /*手机号分服务商*/
