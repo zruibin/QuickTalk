@@ -10,6 +10,7 @@
 #import "QTUserPostMainCell.h"
 #import "QTUserPostModel.h"
 #import "QTUserController.h"
+#import "QTUserPostCommentController.h"
 
 @interface QTUserLikeListController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -215,8 +216,8 @@
                     [likeList addObject:likeMode];
                     model.likeList = [likeList copy];
                 }
-                [self.cacheHeightDict removeAllObjects];
             }
+            [self.cacheHeightDict removeAllObjects];
             model.liked = !model.liked;
             [self.tableView reloadData];
         }
@@ -301,17 +302,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    QTCommentModel *model = self.dataList[indexPath.section];
-//    QTTopicController *topicController = [[QTTopicController alloc] init];
-//    topicController.topicUUID = model.topicUUID;
-//    [self.navigationController pushViewController:topicController animated:YES];
+    QTUserPostModel *model = self.dataList[indexPath.section];
+    QTUserPostCommentController *userPostCommentController = [[QTUserPostCommentController alloc] init];
+    userPostCommentController.uuid = model.uuid;
+    [self.navigationController pushViewController:userPostCommentController animated:YES];
+    [self addReadCountAction:indexPath.section];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.onScrollingHandler && self.dataList.count >= 10) {
+    if (self.onScrollingHandler && self.dataList.count >= 6) {
         self.onScrollingHandler(scrollView.contentOffset.y);
     }
 }

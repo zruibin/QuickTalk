@@ -144,7 +144,7 @@
             cell.textLabel.text = [NSString stringWithFormat:@"欢迎页(%@)", version];
         }
         if (indexPath.row == 1) {
-            cell.textLabel.text = @"教程";
+            cell.textLabel.text = @"使用指南";
         }
         if (indexPath.row == 2) {
             cell.textLabel.text = @"声明及用户协议协议";

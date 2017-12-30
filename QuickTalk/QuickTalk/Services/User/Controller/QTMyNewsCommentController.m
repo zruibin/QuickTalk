@@ -167,7 +167,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.onScrollingHandler && self.dataList.count >= 10) {
+    if (self.onScrollingHandler && self.dataList.count >= 6) {
         self.onScrollingHandler(scrollView.contentOffset.y);
     }
 }
