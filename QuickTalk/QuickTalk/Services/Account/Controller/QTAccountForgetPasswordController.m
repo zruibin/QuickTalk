@@ -31,6 +31,7 @@ static NSUInteger timeNumber = 60;
 {
     [super viewDidLoad];
     [self initViews];
+    self.accountField.text = self.phone;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

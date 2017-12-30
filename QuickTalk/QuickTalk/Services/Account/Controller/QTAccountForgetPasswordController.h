@@ -10,4 +10,6 @@
 
 @interface QTAccountForgetPasswordController : QTViewController
 
+@property (nonatomic, copy) NSString *phone;
+
 @end

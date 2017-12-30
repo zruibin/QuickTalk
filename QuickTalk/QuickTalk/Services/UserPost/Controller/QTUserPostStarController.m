@@ -91,6 +91,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
         QTIntroController *introController = [[QTIntroController alloc] init];
+        introController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:introController animated:YES completion:nil];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
         [[NSUserDefaults standardUserDefaults] synchronize];

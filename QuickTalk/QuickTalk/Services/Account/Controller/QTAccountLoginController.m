@@ -200,6 +200,9 @@
 - (void)forgetButtonAction
 {
     QTAccountForgetPasswordController *viewController = [[QTAccountForgetPasswordController alloc] init];
+    if (self.accountField.text.length > 0) {
+        viewController.phone = self.accountField.text;
+    }
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

@@ -198,6 +198,7 @@
     
     if (indexPath.row == 0) {
         QTIntroController *introController = [[QTIntroController alloc] init];
+        introController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self presentViewController:introController animated:YES completion:nil];
     }
     if (indexPath.row == 1) {

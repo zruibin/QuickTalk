@@ -30,7 +30,6 @@
 - (void)shareData:(QTUserPostModel *)model;
 - (void)collectionData:(QTUserPostModel *)model;
 - (void)addReadCountAction:(NSInteger)index;
-- (void)checkPasteAction;
 - (void)likeOrUnLikeAction:(NSInteger)index;
 
 @end
@@ -39,7 +38,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:QTPasteBoardCheckingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:QTLoginStatusChangeNotification object:nil];
 }
 
@@ -63,17 +61,6 @@
     }];
     
     self.errorView.hidden = YES;
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
-        QTIntroController *introController = [[QTIntroController alloc] init];
-        [self presentViewController:introController animated:YES completion:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    } else {
-        [self checkPasteAction];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkPasteAction)
-                                                 name:QTPasteBoardCheckingNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -213,25 +200,6 @@
 {
     QTUserPostModel *model = self.dataList[index];
     [QTUserPostModel requestAddUserPostReadCount:model.uuid completionHandler:nil];
-}
-
-- (void)checkPasteAction
-{
-    //防止登录延时问题
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        UIPasteboard *board = [UIPasteboard generalPasteboard];
-        YYCache *cache = [YYCache cacheWithName:QTDataCache];
-        if ([board.string isValidUrl]) {
-            if ([cache containsObjectForKey:QTPasteboardURL] == YES) {
-                NSString *urlString = (NSString *)[cache objectForKey:QTPasteboardURL];
-                if (![urlString isEqualToString:board.string]) {
-                    [self addAction];
-                }
-            } else {
-                [self addAction];
-            }
-        }
-    });
 }
 
 - (void)likeOrUnLikeAction:(NSInteger)index
