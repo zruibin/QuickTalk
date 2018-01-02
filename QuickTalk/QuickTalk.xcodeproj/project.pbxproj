@@ -1858,7 +1858,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "快言_Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "快言_Development";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
