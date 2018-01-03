@@ -11,7 +11,7 @@
 """
 定时备份mysql数据
 """
-import os, os.path, time, sys
+import os, os.path, time, sys, datetime
 import tarfile, zipfile
 from dispatch import celery
 from config import *
@@ -28,6 +28,7 @@ backupDir = Config.BACKUP_DIR
 def backup():
     __backupDB()
     __backupMedias()
+    __cleanBackup()
     pass
 
 
@@ -73,6 +74,24 @@ def __backupMedias():
     os.system(bz2CMD)
 
     pass
+
+
+def __cleanBackup():
+    """定时消除备份"""
+    dirList = os.listdir(backupDir)
+    dirList = sorted(dirList)
+    # print len(dirList)
+    nowData = datetime.datetime.now()
+    for directory in dirList:
+        # print directory
+        backupDate = directory.split("_")[-1].split("-")[0]
+        backupDate = datetime.datetime.strptime(backupDate, '%Y%m%d')
+        # print backupDate
+        days = (nowData-backupDate).days
+        if days > Config.BACKUP_DAYS:
+            os.remove(backupDir + "/" + directory) # 删除文件
+    pass
+    
 
 
 if __name__ == '__main__':

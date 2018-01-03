@@ -21,6 +21,7 @@ class Config(object):
   LOG_DIR = "logs/"
   WEB_SITE_DIR = "/home/creactism"
   BACKUP_DIR = "/home/creactism_bak" # 数据备份目录
+  BACKUP_DAYS = 30 # 备份天数
 
   DBHOST = "localhost"
   DBPORT = 3306
