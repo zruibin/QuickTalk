@@ -62,7 +62,7 @@
 /*url*/
 - (BOOL)isValidUrl;
 
-/**/
+/*判断是否是中文*/
 - (BOOL)isValidChinese;
 
 /*邮编号码*/
@@ -90,4 +90,18 @@
 - (BOOL)bankCardluhmCheck;
 
 
+/**
+ 分词
+
+ @param ignoreSpace 是否忽略空格
+ @return 分词数组
+ */
+- (NSArray *)separateWords:(BOOL)ignoreSpace;
+
 @end
+
+
+
+
+
+

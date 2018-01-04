@@ -548,4 +548,39 @@
     return (luhmTotal%10 ==0)?YES:NO;
 }
 
+- (NSArray *)separateWords:(BOOL)ignoreSpace
+{
+    NSString *string = self;
+    
+    // 要分词的字符串
+    
+    NSMutableArray *keywords = [[NSMutableArray alloc] init];
+    CFStringTokenizerRef ref = CFStringTokenizerCreate(NULL, (__bridge CFStringRef)string, CFRangeMake(0, string.length), kCFStringTokenizerUnitWordBoundary, NULL);// 创建分词器
+    CFRange range;// 当前分词的位置
+    // 获取第一个分词的范围
+    CFStringTokenizerAdvanceToNextToken(ref);
+    range = CFStringTokenizerGetCurrentTokenRange(ref);
+    
+    // 循环遍历获取所有分词并记录到数组中
+    NSString *keyWord;
+    while (range.length>0) {
+        keyWord = [string substringWithRange:NSMakeRange(range.location, range.length)];
+        CFStringTokenizerAdvanceToNextToken(ref);
+        range = CFStringTokenizerGetCurrentTokenRange(ref);
+        
+//        DLog(@"%@",keyWord);
+        if (ignoreSpace) {
+            if (![keyWord isEqualToString:@" "]) {
+                [keywords addObject:keyWord];
+            }
+        } else {
+            [keywords addObject:keyWord];
+        }
+    }
+//    DLog(@"keywords = %@", keywords);
+    CFRelease(ref);
+    
+    return [keywords copy];
+}
+
 @end
