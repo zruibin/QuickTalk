@@ -20,7 +20,7 @@ sys.setdefaultencoding('utf-8')
 sys.path.append("./lib")
 sys.path.append("./lib/pygetui")
 
-from flask import Flask, make_response, request
+from flask import Flask, make_response, request, redirect
 from flask_cors import CORS, cross_origin
 from config import *
 import register
@@ -35,6 +35,9 @@ app.config["JSONIFY_MIMETYPE"] = Config.JSONIFY_MIMETYPE
 # app.config['JSON_AS_ASCII'] = False
 app.config['DEBUG'] = Config.DEBUG
 
+# 注册模块
+register.registerBlueprint(app)
+
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -45,7 +48,27 @@ def home():
     return app.send_static_file('index.html')
 
 
-register.registerBlueprint(app)
+""""
+@app.before_request  
+def beforeRequest():  
+    print "beforeRequest..."
+    ip = request.remote_addr  
+    url = request.url
+    real_ip = request.headers.get('X-Real-Ip', request.remote_addr)
+    print real_ip
+    # print ip,  
+    # print url
+    print request.headers
+    return make_response(jsonTool({"code":1, "message": "break..."}))
+
+@app.after_request
+def afterRequest(response):
+    print "afterRequest..."
+    return response
+#"""
+
+
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
