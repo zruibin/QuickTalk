@@ -74,7 +74,7 @@
 
 - (void)asynchronousCleanUpCache
 {
-    [[RBScheduler sharedInstance] runTask:^{
+    [[RBScheduler sharedInstance] dispatchTask:^{
         YYCache *cache = [YYCache cacheWithName:QTDataCache];
         [cache removeAllObjects];
         [self cleanUpPath:IFLY_PATH];

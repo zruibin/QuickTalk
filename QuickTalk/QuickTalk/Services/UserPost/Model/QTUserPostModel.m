@@ -45,7 +45,7 @@
 - (NSString *)nickname
 {
     if (_nickname.length == 0) {
-        _nickname = [NSString stringWithFormat:@"用户%ld", self.userId];
+        _nickname = [NSString stringWithFormat:@"用户%ld", (long)self.userId];
     }
     return _nickname;
 }
@@ -100,6 +100,39 @@
         [params setObject:userUUID forKey:@"user_uuid"];
     }
     [QTNetworkAgent requestDataForUserPostService:@"/starUserPostList" method:SERVICE_REQUEST_GET params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
+        if (completionHandler == nil) {
+            return;
+        }
+        if (error) {
+            completionHandler(nil, error);
+        } else {
+            QTUserPostModelList *listModel = nil;
+            @try {
+                NSUInteger code = [responseObject[@"code"] integerValue];
+                if (code == CODE_SUCCESS) {
+                    listModel = [QTUserPostModelList yy_modelWithJSON:responseObject];
+                } else {
+                    error = [QTServiceCode error:code message:responseObject[@"message"]];
+                }
+            } @catch (NSException *exception) {
+                ;
+            } @finally {
+                completionHandler(listModel.data, error);
+            }
+        }
+    }];
+}
+
++ (void)requestRecommendUserPostData:(NSUInteger)page
+           relationUserUUID:(NSString *)relationUserUUID
+          completionHandler:(void (^)(NSArray<QTUserPostModel *> *list, NSError * error))completionHandler
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"index"];
+    if (relationUserUUID.length > 0) {
+        [params setObject:relationUserUUID forKey:@"relation_user_uuid"];
+    }
+    [QTNetworkAgent requestDataForUserPostService:@"/recommendUserPostList" method:SERVICE_REQUEST_GET params:[params copy] completionHandler:^(id  _Nullable responseObject, NSError * _Nullable error) {
         if (completionHandler == nil) {
             return;
         }

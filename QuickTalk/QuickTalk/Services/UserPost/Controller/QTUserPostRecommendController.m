@@ -1,12 +1,12 @@
 //
-//  QTUserPostMainController.m
+//  QTUserPostRecommendController.m
 //  QuickTalk
 //
-//  Created by  Ruibin.Chow on 2017/12/5.
-//  Copyright © 2017年 www.creactism.com. All rights reserved.
+//  Created by  Ruibin.Chow on 08/01/2018.
+//  Copyright © 2018 www.creactism.com. All rights reserved.
 //
 
-#import "QTUserPostMainController.h"
+#import "QTUserPostRecommendController.h"
 #import "QTUserPostAddController.h"
 #import "QTUserPostModel.h"
 #import "QTUserPostMainCell.h"
@@ -14,7 +14,7 @@
 #import "QTIntroController.h"
 #import "QTUserController.h"
 
-@interface QTUserPostMainController ()<UITableViewDataSource, UITableViewDelegate>
+@interface QTUserPostRecommendController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataList;
@@ -31,9 +31,10 @@
 - (void)addReadCountAction:(NSInteger)index;
 - (void)likeOrUnLikeAction:(NSInteger)index;
 
+
 @end
 
-@implementation QTUserPostMainController
+@implementation QTUserPostRecommendController
 
 - (void)dealloc
 {
@@ -75,7 +76,7 @@
 
 - (void)initViews
 {
-    self.title = @"快言";
+    self.title = @"推荐";
     
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -85,14 +86,14 @@
     [self.view addSubview:self.errorView];
     
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc]
-                                       initWithImage:[UIImage imageNamed:@"add"]
-                                       style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
+                                initWithImage:[UIImage imageNamed:@"add"]
+                                style:UIBarButtonItemStylePlain target:self action:@selector(addAction)];
     self.navigationItem.rightBarButtonItem = addItem;
 }
 
 - (void)loadData
 {
-    [QTUserPostModel requestUserPostData:self.page userUUID:self.userUUID relationUserUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
+    [QTUserPostModel requestRecommendUserPostData:self.page relationUserUUID:[QTUserInfo sharedInstance].uuid completionHandler:^(NSArray<QTUserPostModel *> *list, NSError *error) {
         if (error) {
             [QTProgressHUD showHUDText:error.userInfo[ERROR_MESSAGE] view:self.view];
             if (self.page == 1) {
@@ -137,25 +138,25 @@
             [weakSelf deleteData:model];
         };
         NSArray *items = @[MMItemMake(@"删除", MMItemTypeHighlight, block),
-                                    MMItemMake(@"取消", MMItemTypeNormal, nil)];
+                           MMItemMake(@"取消", MMItemTypeNormal, nil)];
         MMAlertView *view = [[MMAlertView alloc] initWithTitle:@"是否删除" detail:@"" items:items];
         [view show];
     };
     void(^collectionHandler)(NSInteger index) = ^(NSInteger index){
         [weakSelf collectionData:model];
     };
-
+    
     NSArray *items = @[];
     if ([model.userUUID isEqualToString:[QTUserInfo sharedInstance].uuid]) {
         items = @[
-                       MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
-                       ];
+                  MMItemMake(@"删除", MMItemTypeHighlight, deleteHandler)
+                  ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
+                  ];
     } else {// if ([[QTUserInfo sharedInstance] hiddenData] == NO) {
         items = @[
-                       MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
-                       ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
-                       ];
+                  MMItemMake(@"举报", MMItemTypeHighlight, reportHandler)
+                  ,MMItemMake(@"收藏", MMItemTypeNormal, collectionHandler)
+                  ];
     }
     MMSheetView *sheetView = [[MMSheetView alloc] initWithTitle:@""
                                                           items:items];
@@ -325,15 +326,6 @@
     [self addReadCountAction:indexPath.section];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (self.onScrollingHandler && self.dataList.count >= 6) {
-        self.onScrollingHandler(scrollView.contentOffset.y);
-    }
-}
-
 #pragma mark - Action
 
 - (void)addAction
@@ -386,5 +378,6 @@
 }
 
 @end
+
 
 

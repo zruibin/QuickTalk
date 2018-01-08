@@ -26,7 +26,7 @@
 {
     [self registerService:application launchOptions:launchOptions];
     [MMPopupWindow sharedWindow].touchWildToHide = YES;
-    [[RBScheduler sharedInstance] run];
+//    [[RBScheduler sharedInstance] run];
     [[QTUserInfo sharedInstance] loginInBackground];
     [[QTCleaner sharedInstance] checkingCache];
     

@@ -10,6 +10,7 @@
 #import "QTNewsController.h"
 #import "QTUserPostStarController.h"
 #import "QTMyController.h"
+#import "QTUserPostRecommendController.h"
 
 @interface QTTabBarController () <UITabBarControllerDelegate>
 
@@ -27,16 +28,19 @@
     // Do any additional setup after loading the view.
     self.delegate = self;
     
-    QTNewsController *newsController = [[QTNewsController alloc] init];
-    QTNavigationController *newsNav = [[QTNavigationController alloc] initWithRootViewController:newsController];
+//    QTNewsController *newsController = [[QTNewsController alloc] init];
+//    QTNavigationController *newsNav = [[QTNavigationController alloc] initWithRootViewController:newsController];
     
     QTUserPostStarController *userPostController = [[QTUserPostStarController alloc] init];
     QTNavigationController *userPostNav = [[QTNavigationController alloc] initWithRootViewController:userPostController];
     
+    QTUserPostRecommendController *recommendUserPostController = [[QTUserPostRecommendController alloc] init];
+    QTNavigationController *recommendNav = [[QTNavigationController alloc] initWithRootViewController:recommendUserPostController];
+    
     QTMyController *myController = [[QTMyController alloc] init];
     QTNavigationController *myNav = [[QTNavigationController alloc] initWithRootViewController:myController];
     
-    self.viewControllers = @[userPostNav, newsNav, myNav];
+    self.viewControllers = @[userPostNav, recommendNav, myNav];
     [self setTabBarItemAppearance];
 }
 
@@ -70,7 +74,7 @@
                                            @"selectedImageName":@"news_unselect"
                                            },
                                    @"tab1":@{
-                                           @"title":@"新闻",
+                                           @"title":@"推荐",
                                            @"titleColor":@"#666666",
                                            @"titleSelectedColor":QuickTalk_MAIN_COLOR_HEX,
                                            @"imageName":@"circle_unselect",

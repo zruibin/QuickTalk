@@ -27,6 +27,7 @@
 		E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D921FEA7DC800217D9F /* QTUserStarButton.m */; };
 		E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */; };
 		E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D981FEA889100217D9F /* QTUserSearchController.m */; };
+		E02A3CFF2003223100ADF11A /* QTUserPostRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */; };
 		E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */; };
 		E03BBDF11FF1F3B8000F93E8 /* QTUserPostStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */; };
 		E03BBDF51FF20633000F93E8 /* QTNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF31FF20633000F93E8 /* QTNoneView.m */; };
@@ -197,6 +198,8 @@
 		E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserContactBookController.m; sourceTree = "<group>"; };
 		E0256D971FEA889100217D9F /* QTUserSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserSearchController.h; sourceTree = "<group>"; };
 		E0256D981FEA889100217D9F /* QTUserSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserSearchController.m; sourceTree = "<group>"; };
+		E02A3CFD2003223100ADF11A /* QTUserPostRecommendController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostRecommendController.h; sourceTree = "<group>"; };
+		E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostRecommendController.m; sourceTree = "<group>"; };
 		E03BBDEC1FF1F2B0000F93E8 /* QQPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQPopMenuView.h; sourceTree = "<group>"; };
 		E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQPopMenuView.m; sourceTree = "<group>"; };
 		E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostStarController.h; sourceTree = "<group>"; };
@@ -743,6 +746,8 @@
 		E088D6741FD6650000038736 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E02A3CFD2003223100ADF11A /* QTUserPostRecommendController.h */,
+				E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */,
 				E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */,
 				E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */,
 				E088D6761FD6650000038736 /* QTUserPostMainController.h */,
@@ -1629,6 +1634,7 @@
 				E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */,
 				E08560A21FECFC6600B4779E /* QTUserLikeListController.m in Sources */,
 				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
+				E02A3CFF2003223100ADF11A /* QTUserPostRecommendController.m in Sources */,
 				E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */,
 				E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */,
 				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
