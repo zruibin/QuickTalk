@@ -23,6 +23,7 @@ from service.quickTalk.userPost import addReadCount
 from service.quickTalk.userPost import userPostList
 from service.quickTalk.userPost import userPostCommentList
 from service.quickTalk.userPost import starUserPostList
+from service.quickTalk.userPost import recommendUserPostList
 
 
 if __name__ == '__main__':

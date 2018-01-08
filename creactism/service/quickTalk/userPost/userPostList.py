@@ -42,7 +42,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
         (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS nickname,
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS avatar,
         (SELECT COUNT(t_quickTalk_userPost_comment.uuid) FROM t_quickTalk_userPost_comment WHERE userPost_uuid=t_quickTalk_userPost.uuid) AS commentCount
-        FROM t_quickTalk_userPost ORDER BY readCount DESC %s
+        FROM t_quickTalk_userPost ORDER BY time DESC %s
     """ % limitSQL
     if userUUID is not None:
         querySQL = """
@@ -52,7 +52,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
             (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS nickname,
             (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS avatar,
             (SELECT COUNT(t_quickTalk_userPost_comment.uuid) FROM t_quickTalk_userPost_comment WHERE userPost_uuid=t_quickTalk_userPost.uuid) AS commentCount
-            FROM t_quickTalk_userPost WHERE user_uuid='%s' ORDER BY readCount DESC %s
+            FROM t_quickTalk_userPost WHERE user_uuid='%s' ORDER BY time DESC %s
         """ % (userUUID, limitSQL)
     # print querySQL 
 
