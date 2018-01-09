@@ -35,6 +35,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *childControllers;
 @property (nonatomic, strong) QTUserModel *userModel;
+@property (nonatomic, assign) CGFloat offsetY;
 
 - (void)initViews;
 - (void)makeUserData;
@@ -71,6 +72,7 @@
     [Tools drawBorder:self.messageView top:NO left:NO bottom:YES right:NO
           borderColor:[UIColor colorFromHexValue:0xE4E4E4] borderWidth:.5f];
     [self calcuateHeaderView];
+    [self calcuateOnScrolling:self.offsetY];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -195,6 +197,7 @@
     }
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds)*self.count,
                                              CGRectGetHeight(self.scrollView.bounds)-64);
+    self.offsetY = offsetY;
 }
 
 - (void)calcuateHeaderView

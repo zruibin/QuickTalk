@@ -229,7 +229,7 @@ static NSString *goBack = @"goBack";
 - (void)closeSelf
 {
     [self.navigationController popViewControllerAnimated:YES];
-    /*消除缓存a*/
+    /*消除缓存*/
     NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
     NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];
     [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^{
