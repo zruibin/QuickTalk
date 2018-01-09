@@ -91,8 +91,11 @@
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"first"] == nil) {
         QTIntroController *introController = [[QTIntroController alloc] init];
+        introController.viewController = self;
         introController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        [self presentViewController:introController animated:YES completion:nil];
+        [self presentViewController:introController animated:YES completion:^{
+            [Tools openWeb:@"http://www.creactism.com/userGuide.html" viewController:weakSelf];
+        }];
         [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"first"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     } else {

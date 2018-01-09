@@ -136,6 +136,11 @@ static NSDate *refreshDate = nil;
 
 - (BOOL)checkLoginStatus:(UIViewController *)viewController
 {
+    return [self checkLoginStatus:viewController complete:nil];
+}
+
+- (BOOL)checkLoginStatus:(UIViewController *)viewController complete:(void (^)(void))completeHanlder
+{
     if (self.loginStatus == NO) {
         QTAccountLoginController *loginController = [QTAccountLoginController new];
         QTNavigationController *nav = [[QTNavigationController alloc] initWithRootViewController:loginController];

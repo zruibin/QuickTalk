@@ -38,6 +38,7 @@ extern NSString * const QTLoginStatusChangeNotification;
 - (void)logout;
 - (void)loginInBackground;
 - (BOOL)checkLoginStatus:(UIViewController *)viewController;
+- (BOOL)checkLoginStatus:(UIViewController *)viewController complete:(void (^)(void))completeHanlder;
 
 /*检查登录是否过时*/
 - (void)checkingObsolescence;

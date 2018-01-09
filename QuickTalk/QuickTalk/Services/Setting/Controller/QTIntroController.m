@@ -119,7 +119,9 @@
 
 - (void)dismiss
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[QTUserInfo sharedInstance] checkLoginStatus:self.viewController];
+    }];
 }
 
 //pagecontroll的委托方法

@@ -10,4 +10,6 @@
 
 @interface QTIntroController : QTViewController
 
+@property (nonatomic, weak) UIViewController *viewController;
+
 @end
