@@ -32,8 +32,8 @@ def recommendUserPostList():
 
 
 def __getRecommendUserPostFromStorage(index, size, relationUserUUID):
-    limitSQL = limit(index)
-    if size is not None: limitSQL = limit(index, int(size))
+    # limitSQL = limit(index)
+    # if size is not None: limitSQL = limit(index, int(size))
         
     querySQL = """
         SELECT id, uuid, title, content, read_count AS readCount, time,
@@ -42,8 +42,8 @@ def __getRecommendUserPostFromStorage(index, size, relationUserUUID):
         (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS nickname,
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS avatar,
         (SELECT COUNT(t_quickTalk_userPost_comment.uuid) FROM t_quickTalk_userPost_comment WHERE userPost_uuid=t_quickTalk_userPost.uuid) AS commentCount
-        FROM t_quickTalk_userPost ORDER BY readCount DESC %s
-    """ % limitSQL
+        FROM t_quickTalk_userPost ORDER BY Rand() Limit %d
+    """ % Config.PAGE_OF_SIZE
     # print querySQL 
 
     dbManager = DB.DBManager.shareInstanced()
