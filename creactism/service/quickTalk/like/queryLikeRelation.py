@@ -11,7 +11,7 @@
 查询是否点赞系统
 """
 
-from service.quickTalk.like import like
+from . import like
 from module.database import DB
 from module.log.Log import Loger
 from config import *

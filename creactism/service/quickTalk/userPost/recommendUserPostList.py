@@ -11,14 +11,14 @@
 推荐userPost列表
 """
 
-from service.quickTalk.userPost import userPost
+from . import userPost
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.like.queryLikeRelation import queryLikeRelation
-from service.quickTalk.userPost.userPostList import queryTheUserPostIsLiked,queryPackageUserPostLikeList
+from ..like.queryLikeRelation import queryLikeRelation
+from .userPostList import queryTheUserPostIsLiked,queryPackageUserPostLikeList
 
 
 @userPost.route('/recommendUserPostList', methods=["GET", "POST"])

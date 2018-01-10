@@ -8,7 +8,7 @@
 # 
 
 from flask import Flask, Response, request
-from service.api import api
+from . import api
 from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger

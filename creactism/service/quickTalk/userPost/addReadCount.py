@@ -11,7 +11,7 @@
 更新阅读数
 """
 
-from service.quickTalk.userPost import userPost
+from . import userPost
 from module.database import DB
 from module.log.Log import Loger
 from config import *

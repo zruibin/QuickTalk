@@ -11,13 +11,13 @@
 搜索用户(手机号码或昵称)
 """
 
-from service.quickTalk.search import search
+from . import search
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
+from ..star.queryStarUserRelation import queryStarUserRelation
 
 
 @search.route('/searchUser', methods=["GET", "POST"])

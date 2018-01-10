@@ -15,15 +15,15 @@ from flask import Blueprint
   
 userPost = Blueprint("userPost", __name__)
 
-from service.quickTalk.userPost import addUserPost
-from service.quickTalk.userPost import addUserPostComment
-from service.quickTalk.userPost import deleteUserPostComment
-from service.quickTalk.userPost import deleteUserPost
-from service.quickTalk.userPost import addReadCount
-from service.quickTalk.userPost import userPostList
-from service.quickTalk.userPost import userPostCommentList
-from service.quickTalk.userPost import starUserPostList
-from service.quickTalk.userPost import recommendUserPostList
+from . import addUserPost
+from . import addUserPostComment
+from . import deleteUserPostComment
+from . import deleteUserPost
+from . import addReadCount
+from . import userPostList
+from . import userPostCommentList
+from . import starUserPostList
+from . import recommendUserPostList
 
 
 if __name__ == '__main__':

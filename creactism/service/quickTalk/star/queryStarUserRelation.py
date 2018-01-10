@@ -11,7 +11,7 @@
 查询是否已关注
 """
 
-from service.quickTalk.star import star
+from . import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *

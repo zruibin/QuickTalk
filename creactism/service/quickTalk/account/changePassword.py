@@ -11,14 +11,14 @@
 修改密码
 """
 
-from service.quickTalk.account import account
+from . import account
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, md5hex
-from service.quickTalk.account.generalMethod import verifyUserPassword
+from .generalMethod import verifyUserPassword
 
 
 @account.route('/changePassword', methods=["POST"])

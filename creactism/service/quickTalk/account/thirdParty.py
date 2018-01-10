@@ -11,7 +11,7 @@
 第三方帐号绑定与解绑
 """
 
-from service.quickTalk.account import account
+from . import account
 import os.path
 from module.database import DB
 from module.log.Log import Loger
@@ -19,7 +19,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle, ThirdPartyAlreadyBeBindException
 from common.tools import getValueFromRequestByKey
-from service.quickTalk.account.generalMethod import verifyUserIsExists
+from .generalMethod import verifyUserIsExists
 
 
 @account.route('/thirdParty', methods=["POST"])

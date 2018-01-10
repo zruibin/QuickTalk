@@ -11,7 +11,7 @@
 用户注册
 """
 
-from service.quickTalk.account import account
+from . import account
 from flask import Flask, Response, request
 from module.database import DB
 from module.cache.RuntimeCache import CacheManager
@@ -20,7 +20,7 @@ from config import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime, md5hex, userAvatarURL, makeCookie
 from common.code import *
 from common.auth import generateToken, cacheToken
-from service.quickTalk.account.generalMethod import verifyEmailIsExists, verifyPhoneIsExists
+from .generalMethod import verifyEmailIsExists, verifyPhoneIsExists
 
 
 @account.route("/register", methods=["POST"])

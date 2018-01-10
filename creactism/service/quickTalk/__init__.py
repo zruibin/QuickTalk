@@ -14,21 +14,21 @@ from flask import Blueprint
   
 quickTalk = Blueprint("quickTalk", __name__)
 
-from service.quickTalk import topic
-from service.quickTalk import topicList
-from service.quickTalk import topicContent
-from service.quickTalk import changeTopic
-from service.quickTalk import comment
-from service.quickTalk import commentList
-from service.quickTalk import submitTopic
-from service.quickTalk import deleteTopic
-from service.quickTalk import login
-from service.quickTalk import likeAction
-from service.quickTalk import hidden
-from service.quickTalk import deleteComment
-from service.quickTalk import changeAvatar
-from service.quickTalk import changeInfo
-from service.quickTalk import myCommentList
-from service.quickTalk import updateReadCount
-from service.quickTalk import version
+from . import topic
+from . import topicList
+from . import topicContent
+from . import changeTopic
+from . import comment
+from . import commentList
+from . import submitTopic
+from . import deleteTopic
+from . import login
+from . import likeAction
+from . import hidden
+from . import deleteComment
+from . import changeAvatar
+from . import changeInfo
+from . import myCommentList
+from . import updateReadCount
+from . import version
 

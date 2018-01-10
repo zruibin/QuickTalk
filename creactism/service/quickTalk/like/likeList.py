@@ -11,13 +11,13 @@
 个人的已赞列表
 """
 
-from service.quickTalk.like import like
+from . import like
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
+from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
 
 
 @like.route('/likeList', methods=["GET", "POST"])

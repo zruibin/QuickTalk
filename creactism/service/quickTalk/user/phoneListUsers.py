@@ -11,13 +11,13 @@
 根据通讯录号码列表匹配好友
 """
 
-from service.quickTalk.user import user
+from . import user
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
+from ..star.queryStarUserRelation import queryStarUserRelation
 import json
 
 

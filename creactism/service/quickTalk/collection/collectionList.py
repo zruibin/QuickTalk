@@ -11,14 +11,14 @@
 收藏列表
 """
 
-from service.quickTalk.collection import collection
+from . import collection
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
+from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
 
 
 @collection.route('/list', methods=["POST", "GET"])

@@ -11,7 +11,7 @@
 修改头像
 """
 
-from service.quickTalk import quickTalk
+from . import quickTalk
 import os.path
 from module.database import DB
 from module.log.Log import Loger

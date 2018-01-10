@@ -11,7 +11,7 @@
 删除通知设备
 """
 
-from service.quickTalk.account import account
+from . import account
 from module.database import DB
 from module.log.Log import Loger
 from config import *

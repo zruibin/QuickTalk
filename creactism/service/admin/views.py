@@ -7,7 +7,7 @@
 # Copyright (c) 2017年 zruibin All rights reserved.
 # 
 
-from service.admin import admin
+from . import admin
 
 @admin.route('/')
 def index():                         

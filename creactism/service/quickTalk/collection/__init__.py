@@ -14,8 +14,8 @@ from flask import Blueprint
   
 collection = Blueprint("collection", __name__)
 
-from service.quickTalk.collection import action
-from service.quickTalk.collection import collectionList
+from . import action
+from . import collectionList
 
 
 if __name__ == '__main__':

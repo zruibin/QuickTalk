@@ -11,7 +11,7 @@
 收藏与取消收藏
 """
 
-from service.quickTalk.collection import collection
+from . import collection
 from module.database import DB
 from module.log.Log import Loger
 from config import *

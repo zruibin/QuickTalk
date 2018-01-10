@@ -11,13 +11,13 @@
 查询用户的关注用户
 """
 
-from service.quickTalk.star import star
+from . import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from service.quickTalk.star.queryStarUserRelation import queryStarUserRelation
+from .queryStarUserRelation import queryStarUserRelation
 
 
 @star.route('/queryStarUser', methods=["GET", "POST"])

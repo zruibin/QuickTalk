@@ -11,14 +11,14 @@
 登录
 """
 
-from service.quickTalk.account import account
+from . import account
 from module.database import DB
 from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime, userAvatarURL, md5hex, makeCookie
 from common.auth import vertifyTokenHandle, generateToken, cacheToken
-from service.quickTalk.account.register import createNewUserOperation
+from .register import createNewUserOperation
 
 
 @account.route('/login', methods=["POST"])

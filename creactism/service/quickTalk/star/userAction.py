@@ -11,7 +11,7 @@
 关注与取消关注用户
 """
 
-from service.quickTalk.star import star
+from . import star
 from module.database import DB
 from module.log.Log import Loger
 from config import *

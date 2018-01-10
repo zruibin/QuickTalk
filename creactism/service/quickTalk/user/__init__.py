@@ -15,7 +15,7 @@ from flask import Blueprint
   
 user = Blueprint("user", __name__)
 
-from service.quickTalk.user import phoneListUsers
+from . import phoneListUsers
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@
 修改用户简介
 """
 
-from service.quickTalk.account import account
+from . import account
 import os.path
 from module.database import DB
 from module.log.Log import Loger

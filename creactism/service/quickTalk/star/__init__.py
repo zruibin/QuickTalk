@@ -15,11 +15,11 @@ from flask import Blueprint
   
 star = Blueprint("star", __name__)
 
-from service.quickTalk.star import userAction
-from service.quickTalk.star import queryStarUser
-from service.quickTalk.star import queryStarUserRelation
-from service.quickTalk.star import queryFans
-from service.quickTalk.star import queryBeStarRelation
+from . import userAction
+from . import queryStarUser
+from . import queryStarUserRelation
+from . import queryFans
+from . import queryBeStarRelation
 
 
 if __name__ == '__main__':

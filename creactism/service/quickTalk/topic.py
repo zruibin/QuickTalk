@@ -11,7 +11,7 @@
 单个话题
 """
 
-from service.quickTalk import quickTalk
+from . import quickTalk
 from module.database import DB
 from module.log.Log import Loger
 from config import *

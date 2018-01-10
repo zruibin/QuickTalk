@@ -11,7 +11,7 @@
 查询日志文件
 """
 
-from service.admin import admin
+from . import admin
 from config import *
 from common.code import *
 import os

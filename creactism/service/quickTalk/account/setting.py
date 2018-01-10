@@ -21,7 +21,7 @@ NOTIFICATION_FOR_NEW_STAR = 3
 NOTIFICATION_FOR_NEW_SHARE = 4
 """
 
-from service.quickTalk.account import account
+from . import account
 from module.database import DB
 from module.log.Log import Loger
 from config import *

@@ -15,22 +15,22 @@ from flask import Blueprint
   
 account = Blueprint("account", __name__)
 
-from service.quickTalk.account import changeArea
-from service.quickTalk.account import changeGender
-from service.quickTalk.account import changeDetail
-from service.quickTalk.account import register
-from service.quickTalk.account import login
-from service.quickTalk.account import forgetPassword
-from service.quickTalk.account import changePassword
-from service.quickTalk.account import thirdParty
-from service.quickTalk.account import info
-from service.quickTalk.account import changeAvatar
-from service.quickTalk.account import changeInfo
-from service.quickTalk.account import userList
-from service.quickTalk.account import setting
-from service.quickTalk.account import settingList
-from service.quickTalk.account import addDevice
-from service.quickTalk.account import deleteDevice
+from . import changeArea
+from . import changeGender
+from . import changeDetail
+from . import register
+from . import login
+from . import forgetPassword
+from . import changePassword
+from . import thirdParty
+from . import info
+from . import changeAvatar
+from . import changeInfo
+from . import userList
+from . import setting
+from . import settingList
+from . import addDevice
+from . import deleteDevice
 
 
 if __name__ == '__main__':

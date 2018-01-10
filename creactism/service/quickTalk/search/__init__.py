@@ -15,7 +15,7 @@ from flask import Blueprint
   
 search = Blueprint("search", __name__)
 
-from service.quickTalk.search import searchUser
+from . import searchUser
 
 
 if __name__ == '__main__':

@@ -15,6 +15,6 @@ from flask import Blueprint
   
 admin = Blueprint('admin', __name__)
   
-from service.admin import views
-from service.admin import logContent
+from . import views
+from . import logContent
 

@@ -11,7 +11,7 @@
 所有用户
 """
 
-from service.quickTalk.account import account
+from . import account
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -42,7 +42,7 @@ def __getUserListFromStorage(index, size):
         FROM t_quickTalk_user ORDER BY time DESC %s
     """ % limitSQL
 
-    print querySQL 
+    # print querySQL 
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
