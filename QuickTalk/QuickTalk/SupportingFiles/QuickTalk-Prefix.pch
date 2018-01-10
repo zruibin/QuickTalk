@@ -17,6 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <AVFoundation/AVFoundation.h>
+#import <Contacts/Contacts.h>
 
 #import <Masonry.h>
 #import <Aspects.h>

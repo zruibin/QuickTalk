@@ -71,6 +71,16 @@
 
 - (void)registerService:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions
 {
+    /*打开显示允许访问通讯录*/
+    CNContactStore *contactStore = [[CNContactStore alloc] init];
+    [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            DLog(@"允许访问通讯录");
+        }else{
+            DLog(@"不允许访问通讯录");
+        }
+    }];
+    
     /*腾讯Bugly*/
     [Bugly startWithAppId:@"f2e0562976"];
     

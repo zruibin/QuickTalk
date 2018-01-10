@@ -7,7 +7,6 @@
 //
 
 #import "QTUserContactBookController.h"
-#import <Contacts/Contacts.h>
 #import "QTUserCell.h"
 #import "QTUserModel.h"
 #import "QTUserController.h"
@@ -57,7 +56,8 @@
 //获取联系人信息，并赋值给listData数组中
 - (void)getContactData
 {
-    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+    if (status == CNAuthorizationStatusAuthorized) {
         CNContactStore *stroe = [[CNContactStore alloc] init];
         [stroe requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError* _Nullable error) {
             if (granted) {
