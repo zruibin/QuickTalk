@@ -1,0 +1,59 @@
+package com.creactism.quicktalk;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Window;
+
+import com.creactism.quicktalk.services.RecommendFragment;
+import com.creactism.quicktalk.services.UserPostFragment;
+import com.creactism.quicktalk.util.DLog;
+import com.hjm.bottomtabbar.BottomTabBar;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private BottomTabBar tabBar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DLog.debug("MainActivity onCreacte...");
+
+        this.tabBar = (BottomTabBar) findViewById(R.id.tab_bar);
+        this.tabBar.init(getSupportFragmentManager())
+                .addTabItem("第一项", R.mipmap.ic_launcher, UserPostFragment.class)
+                .addTabItem("第二项", R.mipmap.ic_launcher, RecommendFragment.class);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DLog.debug("MainActivity onStart...");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DLog.debug("MainActivity onResume...");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DLog.debug("MainActivity onPause...");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DLog.debug("MainActivity onStop...");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DLog.debug("MainActivity onDestroy...");
+    }
+}
