@@ -2,10 +2,9 @@ package com.creactism.quicktalk;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
 
-import com.creactism.quicktalk.services.RecommendFragment;
-import com.creactism.quicktalk.services.UserPostFragment;
+import com.creactism.quicktalk.services.userpost.RecommendFragment;
+import com.creactism.quicktalk.services.userpost.UserPostFragment;
 import com.creactism.quicktalk.util.DLog;
 import com.hjm.bottomtabbar.BottomTabBar;
 

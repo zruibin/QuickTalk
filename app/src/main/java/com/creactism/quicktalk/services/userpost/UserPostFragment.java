@@ -1,13 +1,19 @@
-package com.creactism.quicktalk.services;
+package com.creactism.quicktalk.services.userpost;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.util.DLog;
 
 /**
@@ -32,7 +38,22 @@ public class UserPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         DLog.debug(  "UserPostFragment onCreateView: .....");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_userpost, container, false);
+
+        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.userpost_navigationbar);
+//        navigationbar.setLeftImageResource(R.mipmap.back_green);
+        navigationbar.setLeftText("取消");
+        navigationbar.setLeftTextColor(Color.BLACK);
+        navigationbar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DLog.info("left click...");
+                Toast.makeText(getActivity().getApplicationContext(), "取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
+//        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

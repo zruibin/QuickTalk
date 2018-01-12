@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.creactism.quicktalk.components.Navigationbar
+        android:id="@+id/userpost_navigationbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/white">
+    </com.creactism.quicktalk.components.Navigationbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userpost_navigationbar"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:height="80dp"
+        android:background="@color/blueviolet"
+        android:gravity="center"/>
+
+</RelativeLayout>

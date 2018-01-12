@@ -1,13 +1,17 @@
-package com.creactism.quicktalk.services;
+package com.creactism.quicktalk.services.userpost;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.util.DLog;
 
 /**
@@ -32,7 +36,31 @@ public class RecommendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         DLog.debug(    "RecommendFragment on onCreateView: .....");
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        View view = inflater.inflate(R.layout.fragment_recommend, container, false);
+
+        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
+        navigationbar.setTitle("第二项");
+        navigationbar.setTitleSize(16);
+        navigationbar.setTitleColor(Color.BLACK);
+        navigationbar.setCenterClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "第二项", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        navigationbar.setActionTextColor(Color.BLACK);
+        navigationbar.addAction(new Navigationbar.TextAction("发布") {
+            @Override
+            public void performAction(View view) {
+                Toast.makeText(getActivity().getApplicationContext(), "点击了发布", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
+//        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
