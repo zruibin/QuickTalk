@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.components;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -127,6 +128,16 @@ public class Navigationbar extends ViewGroup implements View.OnClickListener {
 
     public void setLeftClickListener(OnClickListener l) {
         mLeftText.setOnClickListener(l);
+    }
+
+    public void setDefaultBackAction(final Activity activity) {
+        this.setLeftText("返回");
+        this.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.finish();;
+            }
+        });
     }
 
     public void setLeftText(CharSequence title) {
