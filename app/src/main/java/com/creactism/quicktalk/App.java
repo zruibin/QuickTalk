@@ -1,7 +1,9 @@
 package com.creactism.quicktalk;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.res.Configuration;
+import android.os.Bundle;
 
 import com.creactism.quicktalk.util.DLog;
 
@@ -10,10 +12,48 @@ import com.creactism.quicktalk.util.DLog;
  */
 
 public final class App extends Application {
+
+    private int activityCount;//activity的count数
+    private boolean isForeground;//是否在前台
+
     @Override
     public void onCreate() {
         super.onCreate();
         DLog.info("App onCreate...");
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                activityCount++;
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                activityCount--;
+                if(0==activityCount){
+                    isForeground=false;
+                }
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+            }
+        });
     }
 
     @Override

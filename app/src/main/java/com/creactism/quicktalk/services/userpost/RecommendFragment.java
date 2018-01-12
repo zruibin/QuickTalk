@@ -24,19 +24,19 @@ public class RecommendFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        DLog.debug(  "RecommendFragment on onAttach: ......");
+//        DLog.debug(  "RecommendFragment on onAttach: ......");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DLog.debug(  "RecommendFragment on onCreate: ....");
+//        DLog.debug(  "RecommendFragment on onCreate: ....");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        DLog.debug(    "RecommendFragment on onCreateView: .....");
+//        DLog.debug(    "RecommendFragment on onCreateView: .....");
 
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
 
@@ -70,54 +70,54 @@ public class RecommendFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DLog.debug(    "RecommendFragment on onViewCreated: ....");
+//        DLog.debug(    "RecommendFragment on onViewCreated: ....");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DLog.debug(    "RecommendFragment on onActivityCreated: ...");
+//        DLog.debug(    "RecommendFragment on onActivityCreated: ...");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        DLog.debug(    "RecommendFragment on onStart: ");
+//        DLog.debug(    "RecommendFragment on onStart: ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        DLog.debug(    "RecommendFragment on onResume: ");
+//        DLog.debug(    "RecommendFragment on onResume: ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DLog.debug(    "RecommendFragment on onPause: ");
+//        DLog.debug(    "RecommendFragment on onPause: ");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        DLog.debug(    "RecommendFragment on onStop: ...");
+//        DLog.debug(    "RecommendFragment on onStop: ...");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        DLog.debug(    "RecommendFragment on onDestroyView: ");
+//        DLog.debug(    "RecommendFragment on onDestroyView: ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DLog.debug(    "RecommendFragment on onDestroy: ");
+//        DLog.debug(    "RecommendFragment on onDestroy: ");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        DLog.debug(    "RecommendFragment on onDetach: ...");
+//        DLog.debug(    "RecommendFragment on onDetach: ...");
     }
 }

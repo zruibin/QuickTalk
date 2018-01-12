@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by ruibin.chow on 12/01/2018.
  */
 
-public class AddUserPostActivity extends Activity {
+public class AddUserPostActivity extends BaseActivity {
 
     @BindView(R.id.add_userpost_navigationbar)
     public Navigationbar navigationbar;

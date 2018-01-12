@@ -25,19 +25,19 @@ public class UserPostFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        DLog.debug("UserPostFragment onAttach: ......");
+//        DLog.debug("UserPostFragment onAttach: ......");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DLog.debug("UserPostFragment onCreate: ....");
+//        DLog.debug("UserPostFragment onCreate: ....");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        DLog.debug(  "UserPostFragment onCreateView: .....");
+//        DLog.debug(  "UserPostFragment onCreateView: .....");
         View view = inflater.inflate(R.layout.fragment_userpost, container, false);
 
         Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.userpost_navigationbar);
@@ -59,54 +59,54 @@ public class UserPostFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DLog.debug(  "UserPostFragment onViewCreated: ....");
+//        DLog.debug(  "UserPostFragment onViewCreated: ....");
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DLog.debug(  "UserPostFragment onActivityCreated: ...");
+//        DLog.debug(  "UserPostFragment onActivityCreated: ...");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        DLog.debug(  "UserPostFragment onStart: ");
+//        DLog.debug(  "UserPostFragment onStart: ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        DLog.debug(  "UserPostFragment onResume: ");
+//        DLog.debug(  "UserPostFragment onResume: ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DLog.debug(  "UserPostFragment onPause: ");
+//        DLog.debug(  "UserPostFragment onPause: ");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        DLog.debug(  "UserPostFragment onStop: ...");
+//        DLog.debug(  "UserPostFragment onStop: ...");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        DLog.debug(  "UserPostFragment onDestroyView: ");
+//        DLog.debug(  "UserPostFragment onDestroyView: ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DLog.debug(  "UserPostFragment onDestroy: ");
+//        DLog.debug(  "UserPostFragment onDestroy: ");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        DLog.debug(  "UserPostFragment onDetach: ...");
+//        DLog.debug(  "UserPostFragment onDetach: ...");
     }
 }
