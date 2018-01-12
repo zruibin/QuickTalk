@@ -9,5 +9,12 @@
         android:layout_gravity="top"
         android:background="@color/white">
     </com.creactism.quicktalk.components.Navigationbar>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recommend_recyclerview"
+        android:layout_below="@id/recommend_navigationbar"
+        android:divider="#ffff0000"
+        android:dividerHeight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
