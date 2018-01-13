@@ -1,12 +1,9 @@
 package com.creactism.quicktalk.services.userpost;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.components.BaseActivity;
+import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.util.DLog;
 

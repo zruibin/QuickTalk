@@ -16,14 +16,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.util.DLog;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,8 +38,10 @@ public class RecommendFragment extends Fragment {
     public RecyclerView recyclerView;
     @BindView(R.id.recommend_refresh)
     public SwipeRefreshLayout refreshLayout;
+    public LinearLayoutManager layoutManager;
     private List<String> mDatas;
     private RecommendAdapter mAdapter;
+    private int testNum = 0;
 
     @Override
     public void onAttach(Context context) {
@@ -143,16 +146,15 @@ public class RecommendFragment extends Fragment {
             }
         });
 
+
         this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.recyclerView.setAdapter(mAdapter = new RecommendAdapter());
+        this.layoutManager = new LinearLayoutManager(getActivity());
+        this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new RecycleViewDivider(
                 getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color
                 .gray)));
-        this.mAdapter.notifyItemChanged(2);
-//        this.mAdapter.notifyDataSetChanged();
 
-        this.refreshLayout.setColorSchemeColors(Color.RED);
+        this.refreshLayout.setColorSchemeColors(Color.YELLOW);
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
@@ -161,10 +163,65 @@ public class RecommendFragment extends Fragment {
                         //我在List最前面加入一条数据
                         mDatas.add(0, "嘿，我是“下拉刷新”生出来的");
                         //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
-                        mAdapter.notifyDataSetChanged();
+//                        mAdapter.notifyDataSetChanged();
+                        mAdapter.setNewData(mDatas);
                         refreshLayout.setRefreshing(false);
                     }
                 },2000);
+            }
+        });
+
+        this.mAdapter = new RecommendAdapter();
+        this.mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (testNum < 3) {
+//                            mAdapter.setNewData(data);
+                            for (int i = 0; i < 6; i++) {
+                                mAdapter.addData("嘿，我是“上拉刷新”生出来的: " + String.valueOf(i));
+                            }
+                            mAdapter.loadMoreComplete();
+                            ++testNum;
+                        }
+                        DLog.debug(String.valueOf(testNum));
+                        if (testNum == 2) {
+                            //第一页如果不够一页就不显示没有更多数据布局
+                            mAdapter.loadMoreFail();
+                        }
+                        if (testNum == 3) {
+                            //第一页如果不够一页就不显示没有更多数据布局
+                            mAdapter.loadMoreEnd();
+                        }
+
+                    }
+                },1000);
+            }
+        }, this.recyclerView);
+
+        this.mAdapter.openLoadAnimation(); // 一行代码搞定（默认为渐显效果）
+//        this.mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN); // 默认提供5种方法（渐显、缩放、从下到上，从左到右、从右到左）
+//        this.mAdapter.openLoadAnimation(new BaseAnimation() {
+//            @Override
+//            public Animator[] getAnimators(View view) {
+//                return new Animator[]{
+//                        ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
+//                        ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
+//                };
+//            }
+//        });
+
+        this.recyclerView.setAdapter(this.mAdapter);
+        this.mAdapter.notifyItemChanged(2);
+//        this.mAdapter.notifyDataSetChanged();
+
+        this.recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
+                DLog.debug(mDatas.get(position));
+                Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -174,52 +231,23 @@ public class RecommendFragment extends Fragment {
         for (int i = 'A'; i < 'H'; i++) {
             mDatas.add("" + (char) i);
         }
+        this.mAdapter.setNewData(mDatas);
     }
 
-    class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyViewHolder>
-    {
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    getActivity()).inflate(R.layout.frag_recommend_item, parent,
-                    false));
-            return holder;
+
+    public class RecommendAdapter extends BaseQuickAdapter {
+
+        public RecommendAdapter() {
+            super(R.layout.frag_recommend_item, null);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.tv.setText(mDatas.get(position));
-            holder.tv.setTag(new Integer(position));
-            if (position % 2 == 0) {
-                holder.tv2.setVisibility(View.GONE);
-            } else {
-                holder.tv2.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return mDatas.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-            TextView tv;
-            TextView tv2;
-            public MyViewHolder(View view) {
-                super(view);
-                tv = (TextView)view.findViewById(R.id.recommend_recyclerview_item_num);
-                tv2 = (TextView)view.findViewById(R.id.recommend_recyclerview_item_num2);
-                tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Integer index = (Integer)v.getTag();
-                        String indexStr = "item: " + String.valueOf(index.intValue());
-                        DLog.info(indexStr);
-                        Toast.makeText(getActivity().getApplicationContext(), indexStr, Toast
-                                .LENGTH_SHORT).show();
-                    }
-                });
-            }
+        protected void convert(BaseViewHolder helper, Object text) {
+            helper.setText(R.id.recommend_recyclerview_item_num, (String)text);
+            helper.setText(R.id.recommend_recyclerview_item_num2, "aaa");
         }
     }
+
 }
+
+
