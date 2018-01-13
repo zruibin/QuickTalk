@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,14 +24,19 @@ import com.creactism.quicktalk.util.DLog;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ruibin.chow on 12/01/2018.
  */
 
 public class RecommendFragment extends Fragment {
 
-//    @BindView(R.id.recommend_recyclerview)
+    @BindView(R.id.recommend_recyclerview)
     public RecyclerView recyclerView;
+    @BindView(R.id.recommend_refresh)
+    public SwipeRefreshLayout refreshLayout;
     private List<String> mDatas;
     private RecommendAdapter mAdapter;
 
@@ -49,43 +56,11 @@ public class RecommendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        DLog.debug(    "RecommendFragment on onCreateView: .....");
-
         View view = inflater.inflate(R.layout.frag_recommend, container, false);
-//        ButterKnife.bind(view);
+        ButterKnife.bind(this, view);
 
-        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
-        navigationbar.setTitle("第二项");
-        navigationbar.setTitleSize(16);
-        navigationbar.setTitleColor(Color.BLACK);
-        navigationbar.setCenterClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "第二项", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        navigationbar.setActionTextColor(Color.BLACK);
-        navigationbar.addAction(new Navigationbar.TextAction("发布") {
-            @Override
-            public void performAction(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "点击了发布", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        initData();
-        this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.recyclerView.setAdapter(mAdapter = new RecommendAdapter());
-        this.recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color
-                .gray)));
-        this.mAdapter.notifyItemChanged(2);
-//        this.mAdapter.notifyDataSetChanged();
+        this.initSubView(view);
+        this.initData();
 
         return view;
 //        return super.onCreateView(inflater, container, savedInstanceState);
@@ -145,12 +120,58 @@ public class RecommendFragment extends Fragment {
 //        DLog.debug(    "RecommendFragment on onDetach: ...");
     }
 
+    protected void initSubView (View view) {
+        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
+        navigationbar.setTitle("第二项");
+        navigationbar.setTitleSize(16);
+        navigationbar.setTitleColor(Color.BLACK);
+        navigationbar.setCenterClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "第二项", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-    protected void initData()
-    {
+        navigationbar.setActionTextColor(Color.BLACK);
+        navigationbar.addAction(new Navigationbar.TextAction("发布") {
+            @Override
+            public void performAction(View view) {
+                Toast.makeText(getActivity().getApplicationContext(), "点击了发布", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.recyclerView.setAdapter(mAdapter = new RecommendAdapter());
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(
+                getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color
+                .gray)));
+        this.mAdapter.notifyItemChanged(2);
+//        this.mAdapter.notifyDataSetChanged();
+
+        this.refreshLayout.setColorSchemeColors(Color.RED);
+        this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //我在List最前面加入一条数据
+                        mDatas.add(0, "嘿，我是“下拉刷新”生出来的");
+                        //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
+                        mAdapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
+    }
+
+    protected void initData() {
         mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
+        for (int i = 'A'; i < 'H'; i++) {
             mDatas.add("" + (char) i);
         }
     }
@@ -171,6 +192,8 @@ public class RecommendFragment extends Fragment {
             holder.tv.setTag(new Integer(position));
             if (position % 2 == 0) {
                 holder.tv2.setVisibility(View.GONE);
+            } else {
+                holder.tv2.setVisibility(View.VISIBLE);
             }
         }
 
