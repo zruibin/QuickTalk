@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     >
 
+
     <TextView
-        android:id="@+id/id_num"
+        android:id="@+id/recommend_recyclerview_item_num"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
@@ -14,5 +15,14 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"/>
+    <TextView
+        android:id="@+id/recommend_recyclerview_item_num2"
+        android:layout_below="@id/recommend_recyclerview_item_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="aaaaa"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/red" />
 
-</FrameLayout>
+</RelativeLayout>

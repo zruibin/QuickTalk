@@ -85,6 +85,7 @@ public class RecommendFragment extends Fragment {
                 getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color
                 .gray)));
         this.mAdapter.notifyItemChanged(2);
+//        this.mAdapter.notifyDataSetChanged();
 
         return view;
 //        return super.onCreateView(inflater, container, savedInstanceState);
@@ -168,6 +169,9 @@ public class RecommendFragment extends Fragment {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.tv.setText(mDatas.get(position));
             holder.tv.setTag(new Integer(position));
+            if (position % 2 == 0) {
+                holder.tv2.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -177,9 +181,11 @@ public class RecommendFragment extends Fragment {
 
         class MyViewHolder extends RecyclerView.ViewHolder {
             TextView tv;
+            TextView tv2;
             public MyViewHolder(View view) {
                 super(view);
-                tv = (TextView)view.findViewById(R.id.id_num);
+                tv = (TextView)view.findViewById(R.id.recommend_recyclerview_item_num);
+                tv2 = (TextView)view.findViewById(R.id.recommend_recyclerview_item_num2);
                 tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
