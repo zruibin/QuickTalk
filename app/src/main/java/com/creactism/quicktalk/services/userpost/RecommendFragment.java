@@ -22,9 +22,6 @@ import com.creactism.quicktalk.util.DLog;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by ruibin.chow on 12/01/2018.
  */
@@ -53,7 +50,7 @@ public class RecommendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        DLog.debug(    "RecommendFragment on onCreateView: .....");
 
-        View view = inflater.inflate(R.layout.fragment_recommend, container, false);
+        View view = inflater.inflate(R.layout.frag_recommend, container, false);
 //        ButterKnife.bind(view);
 
         Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
@@ -162,7 +159,7 @@ public class RecommendFragment extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    getActivity()).inflate(R.layout.fragment_recommend_item, parent,
+                    getActivity()).inflate(R.layout.frag_recommend_item, parent,
                     false));
             return holder;
         }
