@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
+import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,8 +146,7 @@ public class RecommendFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-
+        
         this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
@@ -157,17 +157,15 @@ public class RecommendFragment extends Fragment {
         this.refreshLayout.setColorSchemeColors(Color.YELLOW);
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
+
+                UserPostModel.requestUserPostData("", new UserPostModel.CompleteHandler() {
                     @Override
-                    public void run() {
-                        //我在List最前面加入一条数据
-                        mDatas.add(0, "嘿，我是“下拉刷新”生出来的");
-                        //数据重新加载完成后，提示数据发生改变，并且设置现在不在刷新
-//                        mAdapter.notifyDataSetChanged();
+                    public void completeHanlder(List list, Error error) {
+                        mDatas = list;
                         mAdapter.setNewData(mDatas);
                         refreshLayout.setRefreshing(false);
                     }
-                },2000);
+                });
             }
         });
 
