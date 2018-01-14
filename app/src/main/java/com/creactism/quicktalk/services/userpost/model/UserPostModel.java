@@ -3,6 +3,7 @@ package com.creactism.quicktalk.services.userpost.model;
 import android.os.Handler;
 import android.os.Message;
 
+import com.creactism.quicktalk.modules.networking.Networking;
 import com.creactism.quicktalk.modules.networking.QTResponseObject;
 import com.creactism.quicktalk.util.DLog;
 import com.google.gson.Gson;
@@ -35,10 +36,15 @@ public class UserPostModel extends Object {
 
     public static void requestUserPostData(String userUUID, final CompleteHandler completeHandlerObj) {
 
-        final Handler handler = new Handler(new Handler.Callback() { //主线程
+        Map params = new HashMap();
+        params.put("index", "1");
+
+        String url = "http://creactism.com/service/quickTalk/userPost/recommendUserPostList";
+        Networking.handleRequest(url, "POST", params, new Networking.Success(){
             @Override
-            public boolean handleMessage(Message msg) {
-                QTResponseObject obj = (QTResponseObject)msg.obj;
+            public void success(String responseString)  {
+                DLog.debug(responseString);
+                QTResponseObject obj = QTResponseObject.createInstance(responseString);
                 DLog.info("code: " + String.valueOf(obj.getCode()));
                 DLog.info("message: " + obj.getMessage());
                 List list = (List)obj.getData();
@@ -49,33 +55,11 @@ public class UserPostModel extends Object {
                     callBackList.add((String)temp.get("title"));
                 }
                 completeHandlerObj.completeHanlder(callBackList, null);
-                return false;
             }
-        });
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS).build();
-        RequestBody requestBodyPost = new FormBody.Builder()
-                .add("index", "1")
-                .build();
-        Request requestPost = new Request.Builder()
-                .url("http://creactism.com/service/quickTalk/userPost/recommendUserPostList")
-                .post(requestBodyPost)
-                .build();
-        client.newCall(requestPost).enqueue(new Callback() {
+        }, new Networking.Failure(){
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void failure(IOException error) {
 
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String result = response.body().string();//5.获得网络数据
-                DLog.debug(result);
-
-                QTResponseObject obj = QTResponseObject.createInstance(result);
-                Message msg = handler.obtainMessage();
-                msg.obj = obj;
-                msg.sendToTarget(); //异步线程返回数据到主线程
             }
         });
     }
