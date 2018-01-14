@@ -2,13 +2,7 @@ package com.creactism.quicktalk.modules.networking;
 
 import android.os.Handler;
 import android.os.Message;
-
-import com.creactism.quicktalk.util.DLog;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 

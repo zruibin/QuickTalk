@@ -3,7 +3,6 @@ package com.creactism.quicktalk.modules.networking;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

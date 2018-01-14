@@ -43,6 +43,7 @@ public class RecommendFragment extends Fragment {
     private List<String> mDatas;
     private RecommendAdapter mAdapter;
     private int testNum = 0;
+    private int index = 1;
 
     @Override
     public void onAttach(Context context) {
@@ -157,8 +158,8 @@ public class RecommendFragment extends Fragment {
         this.refreshLayout.setColorSchemeColors(Color.YELLOW);
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             public void onRefresh() {
-
-                UserPostModel.requestUserPostData("", new UserPostModel.CompleteHandler() {
+                UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler
+                        () {
                     @Override
                     public void completeHanlder(List list, Error error) {
                         mDatas = list;
@@ -173,6 +174,7 @@ public class RecommendFragment extends Fragment {
         this.mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
+                /*
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -196,6 +198,17 @@ public class RecommendFragment extends Fragment {
 
                     }
                 },1000);
+                */
+                UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(List list, Error error) {
+                        mDatas.addAll(list);
+                        mAdapter.addData(list);
+                        refreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreComplete();
+                        ++index;
+                    }
+                });
             }
         }, this.recyclerView);
 
