@@ -1,12 +1,12 @@
 package com.creactism.quicktalk.services.userpost;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +59,7 @@ public class RecommendFragment extends BaseFragment {
         return view;
     }
 
-    protected void initSubView (View view) {
+    private void initSubView (View view) {
         Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
         navigationbar.setTitle("第二项");
         navigationbar.setTitleSize(16);
@@ -169,6 +169,14 @@ public class RecommendFragment extends BaseFragment {
                 Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
             }
         });
+
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                DLog.debug("offsetY: " + String.valueOf(recyclerView.computeVerticalScrollOffset()));
+            }
+        });
     }
 
     protected void initData() {
@@ -192,6 +200,7 @@ public class RecommendFragment extends BaseFragment {
             helper.setText(R.id.recommend_recyclerview_item_num2, "aaa");
         }
     }
+
 
 }
 
