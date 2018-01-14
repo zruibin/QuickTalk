@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.creactism.quicktalk.util.DLog;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by ruibin.chow on 12/01/2018.
@@ -20,6 +21,14 @@ public final class App extends Application {
     public void onCreate() {
         super.onCreate();
         DLog.info("App onCreate...");
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
