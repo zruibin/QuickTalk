@@ -1,11 +1,10 @@
 package com.creactism.quicktalk.services.userpost;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
+import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.util.DLog;
 
 /**
@@ -44,6 +44,11 @@ public class UserPostFragment extends BaseFragment {
                     @Override
                     public void run() {
                         mSVProgressHUD.dismiss();
+
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity().getApplicationContext(), UserActivity.class);
+                        startActivity(intent);
+
                     }
                 },1000);
             }
