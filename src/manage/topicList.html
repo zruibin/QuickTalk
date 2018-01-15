@@ -94,7 +94,7 @@ function prePage() {
 
 
 function getTopic(index) {
-	var url = host + "service/quickTalk/topicList?size=50&index=" + index;
+	var url = host + "service/quickTalk/news/topicList?size=50&index=" + index;
 	reqwest({
 		url: url, 
 		type: 'json', 
@@ -152,7 +152,7 @@ function deleteTopic(uuid, title) {
 		confirmButton: "确定",
 		cancelButton: "取消",
 		confirm: function(){
-			var url = host + "service/quickTalk/deleteTopic?uuid=" + uuid;
+			var url = host + "service/quickTalk/news/deleteTopic?uuid=" + uuid;
 			reqwest({
 				url: url, 
 				type: 'json', 

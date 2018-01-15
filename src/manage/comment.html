@@ -107,7 +107,7 @@ function getTopicComment() {
 	var titleElement = document.getElementById("title");
 	titleElement.innerText = title;
 
-	var url = host + "service/quickTalk/commentList?topic_uuid=" + uuid + "&index=" + index + "&size=100";
+	var url = host + "service/quickTalk/news/commentList?topic_uuid=" + uuid + "&index=" + index + "&size=100";
 	reqwest({
 		url: url, 
 		type: 'json', 
@@ -160,7 +160,7 @@ function deleteComment(uuid, content) {
 		cancelButton: "取消",
 		confirm: function(){
 			var topic_uuid = getQueryString("uuid");
-			var url = host + "service/quickTalk/deleteComment?uuid=" + uuid + "&topic_uuid=" + topic_uuid;
+			var url = host + "service/quickTalk/news/deleteComment?uuid=" + uuid + "&topic_uuid=" + topic_uuid;
 			console.log(url); 
 			reqwest({
 				url: url, 

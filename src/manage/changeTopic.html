@@ -109,7 +109,7 @@ function submit() {
 		return;
 	}
 
-	var url = host + "service/quickTalk/changeTopic";
+	var url = host + "service/quickTalk/news/changeTopic";
 	reqwest({
 		url: url, 
 		type: 'json', 
@@ -141,7 +141,7 @@ function getQueryString(name)
 } 
 
 function getTopic() {
-	var url = host + "service/quickTalk/topic?topic_uuid=" + getQueryString("uuid");
+	var url = host + "service/quickTalk/news/topic?topic_uuid=" + getQueryString("uuid");
 	reqwest({
 		url: url, 
 		type: 'json', 
@@ -161,7 +161,7 @@ function getTopic() {
 }
 
 function getTopicContent() {
-	var url = host + "service/quickTalk/topicContent?topic_uuid=" + getQueryString("uuid");
+	var url = host + "service/quickTalk/news/topicContent?topic_uuid=" + getQueryString("uuid");
 	reqwest({
 		url: url, 
 		type: 'json', 
