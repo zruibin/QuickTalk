@@ -11,7 +11,7 @@
 更新阅读数
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
-@quickTalk.route('/updateReadCount', methods=["GET", "POST"])
+@news.route('/updateReadCount', methods=["GET", "POST"])
 def updateReadCount():
     topicUUID = getValueFromRequestByKey("topic_uuid")
 

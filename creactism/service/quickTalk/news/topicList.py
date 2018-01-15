@@ -1,17 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*- 
 #
-# topic.py
+# topicList.py
 #
-# Created by ruibin.chow on 2017/11/08.
+# Created by ruibin.chow on 2017/08/23.
 # Copyright (c) 2017年 ruibin.chow All rights reserved.
 # 
 
 """
-单个话题
+话题列表
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,20 +19,22 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit
 
 
-@quickTalk.route('/topic', methods=["GET", "POST"])
-def topic():
-    topicUUID = getValueFromRequestByKey("topic_uuid")
-    if topicUUID == None:
-        return RESPONSE_JSON(CODE_ERROR_MISS_PARAM) 
+@news.route('/topicList', methods=["GET", "POST"])
+def topicList():
+    index = getValueFromRequestByKey("index")
+    index = parsePageIndex(index)
+    size = getValueFromRequestByKey("size")
 
-    return __getTopicFromStorage(topicUUID)
+    return __getTopicFromStorage(index, size)
 
 
-def __getTopicFromStorage(topicUUID):
-    
+def __getTopicFromStorage(index, size):
+    limitSQL = limit(index)
+    if size is not None: limitSQL = limit(index, int(size))
+        
     querySQL = """
-        SELECT id, uuid, title, detail, href, time FROM t_quickTalk_topic WHERE  uuid='%s';
-    """ % topicUUID
+        SELECT id, uuid, title, detail, href, read_count AS readCount, time FROM t_quickTalk_topic ORDER BY time DESC %s
+    """ % limitSQL
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -44,7 +46,6 @@ def __getTopicFromStorage(topicUUID):
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     
-
 
 if __name__ == '__main__':
     pass

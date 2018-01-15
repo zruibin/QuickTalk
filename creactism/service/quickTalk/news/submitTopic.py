@@ -11,7 +11,7 @@
 
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 import json
 
 
-@quickTalk.route('/submitTopic', methods=["GET", "POST"])
+@news.route('/submitTopic', methods=["GET", "POST"])
 def submitTopic():
 
     title = getValueFromRequestByKey("title")

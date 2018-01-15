@@ -11,7 +11,7 @@
 评论
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 from common.auth import vertifyTokenHandle
 
 
-@quickTalk.route('/comment', methods=["GET", "POST"])
+@news.route('/comment', methods=["GET", "POST"])
 @vertifyTokenHandle
 def comment():
     topicUUID = getValueFromRequestByKey("topic_uuid")

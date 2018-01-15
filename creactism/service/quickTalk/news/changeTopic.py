@@ -11,7 +11,7 @@
 修改话题
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -20,7 +20,7 @@ from common.tools import getValueFromRequestByKey, generateUUID, generateCurrent
 import json
 
 
-@quickTalk.route('/changeTopic', methods=["POST"])
+@news.route('/changeTopic', methods=["POST"])
 def changeTopic():
     uuid = getValueFromRequestByKey("uuid")
     title = getValueFromRequestByKey("title")

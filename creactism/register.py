@@ -14,6 +14,7 @@
 from service.api import api
 from service.admin import admin
 from service.quickTalk import quickTalk
+from service.quickTalk.news import news
 from service.quickTalk.like import like
 from service.quickTalk.userPost import userPost
 from service.quickTalk.account import account
@@ -29,7 +30,8 @@ def registerBlueprint(app):
     """ 注册蓝图，并指定前缀""" 
     app.register_blueprint(api, url_prefix="/service/api")
     app.register_blueprint(admin, url_prefix='/admin')
-    app.register_blueprint(quickTalk, url_prefix="/service/quickTalk") # 新闻
+    app.register_blueprint(quickTalk, url_prefix="/service/quickTalk") 
+    app.register_blueprint(news, url_prefix="/service/quickTalk/news") # 新闻
     app.register_blueprint(userPost, url_prefix="/service/quickTalk/userPost") # userPost
     app.register_blueprint(account, url_prefix="/service/quickTalk/account") # account
     app.register_blueprint(like, url_prefix="/service/quickTalk/like") # like

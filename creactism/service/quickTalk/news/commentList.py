@@ -11,7 +11,7 @@
 评论列表
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
 
 
-@quickTalk.route('/commentList', methods=["GET", "POST"])
+@news.route('/commentList', methods=["GET", "POST"])
 def commentList():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     index = getValueFromRequestByKey("index")

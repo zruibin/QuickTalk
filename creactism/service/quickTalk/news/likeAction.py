@@ -11,7 +11,7 @@
 评论点赞
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 
 
-@quickTalk.route('/like', methods=["GET", "POST"])
+@news.route('/like', methods=["GET", "POST"])
 def likeAction():
     commentUUID = getValueFromRequestByKey("comment_uuid")
     action = getValueFromRequestByKey("action")

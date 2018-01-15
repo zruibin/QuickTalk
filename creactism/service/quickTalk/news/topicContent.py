@@ -11,7 +11,7 @@
 单个话题内容
 """
 
-from . import quickTalk
+from . import news
 from module.database import DB
 from module.log.Log import Loger
 from config import *
@@ -19,7 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit
 
 
-@quickTalk.route('/topicContent', methods=["GET", "POST"])
+@news.route('/topicContent', methods=["GET", "POST"])
 def topicContent():
     topicUUID = getValueFromRequestByKey("topic_uuid")
     if topicUUID == None:
