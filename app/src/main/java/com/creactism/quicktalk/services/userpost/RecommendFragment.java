@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -162,9 +163,9 @@ public class RecommendFragment extends BaseFragment {
         this.mAdapter.notifyItemChanged(2);
 //        this.mAdapter.notifyDataSetChanged();
 
-        this.recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+        this.mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 DLog.debug(mDatas.get(position));
                 Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
             }
@@ -198,6 +199,15 @@ public class RecommendFragment extends BaseFragment {
         protected void convert(BaseViewHolder helper, Object text) {
             helper.setText(R.id.recommend_recyclerview_item_num, (String)text);
             helper.setText(R.id.recommend_recyclerview_item_num2, "aaa");
+
+            final int position = helper.getAdapterPosition();
+            Button btn = (Button)helper.getView(R.id.recommend_recyclerview_item_btn);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DLog.debug("position: " + String.valueOf(position));
+                }
+            });
         }
     }
 

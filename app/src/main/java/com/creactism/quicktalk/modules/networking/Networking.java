@@ -4,9 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.creactism.quicktalk.modules.Dispatch;
-import com.creactism.quicktalk.util.DLog;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
