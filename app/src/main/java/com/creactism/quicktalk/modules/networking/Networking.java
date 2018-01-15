@@ -1,7 +1,12 @@
 package com.creactism.quicktalk.modules.networking;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+
+import com.creactism.quicktalk.modules.Dispatch;
+import com.creactism.quicktalk.util.DLog;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -58,9 +63,9 @@ public class Networking extends Object {
 
     public static void handleRequest (String url, String method, Map<String, String>params,
                                       final Success success, final Failure failure) {
-        final Handler handler = new Handler(new Handler.Callback() { //主线程
+        final Handler handler = new Handler(Looper.getMainLooper()) { //主线程
             @Override
-            public boolean handleMessage(Message msg) {
+            public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 1:
                         failure.failure((IOException)msg.obj);
@@ -70,9 +75,8 @@ public class Networking extends Object {
                         success.success(responseString);
                         break;
                 }
-                return false;
             }
-        });
+        };
 
         OkHttpClient client = Networking.httpClient();
         Request requestPost = Networking.requestURL(url, method, params);
