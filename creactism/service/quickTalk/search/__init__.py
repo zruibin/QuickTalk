@@ -16,6 +16,7 @@ from flask import Blueprint
 search = Blueprint("search", __name__)
 
 from . import searchUser
+from . import searchUserPostByTag
 
 
 if __name__ == '__main__':
