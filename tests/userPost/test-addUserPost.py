@@ -13,10 +13,15 @@
 
 import requests
 
+tagsString = """
+["财经", "科技", "新闻", "艺术", "国际", "军事", "娱乐"]
+"""
+
 params = {
     "title":"12324577",
     "content": "http://baidu.com",
-    "user_uuid": "cea8b1c3aebe31823fa86e069de496b9"
+    "user_uuid": "bb004ba120ffae3da7a879da82c4b2f6",
+    "tagsString":tagsString
 }
 r = requests.post(url="http://127.0.0.1:5000/service/quickTalk/userPost/addUserPost", params=params)    
 print(r.text)

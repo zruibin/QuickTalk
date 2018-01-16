@@ -17,9 +17,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey
+from common.auth import vertifyTokenHandle
 
 
 @userPost.route('/deleteUserPost', methods=["POST"])
+@vertifyTokenHandle
 def deleteUserPost():
     userPostUUID = getValueFromRequestByKey("userPost_uuid")
     userUUID = getValueFromRequestByKey("user_uuid")
@@ -37,11 +39,12 @@ def __deleteUserPostInStorage(userPostUUID, userUUID):
 
     deleteSQL = """DELETE FROM t_quickTalk_userPost WHERE uuid='%s' AND user_uuid='%s'; """ % (userPostUUID, userUUID)
     deleteCommentSQL = """DELETE FROM t_quickTalk_userPost_comment WHERE userPost_uuid='%s' """ % (userPostUUID)
+    deleteTagsSQL = """DELETE FROM t_tag_userPost WHERE userPost_uuid='%s' """ % (userPostUUID)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
         commentUUIDList = __queryAllUserPostComment(userPostUUID)
-        dbManager.executeTransactionMutltiDml([deleteSQL, deleteCommentSQL])
+        dbManager.executeTransactionMutltiDml([deleteSQL, deleteCommentSQL, deleteTagsSQL])
         __deleteAllAboutUserPost(userPostUUID, commentUUIDList)
     except Exception as e:
         Loger.error(e, __file__)

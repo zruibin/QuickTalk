@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.auth import vertifyTokenHandle
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
+from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked, queryTheUserPostTagList
 
 
 @collection.route('/list', methods=["POST", "GET"])
@@ -62,6 +62,7 @@ def __collectionListForUserPost(userUUID, index, size):
             uuidList.append(data["uuid"])
         dataList = queryTheUserPostIsLiked(dataList, uuidList, userUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
+        dataList = queryTheUserPostTagList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)

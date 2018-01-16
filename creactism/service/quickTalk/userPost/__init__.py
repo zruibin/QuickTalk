@@ -24,6 +24,7 @@ from . import userPostList
 from . import userPostCommentList
 from . import starUserPostList
 from . import recommendUserPostList
+from . import setUserPostTags
 
 
 if __name__ == '__main__':

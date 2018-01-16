@@ -19,6 +19,7 @@ from common.code import *
 from common.tools import getValueFromRequestByKey, generateUUID, generateCurrentTime
 from dispatch.notification import dispatchNotificationNewShare
 from common.auth import vertifyTokenHandle
+import json
 
 
 @userPost.route('/addUserPost', methods=["POST"])
@@ -28,14 +29,15 @@ def addUserPost():
     content = getValueFromRequestByKey("content")
     txt = getValueFromRequestByKey("txt")
     userUUID = getValueFromRequestByKey("user_uuid")
+    tagsString = getValueFromRequestByKey("tagsString")
 
     if title == None or content == None or userUUID == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __storageUserPost(title, content, userUUID, txt)
+    return __storageUserPost(title, content, userUUID, txt, tagsString)
     
 
-def __storageUserPost(title, content, userUUID, txt):
+def __storageUserPost(title, content, userUUID, txt, tagsString):
     uuid = generateUUID()
     time = generateCurrentTime()
     sqlList = []
@@ -52,6 +54,12 @@ def __storageUserPost(title, content, userUUID, txt):
         firstCommentArgs = [commentUUID, userUUID, uuid, txt, Config.TYPE_FOR_COMMENT_DEFAULT, "", time]
         sqlList.append(insertFirstCommentSQL)
         argsList.append(firstCommentArgs)
+
+    try:
+        tagList = json.loads(tagsString)
+        sqlList, argsList = generateUserPostTagsSQL(uuid, tagList, sqlList, argsList)
+    except Exception, e:
+        Loger.error(e, __file__)
         
     dbManager = DB.DBManager.shareInstanced()
     try: 
@@ -63,6 +71,29 @@ def __storageUserPost(title, content, userUUID, txt):
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
     return RESPONSE_JSON(CODE_SUCCESS)
     
+
+def generateUserPostTagsSQL(userPostUUID, tagList, sqlList, argsList):
+    """"生成标签sql"""
+    deleteSQL = """
+            DELETE FROM t_tag_userPost WHERE userPost_uuid=%s
+        """
+    sqlList.append(deleteSQL)
+    argsList.append([userPostUUID])
+    if len(tagList) > 0:
+        insertSQL = "INSERT INTO t_tag_userPost(userPost_uuid, sorting, tag) VALUES "
+        values = []
+        for index in range(len(tagList)):
+            # print index, tagList[index]
+            insertSQL += "(%s, %s, %s), "
+            values.append(userPostUUID)
+            values.append(index)
+            values.append(tagList[index])
+        insertSQL = insertSQL[:-2] + ";"
+        # DLog(insertSQL, False)
+        sqlList.append(insertSQL)
+        argsList.append(values)
+    return sqlList, argsList
+
 
 
 

@@ -67,6 +67,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
         dataList = queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
+        dataList = queryTheUserPostTagList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
@@ -145,6 +146,52 @@ def __packageUserPostLike(dataList, likeList):
         
     return dataList
 
+
+def queryTheUserPostTagList(dataList, uuidList):
+    """查询userPost列表里每个userPost的标签"""
+    if len(dataList) == 0:
+        return dataList
+
+    inString = "'" + "','".join(uuidList) + "'"
+    querySQL = """
+        SELECT userPost_uuid AS userPostUUID, sorting, tag FROM t_tag_userPost
+        WHERE userPost_uuid IN (%s);
+    """ % (inString)
+    # DLog(querySQL, False)
+
+    dbManager = DB.DBManager.shareInstanced()
+    try: 
+        tagList = dbManager.executeSingleQuery(querySQL)
+        # DLog(tagList)
+        return __packageUserPostTags(dataList, tagList)
+    except Exception as e:
+        Loger.error(e, __file__)
+        raise e
+
+
+def __packageUserPostTags(dataList, tagList):
+    if len(tagList) == 0:
+        return dataList
+
+    tagsDict = {}
+    for tag in tagList:
+        userPostUUID = tag["userPostUUID"]
+        del tag["userPostUUID"]
+        tagValue = tag["tag"]
+        if tagsDict.has_key(userPostUUID):
+            tagsDict[userPostUUID].append(tagValue)
+        else:
+            tagList = [tagValue]
+            tagsDict[userPostUUID] = tagList
+    # DLog(tagsDict)
+
+    # 合并标签
+    for key, value in tagsDict.items():
+        for data in dataList:
+            if data["uuid"] == key:
+                data["tagList"] = value
+    
+    return dataList
     
     
 

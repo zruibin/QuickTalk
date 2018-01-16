@@ -11,6 +11,7 @@
 
 """
 import os
+import pprint 
 
 
 class Config(object):
@@ -129,10 +130,16 @@ class Config(object):
   TYPE_STAR_FOR_USER_RELATION = "0"
 
 
-
   pass
 
 
 
+def DLog(data, format=True):
+  if Config.DEBUG:
+    if format:
+      pprint.pprint(data)
+    else:
+        print data    
+  pass
 
 

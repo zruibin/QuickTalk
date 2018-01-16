@@ -17,7 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
-from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked
+from ..userPost.userPostList import queryPackageUserPostLikeList, queryTheUserPostIsLiked, queryTheUserPostTagList
 
 
 @like.route('/likeList', methods=["GET", "POST"])
@@ -91,6 +91,7 @@ def __queryUserPostList(userPostUUIDList, relationUserUUID):
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
         dataList = queryTheUserPostIsLiked(dataList, userPostUUIDList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
+        dataList = queryTheUserPostTagList(dataList, uuidList)
         return dataList
     except Exception as e:
         Loger.error(e, __file__)

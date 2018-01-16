@@ -18,7 +18,7 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, parsePageIndex, limit, fullPathForMediasFile, userAvatarURL
 from ..like.queryLikeRelation import queryLikeRelation
-from .userPostList import queryTheUserPostIsLiked, queryPackageUserPostLikeList
+from .userPostList import queryTheUserPostIsLiked, queryPackageUserPostLikeList, queryTheUserPostTagList
 from common.auth import vertifyTokenHandle
 
 
@@ -73,6 +73,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
         dataList = queryTheUserPostIsLiked(dataList, uuidList, relationUserUUID)
         dataList = queryPackageUserPostLikeList(dataList, uuidList)
+        dataList = queryTheUserPostTagList(dataList, uuidList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
