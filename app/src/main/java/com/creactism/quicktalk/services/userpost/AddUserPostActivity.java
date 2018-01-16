@@ -1,10 +1,14 @@
 package com.creactism.quicktalk.services.userpost;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,7 +38,12 @@ public class AddUserPostActivity extends BaseActivity {
 //        DLog.info("AddUserPostActivity onCreate....");
 //        this.setContentView(R.layout.activity_add_userpost);
 //        ButterKnife.bind(this);
-//
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         LinearLayout lineLayout = new LinearLayout(this);
@@ -46,8 +55,34 @@ public class AddUserPostActivity extends BaseActivity {
     }
 
     private void addView(final LinearLayout lineLayout) {
+
+        /*
+    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tuna"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    </android.support.v7.widget.Toolbar>
+    */
+        final Toolbar toolbar = new Toolbar(this);
+        toolbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+//        toolbar.setBackgroundColor(this.getResources().getColor(R.color.tuna));
+        toolbar.setBackgroundColor(Color.parseColor("#38383C"));
+        TypedValue typedValue = new TypedValue();
+        this.getTheme().resolveAttribute(R.attr.actionBarSize, typedValue, true);
+        DLog.debug("density: " + String.valueOf(typedValue.density));
+        toolbar.setMinimumHeight(44);
+        toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
+        lineLayout.addView(toolbar);
+
+
         this.navigationbar = new Navigationbar(this);
-        this.navigationbar.setTitle("添加userpost");
+        this.navigationbar.setTitle("添加userpost(动态添加view)");
         this.navigationbar.setDefaultBackAction(this);
         this.navigationbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
