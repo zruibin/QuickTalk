@@ -25,8 +25,10 @@ import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,9 +50,10 @@ public class RecommendFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
+            savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DLog.debug(    "RecommendFragment on onCreateView: .....");
+        DLog.debug("RecommendFragment on onCreateView: .....");
         View view = inflater.inflate(R.layout.frag_recommend, null);
         ButterKnife.bind(this, view);
 
@@ -60,8 +63,8 @@ public class RecommendFragment extends BaseFragment {
         return view;
     }
 
-    private void initSubView (View view) {
-        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.recommend_navigationbar);
+    private void initSubView(View view) {
+        Navigationbar navigationbar = (Navigationbar) view.findViewById(R.id.recommend_navigationbar);
         navigationbar.setTitle("第二项");
         navigationbar.setTitleSize(16);
         navigationbar.setTitleColor(Color.BLACK);
@@ -82,8 +85,8 @@ public class RecommendFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        
-        this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
+
+        this.recyclerView = (RecyclerView) view.findViewById(R.id.recommend_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new RecycleViewDivider(
@@ -91,7 +94,7 @@ public class RecommendFragment extends BaseFragment {
                 .gray)));
 
         this.refreshLayout.setColorSchemeColors(Color.YELLOW);
-        this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler
                         () {
@@ -197,11 +200,11 @@ public class RecommendFragment extends BaseFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, Object text) {
-            helper.setText(R.id.recommend_recyclerview_item_num, (String)text);
+            helper.setText(R.id.recommend_recyclerview_item_num, (String) text);
             helper.setText(R.id.recommend_recyclerview_item_num2, "aaa");
 
             final int position = helper.getAdapterPosition();
-            Button btn = (Button)helper.getView(R.id.recommend_recyclerview_item_btn);
+            Button btn = (Button) helper.getView(R.id.recommend_recyclerview_item_btn);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

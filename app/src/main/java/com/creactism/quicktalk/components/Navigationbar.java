@@ -3,6 +3,7 @@ package com.creactism.quicktalk.components;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -131,7 +132,11 @@ public class Navigationbar extends ViewGroup implements View.OnClickListener {
     }
 
     public void setDefaultBackAction(final Activity activity) {
+        this.setBackgroundColor(Color.parseColor("#333244"));
         this.setLeftText("返回");
+        this.setLeftTextColor(Color.WHITE);
+        this.setTitleColor(Color.WHITE);
+        this.setActionTextColor(Color.WHITE);
         this.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
