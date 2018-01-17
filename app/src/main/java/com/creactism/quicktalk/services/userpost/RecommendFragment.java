@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.userpost;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
+import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 
@@ -47,6 +49,24 @@ public class RecommendFragment extends BaseFragment {
     private RecommendAdapter mAdapter;
     private int testNum = 0;
     private int index = 1;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
+            @Override
+            public void handler(Object object) {
+                DLog.warn("NotificationCenter handler2: " + (String)object);
+            }
+        });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        NotificationCenter.defaultCenter().removeObserver(this.getActivity(), "testNotification");
+    }
 
     @Nullable
     @Override

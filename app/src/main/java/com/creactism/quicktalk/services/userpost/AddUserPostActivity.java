@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.components.Navigationbar;
+import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.util.DLog;
 
 import butterknife.BindView;
@@ -128,6 +129,8 @@ public class AddUserPostActivity extends BaseActivity {
                 } else {
                     Toast.makeText(AddUserPostActivity.this, "文本已被删除", Toast.LENGTH_SHORT).show();
                 }
+
+                NotificationCenter.defaultCenter().postNotification("testNotification", "stringObject...");
             }
         });
 

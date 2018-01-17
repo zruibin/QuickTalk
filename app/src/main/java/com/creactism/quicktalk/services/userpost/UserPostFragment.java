@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.userpost;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,14 +15,35 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
+import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.util.DLog;
+
+import static com.creactism.quicktalk.modules.NotificationCenter.*;
 
 /**
  * Created by ruibin.chow on 12/01/2018.
  */
 
 public class UserPostFragment extends BaseFragment {
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
+            @Override
+            public void handler(Object object) {
+                DLog.warn("NotificationCenter handler: " + (String)object);
+            }
+        });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        NotificationCenter.defaultCenter().removeObserver(this.getActivity(), "testNotification");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
