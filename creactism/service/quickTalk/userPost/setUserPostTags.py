@@ -24,10 +24,10 @@ from .addUserPost import generateUserPostTagsSQL
 @userPost.route('/setUserPostTags', methods=["POST"])
 def setUserPostTags():
     userPostUUID = getValueFromRequestByKey("userPost_uuid")
-    userUUID = getValueFromRequestByKey("user_uuid")
+    # userUUID = getValueFromRequestByKey("user_uuid")
     tagsString = getValueFromRequestByKey("tagsString")
 
-    if userPostUUID == None or userUUID == None or tagsString == None:
+    if userPostUUID == None or tagsString == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
     tagList = []

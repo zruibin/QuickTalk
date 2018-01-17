@@ -53,13 +53,16 @@ def __getUserBaseInfo(userUUID):
         (SELECT COUNT(id) FROM t_quickTalk_user_user 
             WHERE t_quickTalk_user_user.other_user_uuid=t_quickTalk_user.uuid 
             AND t_quickTalk_user_user.type=%s
-        ) AS followingCount
+        ) AS followingCount,
+        (SELECT COUNT(id) FROM t_quickTalk_like 
+            WHERE t_quickTalk_like.user_uuid=%s
+        ) AS likedCount
     FROM t_quickTalk_user WHERE uuid=%s 
     """
     args = [Config.TYPE_MESSAGE_LIKE_USERPOST, 
                 Config.TYPE_STAR_FOR_USER_RELATION, 
                 Config.TYPE_STAR_FOR_USER_RELATION,
-                userUUID]
+                userUUID, userUUID]
 
     dbManager = DB.DBManager.shareInstanced()
     try: 
