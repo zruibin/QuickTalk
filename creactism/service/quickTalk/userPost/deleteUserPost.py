@@ -17,11 +17,9 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey
-from common.auth import vertifyTokenHandle
 
 
 @userPost.route('/deleteUserPost', methods=["POST"])
-@vertifyTokenHandle
 def deleteUserPost():
     userPostUUID = getValueFromRequestByKey("userPost_uuid")
     userUUID = getValueFromRequestByKey("user_uuid")
