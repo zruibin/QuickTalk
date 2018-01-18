@@ -38,9 +38,10 @@ def __getUserPostFromStorage(index, size, userPostUUID):
         
     querySQL = """
         SELECT id, uuid, content, time, user_uuid AS userUUID, 
+        (SELECT t_quickTalk_user.id FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS userId,
         (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS nickname,
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS avatar,
-        isReply, reply_uuid
+        isReply, reply_uuid AS replyCommentId
         FROM t_quickTalk_userPost_comment WHERE userPost_uuid='%s'  ORDER BY time DESC %s
     """ % (userPostUUID, limitSQL)
 
@@ -55,6 +56,7 @@ def __getUserPostFromStorage(index, size, userPostUUID):
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
 
         dataList = __packageReplyContent(dataList)
+        # DLog(dataList)
         return RESPONSE_JSON(CODE_SUCCESS, dataList)
     except Exception as e:
         Loger.error(e, __file__)
@@ -66,7 +68,7 @@ def __packageReplyContent(dataList):
     for data in dataList:
         isReply = str(data["isReply"])
         if isReply == Config.TYPE_FOR_COMMENT_REPLY:
-            inList.append(data["reply_uuid"])
+            inList.append(data["replyCommentId"])
 
     if len(inList) == 0:
         return dataList
@@ -74,6 +76,7 @@ def __packageReplyContent(dataList):
     inString = "'" + "','".join(inList) + "'"
     querySQL = """
         SELECT uuid, content, user_uuid AS replyUserUUID,
+            (SELECT t_quickTalk_user.id FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS replyUserId
 	        (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost_comment.user_uuid) AS replyNickname
      FROM t_quickTalk_userPost_comment WHERE uuid IN (%s)
     """ % inString
@@ -93,7 +96,7 @@ def __packageAction(dataList, replyDataList):
     for data in dataList:
         isReply = str(data["isReply"])
         if isReply == Config.TYPE_FOR_COMMENT_REPLY:
-            replyUUID = data["reply_uuid"]
+            replyUUID = data["replyCommentId"]
             for replyData in replyDataList:
                 if replyUUID == replyData["uuid"]:
                     data["replyContent"] = replyData["content"]
