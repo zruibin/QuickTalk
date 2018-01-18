@@ -37,7 +37,7 @@ def __deleteUserPostInStorage(userPostUUID, userUUID):
 
     deleteSQL = """DELETE FROM t_quickTalk_userPost WHERE uuid='%s' AND user_uuid='%s'; """ % (userPostUUID, userUUID)
     deleteCommentSQL = """DELETE FROM t_quickTalk_userPost_comment WHERE userPost_uuid='%s' """ % (userPostUUID)
-    deleteTagsSQL = """DELETE FROM t_tag_userPost WHERE userPost_uuid='%s' """ % (userPostUUID)
+    deleteTagsSQL = """DELETE FROM t_quickTalk_tag_userPost WHERE userPost_uuid='%s' """ % (userPostUUID)
 
     dbManager = DB.DBManager.shareInstanced()
     try: 

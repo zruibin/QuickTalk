@@ -244,3 +244,27 @@ INSERT INTO t_quickTalk_user_user (user_uuid, type, other_user_uuid, time)
 SELECT uuid AS user_uuid, 0, 'cfb43f1df01c74f24d1a68f583b36613', time FROM t_quickTalk_user
 
 ALTER TABLE `t_quickTalk_notification_device` ADD type TINYINT NOT NULL Default 0;
+
+
+
+-- V1.5
+-- Create By Ruibin.Chow
+DROP TABLE IF EXISTS
+    `t_tag_userPost`;
+CREATE TABLE `t_tag_userPost`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `userPost_uuid` VARCHAR(100) NOT NULL COMMENT 'userPost的uuid',
+    `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
+    `tag` VARCHAR(200) DEFAULT NULL COMMENT '标签',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_tag_userPost` ADD INDEX t_tag_userPost_uuid ( `userPost_uuid` );
+ALTER TABLE `t_tag_userPost` ADD INDEX t_tag_userPost_tag ( `tag` );
+
+-- 更改表名
+ALTER  TABLE t_tag_userPost RENAME TO t_quickTalk_tag_userPost;
+drop INDEX t_tag_userPost_uuid ON t_quickTalk_tag_userPost
+drop INDEX t_tag_userPost_tag ON t_quickTalk_tag_userPost
+ALTER TABLE `t_quickTalk_tag_userPost` ADD INDEX t_quickTalk_tag_userPost_uuid ( `userPost_uuid` );
+ALTER TABLE `t_quickTalk_tag_userPost` ADD INDEX t_quickTalk_tag_userPost_tag ( `tag` );

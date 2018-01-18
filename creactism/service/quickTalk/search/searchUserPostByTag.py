@@ -50,7 +50,7 @@ def __getUserPostFromStorage(tag, userUUID, index, size):
             FROM t_quickTalk_userPost 
             WHERE t_quickTalk_userPost.uuid IN (
                 SELECT userPost_uuid FROM 
-                (SELECT userPost_uuid FROM `t_tag_userPost` 
+                (SELECT userPost_uuid FROM `t_quickTalk_tag_userPost` 
                     WHERE tag LIKE %s """ + limitSQL + """
                 ) AS t_temp
             )

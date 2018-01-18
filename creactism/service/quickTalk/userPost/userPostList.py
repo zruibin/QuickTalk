@@ -154,7 +154,7 @@ def queryTheUserPostTagList(dataList, uuidList):
 
     inString = "'" + "','".join(uuidList) + "'"
     querySQL = """
-        SELECT userPost_uuid AS userPostUUID, sorting, tag FROM t_tag_userPost
+        SELECT userPost_uuid AS userPostUUID, sorting, tag FROM t_quickTalk_tag_userPost
         WHERE userPost_uuid IN (%s);
     """ % (inString)
     # DLog(querySQL, False)

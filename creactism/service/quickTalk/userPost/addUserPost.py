@@ -75,12 +75,12 @@ def __storageUserPost(title, content, userUUID, txt, tagsString):
 def generateUserPostTagsSQL(userPostUUID, tagList, sqlList, argsList):
     """"生成标签sql"""
     deleteSQL = """
-            DELETE FROM t_tag_userPost WHERE userPost_uuid=%s
+            DELETE FROM t_quickTalk_tag_userPost WHERE userPost_uuid=%s
         """
     sqlList.append(deleteSQL)
     argsList.append([userPostUUID])
     if len(tagList) > 0:
-        insertSQL = "INSERT INTO t_tag_userPost(userPost_uuid, sorting, tag) VALUES "
+        insertSQL = "INSERT INTO t_quickTalk_tag_userPost(userPost_uuid, sorting, tag) VALUES "
         values = []
         for index in range(len(tagList)):
             # print index, tagList[index]
