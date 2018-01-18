@@ -84,7 +84,21 @@ def __queryUserMessageFromStorage(userUUID, limitSQL, update):
                 WHEN t_quickTalk_message.type={newFriend}
                 THEN NULL  
                 ELSE NULL  
-            END) AS content
+            END) AS content,
+            (CASE  
+                WHEN t_quickTalk_message.type={likeUserPost} 
+                THEN (SELECT t_quickTalk_userPost.time          
+                    FROM t_quickTalk_userPost 
+                    WHERE t_quickTalk_userPost.uuid=t_quickTalk_message.content_uuid) 
+                WHEN t_quickTalk_message.type={userPostComment} 
+                THEN (SELECT t_quickTalk_userPost.time          
+                    FROM t_quickTalk_userPost, t_quickTalk_userPost_comment 
+                    WHERE t_quickTalk_userPost_comment.uuid=t_quickTalk_message.content_uuid
+                    AND t_quickTalk_userPost.uuid=t_quickTalk_userPost_comment.userPost_uuid)  
+                WHEN t_quickTalk_message.type={newFriend}
+                THEN NULL  
+                ELSE NULL  
+            END) AS userPostTime
         FROM t_quickTalk_message INNER JOIN t_quickTalk_user 
             ON t_quickTalk_message.user_uuid='{userUUID}'
             AND t_quickTalk_user.uuid=t_quickTalk_message.generated_user_uuid
@@ -104,7 +118,10 @@ def __queryUserMessageFromStorage(userUUID, limitSQL, update):
             messageIdList.append(str(data["id"]))
             userUUID = data["userUUID"]
             data["time"] = str(data["time"])
+            if data["userPostTime"] != None:
+                data["userPostTime"] = str(data["userPostTime"])
             data["avatar"] = userAvatarURL(userUUID, data["avatar"])
+        # DLog(dataList)
     except Exception as e:
         Loger.error(e, __file__)
         return RESPONSE_JSON(CODE_ERROR_SERVICE)
