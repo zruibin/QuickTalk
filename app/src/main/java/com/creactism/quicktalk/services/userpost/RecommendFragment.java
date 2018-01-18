@@ -26,6 +26,7 @@ import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.modules.cache.QTCache;
+import com.creactism.quicktalk.services.account.ChangeAvatarActivity;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 
@@ -94,6 +95,9 @@ public class RecommendFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(), "第二项", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
+                startActivity(intent);
             }
         });
 
