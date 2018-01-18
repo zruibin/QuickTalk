@@ -40,26 +40,26 @@ public final class NotificationCenter extends Object {
         if (aName == null) { return;}
         if (selectorHandler == null) { return;}
 
-//        WeakReference<Object> weakReference = new WeakReference<Object>(observer);
-
+        WeakReference<SelectorHandler> referenceHandler = new WeakReference<SelectorHandler>(selectorHandler);
+        //PhantomReference
         String observerHashCodeKey = String.valueOf(observer.hashCode());
 
         Map<String, List> observerMap = null;
-        List<SelectorHandler> selectorHandlerList = null;
+        List<WeakReference<SelectorHandler> > selectorHandlerList = null;
 
         if (this.notificationMap.containsKey(aName)) {
             observerMap = (Map<String, List>)this.notificationMap.get(aName);
 
-            selectorHandlerList = (List<SelectorHandler>)observerMap.get(observerHashCodeKey);
+            selectorHandlerList = (List<WeakReference<SelectorHandler> >)observerMap.get(observerHashCodeKey);
             if (selectorHandlerList == null) {
-                selectorHandlerList = new ArrayList<SelectorHandler>();
+                selectorHandlerList = new ArrayList<WeakReference<SelectorHandler> >();
             }
         } else {
             observerMap = new HashMap<String, List>();
-            selectorHandlerList = new ArrayList<SelectorHandler>();
+            selectorHandlerList = new ArrayList<WeakReference<SelectorHandler> >();
         }
 
-        selectorHandlerList.add(selectorHandler);
+        selectorHandlerList.add(referenceHandler);
         observerMap.put(String.valueOf(observer.hashCode()), selectorHandlerList);
         this.notificationMap.put(aName, observerMap);
     }
@@ -77,9 +77,12 @@ public final class NotificationCenter extends Object {
         Map<String, List> observerMap = (Map<String, List>)this.notificationMap.get(aName);
         for (String observerHashCode : observerMap.keySet()) {
             if (observerHashCode == null) { continue;}
-            List<SelectorHandler> selectorHandlerList = (List<SelectorHandler>)observerMap.get(observerHashCode);
-            for (SelectorHandler selectorHandler : selectorHandlerList) {
-                selectorHandler.handler(object);;
+            List<WeakReference<SelectorHandler>> selectorHandlerList = (List<WeakReference<SelectorHandler> >)observerMap.get(observerHashCode);
+            for (WeakReference<SelectorHandler> referenceHandler : selectorHandlerList) {
+                SelectorHandler selectorHandler = referenceHandler.get();
+                if (selectorHandler != null) {
+                    selectorHandler.handler(object);
+                }
             }
         }
     }
@@ -104,10 +107,13 @@ public final class NotificationCenter extends Object {
     public void  removeObserver(Object observer, String aName) {
         if (observer == null) { return;}
         if (aName == null) { return;}
-//        WeakReference<Object> weakReference = new WeakReference<Object>(observer);
 
         Map observerMap = (Map)this.notificationMap.get(aName);
         if (observerMap == null) {return;}
-        observerMap.remove(observer);
+        String observerHashCodeKey = String.valueOf(observer.hashCode());
+        if (observerMap.keySet().contains(observerHashCodeKey)) {
+            observerMap.remove(observerHashCodeKey);
+        }
+//        this.notificationMap.put(aName, observerMap);
     }
 }

@@ -42,7 +42,7 @@ public class UserPostFragment extends BaseFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        NotificationCenter.defaultCenter().removeObserver(this.getActivity(), "testNotification");
+        NotificationCenter.defaultCenter().removeObserver(this, "testNotification");
     }
 
     @Override
