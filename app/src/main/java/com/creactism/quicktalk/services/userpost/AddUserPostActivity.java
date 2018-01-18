@@ -19,6 +19,7 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.modules.NotificationCenter;
+import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.util.DLog;
 
 import butterknife.BindView;
@@ -44,6 +45,7 @@ public class AddUserPostActivity extends BaseActivity {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
+//        DLog.info("AddUserPostActivity Test Cache: " + QTCache.sharedCache().getString("testCache"));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);

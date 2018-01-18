@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.util.DLog;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -21,6 +22,8 @@ public final class App extends Application {
     public void onCreate() {
         super.onCreate();
         DLog.info("App onCreate...");
+        /*初始化缓存库*/
+        QTCache.sharedCache().initCache(this.getBaseContext());
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

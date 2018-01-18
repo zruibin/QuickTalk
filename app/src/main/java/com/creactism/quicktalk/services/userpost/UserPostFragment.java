@@ -16,6 +16,7 @@ import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.modules.NotificationCenter;
+import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.util.DLog;
 
@@ -30,7 +31,7 @@ public class UserPostFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+//        QTCache.sharedCache().put("testCache", "testCacheValue....");
         NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
             @Override
             public void handler(Object object) {

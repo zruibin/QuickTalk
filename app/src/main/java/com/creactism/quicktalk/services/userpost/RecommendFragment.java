@@ -25,6 +25,7 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.modules.NotificationCenter;
+import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 
@@ -74,6 +75,7 @@ public class RecommendFragment extends BaseFragment {
             savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         DLog.debug("RecommendFragment on onCreateView: .....");
+
         View view = inflater.inflate(R.layout.frag_recommend, null);
         ButterKnife.bind(this, view);
 
