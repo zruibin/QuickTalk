@@ -1,6 +1,8 @@
 package com.creactism.quicktalk.services.userpost;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -125,6 +127,8 @@ public class AddUserPostActivity extends BaseActivity {
         Button btn = new Button(this);
         btn.setText("点击删除文本");
         btn.setBackgroundColor(Color.GRAY);
+        Drawable rippleDrawable = this.getResources().getDrawable(R.drawable.ripple_bg, null);
+        btn.setBackground(rippleDrawable);
         LinearLayout.LayoutParams btn_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         btn_params.setMargins(0, 60, 60, 0);
