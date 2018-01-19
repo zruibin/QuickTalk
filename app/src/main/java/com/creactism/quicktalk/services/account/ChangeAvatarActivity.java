@@ -28,7 +28,9 @@ import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
+import com.creactism.quicktalk.util.DrawableUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -105,12 +107,12 @@ public class ChangeAvatarActivity extends BaseActivity {
 
         this.changeButton = new Button(this);
         this.changeButton.setText("更换头像");
-        this.changeButton.setBackgroundColor(Color.GRAY);
-        this.changeButton.setBackground(this.getResources().getDrawable(R.drawable.ripple_bg, null));
+        this.changeButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
+        this.changeButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.changeButton.setStateListAnimator(null);//去掉阴影效果
         LinearLayout.LayoutParams changeBtnparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 80);
-        changeBtnparams.setMargins(20, 20, 20, 0);
+        changeBtnparams.setMargins(20, 40, 20, 0);
         changeBtnparams.gravity = Gravity.CENTER_HORIZONTAL;
         this.changeButton.setLayoutParams(changeBtnparams);
         linearLayout.addView(this.changeButton);
@@ -118,7 +120,9 @@ public class ChangeAvatarActivity extends BaseActivity {
         this.saveButton = new Button(this);
         this.saveButton.setText("保存");
         this.saveButton.setBackgroundColor(Color.WHITE);
-        this.saveButton.setBackground(this.getResources().getDrawable(R.drawable.ripple_bg, null));
+        this.saveButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
+//        this.saveButton.setBackgroundTintList(DrawableUtil.getColorStateList(Color.WHITE, Color.GRAY, 0, 0));
+        this.saveButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.saveButton.setStateListAnimator(null);
         this.saveButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams saveBtnParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
