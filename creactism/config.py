@@ -129,6 +129,8 @@ class Config(object):
   # 关注类型
   TYPE_STAR_FOR_USER_RELATION = "0"
 
+  # 阅读类型
+  TYPE_READ_FOR_USERPOST = "1"
 
   pass
 

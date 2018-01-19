@@ -22,21 +22,29 @@ from common.tools import getValueFromRequestByKey
 @userPost.route('/addReadCount', methods=["GET", "POST"])
 def addReadCount():
     uuid = getValueFromRequestByKey("uuid")
+    userUUID = getValueFromRequestByKey("user_uuid")
 
     if uuid == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __updateActionInStorage(uuid)
+    return __updateActionInStorage(uuid, userUUID)
     
 
-def __updateActionInStorage(uuid):
+def __updateActionInStorage(uuid, userUUID):
+    sqlList = []
     updateSQL = """
         UPDATE t_quickTalk_userPost SET `read_count`=`read_count`+1 WHERE uuid='%s';
     """ % uuid
+    sqlList.append(updateSQL)
+    if userUUID != None:
+        recodSQL = """
+            INSERT INTO t_quickTalk_user_read(user_uuid, type, uuid) VALUES ('%s', '%s', '%s'); 
+        """ % (userUUID, Config.TYPE_READ_FOR_USERPOST, uuid)
+        sqlList.append(recodSQL)
             
     dbManager = DB.DBManager.shareInstanced()
     try: 
-        dbManager.executeTransactionDml(updateSQL)
+        dbManager.executeTransactionMutltiDml(sqlList)
         return RESPONSE_JSON(CODE_SUCCESS)
     except Exception as e:
         Loger.error(e, __file__)

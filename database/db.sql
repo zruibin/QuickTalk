@@ -250,8 +250,8 @@ ALTER TABLE `t_quickTalk_notification_device` ADD type TINYINT NOT NULL Default 
 -- V1.5
 -- Create By Ruibin.Chow
 DROP TABLE IF EXISTS
-    `t_tag_userPost`;
-CREATE TABLE `t_tag_userPost`(
+    `t_quickTalk_tag_userPost`;
+CREATE TABLE `t_quickTalk_tag_userPost`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `userPost_uuid` VARCHAR(100) NOT NULL COMMENT 'userPost的uuid',
     `sorting` TINYINT UNSIGNED NOT NULL COMMENT '顺序',
@@ -259,12 +259,20 @@ CREATE TABLE `t_tag_userPost`(
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
-ALTER TABLE `t_tag_userPost` ADD INDEX t_tag_userPost_uuid ( `userPost_uuid` );
-ALTER TABLE `t_tag_userPost` ADD INDEX t_tag_userPost_tag ( `tag` );
-
--- 更改表名
-ALTER  TABLE t_tag_userPost RENAME TO t_quickTalk_tag_userPost;
-drop INDEX t_tag_userPost_uuid ON t_quickTalk_tag_userPost
-drop INDEX t_tag_userPost_tag ON t_quickTalk_tag_userPost
 ALTER TABLE `t_quickTalk_tag_userPost` ADD INDEX t_quickTalk_tag_userPost_uuid ( `userPost_uuid` );
 ALTER TABLE `t_quickTalk_tag_userPost` ADD INDEX t_quickTalk_tag_userPost_tag ( `tag` );
+
+
+DROP TABLE IF EXISTS
+    `t_quickTalk_user_read`;
+CREATE TABLE `t_quickTalk_user_read`(
+    `id` INT UNSIGNED AUTO_INCREMENT,
+    `user_uuid` VARCHAR(100) NOT NULL COMMENT '用户的uuid',
+    `type` VARCHAR(20) NOT NULL COMMENT '类型',
+    `uuid` VARCHAR(100) NOT NULL COMMENT '内容的uuid',
+    PRIMARY KEY(`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+ALTER TABLE `t_quickTalk_user_read` ADD INDEX t_quickTalk_user_read_uuid ( `uuid` );
+ALTER TABLE `t_quickTalk_user_read` ADD INDEX t_quickTalk_user_read_user_uuid ( `user_uuid` );
+
