@@ -24,6 +24,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 //        DLog.debug("BaseActivity onCreacte...");
+        this.getWindow().setBackgroundDrawable(this.getResources().getDrawable(R.drawable.bgColor));
     }
 
     @Override

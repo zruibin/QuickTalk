@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -87,9 +88,11 @@ public class ChangeAvatarActivity extends BaseActivity {
 
         this.changeButton = new Button(this);
         this.changeButton.setText("更换头像");
-        this.changeButton.setBackgroundColor(Color.WHITE);
+        this.changeButton.setBackgroundColor(Color.GRAY);
+        this.changeButton.setBackground(this.getResources().getDrawable(R.drawable.ripple_bg, null));
+        this.changeButton.setStateListAnimator(null);//去掉阴影效果
         LinearLayout.LayoutParams changeBtnparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                90);
+                80);
         changeBtnparams.setMargins(20, 20, 20, 0);
         changeBtnparams.gravity = Gravity.CENTER_HORIZONTAL;
         this.changeButton.setLayoutParams(changeBtnparams);
@@ -98,9 +101,11 @@ public class ChangeAvatarActivity extends BaseActivity {
         this.saveButton = new Button(this);
         this.saveButton.setText("保存");
         this.saveButton.setBackgroundColor(Color.WHITE);
+        this.saveButton.setBackground(this.getResources().getDrawable(R.drawable.ripple_bg, null));
+        this.saveButton.setStateListAnimator(null);
         this.saveButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams saveBtnParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                90);
+                80);
         saveBtnParams.setMargins(20, 20, 20, 0);
         saveBtnParams.gravity = Gravity.CENTER_HORIZONTAL;
         this.saveButton.setLayoutParams(saveBtnParams);

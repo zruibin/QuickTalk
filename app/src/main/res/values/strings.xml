@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QuickTalk</string>
+    <drawable name="bgColor">#EFEFEF</drawable>
 </resources>
