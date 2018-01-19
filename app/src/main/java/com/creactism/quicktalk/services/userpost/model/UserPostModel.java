@@ -28,7 +28,7 @@ public class UserPostModel extends Object {
         params.put("index", String.valueOf(index));
 
         NetworkingAgent.requestDataForQuickTalkService("/userPost/recommendUserPostList",
-                "POST", params, new NetworkingAgent.CompleteHandler() {
+                "GET", params, new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
                         DLog.info("code: " + String.valueOf(responseObject.getCode()));

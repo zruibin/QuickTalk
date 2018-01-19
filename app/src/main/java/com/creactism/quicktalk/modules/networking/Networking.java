@@ -5,6 +5,8 @@ import android.os.Looper;
 import android.os.Message;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -37,8 +39,12 @@ public class Networking extends Object {
         if (method.equalsIgnoreCase("GET")) {
             StringBuffer stringBuffer = new StringBuffer();
             for (String key : params.keySet()) {
-                String value = params.get(key);
-                stringBuffer.append(key + "=" + value + "&");
+                try {
+                    String value = URLEncoder.encode(params.get(key), "utf-8");
+                    stringBuffer.append(key + "=" + value + "&");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
             String url = baseURL + "?" + stringBuffer.toString();
             request = new Request.Builder().url(url).get().build();

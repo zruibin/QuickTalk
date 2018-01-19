@@ -79,9 +79,9 @@ public class RecommendFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.frag_recommend, null);
         ButterKnife.bind(this, view);
-
+        this.mDatas = new ArrayList<>();
+        index = 1;
         this.initSubView(view);
-        this.initData();
 
         return view;
     }
@@ -116,21 +116,15 @@ public class RecommendFragment extends BaseFragment {
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color
+                getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color
                 .gray)));
 
         this.refreshLayout.setColorSchemeColors(Color.YELLOW);
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
-                UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler
-                        () {
-                    @Override
-                    public void completeHanlder(List list, Error error) {
-                        mDatas = list;
-                        mAdapter.setNewData(mDatas);
-                        refreshLayout.setRefreshing(false);
-                    }
-                });
+                mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+               index = 1;
+               loadData();
             }
         });
 
@@ -163,16 +157,8 @@ public class RecommendFragment extends BaseFragment {
                     }
                 },1000);
                 */
-                UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
-                    @Override
-                    public void completeHanlder(List list, Error error) {
-                        mDatas.addAll(list);
-                        mAdapter.addData(list);
-                        refreshLayout.setRefreshing(false);
-                        mAdapter.loadMoreComplete();
-                        ++index;
-                    }
-                });
+                ++index;
+                loadData();
             }
         }, this.recyclerView);
 
@@ -189,7 +175,7 @@ public class RecommendFragment extends BaseFragment {
 //        });
 
         this.recyclerView.setAdapter(this.mAdapter);
-        this.mAdapter.notifyItemChanged(2);
+//        this.mAdapter.notifyItemChanged(2);
 //        this.mAdapter.notifyDataSetChanged();
 
         this.mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -207,14 +193,21 @@ public class RecommendFragment extends BaseFragment {
                 DLog.debug("offsetY: " + String.valueOf(recyclerView.computeVerticalScrollOffset()));
             }
         });
+
+        this.refreshLayout.setRefreshing(true);
+        this.loadData();
     }
 
-    protected void initData() {
-        mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'H'; i++) {
-            mDatas.add("" + (char) i);
-        }
-        this.mAdapter.setNewData(mDatas);
+    protected void loadData() {
+        UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
+            @Override
+            public void completeHanlder(List list, Error error) {
+                mDatas.addAll(list);
+                mAdapter.addData(list);
+                refreshLayout.setRefreshing(false);
+                mAdapter.loadMoreComplete();
+            }
+        });
     }
 
 
