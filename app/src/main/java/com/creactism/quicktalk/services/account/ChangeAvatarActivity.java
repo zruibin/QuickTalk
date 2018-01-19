@@ -8,11 +8,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.util.DLog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -64,6 +66,21 @@ public class ChangeAvatarActivity extends BaseActivity {
         lineLayout.setGravity(Gravity.TOP);
         this.initViews(lineLayout);
         setContentView(lineLayout);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (this.imageUri != null) {
+            DLog.info("imageUri: " + this.imageUri.getPath());
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    File file = new File(imageUri.getPath());
+                    if (file.exists() && file.isFile()) file.delete();
+                }
+            });
+        }
     }
 
     private void initViews(LinearLayout linearLayout) {
@@ -160,7 +177,6 @@ public class ChangeAvatarActivity extends BaseActivity {
         if(Build.VERSION.SDK_INT >= 24){
             openCameraIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             imageUri = FileProvider.getUriForFile(ChangeAvatarActivity.this,"com.creactism.quicktalk.fileProvider",file);
-
         }else {
             imageUri = Uri.fromFile(getImageStoragePath(this));
         }
