@@ -31,7 +31,7 @@ public final class DrawableUtil {
     }
 
     public static Drawable getRectRippleDrawable() {
-        return getRectRippleDrawable(DEFAULT_RIPPLE_COLOR);
+        return getRectRippleDrawable(Color.WHITE);
     }
 
     public static Drawable getRectRippleDrawable(int tintColor) {
@@ -58,10 +58,10 @@ public final class DrawableUtil {
         float[] outerR = new float[] { cornerRadius, cornerRadius, cornerRadius, cornerRadius,
                 cornerRadius, cornerRadius, cornerRadius, cornerRadius };
         // 内部矩形与外部矩形的距离
-        RectF inset = new RectF(100, 100, 50, 50);
+//        RectF inset = new RectF(0, 0, 0, 0);
         // 内部矩形弧度
-        float[] innerRadii = new float[] { 20, 20, 20, 20, 20, 20, 20, 20 };
-        RoundRectShape roundRectShape = new RoundRectShape(outerR, inset, null); //无内矩形
+//        float[] innerRadii = new float[] { 20, 20, 20, 20, 20, 20, 20, 20 };
+        RoundRectShape roundRectShape = new RoundRectShape(outerR, null, null); //无内矩形
 
         ShapeDrawable rectDrawable = new ShapeDrawable(roundRectShape);
         rectDrawable.getPaint().setColor(tintColor);

@@ -4,9 +4,23 @@
     <color name="colorPrimaryDark">#292836</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--主颜色-->
+    <color name="QuickTalk_MAIN_COLOR">#00a0e9</color>
+    <!--导航栏颜色-->
+    <color name="QuickTalk_NAVBAR_TINT_COLOR">#FFFFFF</color>
+    <!--导航栏背景色-->
+    <color name="QuickTalk_NAVBAR_BG_COLOR">#343338</color>
+    <!--tabBar颜色-->
+    <color name="QuickTalk_TAB_COLOR">#333244</color>
+    <!--标签颜色-->
+    <color name="QuickTalk_TAG_COLOR">#00a0e9</color>
+    <!--主字体颜色-->
+    <color name="QuickTalk_MAIN_FONT_COLOR">#585858</color>
+    <!--副字体颜色-->
+    <color name="QuickTalk_SECOND_FONT_COLOR">#999999</color>
+
+
     <color name="tuna">#333244</color>
-
-
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
