@@ -23,28 +23,31 @@ import json
 
 
 @userPost.route('/addUserPost', methods=["POST"])
-@vertifyTokenHandle
+# @vertifyTokenHandle
 def addUserPost():
     title = getValueFromRequestByKey("title")
-    content = getValueFromRequestByKey("content")
     txt = getValueFromRequestByKey("txt")
+    content = getValueFromRequestByKey("content")
+    typeStr = getValueFromRequestByKey("type")
     userUUID = getValueFromRequestByKey("user_uuid")
     tagsString = getValueFromRequestByKey("tagsString")
 
-    if title == None or content == None or userUUID == None:
+    if title == None or content == None or typeStr == None or userUUID == None:
+        return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
+    if typeStr not in (Config.TYPE_USERPOST_FOR_REPOST, Config.TYPE_USERPOST_FOR_ORIGINAL):
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
 
-    return __storageUserPost(title, content, userUUID, txt, tagsString)
+    return __storageUserPost(title, content, userUUID, txt, tagsString, typeStr)
     
 
-def __storageUserPost(title, content, userUUID, txt, tagsString):
+def __storageUserPost(title, content, userUUID, txt, tagsString, typeStr):
     uuid = generateUUID()
     time = generateCurrentTime()
     sqlList = []
     argsList = []
 
-    insertSQL = "INSERT INTO t_quickTalk_userPost (uuid, user_uuid, title, txt, content, time) VALUES (%s, %s, %s, %s, %s, %s)"
-    args = [uuid, userUUID, title, txt, content, time]
+    insertSQL = "INSERT INTO t_quickTalk_userPost (uuid, user_uuid, title, txt, content, time, type) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    args = [uuid, userUUID, title, txt, content, time, typeStr]
     sqlList.append(insertSQL)
     argsList.append(args)
 

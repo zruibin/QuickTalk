@@ -132,6 +132,10 @@ class Config(object):
   # 阅读类型
   TYPE_READ_FOR_USERPOST = "1"
 
+  # userPost类型
+  TYPE_USERPOST_FOR_REPOST = "0" # 转载
+  TYPE_USERPOST_FOR_ORIGINAL = "1" # 原创
+
   pass
 
 

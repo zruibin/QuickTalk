@@ -276,3 +276,7 @@ CREATE TABLE `t_quickTalk_user_read`(
 ALTER TABLE `t_quickTalk_user_read` ADD INDEX t_quickTalk_user_read_uuid ( `uuid` );
 ALTER TABLE `t_quickTalk_user_read` ADD INDEX t_quickTalk_user_read_user_uuid ( `user_uuid` );
 
+
+ALTER TABLE `t_quickTalk_userPost` ADD `type` VARCHAR(10) NOT NULL DEFAULT '0' COMMENT '类型';
+
+

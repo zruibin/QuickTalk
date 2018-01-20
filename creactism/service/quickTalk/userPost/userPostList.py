@@ -37,7 +37,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
         
     querySQL = """
         SELECT id, uuid, title, content, read_count AS readCount, time,
-        user_uuid AS userUUID, txt,
+        user_uuid AS userUUID, txt, type,
         (SELECT t_quickTalk_user.id FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS userId,
         (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS nickname,
         (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS avatar,
@@ -47,7 +47,7 @@ def __getUserPostFromStorage(index, size, userUUID, relationUserUUID):
     if userUUID is not None:
         querySQL = """
             SELECT id, uuid, title, content, read_count AS readCount, time,
-            user_uuid AS userUUID, txt,
+            user_uuid AS userUUID, txt, type,
             (SELECT t_quickTalk_user.id FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS userId,
             (SELECT nickname FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS nickname,
             (SELECT avatar FROM t_quickTalk_user WHERE t_quickTalk_user.uuid=t_quickTalk_userPost.user_uuid) AS avatar,

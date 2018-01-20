@@ -129,7 +129,7 @@ MESSAGE = {
     CODE_ERROR_TOKEN_USED : "token已经被使用",
     CODE_ERROR_TOKEN_EXPIRED : "token已经过期",
     CODE_ERROR_TOKEN_REVOKED : "token不合法",
-    CODE_ERROR_TOKEN_NOT_FOUND : "token或用户uuid未找到",
+    CODE_ERROR_TOKEN_NOT_FOUND : "登录过期，请重新登录", #"token或用户uuid未找到",
     CODE_ERROR_TOKEN_CACHE_FAIL : "token缓存失败",
 
     CODE_ERROR_IMAGE_SERVICE_ERROR : "上传图片服务错误",
