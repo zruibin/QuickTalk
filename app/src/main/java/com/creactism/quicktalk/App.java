@@ -25,7 +25,6 @@ public final class App extends Application {
         DLog.info("App onCreate...");
         /*初始化缓存库*/
         QTCache.sharedCache().initCache(this.getApplicationContext());
-        DensityUtil.initContext(this.getApplicationContext());
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
