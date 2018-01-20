@@ -53,9 +53,8 @@ public class UserPostFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.frag_userpost, container, false);
 
         Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.userpost_navigationbar);
-//        navigationbar.setLeftImageResource(R.mipmap.back_green);
+        navigationbar.setDefaulteTheme(this.getActivity());
         navigationbar.setLeftText("取消");
-        navigationbar.setLeftTextColor(Color.BLACK);
         navigationbar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

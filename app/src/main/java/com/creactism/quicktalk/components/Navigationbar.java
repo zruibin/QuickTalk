@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.Resource;
+import com.creactism.quicktalk.R;
+
 import java.util.LinkedList;
 
 /**
@@ -131,13 +134,16 @@ public class Navigationbar extends ViewGroup implements View.OnClickListener {
         mLeftText.setOnClickListener(l);
     }
 
+    public void setDefaulteTheme(final Activity activity) {
+        this.setLeftTextColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
+        this.setTitleColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
+        this.setActionTextColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
+        this.setTitleSize(18);
+
+    }
+
     public void setDefaultBackAction(final Activity activity) {
-//        this.setBackgroundColor(Color.parseColor("#333244"));
-        this.setBackgroundColor(Color.parseColor("#38383C"));
-        this.setLeftText("<返回");
-        this.setLeftTextColor(Color.WHITE);
-        this.setTitleColor(Color.WHITE);
-        this.setActionTextColor(Color.WHITE);
+        this.setLeftText("返回");
         this.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

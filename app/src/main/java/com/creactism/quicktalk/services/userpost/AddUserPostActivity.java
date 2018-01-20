@@ -42,10 +42,6 @@ public class AddUserPostActivity extends BaseActivity {
 //        DLog.info("AddUserPostActivity onCreate....");
 //        this.setContentView(R.layout.activity_add_userpost);
 //        ButterKnife.bind(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
 
 //        DLog.info("AddUserPostActivity Test Cache: " + QTCache.sharedCache().getString("testCache"));
 
@@ -74,18 +70,6 @@ public class AddUserPostActivity extends BaseActivity {
 
     private void addView(final LinearLayout lineLayout) {
 
-        /*
-    <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/tuna"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    </android.support.v7.widget.Toolbar>
-    */
         final Toolbar toolbar = new Toolbar(this);
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));

@@ -2,12 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/recommend_toolbar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/QuickTalk_NAVBAR_BG_COLOR"
+        android:minHeight="22dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    </android.support.v7.widget.Toolbar>
+
     <com.creactism.quicktalk.components.Navigationbar
         android:id="@+id/recommend_navigationbar"
+        android:layout_below="@id/recommend_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:background="@color/white">
+        android:background="@color/QuickTalk_NAVBAR_BG_COLOR">
     </com.creactism.quicktalk.components.Navigationbar>
 
     <android.support.v4.widget.SwipeRefreshLayout

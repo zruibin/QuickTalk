@@ -90,7 +90,7 @@ public class RecommendFragment extends BaseFragment {
         Navigationbar navigationbar = (Navigationbar) view.findViewById(R.id.recommend_navigationbar);
         navigationbar.setTitle("第二项");
         navigationbar.setTitleSize(16);
-        navigationbar.setTitleColor(Color.BLACK);
+        navigationbar.setDefaulteTheme(getActivity());
         navigationbar.setCenterClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,8 +100,8 @@ public class RecommendFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        navigationbar.setVisibility(View.GONE);
 
-        navigationbar.setActionTextColor(Color.BLACK);
         navigationbar.addAction(new Navigationbar.TextAction("发布") {
             @Override
             public void performAction(View view) {
