@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -18,17 +19,23 @@ import android.graphics.drawable.shapes.RoundRectShape;
 
 public final class DrawableUtil {
 
+    public static final int DEFAULT_RIPPLE_COLOR = Color.GRAY;
+
     public static RippleDrawable getRippleDrawable(Drawable drawable, int rippleColor) {
         RippleDrawable rippleDrawable = new RippleDrawable(ColorStateList.valueOf(rippleColor), drawable, null);
         return rippleDrawable;
     }
 
+    public static Drawable getRippleDrawable(Drawable drawable) {
+        return getRippleDrawable(drawable, DEFAULT_RIPPLE_COLOR);
+    }
+
     public static Drawable getRectRippleDrawable() {
-        return getRectRippleDrawable(Color.WHITE);
+        return getRectRippleDrawable(DEFAULT_RIPPLE_COLOR);
     }
 
     public static Drawable getRectRippleDrawable(int tintColor) {
-        return getRectRippleDrawable(tintColor, Color.GRAY);
+        return getRectRippleDrawable(tintColor, DEFAULT_RIPPLE_COLOR);
     }
 
     public static Drawable getRectRippleDrawable(int tintColor, int rippleColor) {
@@ -39,11 +46,11 @@ public final class DrawableUtil {
     }
 
     public static Drawable getRoundRectRippleDrawable(int cornerRadius) {
-        return getRoundRectRippleDrawable(Color.WHITE, Color.GRAY, cornerRadius);
+        return getRoundRectRippleDrawable(Color.WHITE, DEFAULT_RIPPLE_COLOR, cornerRadius);
     }
 
     public static Drawable getRoundRectRippleDrawable(int tintColor, int cornerRadius) {
-        return getRoundRectRippleDrawable(tintColor, Color.GRAY, cornerRadius);
+        return getRoundRectRippleDrawable(tintColor, DEFAULT_RIPPLE_COLOR, cornerRadius);
     }
 
     public static Drawable getRoundRectRippleDrawable(int tintColor, int rippleColor, int cornerRadius) {
@@ -128,5 +135,31 @@ public final class DrawableUtil {
         // View.EMPTY_STATE_SET
         bg.addState(new int[] {}, normal);
         return bg;
+    }
+
+    /*** 设置shape(设置单独每一个圆角)*/
+    public static GradientDrawable getBorderDrawable(float topLeftCA, float topRigthCA, float buttomLeftCA,
+                                        float buttomRightCA, int bgColor, int storkeWidth, int strokeColor) {
+        float[] circleAngleArr = {topLeftCA, topLeftCA, topRigthCA, topRigthCA,
+                buttomLeftCA, buttomLeftCA, buttomRightCA, buttomRightCA};
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setCornerRadii(circleAngleArr);//圆角
+        gradientDrawable.setColor(bgColor); //背景色
+        gradientDrawable.setStroke(storkeWidth, strokeColor); //边框宽度，边框颜色
+        return gradientDrawable;
+    }
+
+    /*** 设置shape(设置圆角)*/
+    public static GradientDrawable getBorderDrawable(float cornerRadius, int bgColor, int storkeWidth, int strokeColor) {
+       return getBorderDrawable(cornerRadius, cornerRadius, cornerRadius, cornerRadius, bgColor, storkeWidth, strokeColor);
+    }
+
+    /**设置shape(圆角)*/
+    public static GradientDrawable getDrawable(int bgCircleAngle, int bgColor, int width, int strokeColor) {
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setCornerRadius(bgCircleAngle);
+        gradientDrawable.setColor(bgColor);
+        gradientDrawable.setStroke(width, strokeColor);
+        return gradientDrawable;
     }
 }

@@ -30,6 +30,7 @@ import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
+import com.creactism.quicktalk.util.DensityUtil;
 import com.creactism.quicktalk.util.DrawableUtil;
 
 import java.io.File;
@@ -107,7 +108,9 @@ public class ChangeAvatarActivity extends BaseActivity {
 
         this.changeButton = new Button(this);
         this.changeButton.setText("更换头像");
-        this.changeButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
+//        this.changeButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
+        this.changeButton.setBackground(DrawableUtil.getRippleDrawable(DrawableUtil.getBorderDrawable(DensityUtil.dip2px(4),
+                Color.WHITE, DensityUtil.dip2px(1), Color.GRAY)));
         this.changeButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.changeButton.setStateListAnimator(null);//去掉阴影效果
         LinearLayout.LayoutParams changeBtnparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -120,8 +123,9 @@ public class ChangeAvatarActivity extends BaseActivity {
         this.saveButton = new Button(this);
         this.saveButton.setText("保存");
         this.saveButton.setBackgroundColor(Color.WHITE);
-        this.saveButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
-//        this.saveButton.setBackgroundTintList(DrawableUtil.getColorStateList(Color.WHITE, Color.GRAY, 0, 0));
+//        this.saveButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
+        this.saveButton.setBackground(DrawableUtil.getRippleDrawable(DrawableUtil.getBorderDrawable(DensityUtil.dip2px(4),
+                Color.WHITE, DensityUtil.dip2px(1), Color.GRAY)));
         this.saveButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.saveButton.setStateListAnimator(null);
         this.saveButton.setVisibility(View.GONE);
