@@ -7,7 +7,11 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.util.DLog;
 
@@ -20,6 +24,7 @@ import java.util.List;
 public class BaseActivity extends AppCompatActivity {
 
     public boolean wasBackground= false;    //声明一个布尔变量,记录当前的活动背景
+    private LinearLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +35,11 @@ public class BaseActivity extends AppCompatActivity {
         }
 
 //        DLog.debug("BaseActivity onCreacte...");
-        this.getWindow().setBackgroundDrawable(this.getResources().getDrawable(R.drawable.bgColor));
+//        this.getWindow().setBackgroundDrawable(this.getResources().getDrawable(R.drawable.bgColor));
+        super.setContentView(R.layout.activity_base);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_base_toolbar);
+//        linearLayout = (LinearLayout)findViewById(R.id.root_layout);
+        initToolbar();
     }
 
     @Override
@@ -81,5 +90,31 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_base_toolbar);
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//        }
+//        if (getSupportActionBar() != null) {
+//            // Enable the Up button
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//
+//        }
+    }
+
+    @Override
+    public void setContentView(int layoutId) {
+        setContentView(View.inflate(this, layoutId, null));
+    }
+
+    @Override
+    public void setContentView(View view) {
+        rootLayout = (LinearLayout)findViewById(R.id.root_layout);
+        if (rootLayout == null) return;
+        rootLayout.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        initToolbar();
     }
 }

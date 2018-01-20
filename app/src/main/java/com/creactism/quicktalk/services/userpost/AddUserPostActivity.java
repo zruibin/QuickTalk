@@ -1,31 +1,22 @@
 package com.creactism.quicktalk.services.userpost;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.BaseActivity;
-import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.modules.NotificationCenter;
-import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.util.DLog;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by ruibin.chow on 12/01/2018.
@@ -33,26 +24,24 @@ import butterknife.ButterKnife;
 
 public class AddUserPostActivity extends BaseActivity {
 
-//    @BindView(R.id.add_userpost_navigationbar)
-    public Navigationbar navigationbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        DLog.info("AddUserPostActivity onCreate....");
-//        this.setContentView(R.layout.activity_add_userpost);
+        setContentView(R.layout.activity_add_userpost);
+//        this.linearLayout
 //        ButterKnife.bind(this);
 
 //        DLog.info("AddUserPostActivity Test Cache: " + QTCache.sharedCache().getString("testCache"));
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        LinearLayout lineLayout = new LinearLayout(this);
-        lineLayout.setOrientation(LinearLayout.VERTICAL);
-        lineLayout.setLayoutParams(params);
-        lineLayout.setGravity(Gravity.TOP);
-        this.addView(lineLayout);
-        setContentView(lineLayout);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.MATCH_PARENT);
+//        LinearLayout lineLayout = new LinearLayout(this);
+//        lineLayout.setOrientation(LinearLayout.VERTICAL);
+//        lineLayout.setLayoutParams(params);
+//        lineLayout.setGravity(Gravity.TOP);
+//        this.addView(lineLayout);
+//        setContentView(lineLayout);
 
         NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
             @Override
@@ -82,13 +71,6 @@ public class AddUserPostActivity extends BaseActivity {
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         lineLayout.addView(toolbar);
 
-
-        this.navigationbar = new Navigationbar(this);
-        this.navigationbar.setTitle("添加userpost(动态添加view)");
-        this.navigationbar.setDefaultBackAction(this);
-        this.navigationbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        lineLayout.addView(this.navigationbar);
 
         final TextView showText = new TextView(this);
         showText.setTextColor(Color.GREEN);

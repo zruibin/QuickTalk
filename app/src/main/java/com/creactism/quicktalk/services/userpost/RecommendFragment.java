@@ -3,11 +3,8 @@ package com.creactism.quicktalk.services.userpost;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,13 +16,10 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.modules.NotificationCenter;
-import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.account.ChangeAvatarActivity;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
@@ -87,30 +81,6 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private void initSubView(View view) {
-        Navigationbar navigationbar = (Navigationbar) view.findViewById(R.id.recommend_navigationbar);
-        navigationbar.setTitle("第二项");
-        navigationbar.setTitleSize(16);
-        navigationbar.setDefaulteTheme(getActivity());
-        navigationbar.setCenterClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "第二项", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
-                startActivity(intent);
-            }
-        });
-//        navigationbar.setVisibility(View.GONE);
-
-        navigationbar.addAction(new Navigationbar.TextAction("发布") {
-            @Override
-            public void performAction(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "点击了发布", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
-                startActivity(intent);
-            }
-        });
 
         this.recyclerView = (RecyclerView) view.findViewById(R.id.recommend_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
@@ -183,6 +153,16 @@ public class RecommendFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 DLog.debug(mDatas.get(position));
                 Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
+                if (position == 1) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
+                    startActivity(intent);
+                }
+                if (position == 2) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
