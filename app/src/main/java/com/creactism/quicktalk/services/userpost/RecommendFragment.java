@@ -100,7 +100,7 @@ public class RecommendFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        navigationbar.setVisibility(View.GONE);
+//        navigationbar.setVisibility(View.GONE);
 
         navigationbar.addAction(new Navigationbar.TextAction("发布") {
             @Override

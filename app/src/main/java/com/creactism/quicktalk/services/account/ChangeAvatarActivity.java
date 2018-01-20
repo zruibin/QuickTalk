@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.Navigationbar;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
@@ -90,13 +91,20 @@ public class ChangeAvatarActivity extends BaseActivity {
         final Toolbar toolbar = new Toolbar(this);
         toolbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        toolbar.setBackgroundColor(Color.parseColor("#38383C"));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         TypedValue typedValue = new TypedValue();
         this.getTheme().resolveAttribute(R.attr.actionBarSize, typedValue, true);
         toolbar.setMinimumHeight(44);
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         linearLayout.addView(toolbar);
 
+        Navigationbar navigationbar = new Navigationbar(this);
+        navigationbar.setTitle("修改头像");
+        navigationbar.setDefaulteTheme(this);
+        navigationbar.setDefaultBackAction(this);
+        navigationbar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.addView(navigationbar);
 
         this.imageView = new ImageView(this);
         this.imageView.setBackgroundColor(Color.GRAY);

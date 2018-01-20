@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class Navigationbar extends ViewGroup implements View.OnClickListener {
     private static final String STATUS_BAR_HEIGHT_RES_NAME = "status_bar_height";
 
     private TextView mLeftText;
+//    private Button mLeftButton;
     private LinearLayout mRightLayout;
     private LinearLayout mCenterLayout;
     private TextView mCenterText;
@@ -135,11 +137,11 @@ public class Navigationbar extends ViewGroup implements View.OnClickListener {
     }
 
     public void setDefaulteTheme(final Activity activity) {
+        this.setBackgroundColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.setLeftTextColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
         this.setTitleColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
         this.setActionTextColor(activity.getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR));
         this.setTitleSize(18);
-
     }
 
     public void setDefaultBackAction(final Activity activity) {
