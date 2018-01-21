@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -87,8 +88,10 @@ public class RecommendFragment extends BaseFragment {
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color
-                .gray)));
+                getActivity().getBaseContext(), LinearLayoutManager.VERTICAL,
+                20, Color.parseColor("#1C1C1C")));
+        /**系统自带的*/
+//        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
 
         this.refreshLayout.setColorSchemeColors(Color.YELLOW);
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

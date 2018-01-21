@@ -1,5 +1,6 @@
 package com.creactism.quicktalk;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,7 +24,7 @@ public class MainActivity extends BaseActivity {
 //                .setFontSize(12)
 //                .setTabPadding(4, 6, 10)
 //                .setChangeColor(Color.GREEN, Color.RED)
-                .isShowDivider(false)
+//                .isShowDivider(false)
                 .addTabItem("第一项", R.mipmap.ic_launcher, UserPostFragment.class)
                 .addTabItem("第二项", R.mipmap.ic_launcher, RecommendFragment.class);
         this.tabBar.setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
