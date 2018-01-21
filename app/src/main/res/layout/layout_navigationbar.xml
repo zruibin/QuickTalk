@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_navigationbar_rootlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="45dp"
+    >
+
+    <Button
+        android:id="@+id/navigationbar_left_item"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="4dp"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="4"
+        android:minHeight="0dp"
+        android:minWidth="0dp"/>
+
+    <TextView
+        android:id="@+id/navigationbar_title_item"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:maxEms="10"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/navigationbar_right_item"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxEms="4"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        />
+
+</RelativeLayout>

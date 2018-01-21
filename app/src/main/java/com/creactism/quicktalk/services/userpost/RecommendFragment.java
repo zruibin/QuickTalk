@@ -70,6 +70,7 @@ public class RecommendFragment extends BaseFragment {
             savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         DLog.debug("RecommendFragment on onCreateView: .....");
+        this.getActivity().setTitle("Recommend....");
 
         View view = inflater.inflate(R.layout.frag_recommend, null);
         ButterKnife.bind(this, view);

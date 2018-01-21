@@ -26,6 +26,8 @@ public class UserPostFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        this.getActivity().setTitle("UserPost....");
 //        QTCache.sharedCache().put("testCache", "testCacheValue....");
         NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
             @Override

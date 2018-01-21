@@ -20,6 +20,7 @@ import android.graphics.drawable.shapes.RoundRectShape;
 public final class DrawableUtil {
 
     public static final int DEFAULT_RIPPLE_COLOR = Color.GRAY;
+    public static final int DEFAULT_COLOR = Color.parseColor("#00000000"); //透明色
 
     public static RippleDrawable getRippleDrawable(Drawable drawable, int rippleColor) {
         RippleDrawable rippleDrawable = new RippleDrawable(ColorStateList.valueOf(rippleColor), drawable, null);
@@ -46,7 +47,7 @@ public final class DrawableUtil {
     }
 
     public static Drawable getRoundRectRippleDrawable(int cornerRadius) {
-        return getRoundRectRippleDrawable(Color.WHITE, DEFAULT_RIPPLE_COLOR, cornerRadius);
+        return getRoundRectRippleDrawable(DEFAULT_COLOR, DEFAULT_RIPPLE_COLOR, cornerRadius);
     }
 
     public static Drawable getRoundRectRippleDrawable(int tintColor, int cornerRadius) {
@@ -54,18 +55,8 @@ public final class DrawableUtil {
     }
 
     public static Drawable getRoundRectRippleDrawable(int tintColor, int rippleColor, int cornerRadius) {
-        // 外部矩形弧度
-        float[] outerR = new float[] { cornerRadius, cornerRadius, cornerRadius, cornerRadius,
-                cornerRadius, cornerRadius, cornerRadius, cornerRadius };
-        // 内部矩形与外部矩形的距离
-//        RectF inset = new RectF(0, 0, 0, 0);
-        // 内部矩形弧度
-//        float[] innerRadii = new float[] { 20, 20, 20, 20, 20, 20, 20, 20 };
-        RoundRectShape roundRectShape = new RoundRectShape(outerR, null, null); //无内矩形
 
-        ShapeDrawable rectDrawable = new ShapeDrawable(roundRectShape);
-        rectDrawable.getPaint().setColor(tintColor);
-        rectDrawable.getPaint().setStyle(Paint.Style.FILL); //填充
+        Drawable rectDrawable = getBorderDrawable(cornerRadius, tintColor, 0, 0);
         return getRippleDrawable(rectDrawable, rippleColor);
     }
 
@@ -92,7 +83,7 @@ public final class DrawableUtil {
         RectF inset = new RectF(100, 100, 50, 50);
         // 内部矩形弧度
         float[] innerRadii = new float[] { 20, 20, 20, 20, 20, 20, 20, 20 };
-        RoundRectShape roundRectShape = new RoundRectShape(outerR, inset, null); //无内矩形
+        RoundRectShape roundRectShape = new RoundRectShape(outerR, null, null); //无内矩形
 
         ShapeDrawable roundRectDrawable = new ShapeDrawable(roundRectShape);
         roundRectDrawable.getPaint().setColor(tintColor);
@@ -161,5 +152,10 @@ public final class DrawableUtil {
         gradientDrawable.setColor(bgColor);
         gradientDrawable.setStroke(width, strokeColor);
         return gradientDrawable;
+    }
+
+    /** drawable 复制*/
+    public static Drawable getNewDrawable(Drawable drawable) {
+        return drawable.getConstantState().newDrawable();
     }
 }

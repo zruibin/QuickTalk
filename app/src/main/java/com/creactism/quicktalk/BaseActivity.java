@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +15,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.creactism.quicktalk.components.NavigationBar;
 import com.creactism.quicktalk.util.DLog;
+import com.creactism.quicktalk.util.DensityUtil;
+import com.creactism.quicktalk.util.DrawableUtil;
 
 import java.util.List;
 
@@ -25,6 +30,10 @@ public class BaseActivity extends AppCompatActivity {
 
     public boolean wasBackground= false;    //声明一个布尔变量,记录当前的活动背景
     private LinearLayout rootLayout;
+    protected Toolbar statusBar;
+    protected NavigationBar navigationBar;
+    protected String title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +46,8 @@ public class BaseActivity extends AppCompatActivity {
 //        DLog.debug("BaseActivity onCreacte...");
 //        this.getWindow().setBackgroundDrawable(this.getResources().getDrawable(R.drawable.bgColor));
         super.setContentView(R.layout.activity_base);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_base_toolbar);
-//        linearLayout = (LinearLayout)findViewById(R.id.root_layout);
-        initToolbar();
+        initNavigationBar();
+        this.setTitle("base...");
     }
 
     @Override
@@ -92,17 +100,15 @@ public class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_base_toolbar);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
-//        if (getSupportActionBar() != null) {
-//            // Enable the Up button
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//
-//        }
+    private void initNavigationBar() {
+        statusBar = (Toolbar) findViewById(R.id.activity_base_toolbar);
+        navigationBar = (NavigationBar)findViewById(R.id.activity_base_navigationbar);
+
+        navigationBar.setBackgroundColor(getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR, null));
+        navigationBar.setTintColor(getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR, null));
+        Drawable drawable = DrawableUtil.getRoundRectRippleDrawable(
+                getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR, null), 10);
+        navigationBar.setItemBackground(drawable);
     }
 
     @Override
@@ -115,6 +121,11 @@ public class BaseActivity extends AppCompatActivity {
         rootLayout = (LinearLayout)findViewById(R.id.root_layout);
         if (rootLayout == null) return;
         rootLayout.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        initToolbar();
+        initNavigationBar();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        this.navigationBar.titleView.setText(title);
     }
 }

@@ -19,7 +19,15 @@ public class MainActivity extends BaseActivity {
         this.tabBar = (BottomTabBar) findViewById(R.id.tab_bar);
         this.tabBar.init(getSupportFragmentManager())
                 .addTabItem("第一项", R.mipmap.ic_launcher, UserPostFragment.class)
-                .addTabItem("第二项", R.mipmap.ic_launcher, RecommendFragment.class);
+                .addTabItem("第二项", R.mipmap.ic_launcher, RecommendFragment.class)
+                .isShowDivider(false)
+                .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
+            @Override
+            public void onTabChange(int position, String name) {
+                setTitle(name);
+            }
+        });;
+
     }
 
     @Override
