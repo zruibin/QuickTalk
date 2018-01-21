@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -12,6 +13,8 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.annotation.DrawableRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 /**
  * Created by ruibin.chow on 19/01/2018.
@@ -21,6 +24,11 @@ public final class DrawableUtil {
 
     public static final int DEFAULT_RIPPLE_COLOR = Color.GRAY;
     public static final int DEFAULT_COLOR = Color.parseColor("#00000000"); //透明色
+
+    /** 从Resources里获得drawable*/
+    public static Drawable getDrawableFromResources(Activity activity, @DrawableRes int id) {
+        return activity.getResources().getDrawable(id, null);
+    }
 
     public static RippleDrawable getRippleDrawable(Drawable drawable, int rippleColor) {
         RippleDrawable rippleDrawable = new RippleDrawable(ColorStateList.valueOf(rippleColor), drawable, null);
@@ -91,21 +99,7 @@ public final class DrawableUtil {
         return roundRectDrawable;
     }
 
-    /** 设置不同状态时其文字颜色。 */
-    public static ColorStateList getColorStateList(int normal, int pressed, int focused, int unable) {
-        int[] colors = new int[] { pressed, focused, normal, focused, unable, normal };
-        int[][] states = new int[6][];
-        states[0] = new int[] { android.R.attr.state_pressed, android.R.attr.state_enabled };
-        states[1] = new int[] { android.R.attr.state_enabled, android.R.attr.state_focused };
-        states[2] = new int[] { android.R.attr.state_enabled };
-        states[3] = new int[] { android.R.attr.state_focused };
-        states[4] = new int[] { android.R.attr.state_window_focused };
-        states[5] = new int[] {};
-        ColorStateList colorList = new ColorStateList(states, colors);
-        return colorList;
-    }
-
-    /** 设置Selector。 */
+    /** 设置Selector */
     public static StateListDrawable getSelector(Context context,
                                                 int idNormal, int idPressed, int idFocused, int idUnable) {
         StateListDrawable bg = new StateListDrawable();
@@ -158,4 +152,19 @@ public final class DrawableUtil {
     public static Drawable getNewDrawable(Drawable drawable) {
         return drawable.getConstantState().newDrawable();
     }
+
+    /** drawable 各状态着色*/
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList colors) {
+        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTintList(wrappedDrawable, colors);
+        return wrappedDrawable;
+    }
+
+    /** drawable 着色*/
+    public static Drawable tintDrawable(Drawable drawable, int tintColor) {
+        ColorStateList stateList = ColorUtil.getColorStateList(tintColor, tintColor, tintColor, tintColor);
+        return tintDrawable(drawable, stateList);
+    }
+
+
 }

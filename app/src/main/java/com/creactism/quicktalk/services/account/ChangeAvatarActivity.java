@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.creactism.quicktalk.util.DrawableUtil;
@@ -55,6 +57,18 @@ public class ChangeAvatarActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setTitle("修改头像");
+        this.navigationBar.setDefaultBackAction(this);
+//        this.navigationBar.backItem.setImageDrawable(DrawableUtil.tintDrawable(
+//                DrawableUtil.getDrawableFromResources(this, R.drawable.cancel), Color.WHITE));
+//        this.navigationBar.rightItem.setText("确定");
+//        this.navigationBar.rightItem.setTextColor(ColorUtil.getColorStateList(Color.YELLOW, Color.RED, 0, Color.GREEN));
+//        this.navigationBar.rightItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DLog.debug("rightItem onClick....");
+//                navigationBar.rightItem.setEnabled(false);
+//            }
+//        });
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -96,7 +110,7 @@ public class ChangeAvatarActivity extends BaseActivity {
 //        this.changeButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
         this.changeButton.setBackground(DrawableUtil.getRippleDrawable(DrawableUtil.getBorderDrawable(DensityUtil.dip2px(4),
                 Color.WHITE, DensityUtil.dip2px(1), Color.GRAY)));
-        this.changeButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
+        this.changeButton.setTextColor(ColorUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.changeButton.setStateListAnimator(null);//去掉阴影效果
         LinearLayout.LayoutParams changeBtnparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 80);
@@ -111,7 +125,7 @@ public class ChangeAvatarActivity extends BaseActivity {
 //        this.saveButton.setBackground(DrawableUtil.getRoundRectRippleDrawable(10));
         this.saveButton.setBackground(DrawableUtil.getRippleDrawable(DrawableUtil.getBorderDrawable(DensityUtil.dip2px(4),
                 Color.WHITE, DensityUtil.dip2px(1), Color.GRAY)));
-        this.saveButton.setTextColor(DrawableUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
+        this.saveButton.setTextColor(ColorUtil.getColorStateList(Color.BLACK, Color.RED, 0, 0));
         this.saveButton.setStateListAnimator(null);
         this.saveButton.setVisibility(View.GONE);
         LinearLayout.LayoutParams saveBtnParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,

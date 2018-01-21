@@ -105,7 +105,6 @@ public class BaseActivity extends AppCompatActivity {
         navigationBar = (NavigationBar)findViewById(R.id.activity_base_navigationbar);
 
         navigationBar.setBackgroundColor(getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR, null));
-        navigationBar.setTintColor(getResources().getColor(R.color.QuickTalk_NAVBAR_TINT_COLOR, null));
         Drawable drawable = DrawableUtil.getRoundRectRippleDrawable(
                 getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR, null), 10);
         navigationBar.setItemBackground(drawable);
