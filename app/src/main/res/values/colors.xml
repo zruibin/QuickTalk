@@ -20,6 +20,8 @@
     <color name="QuickTalk_SECOND_FONT_COLOR">#999999</color>
     <!--名称字体颜色-->
     <color name="QuickTalk_NAME_FONT_COLOR">#5a6e97</color>
+    <!--View默认背景-->
+    <color name="QuickTalk_VIEW_BG_COLOR">#EFEFEF</color>
 
     <!--http://blog.csdn.net/github_25928675/article/details/50330635-->
 
