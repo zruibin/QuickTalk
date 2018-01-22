@@ -18,6 +18,8 @@
     <color name="QuickTalk_MAIN_FONT_COLOR">#585858</color>
     <!--副字体颜色-->
     <color name="QuickTalk_SECOND_FONT_COLOR">#999999</color>
+    <!--名称字体颜色-->
+    <color name="QuickTalk_NAME_FONT_COLOR">#5a6e97</color>
 
 
     <color name="tuna">#333244</color>

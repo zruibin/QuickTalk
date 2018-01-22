@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,14 +21,12 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.account.ChangeAvatarActivity;
+import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by ruibin.chow on 12/01/2018.
@@ -37,13 +34,11 @@ import butterknife.ButterKnife;
 
 public class RecommendFragment extends BaseFragment {
 
-    @BindView(R.id.recommend_recyclerview)
-    public RecyclerView recyclerView;
-    @BindView(R.id.recommend_refresh)
-    public SwipeRefreshLayout refreshLayout;
-    public LinearLayoutManager layoutManager;
-    private List<String> mDatas;
-    private RecommendAdapter mAdapter;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
+    private LinearLayoutManager layoutManager;
+    private List<UserPostModel> dataList;
+    private UserPostAdapter userPostAdapter;
     private int testNum = 0;
     private int index = 1;
 
@@ -74,8 +69,9 @@ public class RecommendFragment extends BaseFragment {
         this.getActivity().setTitle("Recommend....");
 
         View view = inflater.inflate(R.layout.frag_recommend, null);
-        ButterKnife.bind(this, view);
-        this.mDatas = new ArrayList<>();
+        this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
+        this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.recommend_refresh);
+        this.dataList = new ArrayList<UserPostModel>();
         index = 1;
         this.initSubView(view);
 
@@ -87,23 +83,25 @@ public class RecommendFragment extends BaseFragment {
         this.recyclerView = (RecyclerView) view.findViewById(R.id.recommend_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity().getBaseContext(), LinearLayoutManager.VERTICAL,
-                20, Color.parseColor("#1C1C1C")));
+//        this.recyclerView.addItemDecoration(new RecycleViewDivider(
+//                getActivity().getBaseContext(), LinearLayoutManager.VERTICAL,
+//                20, Color.parseColor("#1C1C1C")));
         /**系统自带的*/
-//        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
 
-        this.refreshLayout.setColorSchemeColors(Color.YELLOW);
+        this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
-                mAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
-               index = 1;
-               loadData();
+                userPostAdapter.setEnableLoadMore(false);//这里的作用是防止下拉刷新的时候还可以上拉加载
+                index = 1;
+                dataList.clear();
+                loadData();
             }
         });
 
-        this.mAdapter = new RecommendAdapter();
-        this.mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        this.userPostAdapter = new UserPostAdapter();
+        this.userPostAdapter.setActivity(this.getActivity());
+        this.userPostAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 /*
@@ -136,7 +134,7 @@ public class RecommendFragment extends BaseFragment {
             }
         }, this.recyclerView);
 
-        this.mAdapter.openLoadAnimation(); // 一行代码搞定（默认为渐显效果）
+        this.userPostAdapter.openLoadAnimation(); // 一行代码搞定（默认为渐显效果）
 //        this.mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN); // 默认提供5种方法（渐显、缩放、从下到上，从左到右、从右到左）
 //        this.mAdapter.openLoadAnimation(new BaseAnimation() {
 //            @Override
@@ -148,25 +146,25 @@ public class RecommendFragment extends BaseFragment {
 //            }
 //        });
 
-        this.recyclerView.setAdapter(this.mAdapter);
+        this.recyclerView.setAdapter(this.userPostAdapter);
 //        this.mAdapter.notifyItemChanged(2);
 //        this.mAdapter.notifyDataSetChanged();
 
-        this.mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        this.userPostAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DLog.debug(mDatas.get(position));
-                Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
-                if (position == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
-                    startActivity(intent);
-                }
-                if (position == 2) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
-                    startActivity(intent);
-                }
+//                DLog.debug(mDatas.get(position));
+//                Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
+//                if (position == 1) {
+//                    Intent intent = new Intent();
+//                    intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
+//                    startActivity(intent);
+//                }
+//                if (position == 2) {
+//                    Intent intent = new Intent();
+//                    intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
+//                    startActivity(intent);
+//                }
             }
         });
 
@@ -185,37 +183,15 @@ public class RecommendFragment extends BaseFragment {
     protected void loadData() {
         UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
             @Override
-            public void completeHanlder(List list, Error error) {
-                mDatas.addAll(list);
-                mAdapter.addData(list);
+            public void completeHanlder(List<UserPostModel> list, Error error) {
+                dataList.addAll(list);
+                userPostAdapter.addData(list);
                 refreshLayout.setRefreshing(false);
-                mAdapter.loadMoreComplete();
+                userPostAdapter.loadMoreComplete();
             }
         });
     }
 
-
-    public class RecommendAdapter extends BaseQuickAdapter {
-
-        public RecommendAdapter() {
-            super(R.layout.frag_recommend_item, null);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, Object text) {
-            helper.setText(R.id.recommend_recyclerview_item_num, (String) text);
-            helper.setText(R.id.recommend_recyclerview_item_num2, "aaa");
-
-            final int position = helper.getAdapterPosition();
-            Button btn = (Button) helper.getView(R.id.recommend_recyclerview_item_btn);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DLog.debug("position: " + String.valueOf(position));
-                }
-            });
-        }
-    }
 
 
 }

@@ -76,11 +76,11 @@ public class StringUtil {
             return simpleDateFormat.format(dateTime.toDate());
         }
         if (year < 1) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日 HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM月dd日");
             return simpleDateFormat.format(dateTime.toDate());
         }
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         return simpleDateFormat.format(dateTime.toDate());
     }
 
