@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.services.userpost.RecommendFragment;
+import com.creactism.quicktalk.services.userpost.UserPostListFragment;
 import com.creactism.quicktalk.util.DLog;
 
 /**
@@ -25,7 +25,7 @@ public class UserActivity extends BaseActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.user_linearlayout, new RecommendFragment())
+                .replace(R.id.user_linearlayout, new UserPostListFragment())
                 .commit();
     }
 

@@ -87,7 +87,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         timeView.setText(StringUtil.formatDate(model.getTime()));
         readView.setText("|  " + StringUtil.countTransition(model.getReadCount()) + "人阅读");
 
-        Bitmap bitmap = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.arrow);
+        Bitmap bitmap = BitmapFactory.decodeResource(this.activity.getResources(), R.mipmap.arrow);
         bitmap = BitmapUtil.roateBitmap(bitmap, -90);
         bitmap = BitmapUtil.tintBitmap(bitmap,
                 ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
@@ -129,10 +129,10 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         });
 
         if (model.isLiked()) {
-            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.like);
+            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.mipmap.like);
             likeButton.setImageBitmap(bp);
         } else {
-            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.unlike);
+            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.mipmap.unlike);
             bp = BitmapUtil.tintBitmap(bp,
                     ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
             likeButton.setImageBitmap(bp);

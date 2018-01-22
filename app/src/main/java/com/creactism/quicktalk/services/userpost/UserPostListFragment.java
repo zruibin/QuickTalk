@@ -32,7 +32,7 @@ import java.util.List;
  * Created by ruibin.chow on 12/01/2018.
  */
 
-public class RecommendFragment extends BaseFragment {
+public class UserPostListFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -64,7 +64,7 @@ public class RecommendFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DLog.error("RecommendFragment->onDestroy...");
+        DLog.error("UserPostListFragment->onDestroy...");
 
     }
 
@@ -73,7 +73,7 @@ public class RecommendFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DLog.debug("RecommendFragment on onCreateView: .....");
+        DLog.debug("UserPostListFragment on onCreateView: .....");
         this.getActivity().setTitle("Recommend....");
 
         View view = inflater.inflate(R.layout.frag_recommend, null);

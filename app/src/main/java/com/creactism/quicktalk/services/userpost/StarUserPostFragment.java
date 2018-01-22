@@ -23,7 +23,7 @@ import com.creactism.quicktalk.util.DLog;
  * Created by ruibin.chow on 12/01/2018.
  */
 
-public class UserPostFragment extends BaseFragment {
+public class StarUserPostFragment extends BaseFragment {
 
     @Override
     public void onAttach(Context context) {
@@ -47,7 +47,7 @@ public class UserPostFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        DLog.debug(  "UserPostFragment onCreateView: .....");
+//        DLog.debug(  "StarUserPostFragment onCreateView: .....");
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.frag_userpost, container, false);
         TextView textView = (TextView)view.findViewById(R.id.frag_userpost_text);

@@ -156,8 +156,8 @@ public class UserPostLikeView extends ViewGroup {
             addView(icon);
 
             GenericDraweeHierarchy hierarchy = icon.getHierarchy();
-            hierarchy.setPlaceholderImage(R.drawable.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
-            hierarchy.setFailureImage(R.drawable.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
+            hierarchy.setPlaceholderImage(R.mipmap.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
+            hierarchy.setFailureImage(R.mipmap.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
             hierarchy.setOverlayImage(getContext().getResources().getDrawable(R.drawable.ripple_avatar_bg));
             hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
             icon.setHierarchy(hierarchy);

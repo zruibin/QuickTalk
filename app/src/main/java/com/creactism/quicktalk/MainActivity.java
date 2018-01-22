@@ -1,11 +1,11 @@
 package com.creactism.quicktalk;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
-import com.creactism.quicktalk.services.userpost.RecommendFragment;
-import com.creactism.quicktalk.services.userpost.UserPostFragment;
+import com.creactism.quicktalk.services.userpost.MyFragment;
+import com.creactism.quicktalk.services.userpost.UserPostListFragment;
+import com.creactism.quicktalk.services.userpost.StarUserPostFragment;
 import com.hjm.bottomtabbar.BottomTabBar;
 
 
@@ -25,8 +25,9 @@ public class MainActivity extends BaseActivity {
 //                .setTabPadding(4, 6, 10)
 //                .setChangeColor(Color.GREEN, Color.RED)
 //                .isShowDivider(false)
-                .addTabItem("第一项", R.mipmap.ic_launcher, UserPostFragment.class)
-                .addTabItem("第二项", R.mipmap.ic_launcher, RecommendFragment.class);
+                .addTabItem("快言", R.mipmap.news_unselect, StarUserPostFragment.class)
+                .addTabItem("发现", R.mipmap.circle_unselect, UserPostListFragment.class)
+                .addTabItem("我", R.mipmap.my_unselect, MyFragment.class);
         this.tabBar.setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
             @Override
             public void onTabChange(int position, String name, View view) {

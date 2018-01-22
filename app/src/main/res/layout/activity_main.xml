@@ -11,17 +11,17 @@
         android:id="@+id/tab_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        hjm:tab_divider_background="#FF0000"
+        hjm:tab_divider_background="#EAEAEA"
         hjm:tab_divider_height="0.5dp"
-        hjm:tab_font_size="4sp"
+        hjm:tab_font_size="4.5sp"
         hjm:tab_img_font_padding="0dp"
-        hjm:tab_img_height="28dp"
-        hjm:tab_img_width="28dp"
+        hjm:tab_img_height="20dp"
+        hjm:tab_img_width="20dp"
         hjm:tab_isshow_divider="true"
-        hjm:tab_padding_bottom="5dp"
+        hjm:tab_padding_bottom="4dp"
         hjm:tab_padding_top="8dp"
-        hjm:tab_selected_color="@color/green"
-        hjm:tab_unselected_color="@color/gray" />
+        hjm:tab_selected_color="@color/QuickTalk_NAVBAR_BG_COLOR"
+        hjm:tab_unselected_color="@color/QuickTalk_SECOND_FONT_COLOR" />
 
 
 

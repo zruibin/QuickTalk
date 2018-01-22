@@ -17,7 +17,7 @@
         android:paddingBottom="12dp"
         android:paddingLeft="10dp"
         android:paddingRight="14dp"
-        android:src="@drawable/back"
+        android:src="@mipmap/back"
         android:scaleType="fitXY"
         />
 
