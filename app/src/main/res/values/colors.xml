@@ -21,6 +21,9 @@
     <!--名称字体颜色-->
     <color name="QuickTalk_NAME_FONT_COLOR">#5a6e97</color>
 
+    <!--http://blog.csdn.net/github_25928675/article/details/50330635-->
+
+
 
     <color name="tuna">#333244</color>
     <color name="white">#FFFFFF</color><!--白色 -->

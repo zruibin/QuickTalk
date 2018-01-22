@@ -22,7 +22,7 @@
             android:textColor="@color/QuickTalk_NAME_FONT_COLOR"
             android:textSize="16sp" android:singleLine="true"
             android:ellipsize="end" android:maxEms="10"
-            android:text="ff"
+            android:text="ff" android:textAllCaps="false"
             />
         <LinearLayout
             android:layout_below="@id/userpost_list_item_nickname"
@@ -48,7 +48,7 @@
             android:id="@+id/userpost_list_item_arrow"
             android:layout_alignParentRight="true" android:layout_alignParentTop="true"
             android:layout_width="30dp" android:layout_height="30dp"
-            android:scaleType="fitXY" android:padding="8dp"
+            android:scaleType="fitXY" android:padding="8dp" android:textAllCaps="false"
             style="?android:attr/borderlessButtonStyle" android:background="@drawable/ripple_bg"
             />
     </RelativeLayout>
@@ -57,9 +57,9 @@
         android:id="@+id/userpost_list_item_detail"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginLeft="60dp" android:layout_marginRight="10dp" android:layout_marginTop="-6dp"
-        android:textSize="14sp" android:lineSpacingExtra="4dp"
+        android:textSize="15sp" android:lineSpacingExtra="4dp"
         android:text="是否曾抱怨过产品经理，为什么一个app里面按钮正常/按下状态颜色不统一起来？ 你是否曾埋怨过UI，为什么不同地方输入框的颜色、圆角和聚焦字体颜色不一样？"
-        android:textColor="@color/black"  />
+        android:textColor="@color/black"  android:textAllCaps="false"/>
     <Button
         android:id="@+id/userpost_list_item_href"
         android:layout_width="match_parent" android:layout_height="46dp"
@@ -67,7 +67,7 @@
         android:layout_marginTop="2dp" android:layout_marginBottom="6dp"
         android:layout_marginRight="10dp" android:layout_marginLeft="60dp"
         android:padding="4dp" android:gravity="left|center"
-        style="?android:attr/borderlessButtonStyle"
+        style="?android:attr/borderlessButtonStyle" android:textAllCaps="false"
         android:background="@drawable/userpost_list_item_href_label"
         android:text="是否曾抱怨过产品经理，为什么一个app里面按钮正常/按下状态颜色不统一起来？ 你是否曾埋怨过UI，为什么不同地方输入框的颜色、圆角和聚焦字体颜色不一样？"
         />
@@ -102,19 +102,18 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/userpost_list_item_like_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginLeft="60dp" android:layout_marginRight="10dp"
-        android:layout_marginBottom="6dp" android:orientation="horizontal"
-        android:background="@color/red">
+        android:layout_marginBottom="6dp" android:orientation="horizontal">
         <ImageView
-            android:layout_width="30dp" android:layout_height="30dp" android:padding="8dp"
+            android:layout_width="28dp" android:layout_height="28dp" android:padding="8dp"
             android:background="@color/white" android:src="@drawable/unlike"
             />
-        <View
+        <com.creactism.quicktalk.services.userpost.view.UserPostLikeView
             android:id="@+id/userpost_list_item_likeView" android:scaleType="fitCenter"
-            android:layout_width="match_parent" android:layout_height="120dp"
-            android:layout_weight="1"
-            android:background="@color/pink"/>
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -58,6 +58,14 @@ public class RecommendFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         NotificationCenter.defaultCenter().removeObserver(this.getActivity(), "testNotification");
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DLog.error("RecommendFragment->onDestroy...");
+
     }
 
     @Nullable
@@ -172,7 +180,7 @@ public class RecommendFragment extends BaseFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                DLog.debug("offsetY: " + String.valueOf(recyclerView.computeVerticalScrollOffset()));
+//                DLog.debug("offsetY: " + String.valueOf(recyclerView.computeVerticalScrollOffset()));
             }
         });
 
@@ -185,7 +193,11 @@ public class RecommendFragment extends BaseFragment {
             @Override
             public void completeHanlder(List<UserPostModel> list, Error error) {
                 dataList.addAll(list);
-                userPostAdapter.addData(list);
+                if (index == 1) {
+                    userPostAdapter.setNewData(list);
+                } else {
+                    userPostAdapter.addData(list);
+                }
                 refreshLayout.setRefreshing(false);
                 userPostAdapter.loadMoreComplete();
             }

@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.modules.NotificationCenter;
@@ -48,6 +50,15 @@ public class UserPostFragment extends BaseFragment {
 //        DLog.debug(  "UserPostFragment onCreateView: .....");
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.frag_userpost, container, false);
+        TextView textView = (TextView)view.findViewById(R.id.frag_userpost_text);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity().getApplicationContext(), UserActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        Navigationbar navigationbar = (Navigationbar)view.findViewById(R.id.userpost_navigationbar);
 //        navigationbar.setDefaulteTheme(this.getActivity());
@@ -64,9 +75,6 @@ public class UserPostFragment extends BaseFragment {
 //                    public void run() {
 //                        mSVProgressHUD.dismiss();
 //
-//                        Intent intent = new Intent();
-//                        intent.setClass(getActivity().getApplicationContext(), UserActivity.class);
-//                        startActivity(intent);
 //
 //                    }
 //                },1000);

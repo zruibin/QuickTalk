@@ -9,12 +9,14 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
+import com.creactism.quicktalk.services.userpost.view.UserPostLikeView;
 import com.creactism.quicktalk.util.BitmapUtil;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
@@ -56,6 +58,8 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         LabelsView tagView = helper.getView(R.id.userpost_list_item_tag);
         ImageButton likeButton = helper.getView(R.id.userpost_list_item_like);
         ImageButton commentButton = helper.getView(R.id.userpost_list_item_comment);
+        LinearLayout likeLayout = helper.getView(R.id.userpost_list_item_like_layout);
+        UserPostLikeView likeView = helper.getView(R.id.userpost_list_item_likeView);
 
         avatarButton.setImageURI(Uri.parse(model.getAvatar()));
         avatarButton.setOnClickListener(new View.OnClickListener() {
@@ -94,5 +98,31 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
                 DLog.info(String.valueOf(position) + "->" + model.getTagList().get(position));
             }
         });
+
+//        likeButton
+        if (model.isLiked()) {
+            Bitmap bp = BitmapFactory.decodeResource(this.getActivity().getResources(), R.drawable.like);
+            likeButton.setImageBitmap(bp);
+        } else {
+            Bitmap bp = BitmapFactory.decodeResource(this.getActivity().getResources(), R.drawable.unlike);
+            bp = BitmapUtil.tintBitmap(bp,
+                    ColorUtil.getResourcesColor(this.getActivity().getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
+            likeButton.setImageBitmap(bp);
+        }
+
+        likeView.setLikeList(model.getLikeList());
+        likeView.makeSubViews();
+        if (model.getLikeList() == null) {
+            likeLayout.setVisibility(View.GONE);
+        } else {
+            likeLayout.setVisibility(View.VISIBLE);
+        }
+        likeView.setTouchHandler(new UserPostLikeView.OnSingLikeTouchHandler() {
+            @Override
+            public void onTouchHandler(int index) {
+                DLog.info("likeIndex->" + String.valueOf(index));
+            }
+        });
+
     }
 }
