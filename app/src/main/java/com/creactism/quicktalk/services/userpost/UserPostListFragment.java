@@ -1,8 +1,6 @@
 package com.creactism.quicktalk.services.userpost;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,15 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.modules.NotificationCenter;
-import com.creactism.quicktalk.services.account.ChangeAvatarActivity;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
@@ -76,7 +70,7 @@ public class UserPostListFragment extends BaseFragment {
         DLog.debug("UserPostListFragment on onCreateView: .....");
         this.getActivity().setTitle("Recommend....");
 
-        View view = inflater.inflate(R.layout.frag_recommend, null);
+        View view = inflater.inflate(R.layout.frag_userpost_list, null);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
         this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.recommend_refresh);
         this.dataList = new ArrayList<UserPostModel>();
@@ -110,25 +104,32 @@ public class UserPostListFragment extends BaseFragment {
         this.userPostAdapter = new UserPostAdapter();
         this.userPostAdapter.setActivity(this.getActivity());
         this.userPostAdapter.setItemHandler(new UserPostAdapter.OnUserPostItemHandler() {
-            public void onInfoHandler(UserPostModel model) {
+            public void onInfoHandler(int index) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getNickname());
             }
-            public void onArrowHandler(UserPostModel model) {
+            public void onArrowHandler(int index) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getAvatar());
             }
-            public void onHrefHandler(UserPostModel model) {
+            public void onHrefHandler(int index) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getContent());
             }
-            public void onLikeActionHandler(UserPostModel model) {
+            public void onLikeActionHandler(int index) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getTitle());
             }
-            public void onCommentHandler(UserPostModel model) {
+            public void onCommentHandler(int index) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getAvatar());
             }
-            public void onTagActionHandler(UserPostModel model, int tagIndex) {
+            public void onTagActionHandler(int index, int tagIndex) {
+                UserPostModel model = dataList.get(index);
                 DLog.debug(model.getTagList().get(tagIndex));
             }
-            public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {
+            public void onLikeIconActionHandler(int index, int likeIndex) {
+                UserPostModel model = dataList.get(index);
                 UserPostModel.UserPostLikeModel likeModel = model.getLikeList().get(likeIndex);
                 DLog.debug(likeModel.getNickname());
             }

@@ -3,7 +3,7 @@ package com.creactism.quicktalk;
 import android.os.Bundle;
 import android.view.View;
 
-import com.creactism.quicktalk.services.userpost.MyFragment;
+import com.creactism.quicktalk.services.user.MyFragment;
 import com.creactism.quicktalk.services.userpost.UserPostListFragment;
 import com.creactism.quicktalk.services.userpost.StarUserPostFragment;
 import com.hjm.bottomtabbar.BottomTabBar;
