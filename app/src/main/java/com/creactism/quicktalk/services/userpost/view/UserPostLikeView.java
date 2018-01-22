@@ -33,14 +33,14 @@ public class UserPostLikeView extends ViewGroup {
     private int padding;
 
     private List<UserPostModel.UserPostLikeModel> likeList;
-    private WeakReference<OnSingLikeTouchHandler> weakHandler;
+    private OnSingLikeTouchHandler touchHandler;
 
     public List<UserPostModel.UserPostLikeModel> getLikeList() {
         return likeList;
     }
 
     public void setTouchHandler(OnSingLikeTouchHandler touchHandler) {
-        this.weakHandler = new WeakReference<OnSingLikeTouchHandler>(touchHandler);
+        this.touchHandler = touchHandler;
     }
 
     public void setLikeList(List<UserPostModel.UserPostLikeModel> likeList) {
@@ -69,8 +69,6 @@ public class UserPostLikeView extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        DLog.info("width: " + String.valueOf(widthMeasureSpec));
-        DLog.info("height: " + String.valueOf(heightMeasureSpec));
         if (this.getLikeList() == null) {
             //保存测量高度
             setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
@@ -170,12 +168,7 @@ public class UserPostLikeView extends ViewGroup {
             icon.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    OnSingLikeTouchHandler handler = weakHandler.get();
-                    DLog.info("onClick1....");
-                    if (handler != null) {
-                        DLog.info("onClick2....");
-                        handler.onTouchHandler(v.getId());
-                    }
+                    touchHandler.onTouchHandler(v.getId());
                 }
             });
         }

@@ -3,8 +3,6 @@ package com.creactism.quicktalk.services.userpost.adapter;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +22,6 @@ import com.creactism.quicktalk.util.StringUtil;
 import com.donkingliang.labels.LabelsView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.lang.ref.WeakReference;
 
 /**
  * Created by ruibin.chow on 22/01/2018.
@@ -32,14 +29,25 @@ import java.lang.ref.WeakReference;
 
 public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHolder> {
 
-    private WeakReference<Activity> weakActivity;
-
-    public void setActivity(Activity activity) {
-        weakActivity = new WeakReference<Activity>(activity);
+    public static class OnUserPostItemHandler {
+        public void onInfoHandler(UserPostModel model) {};
+        public void onArrowHandler(UserPostModel model) {};
+        public void onHrefHandler(UserPostModel model) {};
+        public void onLikeActionHandler(UserPostModel model) {};
+        public void onCommentHandler(UserPostModel model) {};
+        public void onTagActionHandler(UserPostModel model, int tagIndex) {};
+        public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {};
     }
 
-    private Activity getActivity() {
-        return weakActivity.get();
+    private Activity activity;
+    private OnUserPostItemHandler itemHandler;
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void setItemHandler(OnUserPostItemHandler itemHandler) {
+        this.itemHandler = itemHandler;
     }
 
     public UserPostAdapter() {
@@ -65,18 +73,31 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         avatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DLog.info(model.getAvatar());
+                itemHandler.onInfoHandler(model);
             }
         });
         nicknameButton.setText(model.getNickname());
+        nicknameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onInfoHandler(model);
+            }
+        });
+
         timeView.setText(StringUtil.formatDate(model.getTime()));
         readView.setText("|  " + StringUtil.countTransition(model.getReadCount()) + "人阅读");
 
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getActivity().getResources(), R.drawable.arrow);
+        Bitmap bitmap = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.arrow);
         bitmap = BitmapUtil.roateBitmap(bitmap, -90);
         bitmap = BitmapUtil.tintBitmap(bitmap,
-                ColorUtil.getResourcesColor(this.getActivity().getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
+                ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
         arrowButton.setImageBitmap(bitmap);
+        arrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onArrowHandler(model);
+            }
+        });
 
         if (model.getTxt() == null) {
             detailView.setVisibility(View.GONE);
@@ -85,6 +106,13 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
             detailView.setVisibility(View.VISIBLE);
         }
         hrefButton.setText(model.getTitle());
+        hrefButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onHrefHandler(model);
+            }
+        });
+
         tagView.setLabels(model.getTagList(), new LabelsView.LabelTextProvider<String>() {
             @Override
             public CharSequence getLabelText(TextView label, int position, String data) {
@@ -96,19 +124,31 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
             @Override
             public void onLabelClick(TextView label, Object data, int position) {
                 DLog.info(String.valueOf(position) + "->" + model.getTagList().get(position));
+                itemHandler.onTagActionHandler(model, position);
             }
         });
 
-//        likeButton
         if (model.isLiked()) {
-            Bitmap bp = BitmapFactory.decodeResource(this.getActivity().getResources(), R.drawable.like);
+            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.like);
             likeButton.setImageBitmap(bp);
         } else {
-            Bitmap bp = BitmapFactory.decodeResource(this.getActivity().getResources(), R.drawable.unlike);
+            Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.drawable.unlike);
             bp = BitmapUtil.tintBitmap(bp,
-                    ColorUtil.getResourcesColor(this.getActivity().getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
+                    ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
             likeButton.setImageBitmap(bp);
         }
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onLikeActionHandler(model);
+            }
+        });
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onCommentHandler(model);
+            }
+        });
 
         likeView.setLikeList(model.getLikeList());
         likeView.makeSubViews();
@@ -121,6 +161,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
             @Override
             public void onTouchHandler(int index) {
                 DLog.info("likeIndex->" + String.valueOf(index));
+                itemHandler.onLikeIconActionHandler(model, index);
             }
         });
 

@@ -109,6 +109,31 @@ public class RecommendFragment extends BaseFragment {
 
         this.userPostAdapter = new UserPostAdapter();
         this.userPostAdapter.setActivity(this.getActivity());
+        this.userPostAdapter.setItemHandler(new UserPostAdapter.OnUserPostItemHandler() {
+            public void onInfoHandler(UserPostModel model) {
+                DLog.debug(model.getNickname());
+            }
+            public void onArrowHandler(UserPostModel model) {
+                DLog.debug(model.getAvatar());
+            }
+            public void onHrefHandler(UserPostModel model) {
+                DLog.debug(model.getContent());
+            }
+            public void onLikeActionHandler(UserPostModel model) {
+                DLog.debug(model.getTitle());
+            }
+            public void onCommentHandler(UserPostModel model) {
+                DLog.debug(model.getAvatar());
+            }
+            public void onTagActionHandler(UserPostModel model, int tagIndex) {
+                DLog.debug(model.getTagList().get(tagIndex));
+            }
+            public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {
+                UserPostModel.UserPostLikeModel likeModel = model.getLikeList().get(likeIndex);
+                DLog.debug(likeModel.getNickname());
+            }
+        });
+
         this.userPostAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -143,17 +168,6 @@ public class RecommendFragment extends BaseFragment {
         }, this.recyclerView);
 
         this.userPostAdapter.openLoadAnimation(); // 一行代码搞定（默认为渐显效果）
-//        this.mAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN); // 默认提供5种方法（渐显、缩放、从下到上，从左到右、从右到左）
-//        this.mAdapter.openLoadAnimation(new BaseAnimation() {
-//            @Override
-//            public Animator[] getAnimators(View view) {
-//                return new Animator[]{
-//                        ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
-//                        ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
-//                };
-//            }
-//        });
-
         this.recyclerView.setAdapter(this.userPostAdapter);
 //        this.mAdapter.notifyItemChanged(2);
 //        this.mAdapter.notifyDataSetChanged();
