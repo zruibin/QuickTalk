@@ -38,6 +38,7 @@
         <!--account-->
         <activity android:screenOrientation="portrait" android:name=".services.account.ChangeAvatarActivity" />
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountSettingActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountThirdPartActivity" />
 
     </application>
 

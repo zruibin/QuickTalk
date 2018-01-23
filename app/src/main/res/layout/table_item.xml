@@ -29,15 +29,17 @@
         android:id="@+id/table_item_indicator"
         android:layout_width="14dp" android:layout_height="14dp"
         android:layout_alignParentRight="true" android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp" android:src="@mipmap/indicator"/>
     <TextView
         android:id="@+id/table_item_detail_text"
         android:layout_toLeftOf="@id/table_item_indicator" android:layout_centerVertical="true"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:ellipsize="end" android:gravity="right|center"
-        android:singleLine="true" android:layout_toRightOf="@id/table_item_text"
+        android:singleLine="true"
         android:textAllCaps="false" android:textColor="@color/gray"
-        android:textSize="16sp" android:textStyle="normal"/>
+        android:textSize="14sp" android:textStyle="normal"/>
 
     </RelativeLayout>
 
