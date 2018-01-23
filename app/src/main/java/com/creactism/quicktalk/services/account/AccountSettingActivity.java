@@ -1,4 +1,4 @@
-package com.creactism.quicktalk.services.setting;
+package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,14 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseActivity;
-import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
-import com.creactism.quicktalk.services.account.AccountSettingActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
  * Created by ruibin.chow on 23/01/2018.
  */
 
-public class SettingActivity extends BaseActivity {
+public class AccountSettingActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -34,42 +33,36 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        this.setTitle("设置");
+        this.setTitle("帐号与安全");
         this.navigationBar.setDefaultBackAction(this);
+
+        this.recyclerView = new RecyclerView(this);
+        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        this.recyclerView.setLayoutParams(viewParams);
+        setContentView(this.recyclerView);
 
         this.dataList = new ArrayList<TableEntity>();
         this.loadData();
-        this.recyclerView = (RecyclerView)findViewById(R.id.setting_recyclerview);
         this.layoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        this.sectionTableListAdapter = new SettingAdapter(this.dataList);
+        this.sectionTableListAdapter = new AccountSettingAdapter(this.dataList);
         this.recyclerView.setAdapter(this.sectionTableListAdapter);
     }
 
     private void loadData() {
-        this.dataList.add(new TableEntity(true, "user", new TableEntity.IndexPath(0, 0)));
-        this.dataList.add(new TableEntity("帐号与安全", new TableEntity.IndexPath(0, 0)));
-        this.dataList.add(new TableEntity("消息通知", new TableEntity.IndexPath(0, 1)));
-
-        this.dataList.add(new TableEntity(true, "data", new TableEntity.IndexPath(1, 0)));
-        this.dataList.add(new TableEntity("欢迎页", new TableEntity.IndexPath(1, 0)));
-        this.dataList.add(new TableEntity("使用指南", new TableEntity.IndexPath(1, 1)));
-        this.dataList.add(new TableEntity("声明及用户协议", new TableEntity.IndexPath(1, 2)));
-        this.dataList.add(new TableEntity("意见反馈", new TableEntity.IndexPath(1, 3)));
-        this.dataList.add(new TableEntity("清除缓存", new TableEntity.IndexPath(1, 4)));
-
-        this.dataList.add(new TableEntity(true, "login", new TableEntity.IndexPath(2, 0)));
-        this.dataList.add(new TableEntity("退出登录", new TableEntity.IndexPath(2, 0)));
+        this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(0, 0)));
+        this.dataList.add(new TableEntity("修改手机号码", new TableEntity.IndexPath(0, 0)));
+        this.dataList.add(new TableEntity("修改密码", new TableEntity.IndexPath(0, 1)));
+        this.dataList.add(new TableEntity("第三方帐号管理", new TableEntity.IndexPath(0, 2)));
     }
 
 
+    private class AccountSettingAdapter extends TableListAdapter {
 
-    private class SettingAdapter extends TableListAdapter {
-
-        public SettingAdapter(List<TableEntity> data) {
+        public AccountSettingAdapter(List<TableEntity> data) {
             super(data);
         }
 
@@ -92,13 +85,8 @@ public class SettingActivity extends BaseActivity {
         @Override
         public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath) {
 
-            if (indexPath.section == 0 && indexPath.row == 0) {
-                Intent intent = new Intent().setClass(getBaseContext(), AccountSettingActivity.class);
-                startActivity(intent);
-            }
+
 
         }
     }
-
-
 }
