@@ -30,13 +30,13 @@ import com.facebook.drawee.view.SimpleDraweeView;
 public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHolder> {
 
     public static class OnUserPostItemHandler {
-        public void onInfoHandler(int index) {};
-        public void onArrowHandler(int index) {};
-        public void onHrefHandler(int index) {};
-        public void onLikeActionHandler(int index) {};
-        public void onCommentHandler(int index) {};
-        public void onTagActionHandler(int index, int tagIndex) {};
-        public void onLikeIconActionHandler(int index, int likeIndex) {};
+        public void onInfoHandler(UserPostModel model) {};
+        public void onArrowHandler(UserPostModel model) {};
+        public void onHrefHandler(UserPostModel model) {};
+        public void onLikeActionHandler(UserPostModel model) {};
+        public void onCommentHandler(UserPostModel model) {};
+        public void onTagActionHandler(UserPostModel model, int tagIndex) {};
+        public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {};
     }
 
     private Activity activity;
@@ -56,6 +56,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, final UserPostModel model) {
+        DLog.error("convert....");
         SimpleDraweeView avatarButton = helper.getView(R.id.userpost_list_item_avatar);
         Button nicknameButton = helper.getView(R.id.userpost_list_item_nickname);
         TextView timeView = helper.getView(R.id.userpost_list_item_time);
@@ -70,7 +71,19 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         UserPostLikeView likeView = helper.getView(R.id.userpost_list_item_likeView);
 
         avatarButton.setImageURI(Uri.parse(model.getAvatar()));
+        avatarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onInfoHandler(model);
+            }
+        });
         nicknameButton.setText(model.getNickname());
+        nicknameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onInfoHandler(model);
+            }
+        });
         timeView.setText(StringUtil.formatDate(model.getTime()));
         readView.setText("|  " + StringUtil.countTransition(model.getReadCount()) + "人阅读");
 
@@ -79,6 +92,12 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         bitmap = BitmapUtil.tintBitmap(bitmap,
                 ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
         arrowButton.setImageBitmap(bitmap);
+        arrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onArrowHandler(model);
+            }
+        });
 
         if (model.getTxt() == null) {
             detailView.setVisibility(View.GONE);
@@ -87,7 +106,12 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
             detailView.setVisibility(View.VISIBLE);
         }
         hrefButton.setText(model.getTitle());
-
+        hrefButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onHrefHandler(model);
+            }
+        });
 
         tagView.setLabels(model.getTagList(), new LabelsView.LabelTextProvider<String>() {
             @Override
@@ -96,6 +120,12 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
             }
         });
         tagView.setSelectType(LabelsView.SelectType.NONE);
+        tagView.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
+            @Override
+            public void onLabelClick(TextView label, Object data, int tagIndex) {
+                itemHandler.onTagActionHandler(model, tagIndex);
+            }
+        });
 
         if (model.isLiked()) {
             Bitmap bp = BitmapFactory.decodeResource(this.activity.getResources(), R.mipmap.like);
@@ -106,6 +136,18 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
                     ColorUtil.getResourcesColor(this.activity.getBaseContext(), R.color.QuickTalk_SECOND_FONT_COLOR));
             likeButton.setImageBitmap(bp);
         }
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onLikeActionHandler(model);
+            }
+        });
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemHandler.onCommentHandler(model);
+            }
+        });
 
         likeView.setLikeList(model.getLikeList());
         likeView.makeSubViews();
@@ -114,72 +156,19 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         } else {
             likeLayout.setVisibility(View.VISIBLE);
         }
+        likeView.setTouchHandler(new UserPostLikeView.OnSingLikeTouchHandler() {
+            @Override
+            public void onTouchHandler(int index) {
+                DLog.info("likeIndex->" + String.valueOf(index));
+                itemHandler.onLikeIconActionHandler(model, index);
+            }
+        });
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        SimpleDraweeView avatarButton = holder.getView(R.id.userpost_list_item_avatar);
-        Button nicknameButton = holder.getView(R.id.userpost_list_item_nickname);
-        TextView timeView = holder.getView(R.id.userpost_list_item_time);
-        TextView readView = holder.getView(R.id.userpost_list_item_read);
-        ImageButton arrowButton = holder.getView(R.id.userpost_list_item_arrow);
-        TextView detailView = holder.getView(R.id.userpost_list_item_detail);
-        Button hrefButton = holder.getView(R.id.userpost_list_item_href);
-        LabelsView tagView = holder.getView(R.id.userpost_list_item_tag);
-        ImageButton likeButton = holder.getView(R.id.userpost_list_item_like);
-        ImageButton commentButton = holder.getView(R.id.userpost_list_item_comment);
-        LinearLayout likeLayout = holder.getView(R.id.userpost_list_item_like_layout);
-        UserPostLikeView likeView = holder.getView(R.id.userpost_list_item_likeView);
+        DLog.error("onBindViewHolder....");
 
-        avatarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onInfoHandler(position);
-            }
-        });
-        nicknameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onInfoHandler(position);
-            }
-        });
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onArrowHandler(position);
-            }
-        });
-        hrefButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onHrefHandler(position);
-            }
-        });
-        tagView.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
-            @Override
-            public void onLabelClick(TextView label, Object data, int tagIndex) {
-                itemHandler.onTagActionHandler(position, tagIndex);
-            }
-        });
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onLikeActionHandler(position);
-            }
-        });
-        commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemHandler.onCommentHandler(position);
-            }
-        });
-        likeView.setTouchHandler(new UserPostLikeView.OnSingLikeTouchHandler() {
-            @Override
-            public void onTouchHandler(int index) {
-                DLog.info("likeIndex->" + String.valueOf(index));
-                itemHandler.onLikeIconActionHandler(position, index);
-            }
-        });
     }
 }

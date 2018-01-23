@@ -104,32 +104,25 @@ public class UserPostListFragment extends BaseFragment {
         this.userPostAdapter = new UserPostAdapter();
         this.userPostAdapter.setActivity(this.getActivity());
         this.userPostAdapter.setItemHandler(new UserPostAdapter.OnUserPostItemHandler() {
-            public void onInfoHandler(int index) {
-                UserPostModel model = dataList.get(index);
+            public void onInfoHandler(UserPostModel model) {
                 DLog.debug(model.getNickname());
             }
-            public void onArrowHandler(int index) {
-                UserPostModel model = dataList.get(index);
+            public void onArrowHandler(UserPostModel model) {
                 DLog.debug(model.getAvatar());
             }
-            public void onHrefHandler(int index) {
-                UserPostModel model = dataList.get(index);
-                DLog.debug(model.getContent());
-            }
-            public void onLikeActionHandler(int index) {
-                UserPostModel model = dataList.get(index);
+            public void onHrefHandler(UserPostModel model) {
                 DLog.debug(model.getTitle());
             }
-            public void onCommentHandler(int index) {
-                UserPostModel model = dataList.get(index);
-                DLog.debug(model.getAvatar());
+            public void onLikeActionHandler(UserPostModel model) {
+                DLog.debug(model.getTitle());
             }
-            public void onTagActionHandler(int index, int tagIndex) {
-                UserPostModel model = dataList.get(index);
+            public void onCommentHandler(UserPostModel model) {
+                DLog.debug(model.getTitle());
+            }
+            public void onTagActionHandler(UserPostModel model, int tagIndex) {
                 DLog.debug(model.getTagList().get(tagIndex));
             }
-            public void onLikeIconActionHandler(int index, int likeIndex) {
-                UserPostModel model = dataList.get(index);
+            public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {
                 UserPostModel.UserPostLikeModel likeModel = model.getLikeList().get(likeIndex);
                 DLog.debug(likeModel.getNickname());
             }
@@ -169,9 +162,10 @@ public class UserPostListFragment extends BaseFragment {
         }, this.recyclerView);
 
         this.userPostAdapter.openLoadAnimation(); // 一行代码搞定（默认为渐显效果）
+        // 默认提供5种方法（渐显、缩放、从下到上，从左到右、从右到左）
+//        this.userPostAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         this.recyclerView.setAdapter(this.userPostAdapter);
-//        this.mAdapter.notifyItemChanged(2);
-//        this.mAdapter.notifyDataSetChanged();
+
 
         this.userPostAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
