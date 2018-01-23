@@ -121,6 +121,7 @@ public class BaseActivity extends AppCompatActivity {
         if (rootLayout == null) return;
         rootLayout.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initNavigationBar();
+        rootLayout.setBackgroundColor(getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR, null));
     }
 
     public void setTitle(String title) {

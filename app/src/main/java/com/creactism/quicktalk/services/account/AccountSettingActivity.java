@@ -85,6 +85,14 @@ public class AccountSettingActivity extends BaseActivity {
         @Override
         public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath) {
 
+            if (indexPath.row == 0) {
+                Intent intent = new Intent().setClass(getBaseContext(), AccountPhoneActivity.class);
+                startActivity(intent);
+            }
+            if (indexPath.row == 1) {
+                Intent intent = new Intent().setClass(getBaseContext(), AccountChangePasswordActivity.class);
+                startActivity(intent);
+            }
             if (indexPath.row == 2) {
                 Intent intent = new Intent().setClass(getBaseContext(), AccountThirdPartActivity.class);
                 startActivity(intent);

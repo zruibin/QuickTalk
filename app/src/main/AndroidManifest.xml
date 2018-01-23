@@ -39,6 +39,9 @@
         <activity android:screenOrientation="portrait" android:name=".services.account.ChangeAvatarActivity" />
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountSettingActivity" />
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountThirdPartActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountPhoneActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountChangePasswordActivity" />
+
 
     </application>
 
