@@ -30,6 +30,6 @@ public class AccountChangePasswordActivity extends BaseActivity {
         this.comfirmField = (EditText)findViewById(R.id.activity_account_chanage_password_comfirm);
         this.submitButton = (Button)findViewById(R.id.activity_account_chanage_password_submit);
 
-        
+
     }
 }

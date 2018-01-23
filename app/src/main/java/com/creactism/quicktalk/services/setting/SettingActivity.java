@@ -92,11 +92,23 @@ public class SettingActivity extends BaseActivity {
         @Override
         public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath) {
 
-            if (indexPath.section == 0 && indexPath.row == 0) {
-                Intent intent = new Intent().setClass(getBaseContext(), AccountSettingActivity.class);
-                startActivity(intent);
+            if (indexPath.section == 0) {
+                if (indexPath.row == 0) {
+                    Intent intent = new Intent().setClass(getBaseContext(), AccountSettingActivity.class);
+                    startActivity(intent);
+                }
             }
 
+            if (indexPath.section == 1) {
+                if (indexPath.row == 0) {
+                    Intent intent = new Intent().setClass(getBaseContext(), WelcomeActivity.class);
+                    startActivity(intent);
+                }
+                if (indexPath.row == 2) {
+                    Intent intent = new Intent().setClass(getBaseContext(), UserAgreementActivity.class);
+                    startActivity(intent);
+                }
+            }
         }
     }
 
