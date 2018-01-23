@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +34,11 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 隐藏状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         this.statusBar.setVisibility(View.GONE);
         this.navigationBar.setVisibility(View.GONE);
         setContentView(R.layout.activity_welcome);
@@ -44,6 +50,8 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+//                overridePendingTransition(0, R.anim.activity_down_close);
+                overridePendingTransition(0, android.R.anim.fade_out);
             }
         });
 

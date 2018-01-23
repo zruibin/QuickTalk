@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.setting;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -103,6 +104,8 @@ public class SettingActivity extends BaseActivity {
                 if (indexPath.row == 0) {
                     Intent intent = new Intent().setClass(getBaseContext(), WelcomeActivity.class);
                     startActivity(intent);
+//                    overridePendingTransition(R.anim.activity_up_open, 0);
+                    overridePendingTransition(android.R.anim.fade_in, 0);
                 }
                 if (indexPath.row == 2) {
                     Intent intent = new Intent().setClass(getBaseContext(), UserAgreementActivity.class);
