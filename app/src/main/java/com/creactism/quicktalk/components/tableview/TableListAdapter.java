@@ -2,14 +2,11 @@ package com.creactism.quicktalk.components.tableview;
 
 import android.support.annotation.IdRes;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.util.DensityUtil;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
  * Created by ruibin.chow on 23/01/2018.
  */
 
-public abstract class SectionTableListAdapter extends BaseSectionQuickAdapter <SectionTableEntity, BaseViewHolder> {
+public abstract class TableListAdapter extends BaseSectionQuickAdapter <TableEntity, BaseViewHolder> {
 
     private LinearLayout tableLinearLayout;
     protected @IdRes int table_layout_id;
@@ -26,19 +23,19 @@ public abstract class SectionTableListAdapter extends BaseSectionQuickAdapter <S
     protected @IdRes int table_detail_id;
     protected @IdRes int table_indicator_id;
 
-    public SectionTableListAdapter(List<SectionTableEntity> data) {
+    public TableListAdapter(List<TableEntity> data) {
         super(R.layout.table_item, R.layout.table_section, data);
     }
 
     @Override
-    protected void convertHead(BaseViewHolder helper, final SectionTableEntity item) {
+    protected void convertHead(BaseViewHolder helper, final TableEntity item) {
 //            helper.setText(R.id.header, item.header);
 //            helper.setVisible(R.id.more, item.isMore());
 //            helper.addOnClickListener(R.id.more);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final SectionTableEntity item) {
+    protected void convert(BaseViewHolder helper, final TableEntity item) {
         this.table_layout_id = R.id.table_item_layout;
         this.table_image_id = R.id.table_item_image;
         this.table_text_id = R.id.table_item_text;
@@ -55,6 +52,6 @@ public abstract class SectionTableListAdapter extends BaseSectionQuickAdapter <S
         });
     }
 
-    public abstract void cellForRowAtIndexPath(final BaseViewHolder helper, final SectionTableEntity item, final SectionTableEntity.IndexPath indexPath);
-    public void didSelectRowAtIndexPath(final SectionTableEntity item, final SectionTableEntity.IndexPath indexPath){};
+    public abstract void cellForRowAtIndexPath(final BaseViewHolder helper, final TableEntity item, final TableEntity.IndexPath indexPath);
+    public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath){};
 }

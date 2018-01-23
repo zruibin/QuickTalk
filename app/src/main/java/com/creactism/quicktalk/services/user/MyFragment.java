@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.components.tableview.SectionTableEntity;
-import com.creactism.quicktalk.components.tableview.SectionTableListAdapter;
+import com.creactism.quicktalk.components.tableview.TableEntity;
+import com.creactism.quicktalk.components.tableview.TableListAdapter;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 
@@ -33,8 +33,8 @@ public class MyFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
-    private List<SectionTableEntity> dataList;
-    private SectionTableListAdapter sectionTableListAdapter;
+    private List<TableEntity> dataList;
+    private TableListAdapter sectionTableListAdapter;
 
 
     @Nullable
@@ -45,7 +45,7 @@ public class MyFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.frag_my, null);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
-        this.dataList = new ArrayList<SectionTableEntity>();
+        this.dataList = new ArrayList<TableEntity>();
         this.loadData();
         this.initSubView(view);
 
@@ -63,29 +63,29 @@ public class MyFragment extends BaseFragment {
     }
 
     protected void loadData() {
-        this.dataList.add(new SectionTableEntity(true, "", new SectionTableEntity.IndexPath(0, 0)));
-        this.dataList.add(new SectionTableEntity("Section0-- item 1", new SectionTableEntity.IndexPath(0, 0)));
+//        this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(0, 0)));
+//        this.dataList.add(new TableEntity("Section0-- item 1", new TableEntity.IndexPath(0, 0)));
+//
+//        this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(1, 0)));
+        this.dataList.add(new TableEntity("Section1-- item 1", new TableEntity.IndexPath(1, 0)));
+        this.dataList.add(new TableEntity("Section1-- item 2", new TableEntity.IndexPath(1, 1)));
+        this.dataList.add(new TableEntity("Section1-- item 3", new TableEntity.IndexPath(1, 2)));
+        this.dataList.add(new TableEntity("Section1-- item 4", new TableEntity.IndexPath(1, 3)));
+        this.dataList.add(new TableEntity("Section1-- item 5", new TableEntity.IndexPath(1, 4)));
 
-        this.dataList.add(new SectionTableEntity(true, "", new SectionTableEntity.IndexPath(1, 0)));
-        this.dataList.add(new SectionTableEntity("Section1-- item 1", new SectionTableEntity.IndexPath(1, 0)));
-        this.dataList.add(new SectionTableEntity("Section1-- item 2", new SectionTableEntity.IndexPath(1, 1)));
-        this.dataList.add(new SectionTableEntity("Section1-- item 3", new SectionTableEntity.IndexPath(1, 2)));
-        this.dataList.add(new SectionTableEntity("Section1-- item 4", new SectionTableEntity.IndexPath(1, 3)));
-        this.dataList.add(new SectionTableEntity("Section1-- item 5", new SectionTableEntity.IndexPath(1, 4)));
-
-        this.dataList.add(new SectionTableEntity(true, "", new SectionTableEntity.IndexPath(2, 0)));
-        this.dataList.add(new SectionTableEntity("Section3-- item 1--", new SectionTableEntity.IndexPath(2, 0)));
+//        this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(2, 0)));
+//        this.dataList.add(new TableEntity("Section3-- item 1--", new TableEntity.IndexPath(2, 0)));
     }
 
 
-    private class MyAdapter extends SectionTableListAdapter {
+    private class MyAdapter extends TableListAdapter {
 
-        public MyAdapter(List<SectionTableEntity> data) {
+        public MyAdapter(List<TableEntity> data) {
             super(data);
         }
 
         @Override
-        public void cellForRowAtIndexPath(final BaseViewHolder helper, final SectionTableEntity item, final SectionTableEntity
+        public void cellForRowAtIndexPath(final BaseViewHolder helper, final TableEntity item, final TableEntity
                 .IndexPath indexPath) {
             DLog.debug("section:" + String.valueOf(indexPath.section) + " row:" + String.valueOf(indexPath.row));
 
@@ -131,7 +131,7 @@ public class MyFragment extends BaseFragment {
         }
 
         @Override
-        public void didSelectRowAtIndexPath(final SectionTableEntity item, final SectionTableEntity.IndexPath indexPath) {
+        public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath) {
             DLog.debug("section: "+String.valueOf(indexPath.section)+" row:"+String.valueOf(indexPath.row));
         }
     }

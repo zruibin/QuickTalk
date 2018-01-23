@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.entity.SectionEntity;
  * Created by ruibin.chow on 23/01/2018.
  */
 
-public class SectionTableEntity<T> extends SectionEntity<T> {
+public class TableEntity<T> extends SectionEntity<T> {
 
     public static class IndexPath {
         public static int SECTION = -1;
@@ -23,13 +23,13 @@ public class SectionTableEntity<T> extends SectionEntity<T> {
     private IndexPath indexPath;
 
 
-    public SectionTableEntity(boolean isHeader, String header, IndexPath indexPath) {
+    public TableEntity(boolean isHeader, String header, IndexPath indexPath) {
         super(isHeader, header);
         indexPath.row = IndexPath.SECTION;
         this.indexPath = indexPath;
     }
 
-    public SectionTableEntity(T o, IndexPath indexPath) {
+    public TableEntity(T o, IndexPath indexPath) {
         super(o);
         this.obj = o;
         this.indexPath = indexPath;
