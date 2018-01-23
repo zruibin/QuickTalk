@@ -21,6 +21,8 @@ import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
+import com.creactism.quicktalk.util.Tools;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +103,7 @@ public class MyFragment extends BaseFragment {
             }
             linearLayout.setLayoutParams(lp);
 
-            final ImageView imageView = helper.getView(this.table_image_id);
+            final SimpleDraweeView imageView = helper.getView(this.table_image_id);
             ViewTreeObserver vto2 = imageView.getViewTreeObserver();
             vto2.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -118,6 +120,7 @@ public class MyFragment extends BaseFragment {
                     imageView.setLayoutParams(imageLP);
                 }
             });
+            imageView.setImageURI(Tools.getResoucesUri(R.mipmap.my_unselect));
 
 
             TextView textView = helper.getView(this.table_text_id);
