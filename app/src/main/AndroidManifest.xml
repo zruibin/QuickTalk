@@ -32,6 +32,9 @@
         <!--user-->
         <activity android:screenOrientation="portrait" android:name=".services.user.UserActivity" />
 
+        <!--setting-->
+        <activity android:screenOrientation="portrait" android:name=".services.setting.SettingActivity" />
+
         <!--account-->
         <activity android:screenOrientation="portrait" android:name=".services.account.ChangeAvatarActivity" />
 
