@@ -98,6 +98,10 @@ public class SettingActivity extends BaseActivity {
                     Intent intent = new Intent().setClass(getBaseContext(), AccountSettingActivity.class);
                     startActivity(intent);
                 }
+                if (indexPath.row == 1) {
+                    Intent intent = new Intent().setClass(getBaseContext(), NotificationSettingActivity.class);
+                    startActivity(intent);
+                }
             }
 
             if (indexPath.section == 1) {
