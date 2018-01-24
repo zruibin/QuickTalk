@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/frag_userpost_list_refresh"
+        android:id="@+id/frag_user_star_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/frag_userpost_list_recyclerview"
+            android:id="@+id/frag_user_star_recyclerview"
             android:divider="#ffff0000"
             android:dividerHeight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-</RelativeLayout>
+</LinearLayout>

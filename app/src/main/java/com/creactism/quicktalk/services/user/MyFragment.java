@@ -83,7 +83,7 @@ public class MyFragment extends BaseFragment {
         List<String> users = new ArrayList<String>();
         users.add(String.valueOf(R.mipmap.users));
         users.add("关注与粉丝");
-        users.add("com.creactism.quicktalk.services.user.UserActivity");
+        users.add("com.creactism.quicktalk.services.user.UserStarAndFansActivity");
 
         List<String> userPost = new ArrayList<String>();
         userPost.add(String.valueOf(R.mipmap.userpost));

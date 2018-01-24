@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="50dp" android:background="@color/white"
+    android:id="@+id/table_item_layout">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:paddingLeft="10dp" android:paddingRight="10dp"
+        android:background="@drawable/ripple_bg">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/frag_user_item_image"
+        fresco:placeholderImage="@mipmap/avatar_default" fresco:placeholderImageScaleType="centerCrop"
+        fresco:failureImage="@mipmap/avatar_default" fresco:failureImageScaleType="centerCrop"
+        android:layout_width="40dp" android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
+    <TextView
+        android:id="@+id/frag_user_item_text"
+        android:layout_toRightOf="@id/table_item_image" android:layout_marginLeft="2dp"
+        android:layout_centerVertical="true" android:gravity="left|center"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:textSize="14sp" android:singleLine="true"
+        android:ellipsize="end" android:maxEms="8" android:textColor="@color/black"
+        android:textAllCaps="false" android:textStyle="normal"/>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

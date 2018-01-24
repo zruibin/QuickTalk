@@ -33,7 +33,6 @@ public class UserPostListFragment extends BaseFragment {
     private LinearLayoutManager layoutManager;
     private List<UserPostModel> dataList;
     private UserPostAdapter userPostAdapter;
-    private int testNum = 0;
     private int index = 1;
 
     @Override
@@ -71,8 +70,8 @@ public class UserPostListFragment extends BaseFragment {
         this.getActivity().setTitle("Recommend....");
 
         View view = inflater.inflate(R.layout.frag_userpost_list, null);
-        this.recyclerView = (RecyclerView)view.findViewById(R.id.recommend_recyclerview);
-        this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.recommend_refresh);
+        this.recyclerView = (RecyclerView)view.findViewById(R.id.frag_userpost_list_recyclerview);
+        this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.frag_userpost_list_refresh);
         this.dataList = new ArrayList<UserPostModel>();
         index = 1;
         this.initSubView(view);
@@ -82,7 +81,6 @@ public class UserPostListFragment extends BaseFragment {
 
     private void initSubView(View view) {
 
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.recommend_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
 //        this.recyclerView.addItemDecoration(new RecycleViewDivider(
