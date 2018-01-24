@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
 import com.creactism.quicktalk.util.DLog;
@@ -199,6 +200,11 @@ public class MyFragment extends BaseFragment {
         public void didSelectRowAtIndexPath(final TableEntity item, final TableEntity.IndexPath indexPath) {
             List<String> data = (List<String>)item.getObj();
             DLog.debug("section: "+data.get(2));
+
+            if (indexPath.section == 0 && indexPath.row == 0) {
+                UserInfo.sharedInstance().checkLoginStatus(getActivity());
+                return;
+            }
 
             Intent intent = new Intent();
             try {

@@ -1,6 +1,9 @@
 package com.creactism.quicktalk;
 
 import android.app.Activity;
+import android.content.Intent;
+
+import com.creactism.quicktalk.services.account.AccountLoginActivity;
 
 /**
  * Created by ruibin.chow on 14/01/2018.
@@ -43,8 +46,12 @@ public final class UserInfo extends Object {
     }
 
     public boolean checkLoginStatus(Activity activity) {
-
-        return false;
+        if (this.isLogin == false) {
+            Intent intent = new Intent().setClass(activity.getBaseContext(), AccountLoginActivity.class);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.activity_up_open, 0);
+        }
+        return this.isLogin;
     }
 
     /*检查登录是否过时*/

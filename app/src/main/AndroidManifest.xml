@@ -44,6 +44,9 @@
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountThirdPartActivity" />
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountPhoneActivity" />
         <activity android:screenOrientation="portrait" android:name=".services.account.AccountChangePasswordActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountLoginActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountRegisterActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountForgetPasswordActivity" />
 
 
     </application>
