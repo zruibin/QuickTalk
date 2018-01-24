@@ -9,7 +9,9 @@ import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.mob.MobSDK;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by ruibin.chow on 12/01/2018.
@@ -24,17 +26,7 @@ public final class App extends Application {
     public void onCreate() {
         super.onCreate();
         DLog.info("App onCreate...");
-        /*初始化缓存库*/
-        QTCache.sharedCache().initCache(this.getApplicationContext());
-        /*初始化图片缓存库*/
-        Fresco.initialize(this);
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+        initPart();
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
@@ -91,4 +83,32 @@ public final class App extends Application {
     }
 
 
+    private void initPart() {
+        /*初始化缓存库*/
+        QTCache.sharedCache().initCache(this.getApplicationContext());
+        /*初始化图片缓存库*/
+        Fresco.initialize(this);
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+
+        MobSDK.init(this);
+        CrashReport.initCrashReport(getApplicationContext(), "abbac601ae", false);
+
+
+    }
+
+
+
+
 }
+
+
+
+
+
+

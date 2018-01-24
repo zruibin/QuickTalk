@@ -9,6 +9,16 @@ import android.widget.ImageButton;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.QTProgressHUD;
+
+import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by ruibin.chow on 24/01/2018.
@@ -53,6 +63,12 @@ public class AccountLoginActivity extends BaseActivity {
         buttonAction();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QTProgressHUD.hide();
+    }
+
     private void buttonAction() {
         this.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +84,68 @@ public class AccountLoginActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        this.submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QTProgressHUD.showHUD(AccountLoginActivity.this);
+            }
+        });
+
+        this.qqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWithPlatform(QQ.NAME);
+            }
+        });
+        this.wechatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWithPlatform(Wechat.NAME);
+            }
+        });
+        this.weiboButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginWithPlatform(SinaWeibo.NAME);
+            }
+        });
+
     }
 
 
+    private void loginWithPlatform(String name) {
+        Platform platform = ShareSDK.getPlatform(name);
+        ShareSDK.removeCookieOnAuthorize(true);
+        platform.SSOSetting(false);  //设置false表示使用SSO授权方式
+        //回调信息，可以在这里获取基本的授权返回的信息，
+        // 但是注意如果做提示和UI操作要传到主线程handler里去执行
+        platform.setPlatformActionListener(new PlatformActionListener() {
 
+            @Override
+            public void onError(Platform platform1, int arg1, Throwable arg2) {
+                // TODO Auto-generated method stub
+                arg2.printStackTrace();
+            }
+
+            @Override
+            public void onComplete(Platform platform1, int arg1, HashMap<String, Object> arg2) {
+                // TODO Auto-generated method stub
+                //输出所有授权信息
+                platform1.getDb().exportData();
+                String uid = platform1.getDb().getUserId();
+            }
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        if (platform.isAuthValid()) { //如果授权就删除授权资料
+            platform.removeAccount(true);
+        }
+        platform.showUser(null);//执行登录，登录后在回调里面获取用户资料
+    }
 
 }
 
