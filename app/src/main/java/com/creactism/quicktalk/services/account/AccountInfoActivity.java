@@ -1,14 +1,22 @@
 package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.services.account.adapter.AddressPickTask;
 import com.creactism.quicktalk.util.DLog;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.OptionPicker;
+import cn.qqtheme.framework.widget.WheelView;
 
 /**
  * Created by ruibin.chow on 24/01/2018.
@@ -45,11 +53,46 @@ public class AccountInfoActivity extends BaseActivity {
     }
 
     public void onGenderItemClick(View view) {
-
+        OptionPicker picker = new OptionPicker(this, new String[]{"男", "女"});
+        picker.setTitleText("性别");
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTextSize(14);
+        picker.setTopLineColor(Color.BLACK);
+        picker.setSubmitTextColor(Color.BLACK);
+        picker.setCanceledOnTouchOutside(true);
+        picker.setDividerRatio(WheelView.DividerConfig.FILL);
+        picker.setDividerColor(Color.parseColor("#999999"));
+        picker.setCancelTextColor(Color.RED);
+        picker.setSelectedIndex(1);
+        picker.setLineSpaceMultiplier(3);
+        picker.setTextPadding(2);
+        picker.setCycleDisable(true);
+        picker.setTextSize(15);
+        picker.setTextColor(Color.BLACK);
+        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+            @Override
+            public void onOptionPicked(int index, String item) {
+                DLog.info("index: " + index + " item:" + item);
+            }
+        });
+        picker.show();
     }
 
     public void onAreaItemClick(View view) {
+        AddressPickTask task = new AddressPickTask(this);
+        task.setHideCounty(true);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                DLog.info("数据初始化失败");
+            }
 
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                DLog.info(province.getAreaName() + " " + city.getAreaName());
+            }
+        });
+        task.execute("四川", "阿坝");
     }
 
 }
