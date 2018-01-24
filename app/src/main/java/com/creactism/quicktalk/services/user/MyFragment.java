@@ -73,12 +73,12 @@ public class MyFragment extends BaseFragment {
         List<String> user = new ArrayList<String>();
         user.add(String.valueOf(R.mipmap.avatar_default));
         user.add("nickname");
-        user.add("com.creactism.quicktalk.services.user.UserActivity");
+        user.add("com.creactism.quicktalk.services.account.AccountInfoActivity");
 
         List<String> unLogin = new ArrayList<String>();
         unLogin.add(String.valueOf(R.mipmap.avatar_default));
         unLogin.add("nickname");
-        unLogin.add("com.creactism.quicktalk.services.user.UserActivity");
+        unLogin.add("null");
 
         List<String> users = new ArrayList<String>();
         users.add(String.valueOf(R.mipmap.users));
@@ -201,10 +201,10 @@ public class MyFragment extends BaseFragment {
             List<String> data = (List<String>)item.getObj();
             DLog.debug("section: "+data.get(2));
 
-            if (indexPath.section == 0 && indexPath.row == 0) {
-                UserInfo.sharedInstance().checkLoginStatus(getActivity());
-                return;
-            }
+//            if (indexPath.section == 0 && indexPath.row == 0) {
+//                UserInfo.sharedInstance().checkLoginStatus(getActivity());
+//                return;
+//            }
 
             Intent intent = new Intent();
             try {

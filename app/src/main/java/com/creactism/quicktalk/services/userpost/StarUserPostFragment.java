@@ -9,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.modules.NotificationCenter;

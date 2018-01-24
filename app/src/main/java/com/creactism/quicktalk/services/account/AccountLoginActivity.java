@@ -2,6 +2,7 @@ package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,12 +64,6 @@ public class AccountLoginActivity extends BaseActivity {
         buttonAction();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        QTProgressHUD.hide();
-    }
-
     private void buttonAction() {
         this.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +83,12 @@ public class AccountLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 QTProgressHUD.showHUD(AccountLoginActivity.this);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        QTProgressHUD.showHUDWithText("加载成功");
+                    }
+                }, 2000);
             }
         });
 

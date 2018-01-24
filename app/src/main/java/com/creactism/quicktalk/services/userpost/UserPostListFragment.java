@@ -174,7 +174,7 @@ public class UserPostListFragment extends BaseFragment {
 //                Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
 //                if (position == 1) {
 //                    Intent intent = new Intent();
-//                    intent.setClass(getActivity().getApplicationContext(), ChangeAvatarActivity.class);
+//                    intent.setClass(getActivity().getApplicationContext(), AccountChangeAvatarActivity.class);
 //                    startActivity(intent);
 //                }
 //                if (position == 2) {

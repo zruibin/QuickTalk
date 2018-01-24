@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,11 +17,8 @@ import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +29,9 @@ import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.creactism.quicktalk.util.DrawableUtil;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,9 +40,9 @@ import java.io.FileNotFoundException;
  * Created by ruibin.chow on 18/01/2018.
  */
 
-public class ChangeAvatarActivity extends BaseActivity {
+public class AccountChangeAvatarActivity extends BaseActivity {
 
-    private ImageView imageView;
+    private SimpleDraweeView imageView;
     private Button changeButton;
     private Button saveButton;
 
@@ -97,13 +96,19 @@ public class ChangeAvatarActivity extends BaseActivity {
 
     private void initViews(LinearLayout linearLayout) {
 
-        this.imageView = new ImageView(this);
+        this.imageView = new SimpleDraweeView(this);
         this.imageView.setBackgroundColor(Color.GRAY);
         int height = this.getResources().getDisplayMetrics().widthPixels;
         LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 height);
         this.imageView.setLayoutParams(imageViewParams);
         linearLayout.addView(this.imageView);
+
+        GenericDraweeHierarchy hierarchy = this.imageView.getHierarchy();
+        hierarchy.setPlaceholderImage(R.mipmap.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
+        hierarchy.setFailureImage(R.mipmap.avatar_default, ScalingUtils.ScaleType.CENTER_CROP);
+        hierarchy.setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP);
+        this.imageView.setHierarchy(hierarchy);
 
         this.changeButton = new Button(this);
         this.changeButton.setText("更换头像");
@@ -138,7 +143,7 @@ public class ChangeAvatarActivity extends BaseActivity {
         this.changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChangeAvatarActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AccountChangeAvatarActivity.this);
                 builder.setTitle("更改头像");
                 String[] items = {"选择本地照片","拍照"};
                 builder.setNegativeButton("取消",null);
@@ -183,7 +188,7 @@ public class ChangeAvatarActivity extends BaseActivity {
 
         if(Build.VERSION.SDK_INT >= 24){
             openCameraIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            imageUri = FileProvider.getUriForFile(ChangeAvatarActivity.this,"com.creactism.quicktalk.fileProvider",file);
+            imageUri = FileProvider.getUriForFile(AccountChangeAvatarActivity.this,"com.creactism.quicktalk.fileProvider",file);
         }else {
             imageUri = Uri.fromFile(getImageStoragePath(this));
         }
