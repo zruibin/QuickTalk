@@ -1,7 +1,12 @@
 package com.creactism.quicktalk.util;
 
+import android.text.TextUtils;
+import android.text.format.DateFormat;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.joda.time.DateTime;
@@ -19,6 +24,9 @@ import java.util.TimeZone;
  */
 
 public class StringUtil {
+
+    private static String patternCoder = "(?<!\\d)\\d{6}(?!\\d)";
+    private static String phonePatter = "^1\\d{10}$";
 
     /**32小写md5加密*/
     public static String md5(String plain) {
@@ -136,5 +144,98 @@ public class StringUtil {
             return String.valueOf(count/10000) + "." + String.valueOf(count%10000/10000) + "万";
         }
     }
+
+    /** 获得当前时间 */
+    public static CharSequence currentTime(CharSequence inFormat) {
+        return DateFormat.format(inFormat, System.currentTimeMillis());
+    }
+
+    /** 时间戳转 yyyy年MM月dd日 HH:mm*/
+    public static String getDateTime(String longTime){
+        long time = Long.valueOf(longTime)*1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        return  sdf.format(new Date(time));
+    }
+
+    /** 时间戳转 yyy年MM月dd日 HH:mm:ss*/
+    public static String getDateSec(String longTime){
+        long time = Long.valueOf(longTime)*1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        return  sdf.format(new Date(time));
+    }
+
+    /** 时间戳转 MM月dd日 HH:mm*/
+    public static String getDateMinite(String longTime){
+        long time = Long.valueOf(longTime)*1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日 HH:mm");
+        return  sdf.format(new Date(time));
+    }
+
+    /** 时间戳转 yyyy-MM-dd HH:mm*/
+    public static String getTime(String longTime){
+        long time = Long.valueOf(longTime)*1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return  sdf.format(new Date(time));
+    }
+
+    /** 时间戳转 yyyy-MM-dd*/
+    public static String getdate(String longTime){
+        long time = Long.valueOf(longTime)*1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return  sdf.format(new Date(time));
+    }
+
+    /** 日期转时间戳*/
+    public static String getTimeStamp(String dateTime, String format){
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+            return String.valueOf(simpleDateFormat.parse(dateTime).getTime()/1000);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /** 从短信中截取验证码*/
+    public static String patternCode(String patternContent) {
+        if (TextUtils.isEmpty(patternContent)) {
+            return null;
+        }
+        Pattern p = Pattern.compile(patternCoder);
+        Matcher matcher = p.matcher(patternContent);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
+    }
+
+    /** 检测手机号码*/
+    public static boolean checkPhone(String patternContent){
+        Pattern pattern = Pattern.compile(phonePatter);
+        Matcher matcher =  pattern.matcher(patternContent);
+        return matcher.matches();
+    }
+
+    /** 保留指定小数点位数,format传 "0.0" "0.00"形式分别保存一位，两位小数*/
+    public static String doubleRound(double num, String format){
+        DecimalFormat df = new DecimalFormat(format);
+        return df.format(num);
+    }
+
+    /*** 判断单个字符串是否为空*/
+    public static boolean isStr(String str){
+        if(null != str && str.length() != 0) return true;
+        return false;
+    }
+
+    /*** 判断多个字符串是否为空*/
+    public static boolean isArrStr(String... str){
+        if(null == str) return false;
+        for(String s : str){
+            if(!isStr(s)) return false;
+        }
+        return true;
+    }
+
 
 }
