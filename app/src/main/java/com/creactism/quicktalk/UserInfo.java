@@ -3,13 +3,24 @@ package com.creactism.quicktalk;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.creactism.quicktalk.modules.NotificationCenter;
+import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.account.AccountLoginActivity;
+import com.creactism.quicktalk.services.account.model.AccountModel;
+import com.creactism.quicktalk.util.StringUtil;
+
+import static com.creactism.quicktalk.Marcos.QTLoginStatusChangeNotification;
 
 /**
  * Created by ruibin.chow on 14/01/2018.
  */
 
 public final class UserInfo extends Object {
+
+    private static final String QTLoginAccount = "kQTLoginAccount";
+    private static final String QTLoginPassword = "kQTLoginPassword";
+    private static final String QTLoginOpenId = "kQTLoginOpenId";
+    private static final String QTLoginType = "kQTLoginType";
 
     private static UserInfo instance = new UserInfo();
 
@@ -21,22 +32,154 @@ public final class UserInfo extends Object {
 
     public boolean isLogin;
     public boolean hiddenData;
-    public String id;
-    public String uuid;
-    public String avatar;
-    public String nickname;
-    public String detail;
-    public String email;
-    public String phone;
-    public String qq;
-    public String wechat;
-    public String weibo;
-    public String area;
-    public int gender;
-    public String deviceId;
-    public String token;
+    private String id;
+    private String uuid;
+    private String avatar;
+    private String nickname;
+    private String detail;
+    private String email;
+    private String phone;
+    private String qq;
+    private String wechat;
+    private String weibo;
+    private String area;
+    private int gender;
+    private String deviceId;
+    private String token;
 
-//    public void login()
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
+
+    public String getWeibo() {
+        return weibo;
+    }
+
+    public void setWeibo(String weibo) {
+        this.weibo = weibo;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void login(AccountModel accountModel, String password, String type) {
+        this.id = accountModel.getId();
+        this.uuid = accountModel.getUuid();
+        this.nickname = accountModel.getNickname();
+        this.avatar = accountModel.getAvatar();
+        this.detail = accountModel.getDetail();
+        this.email = accountModel.getEmail();
+        this.phone = accountModel.getPhone();
+        this.qq = accountModel.getQq();
+        this.wechat = accountModel.getWechat();
+        this.weibo = accountModel.getWeibo();
+        this.area = accountModel.getArea();
+        this.gender = accountModel.getGender();
+        this.token = accountModel.getToken();
+        this.isLogin = true;
+        QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
+        QTCache.sharedCache().put(QTLoginPassword, StringUtil.md5(password));
+        QTCache.sharedCache().put(QTLoginType, type);
+        NotificationCenter.defaultCenter().postNotification(QTLoginStatusChangeNotification);
+    }
+
     public void logout() {
 
     }
@@ -59,9 +202,7 @@ public final class UserInfo extends Object {
 
     }
 
-    /*
-- (void)login:(QTAccountInfo *)userInfo password:(NSString *)password type:(NSString *)type;
-- (void)loginWithThirdPart:(QTAccountInfo *)userInfo openId:(NSString *)openId type:(NSString *)type;
-    * */
+
+
 
 }

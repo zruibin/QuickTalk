@@ -2,12 +2,14 @@ package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.services.account.adapter.AddressPickTask;
 import com.creactism.quicktalk.util.DLog;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -40,6 +42,12 @@ public class AccountInfoActivity extends BaseActivity {
         this.nicknameField = (TextView)findViewById(R.id.activity_account_info_nickname);
         this.genderField = (TextView)findViewById(R.id.activity_account_info_gender);
         this.areaField = (TextView)findViewById(R.id.activity_account_info_area);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData();
     }
 
     public void onIconItemClick(View view) {
@@ -95,6 +103,24 @@ public class AccountInfoActivity extends BaseActivity {
         task.execute("四川", "阿坝");
     }
 
+    private void loadData() {
+        if (UserInfo.sharedInstance().getAvatar() != null) {
+            this.avatarView.setImageURI(Uri.parse(UserInfo.sharedInstance().getAvatar()));
+        }
+        this.nicknameField.setText(UserInfo.sharedInstance().getNickname());
+        if (UserInfo.sharedInstance().getGender() == 1) {
+            this.genderField.setText("男");
+        } else if (UserInfo.sharedInstance().getGender() == 2) {
+            this.genderField.setText("女");
+        } else {
+            this.genderField.setText("");
+        }
+        if (UserInfo.sharedInstance().getArea() != null) {
+            this.areaField.setText(UserInfo.sharedInstance().getArea());
+        } else {
+            this.areaField.setText("");
+        }
+    }
 }
 
 

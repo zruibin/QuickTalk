@@ -44,4 +44,11 @@ public class NetworkingAgent extends Object {
         });
     }
 
+    public static void requestDataForAccountService(String serviceURL, String method,
+                                                      Map<String, String> params, final CompleteHandler
+                                                              handler) {
+        String urlString = "/account" + serviceURL;
+        requestDataForQuickTalkService(urlString, method, params, handler);
+    }
+
 }

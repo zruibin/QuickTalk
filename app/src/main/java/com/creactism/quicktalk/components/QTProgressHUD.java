@@ -23,7 +23,7 @@ public final class QTProgressHUD {
     * */
 
     private static ProgressDialog hud = null;
-    private static long DEFAULT_TIME = 1500;
+    private static long DEFAULT_TIME = 0;
 
     public static void showHUD(Context context) {
 //        hud = ProgressDialog.show(context, "", "加载中...", false, false);

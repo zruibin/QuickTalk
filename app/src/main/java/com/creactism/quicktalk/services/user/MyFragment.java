@@ -22,6 +22,7 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
+import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.creactism.quicktalk.util.StringUtil;
@@ -30,6 +31,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.creactism.quicktalk.Marcos.QTLoginStatusChangeNotification;
 
 /**
  * Created by ruibin.chow on 22/01/2018.
@@ -42,6 +45,11 @@ public class MyFragment extends BaseFragment {
     private List<TableEntity> dataList;
     private TableListAdapter sectionTableListAdapter;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NotificationCenter.defaultCenter().removeObserver(this, QTLoginStatusChangeNotification);
+    }
 
     @Nullable
     @Override
@@ -52,8 +60,15 @@ public class MyFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.frag_my, null);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.my_recyclerview);
         this.dataList = new ArrayList<TableEntity>();
-        this.loadData();
-        this.initSubView(view);
+        initSubView(view);
+
+        NotificationCenter.defaultCenter().addObserver(this, QTLoginStatusChangeNotification, new NotificationCenter.SelectorHandler() {
+            @Override
+            public void handler(Object object) {
+                loadData();
+            }
+        });
+        loadData();
 
         return view;
     }
@@ -63,16 +78,13 @@ public class MyFragment extends BaseFragment {
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
-
-        this.sectionTableListAdapter = new MyAdapter(this.dataList);
-        this.recyclerView.setAdapter(this.sectionTableListAdapter);
     }
 
     protected void loadData() {
 
         List<String> user = new ArrayList<String>();
-        user.add(String.valueOf(R.mipmap.avatar_default));
-        user.add("nickname");
+        user.add(UserInfo.sharedInstance().getAvatar());
+        user.add(UserInfo.sharedInstance().getNickname());
         user.add("com.creactism.quicktalk.services.account.AccountInfoActivity");
 
         List<String> unLogin = new ArrayList<String>();
@@ -105,9 +117,8 @@ public class MyFragment extends BaseFragment {
         setting.add("设置");
         setting.add("com.creactism.quicktalk.services.setting.SettingActivity");
 
-        boolean isLogin = true;
         this.dataList.clear();
-        if (isLogin) {
+        if (UserInfo.sharedInstance().isLogin) {
             this.dataList.add(new TableEntity(true, "user", new TableEntity.IndexPath(0, 0)));
             this.dataList.add(new TableEntity(user, new TableEntity.IndexPath(0, 0)));
 
@@ -130,6 +141,8 @@ public class MyFragment extends BaseFragment {
             this.dataList.add(new TableEntity(setting, new TableEntity.IndexPath(2, 0)));
         }
 
+        this.sectionTableListAdapter = new MyAdapter(this.dataList);
+        this.recyclerView.setAdapter(this.sectionTableListAdapter);
     }
 
 
@@ -201,10 +214,9 @@ public class MyFragment extends BaseFragment {
             List<String> data = (List<String>)item.getObj();
             DLog.debug("section: "+data.get(2));
 
-//            if (indexPath.section == 0 && indexPath.row == 0) {
-//                UserInfo.sharedInstance().checkLoginStatus(getActivity());
-//                return;
-//            }
+            if (indexPath.section == 0 && indexPath.row ==0) {
+                if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {return;}
+            }
 
             Intent intent = new Intent();
             try {

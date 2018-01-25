@@ -2,15 +2,19 @@ package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.creactism.quicktalk.BaseActivity;
+import com.creactism.quicktalk.Marcos;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.QTProgressHUD;
+import com.creactism.quicktalk.components.QTToast;
+import com.creactism.quicktalk.services.account.model.AccountModel;
+import com.creactism.quicktalk.util.StringUtil;
 
 import java.util.HashMap;
 
@@ -46,8 +50,7 @@ public class AccountLoginActivity extends BaseActivity {
         this.navigationBar.backItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                overridePendingTransition(0, R.anim.activity_down_close);
+                backAction();
             }
         });
 
@@ -82,13 +85,7 @@ public class AccountLoginActivity extends BaseActivity {
         this.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QTProgressHUD.showHUD(AccountLoginActivity.this);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        QTProgressHUD.showHUDWithText("加载成功");
-                    }
-                }, 2000);
+                loginButtonAction();
             }
         });
 
@@ -113,6 +110,10 @@ public class AccountLoginActivity extends BaseActivity {
 
     }
 
+    private void backAction() {
+        finish();
+        overridePendingTransition(0, R.anim.activity_down_close);
+    }
 
     private void loginWithPlatform(String name) {
         Platform platform = ShareSDK.getPlatform(name);
@@ -124,13 +125,11 @@ public class AccountLoginActivity extends BaseActivity {
 
             @Override
             public void onError(Platform platform1, int arg1, Throwable arg2) {
-                // TODO Auto-generated method stub
                 arg2.printStackTrace();
             }
 
             @Override
             public void onComplete(Platform platform1, int arg1, HashMap<String, Object> arg2) {
-                // TODO Auto-generated method stub
                 //输出所有授权信息
                 platform1.getDb().exportData();
                 String uid = platform1.getDb().getUserId();
@@ -138,7 +137,6 @@ public class AccountLoginActivity extends BaseActivity {
 
             @Override
             public void onCancel(Platform arg0, int arg1) {
-                // TODO Auto-generated method stub
 
             }
         });
@@ -146,6 +144,45 @@ public class AccountLoginActivity extends BaseActivity {
             platform.removeAccount(true);
         }
         platform.showUser(null);//执行登录，登录后在回调里面获取用户资料
+    }
+
+    private void loginButtonAction() {
+
+        String account = this.accountField.getText().toString();
+        final String password = this.passwordField.getText().toString();
+
+        if (account.length() == 0) {
+            QTToast.makeText(this, "请输入手机号");
+            return;
+        }
+        if (password.length() == 0) {
+            QTToast.makeText(this, "请输入密码");
+            return;
+        }
+
+        if (StringUtil.isMobileNumber(account) == false) {
+            QTToast.makeText(this, "请输入正确手机号");
+        } else {
+            QTProgressHUD.showHUD(this);
+            AccountModel.requestLogin(account, StringUtil.md5(password), Marcos.QuickTalk_ACCOUNT_PHONE,
+                    new AccountModel.CompleteHandler(){
+                        @Override
+                        public void completeHanlder(AccountModel accountModel, Error error) {
+                            super.completeHanlder(accountModel, error);
+                            QTProgressHUD.hide();
+                            if (error != null) {
+                                QTToast.makeText(getBaseContext(), error.getMessage());
+                            } else {
+                                QTToast.makeText(getBaseContext(), "登录成功");
+                                UserInfo.sharedInstance().login(accountModel, password, Marcos.QuickTalk_ACCOUNT_PHONE);
+                                backAction();
+                            }
+                        }
+                    });
+        }
+
+
+
     }
 
 }
