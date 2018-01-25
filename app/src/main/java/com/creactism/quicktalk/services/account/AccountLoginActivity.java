@@ -76,6 +76,12 @@ public class AccountLoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backAction();
+    }
+
     private void buttonAction() {
         this.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
