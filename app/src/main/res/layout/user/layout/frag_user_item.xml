@@ -18,14 +18,21 @@
         android:layout_marginLeft="5dp" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"/>
     <TextView
         android:id="@+id/frag_user_item_text"
-        android:layout_toRightOf="@id/table_item_image" android:layout_marginLeft="2dp"
+        android:layout_marginLeft="4dp" android:layout_toRightOf="@id/frag_user_item_image"
         android:layout_centerVertical="true" android:gravity="left|center"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:textSize="14sp" android:singleLine="true"
-        android:ellipsize="end" android:maxEms="8" android:textColor="@color/black"
+        android:textSize="14sp" android:singleLine="true" android:text="sfsfsfsfafsdddddfdsfds"
+        android:ellipsize="end" android:maxEms="10" android:textColor="@color/black"
         android:textAllCaps="false" android:textStyle="normal"/>
 
-
+    <Button
+        android:layout_width="65dp" android:layout_height="28dp"
+        android:layout_centerVertical="true" android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:textSize="12sp" android:textColor="@color/QuickTalk_MAIN_COLOR" android:text="关注"
+        android:textStyle="normal" android:textAllCaps="false"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/user_button_style1"/>
 
     </RelativeLayout>
 

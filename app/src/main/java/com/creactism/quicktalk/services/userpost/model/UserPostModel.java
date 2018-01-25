@@ -224,20 +224,23 @@ public class UserPostModel extends Object {
                 "GET", params, new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
-                        List<UserPostModel> array = null;
-                        if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
-                            try {
-                                String data = String.valueOf(responseObject.getData());
-                                array =  JSON.parseArray(data, UserPostModel.class);
-                            } catch (Exception e) {
-                                ;
-                            }
-                            completeHandlerObj.completeHanlder(array, null);
-                        } else {
-                            error = new Error(responseObject.getMessage());
+                        if (error != null) {
                             completeHandlerObj.completeHanlder(null, error);
+                        } else {
+                            List<UserPostModel> array = null;
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                try {
+                                    String data = String.valueOf(responseObject.getData());
+                                    array =  JSON.parseArray(data, UserPostModel.class);
+                                } catch (Exception e) {
+                                    ;
+                                }
+                                completeHandlerObj.completeHanlder(array, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandlerObj.completeHanlder(null, error);
+                            }
                         }
-
                     }
          });
     }

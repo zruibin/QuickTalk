@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
@@ -66,7 +67,7 @@ public class UserStarFragment extends BaseFragment {
 
         this.adapter = new UserStarOrFansAdapter();
 //        this.adapter.setActivity(this.getActivity());
-        View headerView = getLayoutInflater().inflate(R.layout.frag_user_star_header, (ViewGroup)this.recyclerView.getParent(), false);
+        View headerView = getHeaderView();
         this.adapter.setHeaderView(headerView);
 
         this.adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -104,6 +105,28 @@ public class UserStarFragment extends BaseFragment {
         this.adapter.setNewData(this.dataList);
         refreshLayout.setRefreshing(false);
         adapter.loadMoreComplete();
+    }
+
+
+    private View getHeaderView() {
+        /**haderView中子类不能是View类型*/
+        View headerView = getLayoutInflater().
+                inflate(R.layout.frag_user_star_header, (ViewGroup)this.recyclerView.getParent(), false);
+        RelativeLayout searchLayout = (RelativeLayout)headerView.findViewById(R.id.frag_user_star_header_search);
+        searchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DLog.debug("searchLayout...");
+            }
+        });
+        RelativeLayout contactLayout = (RelativeLayout)headerView.findViewById(R.id.frag_user_star_header_contact);
+        contactLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DLog.debug("contactLayout...");
+            }
+        });
+        return headerView;
     }
 
 

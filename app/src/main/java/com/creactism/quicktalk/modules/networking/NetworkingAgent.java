@@ -30,12 +30,16 @@ public class NetworkingAgent extends Object {
             @Override
             public void success(String responseString)  {
                 QTResponseObject responseObject = QTResponseObject.createInstance(responseString);
-                handler.completeHanlder(responseObject, null);
+                if (responseObject == null) {
+                    handler.completeHanlder(null, new Error("网络开了点小差，请稍后再试!"));
+                } else {
+                    handler.completeHanlder(responseObject, null);
+                }
             }
         }, new Networking.Failure(){
             @Override
             public void failure(IOException error) {
-                handler.completeHanlder(null, new Error(error.getMessage()));
+                handler.completeHanlder(null, new Error("网络开了点小差，请稍后再试!"));
             }
         });
     }

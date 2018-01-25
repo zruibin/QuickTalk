@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
@@ -18,6 +19,7 @@ import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
+import com.creactism.quicktalk.util.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -199,14 +201,18 @@ public class UserPostListFragment extends BaseFragment {
         UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
             @Override
             public void completeHanlder(List<UserPostModel> list, Error error) {
+                refreshLayout.setRefreshing(false);
+                userPostAdapter.loadMoreComplete();
+                if (error != null) {
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 dataList.addAll(list);
                 if (index == 1) {
                     userPostAdapter.setNewData(list);
                 } else {
                     userPostAdapter.addData(list);
                 }
-                refreshLayout.setRefreshing(false);
-                userPostAdapter.loadMoreComplete();
             }
         });
     }

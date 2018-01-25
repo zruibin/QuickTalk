@@ -19,7 +19,14 @@ public final class QTResponseObject extends Object {
     private Object data;
 
     public static QTResponseObject createInstance(String string) {
-        QTResponseObject obj = JSON.parseObject(string, QTResponseObject.class);
+
+        QTResponseObject obj = null;
+        try {
+            obj = JSON.parseObject(string, QTResponseObject.class);
+        } catch (Exception e) {
+
+        }
+
         return obj;
     }
 
