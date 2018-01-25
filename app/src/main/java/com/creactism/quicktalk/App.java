@@ -88,6 +88,7 @@ public final class App extends Application {
         QTCache.sharedCache().initCache(this.getApplicationContext());
         /*初始化图片缓存库*/
         Fresco.initialize(this);
+        UserInfo.sharedInstance().initApp(this);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

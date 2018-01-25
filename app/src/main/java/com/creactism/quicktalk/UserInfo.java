@@ -3,7 +3,6 @@ package com.creactism.quicktalk;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.account.AccountLoginActivity;
 import com.creactism.quicktalk.services.account.model.AccountModel;
@@ -23,6 +22,9 @@ public final class UserInfo extends Object {
     private static final String QTLoginType = "kQTLoginType";
 
     private static UserInfo instance = new UserInfo();
+    private App app;
+
+    public void initApp(App app) {this.app = app;}
 
     private UserInfo(){}
 
@@ -72,6 +74,9 @@ public final class UserInfo extends Object {
     }
 
     public String getNickname() {
+        if (this.nickname == null || this.nickname.length() == 0) {
+            nickname = "用户"+this.id;
+        }
         return nickname;
     }
 
@@ -177,7 +182,7 @@ public final class UserInfo extends Object {
         QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
         QTCache.sharedCache().put(QTLoginPassword, StringUtil.md5(password));
         QTCache.sharedCache().put(QTLoginType, type);
-        NotificationCenter.defaultCenter().postNotification(QTLoginStatusChangeNotification);
+        this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 
     public void logout() {

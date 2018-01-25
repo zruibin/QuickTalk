@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class NetworkingAgent extends Object {
 
-//    public final static String QuickTalk_SERVICE_HOST = "http://192.168.0.103/service";
-    public final static String QuickTalk_SERVICE_HOST = "http://creactism.com/service";
+    public final static String QuickTalk_SERVICE_HOST = "http://192.168.0.116/service";
+//    public final static String QuickTalk_SERVICE_HOST = "http://creactism.com/service";
     public final static String  SERVICE_REQUEST_GET = "GET";
     public final static String  SERVICE_REQUEST_POST = "POST";
 

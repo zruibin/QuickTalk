@@ -1,6 +1,9 @@
 package com.creactism.quicktalk.services.user;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +25,6 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
-import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.creactism.quicktalk.util.StringUtil;
@@ -44,11 +46,12 @@ public class MyFragment extends BaseFragment {
     private LinearLayoutManager layoutManager;
     private List<TableEntity> dataList;
     private TableListAdapter sectionTableListAdapter;
+    private BroadcastReceiver receiver;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        NotificationCenter.defaultCenter().removeObserver(this, QTLoginStatusChangeNotification);
+        getActivity().unregisterReceiver(receiver);
     }
 
     @Nullable
@@ -62,14 +65,15 @@ public class MyFragment extends BaseFragment {
         this.dataList = new ArrayList<TableEntity>();
         initSubView(view);
 
-        NotificationCenter.defaultCenter().addObserver(this, QTLoginStatusChangeNotification, new NotificationCenter.SelectorHandler() {
+        this.receiver = new BroadcastReceiver() {
             @Override
-            public void handler(Object object) {
+            public void onReceive(Context context, Intent intent) {
                 loadData();
             }
-        });
-        loadData();
+        };
+        getActivity().registerReceiver(this.receiver, new IntentFilter(QTLoginStatusChangeNotification));
 
+        loadData();
         return view;
     }
 
@@ -188,10 +192,13 @@ public class MyFragment extends BaseFragment {
             });
 
             List<String> data = (List<String>)item.getObj();
-            if (StringUtil.isValidUrl(data.get(0))) {
-                imageView.setImageURI(Uri.parse(data.get(0)));
-            } else {
-                imageView.setImageURI(Tools.getResoucesUri(Integer.parseInt(data.get(0))));
+            String imageUrl = data.get(0);
+            if (imageUrl != null && imageUrl.length() > 0) {
+                if (StringUtil.isValidUrl(data.get(0))) {
+                    imageView.setImageURI(Uri.parse(data.get(0)));
+                } else {
+                    imageView.setImageURI(Tools.getResoucesUri(Integer.parseInt(data.get(0))));
+                }
             }
 
             TextView textView = helper.getView(this.table_text_id);

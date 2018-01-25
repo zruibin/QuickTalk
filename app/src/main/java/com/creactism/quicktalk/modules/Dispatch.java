@@ -20,7 +20,7 @@ public final class Dispatch extends Object {
         }
     };
 
-    public final static Handler DISPATCH_GET_MAIN_QUEUE = mainHandler;
+    public final static Handler DISPATCH_GET_MAIN_QUEUE = Dispatch.mainHandler;
 
     public static void dispatchAsync(Handler handler, final DispatchBlock block) {
         Message msg = handler.obtainMessage();

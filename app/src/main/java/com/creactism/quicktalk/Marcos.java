@@ -6,7 +6,7 @@ package com.creactism.quicktalk;
 
 public final class Marcos {
 
-    public static final String QTLoginStatusChangeNotification = "kQTLoginStatusChangeNotification";
+    public static final String QTLoginStatusChangeNotification = "com.creactism.quicktalk.QTLoginStatusChangeNotification";
 
     /*登录用类型*/
     public static final String QuickTalk_ACCOUNT_EMAIL = "1";

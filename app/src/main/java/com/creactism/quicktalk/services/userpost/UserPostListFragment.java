@@ -15,11 +15,9 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
-import com.creactism.quicktalk.util.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,25 +34,6 @@ public class UserPostListFragment extends BaseFragment {
     private List<UserPostModel> dataList;
     private UserPostAdapter userPostAdapter;
     private int index = 1;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
-            @Override
-            public void handler(Object object) {
-                DLog.warn("NotificationCenter handler2: " + (String)object);
-            }
-        });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        NotificationCenter.defaultCenter().removeObserver(this.getActivity(), "testNotification");
-
-    }
 
     @Override
     public void onDestroy() {

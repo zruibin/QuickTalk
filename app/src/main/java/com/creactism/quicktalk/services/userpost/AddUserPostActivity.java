@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.BaseActivity;
-import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.util.DLog;
 
 /**
@@ -42,20 +41,8 @@ public class AddUserPostActivity extends BaseActivity {
 //        lineLayout.setGravity(Gravity.TOP);
 //        this.addView(lineLayout);
 //        setContentView(lineLayout);
-
-        NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
-            @Override
-            public void handler(Object object) {
-                DLog.warn("NotificationCenter handler3: " + (String)object);
-            }
-        });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        NotificationCenter.defaultCenter().removeObserver(this, "testNotification");
-    }
 
     private void addView(final LinearLayout lineLayout) {
 
@@ -114,8 +101,6 @@ public class AddUserPostActivity extends BaseActivity {
                 } else {
 //                    Toast.makeText(AddUserPostActivity.this, "文本已被删除", Toast.LENGTH_SHORT).show();
                 }
-
-                NotificationCenter.defaultCenter().postNotification("testNotification", "stringObject...");
             }
         });
 

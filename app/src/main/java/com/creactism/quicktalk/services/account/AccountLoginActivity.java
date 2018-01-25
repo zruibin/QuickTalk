@@ -67,12 +67,21 @@ public class AccountLoginActivity extends BaseActivity {
         buttonAction();
     }
 
+    // 回调方法，从第二个页面回来的时候会执行这个方法
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1010 && data != null) {
+            String finishStr = data.getStringExtra("finish");
+            if (finishStr != null) { backAction(); }
+        }
+    }
+
     private void buttonAction() {
         this.registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent().setClass(getBaseContext(), AccountRegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1010);
             }
         });
         this.forgetButton.setOnClickListener(new View.OnClickListener() {
@@ -180,9 +189,6 @@ public class AccountLoginActivity extends BaseActivity {
                         }
                     });
         }
-
-
-
     }
 
 }

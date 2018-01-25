@@ -3,7 +3,6 @@ package com.creactism.quicktalk.services.userpost;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
-import com.creactism.quicktalk.modules.NotificationCenter;
 import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.util.DLog;
 
@@ -27,18 +25,6 @@ public class StarUserPostFragment extends BaseFragment {
 
         this.getActivity().setTitle("UserPost....");
 //        QTCache.sharedCache().put("testCache", "testCacheValue....");
-        NotificationCenter.defaultCenter().addObserver(this, "testNotification", new NotificationCenter.SelectorHandler(){
-            @Override
-            public void handler(Object object) {
-                DLog.warn("NotificationCenter handler: " + (String)object);
-            }
-        });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        NotificationCenter.defaultCenter().removeObserver(this, "testNotification");
     }
 
     @Override

@@ -177,9 +177,38 @@ public class AccountModel {
                 }
             }
         });
-
     }
 
+    public static void requestRegisterUser(String account, String password, String type, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("account", account);
+        params.put("type", type);
+        params.put("password", password);
+        NetworkingAgent.requestDataForAccountService("/register", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(null, error);
+                        } else {
+                            AccountModel model = null;
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                try {
+                                    String data = String.valueOf(responseObject.getData());
+                                    model = JSONObject.parseObject(data, AccountModel.class);
+                                } catch (Exception e) {
+                                    ;
+                                }
+                                completeHandler.completeHanlder(model, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(null, error);
+                            }
+                        }
+                    }
+                });
+
+    }
 
 
 }
