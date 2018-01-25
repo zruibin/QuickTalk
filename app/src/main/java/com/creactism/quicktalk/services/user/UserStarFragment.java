@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -116,7 +117,8 @@ public class UserStarFragment extends BaseFragment {
         searchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DLog.debug("searchLayout...");
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserSearchActivity.class);
+                startActivity(intent);
             }
         });
         RelativeLayout contactLayout = (RelativeLayout)headerView.findViewById(R.id.frag_user_star_header_contact);
