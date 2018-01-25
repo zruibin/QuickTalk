@@ -146,6 +146,7 @@ public class AccountModel {
 
     public static class CompleteHandler extends Object {
         public void completeHanlder (AccountModel accountModel, Error error){};
+        public void completeHanlder (boolean action, Error error){};
     }
 
     public static void requestLogin(String account, String password, String type, final CompleteHandler completeHandler) {
@@ -207,8 +208,30 @@ public class AccountModel {
                         }
                     }
                 });
-
     }
 
+    public static void requestForgetPassword(String account, String password, String type, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("account", account);
+        params.put("type", type);
+        params.put("newpassword", password);
+        NetworkingAgent.requestDataForAccountService("/forgetPassword", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(false, error);
+                        } else {
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+
+                                completeHandler.completeHanlder(true, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(false, error);
+                            }
+                        }
+                    }
+                });
+    }
 
 }
