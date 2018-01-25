@@ -125,7 +125,8 @@ public class UserStarFragment extends BaseFragment {
         contactLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DLog.debug("contactLayout...");
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserContactBookActivity.class);
+                startActivity(intent);
             }
         });
         return headerView;
