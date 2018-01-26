@@ -19,9 +19,11 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
 from common.file import FileTypeException, uploadPicture
+from common.auth import vertifyTokenHandle
 
 
 @account.route('/changeAvatar', methods=["POST"])
+@vertifyTokenHandle
 def changeAvatar():
     userUUID = getValueFromRequestByKey("user_uuid")
 

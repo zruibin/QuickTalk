@@ -19,9 +19,11 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey, fullPathForMediasFile
+from common.auth import vertifyTokenHandle
 
 
 @account.route('/changeInfo', methods=["POST"])
+@vertifyTokenHandle
 def changeInfo():
     userUUID = getValueFromRequestByKey("user_uuid")
     typeStr = getValueFromRequestByKey("type")
