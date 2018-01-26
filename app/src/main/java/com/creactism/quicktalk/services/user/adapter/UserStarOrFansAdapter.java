@@ -55,7 +55,6 @@ public class UserStarOrFansAdapter extends BaseQuickAdapter <UserModel, BaseView
         Button actionButton = helper.getView(R.id.frag_user_item_action);
 
         if (model.getAvatar() != null) {
-            DLog.warn(model.getAvatar());
             imageView.setImageURI(Uri.parse(model.getAvatar()));
         }
         textView.setText(model.getNickname());
@@ -69,8 +68,13 @@ public class UserStarOrFansAdapter extends BaseQuickAdapter <UserModel, BaseView
                 int color = activity.getResources().getColor(R.color.QuickTalk_MAIN_COLOR);
                 actionButton.setTextColor(color);
                 actionButton.setBackground(activity.getResources().getDrawable(R.drawable.user_button_style1, null));
-            } else { //已关注，即相互关注了
+            } else if (model.getRelation() == UserModel.UserRelationStarAndBeStar){ //已关注，即相互关注了
                 actionButton.setText("相互关注");
+                int color = activity.getResources().getColor(R.color.QuickTalk_SECOND_FONT_COLOR);
+                actionButton.setTextColor(color);
+                actionButton.setBackground(activity.getResources().getDrawable(R.drawable.user_button_style2, null));
+            } else {
+                actionButton.setText("已关注");
                 int color = activity.getResources().getColor(R.color.QuickTalk_SECOND_FONT_COLOR);
                 actionButton.setTextColor(color);
                 actionButton.setBackground(activity.getResources().getDrawable(R.drawable.user_button_style2, null));

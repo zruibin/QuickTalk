@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.user.model;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.creactism.quicktalk.modules.networking.NetworkingAgent;
 import com.creactism.quicktalk.modules.networking.QTResponseObject;
@@ -152,6 +153,7 @@ public class UserModel {
     public static class CompleteHandler extends Object {
         public void completeHanlder (List<UserModel> list, Error error){};
         public void completeHanlder (boolean action, Error error){};
+        public void completeHanlder (Map<String, String> map, Error error){};
     }
 
 
@@ -165,7 +167,7 @@ public class UserModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder(null, error);
+                    completeHandler.completeHanlder((List)null, error);
                 } else {
                     List<UserModel> list = new ArrayList<UserModel>();
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -178,7 +180,7 @@ public class UserModel {
                         completeHandler.completeHanlder(list, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder(null, error);
+                        completeHandler.completeHanlder((List)null, error);
                     }
                 }
             }
@@ -197,7 +199,7 @@ public class UserModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder(null, error);
+                    completeHandler.completeHanlder((List)null, error);
                 } else {
                     List<UserModel> list = new ArrayList<UserModel>();
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -210,7 +212,7 @@ public class UserModel {
                         completeHandler.completeHanlder(list, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder(null, error);
+                        completeHandler.completeHanlder((List)null, error);
                     }
                 }
             }
@@ -242,5 +244,59 @@ public class UserModel {
         });
     }
 
+    public static void requestPhoneUserData(String userUUID, List<String> phoneList, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        String phoneListString = JSON.toJSONString(phoneList);
+        params.put("phoneList", phoneListString);
+        NetworkingAgent.requestDataForUserService("/phoneListUsers", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder((List)null, error);
+                } else {
+                    List<UserModel> list = new ArrayList<UserModel>();
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            list = JSONObject.parseArray(data, UserModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandler.completeHanlder(list, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder((List)null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestStarRelation(String userUUID, List<String> uuidList, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        String uuidListString = JSON.toJSONString(uuidList);
+        params.put("uuidList", uuidListString);
+        NetworkingAgent.requestDataForStarService("/queryStarUserRelation", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder((Map<String, String>)null, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        String data = String.valueOf(responseObject.getData());
+                        Map<String, String> map = JSONObject.parseObject(data, Map.class);
+                        completeHandler.completeHanlder(map, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder((Map<String, String>)null, error);
+                    }
+                }
+            }
+        });
+    }
 
 }

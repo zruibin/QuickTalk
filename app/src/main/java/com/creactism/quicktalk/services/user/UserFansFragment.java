@@ -3,7 +3,6 @@ package com.creactism.quicktalk.services.user;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -122,6 +121,13 @@ public class UserFansFragment extends BaseFragment {
                 if (error != null) {
                     QTToast.makeText(getActivity(), error.getMessage());
                 } else {
+                    for (UserModel model: list) {
+                        if (model.getRelation() == UserModel.UserRelationStar) {
+                            model.setRelation(UserModel.UserRelationStarAndBeStar);
+                        } else {
+                            model.setRelation(UserModel.UserRelationDefault);
+                        }
+                    }
                     if (list.size() < 10) {
                         adapter.loadMoreEnd();
                     }
@@ -138,7 +144,7 @@ public class UserFansFragment extends BaseFragment {
 
     private void starOrUnStarAction(final UserModel model) {
         String action = Marcos.STAR_ACTION_FOR_STAR;
-        if (model.getRelation() == UserModel.UserRelationStar) {
+        if (model.getRelation() == UserModel.UserRelationStarAndBeStar) {
             action = Marcos.STAR_ACTION_FOR_UNSTAR;
         }
         String userUUID = UserInfo.sharedInstance().getUuid();
@@ -150,10 +156,10 @@ public class UserFansFragment extends BaseFragment {
                 if (error != null) {
                     QTToast.makeText(getActivity(), error.getMessage());
                 } else {
-                    if (model.getRelation() == UserModel.UserRelationStar) {
-                        model.setRelation(UserModel.UserRelationDefault);
+                    if (model.getRelation() == UserModel.UserRelationDefault) {
+                        model.setRelation(UserModel.UserRelationStarAndBeStar);
                     } else {
-                        model.setRelation(UserModel.UserRelationStar);
+                        model.setRelation(UserModel.UserRelationDefault);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -161,5 +167,5 @@ public class UserFansFragment extends BaseFragment {
         });
     }
 
-    
+
 }
