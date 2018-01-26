@@ -1,5 +1,7 @@
 package com.creactism.quicktalk.modules.networking;
 
+import com.creactism.quicktalk.UserInfo;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,6 +27,11 @@ public class NetworkingAgent extends Object {
     public static void requestDataForQuickTalkService(String serviceURL, String method,
                                                       Map<String, String> params, final CompleteHandler
                                                              handler) {
+        if (UserInfo.sharedInstance().isLogin &&
+                UserInfo.sharedInstance().getToken() != null &&
+                UserInfo.sharedInstance().getToken().length() > 0) {
+            params.put("token", UserInfo.sharedInstance().getToken());
+        }
         String fullURL = NetworkingAgent.appendHostURL(serviceURL);
         Networking.handleRequest(fullURL, method, params, new Networking.Success(){
             @Override

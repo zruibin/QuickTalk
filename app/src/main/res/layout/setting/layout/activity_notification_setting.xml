@@ -8,7 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/gray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="40dp"
         android:orientation="horizontal" android:background="@color/white">
@@ -18,7 +18,7 @@
             android:textColor="@color/black"
             android:textSize="14sp" android:text="评论"/>
         <Switch
-            android:theme="@style/QTSwitch"
+            android:theme="@style/QTSwitch" android:checked="true"
             android:id="@+id/activity_notification_setting_comment"
             android:layout_alignParentRight="true" android:layout_centerVertical="true"
             android:layout_width="60dp" android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/gray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="40dp"
         android:orientation="horizontal" android:background="@color/white">
@@ -37,7 +37,7 @@
             android:textColor="@color/black"
             android:textSize="14sp" android:text="赞"/>
         <Switch
-            android:theme="@style/QTSwitch"
+            android:theme="@style/QTSwitch" android:checked="true"
             android:id="@+id/activity_notification_setting_like"
             android:layout_width="60dp" android:layout_height="wrap_content"
             android:layout_alignParentRight="true" android:layout_centerVertical="true"
@@ -46,7 +46,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/gray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="40dp"
         android:orientation="horizontal" android:background="@color/white">
@@ -56,7 +56,7 @@
             android:textColor="@color/black"
             android:textSize="14sp" android:text="新的关注"/>
         <Switch
-            android:theme="@style/QTSwitch"
+            android:theme="@style/QTSwitch" android:checked="true"
             android:id="@+id/activity_notification_setting_star"
             android:layout_width="60dp" android:layout_height="wrap_content"
             android:layout_alignParentRight="true" android:layout_centerVertical="true"
@@ -65,7 +65,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/gray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="40dp"
         android:orientation="horizontal" android:background="@color/white">
@@ -84,6 +84,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/gray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
 
 </LinearLayout>

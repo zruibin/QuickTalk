@@ -8,12 +8,18 @@ public final class Marcos {
 
     public static final String QTLoginStatusChangeNotification = "com.creactism.quicktalk.QTLoginStatusChangeNotification";
 
-    /*登录用类型*/
+    /**登录用类型*/
     public static final String QuickTalk_ACCOUNT_EMAIL = "1";
     public static final String QuickTalk_ACCOUNT_PHONE = "2";
     public static final String QuickTalk_ACCOUNT_WECHAT = "8";
     public static final String QuickTalk_ACCOUNT_QQ = "9";
     public static final String QuickTalk_ACCOUNT_WEIBO = "10";
+
+    /**推送通知类型*/
+    public static final String NOTIFICATION_FOR_LIKE = "1";
+    public static final String NOTIFICATION_FOR_COMMENT = "2";
+    public static final String NOTIFICATION_FOR_NEW_STAR = "3";
+    public static final String NOTIFICATION_FOR_NEW_SHARE = "4";
 
     public static final int QuickTalk_GENDER_MALE = 1;
     public static final int QuickTalk_GENDER_FEMALE = 2;

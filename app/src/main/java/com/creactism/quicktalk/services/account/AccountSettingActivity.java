@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseActivity;
+import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -46,7 +48,9 @@ public class AccountSettingActivity extends BaseActivity {
         this.loadData();
         this.layoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        this.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(getBaseContext(),
+                LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
         this.sectionTableListAdapter = new AccountSettingAdapter(this.dataList);
         this.recyclerView.setAdapter(this.sectionTableListAdapter);

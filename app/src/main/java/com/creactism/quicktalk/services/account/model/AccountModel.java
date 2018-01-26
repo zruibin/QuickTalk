@@ -147,6 +147,7 @@ public class AccountModel {
     public static class CompleteHandler extends Object {
         public void completeHanlder (AccountModel accountModel, Error error){};
         public void completeHanlder (boolean action, Error error){};
+        public void completeHanlder (Map<String, Boolean> map, Error error){};
     }
 
     public static void requestLogin(String account, String password, String type, final CompleteHandler completeHandler) {
@@ -160,7 +161,7 @@ public class AccountModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder(null, error);
+                    completeHandler.completeHanlder((AccountModel)null, error);
                 } else {
                     AccountModel model = null;
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -173,7 +174,7 @@ public class AccountModel {
                         completeHandler.completeHanlder(model, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder(null, error);
+                        completeHandler.completeHanlder((AccountModel)null, error);
                     }
                 }
             }
@@ -190,7 +191,7 @@ public class AccountModel {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
                         if (error != null) {
-                            completeHandler.completeHanlder(null, error);
+                            completeHandler.completeHanlder((AccountModel)null, error);
                         } else {
                             AccountModel model = null;
                             if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -203,7 +204,7 @@ public class AccountModel {
                                 completeHandler.completeHanlder(model, null);
                             } else {
                                 error = new Error(responseObject.getMessage());
-                                completeHandler.completeHanlder(null, error);
+                                completeHandler.completeHanlder((AccountModel)null, error);
                             }
                         }
                     }
@@ -220,7 +221,7 @@ public class AccountModel {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
                         if (error != null) {
-                            completeHandler.completeHanlder(null, error);
+                            completeHandler.completeHanlder((AccountModel)null, error);
                         } else {
                             AccountModel model = null;
                             if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -233,7 +234,7 @@ public class AccountModel {
                                 completeHandler.completeHanlder(model, null);
                             } else {
                                 error = new Error(responseObject.getMessage());
-                                completeHandler.completeHanlder(null, error);
+                                completeHandler.completeHanlder((AccountModel)null, error);
                             }
                         }
                     }
@@ -253,7 +254,62 @@ public class AccountModel {
                             completeHandler.completeHanlder(false, error);
                         } else {
                             if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                completeHandler.completeHanlder(true, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(false, error);
+                            }
+                        }
+                    }
+                });
+    }
 
+    public static void requestForSettingList(String userUUID, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        NetworkingAgent.requestDataForAccountService("/settingList", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder((Map<String, Boolean>) null, error);
+                        } else {
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                String data = String.valueOf(responseObject.getData());
+                                Map<String, Integer> map = JSONObject.parseObject(data, Map.class);
+                                Map<String, Boolean> resultMap = new HashMap<String, Boolean>();
+                                for (String key: map.keySet()) {
+                                    Integer value = map.get(key);
+                                    if (value.intValue() == 1) {
+                                        resultMap.put(key, true);
+                                    } else {
+                                        resultMap.put(key, false);
+                                    }
+                                }
+                                completeHandler.completeHanlder(resultMap, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder((Map<String, Boolean>) null, error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void requestForSetting(String userUUID, String type, Boolean status, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        params.put("type", type);
+        String statusStr = status == true ? "1" : "0";
+        params.put("status", statusStr);
+        NetworkingAgent.requestDataForAccountService("/setting", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(false, error);
+                        } else {
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
                                 completeHandler.completeHanlder(true, null);
                             } else {
                                 error = new Error(responseObject.getMessage());
