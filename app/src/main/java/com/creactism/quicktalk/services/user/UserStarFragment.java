@@ -15,7 +15,12 @@ import android.widget.RelativeLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.QTProgressHUD;
+import com.creactism.quicktalk.components.QTToast;
+import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.user.adapter.UserStarOrFansAdapter;
+import com.creactism.quicktalk.services.user.model.UserModel;
 import com.creactism.quicktalk.util.DLog;
 
 import java.util.ArrayList;
@@ -30,7 +35,7 @@ public class UserStarFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
-    private List<String> dataList;
+    private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
 
@@ -42,10 +47,7 @@ public class UserStarFragment extends BaseFragment {
         this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.frag_user_star_refresh);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.frag_user_star_recyclerview);
 
-        this.dataList = new ArrayList<String>();
-        for (int i=0; i<20; ++i) {
-            this.dataList.add(String.valueOf(i));
-        }
+        this.dataList = new ArrayList<UserModel>();
 
         initViews(view);
         return view;
@@ -54,7 +56,8 @@ public class UserStarFragment extends BaseFragment {
     private void initViews(View view) {
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
+                LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
         this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -67,7 +70,7 @@ public class UserStarFragment extends BaseFragment {
         });
 
         this.adapter = new UserStarOrFansAdapter();
-//        this.adapter.setActivity(this.getActivity());
+        this.adapter.setHiddenRelation(true);
         View headerView = getHeaderView();
         this.adapter.setHeaderView(headerView);
 
@@ -86,7 +89,7 @@ public class UserStarFragment extends BaseFragment {
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                DLog.info("position: " + position);
             }
         });
 
@@ -103,9 +106,28 @@ public class UserStarFragment extends BaseFragment {
     }
 
     private void loadData() {
-        this.adapter.setNewData(this.dataList);
-        refreshLayout.setRefreshing(false);
-        adapter.loadMoreComplete();
+        String userUUID = UserInfo.sharedInstance().getUuid();
+        UserModel.requestForStarUser(userUUID, this.index, new UserModel.CompleteHandler(){
+            @Override
+            public void completeHanlder(List<UserModel> list, Error error) {
+                super.completeHanlder(list, error);
+                refreshLayout.setRefreshing(false);
+                adapter.loadMoreComplete();
+                if (error != null) {
+                    QTToast.makeText(getActivity(), error.getMessage());
+                } else {
+                    if (list.size() < 10) {
+                        adapter.loadMoreEnd();
+                    }
+                    if (index == 1) {
+                        adapter.setNewData(list);
+                    } else {
+                        adapter.addData(list);
+                    }
+                    dataList.addAll(list);
+                }
+            }
+        });
     }
 
 

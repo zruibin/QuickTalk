@@ -30,6 +30,7 @@ import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.QTProgressHUD;
 import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.services.account.model.AccountModel;
+import com.creactism.quicktalk.services.user.model.UserModel;
 import com.creactism.quicktalk.util.BitmapUtil;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
@@ -84,6 +85,10 @@ public class AccountChangeAvatarActivity extends BaseActivity {
         this.initViews(lineLayout);
         setContentView(lineLayout);
         runtimePermissions();
+
+        if (UserInfo.sharedInstance().getAvatar() != null) {
+            this.imageView.setImageURI(Uri.parse(UserInfo.sharedInstance().getAvatar()));
+        }
     }
 
     @Override

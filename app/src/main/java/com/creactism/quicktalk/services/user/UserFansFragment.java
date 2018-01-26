@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.user.adapter.UserStarOrFansAdapter;
+import com.creactism.quicktalk.services.user.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class UserFansFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
-    private List<String> dataList;
+    private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
 
@@ -39,10 +41,7 @@ public class UserFansFragment extends BaseFragment {
         this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.frag_user_fans_refresh);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.frag_user_fans_recyclerview);
 
-        this.dataList = new ArrayList<String>();
-        for (int i=0; i<20; ++i) {
-            this.dataList.add(String.valueOf(i));
-        }
+        this.dataList = new ArrayList<UserModel>();
 
         initViews(view);
         return view;
@@ -51,7 +50,8 @@ public class UserFansFragment extends BaseFragment {
     private void initViews(View view) {
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
+                LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
         this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -92,7 +92,7 @@ public class UserFansFragment extends BaseFragment {
     }
 
     private void loadData() {
-        this.adapter.setNewData(this.dataList);
+//        this.adapter.setNewData(this.dataList);
         refreshLayout.setRefreshing(false);
         adapter.loadMoreComplete();
     }
