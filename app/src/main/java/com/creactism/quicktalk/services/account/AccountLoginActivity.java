@@ -203,8 +203,9 @@ public class AccountLoginActivity extends BaseActivity {
         if (StringUtil.isMobileNumber(account) == false) {
             QTToast.makeText(this, "请输入正确手机号");
         } else {
+            final String md5Password = StringUtil.md5(password);
             QTProgressHUD.showHUD(this);
-            AccountModel.requestLogin(account, StringUtil.md5(password), Marcos.QuickTalk_ACCOUNT_PHONE,
+            AccountModel.requestLogin(account, md5Password, Marcos.QuickTalk_ACCOUNT_PHONE,
                     new AccountModel.CompleteHandler(){
                         @Override
                         public void completeHanlder(AccountModel accountModel, Error error) {
@@ -214,7 +215,7 @@ public class AccountLoginActivity extends BaseActivity {
                                 QTToast.makeText(getBaseContext(), error.getMessage());
                             } else {
                                 QTToast.makeText(getBaseContext(), "登录成功");
-                                UserInfo.sharedInstance().login(accountModel, password, Marcos.QuickTalk_ACCOUNT_PHONE);
+                                UserInfo.sharedInstance().login(accountModel, md5Password, Marcos.QuickTalk_ACCOUNT_PHONE);
                                 backAction();
                             }
                         }
@@ -227,8 +228,9 @@ public class AccountLoginActivity extends BaseActivity {
             QTToast.makeText(this, "登录失败");
             return;
         }
+        final String md5OpenId = StringUtil.md5(openId);
         QTProgressHUD.showHUD(this);
-        AccountModel.requestLoginForThirdPart(StringUtil.md5(openId), this.loginType, new AccountModel.CompleteHandler(){
+        AccountModel.requestLoginForThirdPart(md5OpenId, this.loginType, new AccountModel.CompleteHandler(){
             @Override
             public void completeHanlder(AccountModel accountModel, Error error) {
                 super.completeHanlder(accountModel, error);
@@ -237,7 +239,7 @@ public class AccountLoginActivity extends BaseActivity {
                     QTToast.makeText(getBaseContext(), error.getMessage());
                 } else {
                     QTToast.makeText(getBaseContext(), "登录成功");
-                    UserInfo.sharedInstance().loginWithThirdPart(accountModel, openId, loginType);
+                    UserInfo.sharedInstance().loginWithThirdPart(accountModel, md5OpenId, loginType);
                     backAction();
                 }
             }

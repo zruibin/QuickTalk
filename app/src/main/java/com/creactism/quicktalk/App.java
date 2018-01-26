@@ -99,7 +99,8 @@ public final class App extends Application {
 
         MobSDK.init(this);
         CrashReport.initCrashReport(getApplicationContext(), "abbac601ae", false);
-
+        /**自动登录*/
+        UserInfo.sharedInstance().loginInBackground();
 
     }
 

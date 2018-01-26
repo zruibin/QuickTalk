@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.account.AccountLoginActivity;
 import com.creactism.quicktalk.services.account.model.AccountModel;
-import com.creactism.quicktalk.util.StringUtil;
 
 import static com.creactism.quicktalk.Marcos.QTLoginStatusChangeNotification;
 
@@ -185,14 +184,14 @@ public final class UserInfo extends Object {
             QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
         }
         if (password != null) {
-            QTCache.sharedCache().put(QTLoginPassword, StringUtil.md5(password));
+            QTCache.sharedCache().put(QTLoginPassword, password);
         }
         QTCache.sharedCache().put(QTLoginType, type);
         this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 
     public void loginWithThirdPart(AccountModel accountModel, String openId, String type) {
-        QTCache.sharedCache().put(QTLoginOpenId, StringUtil.md5(openId));
+        QTCache.sharedCache().put(QTLoginOpenId, openId);
         login(accountModel, null, type);
     }
 
@@ -210,7 +209,37 @@ public final class UserInfo extends Object {
     }
 
     public void loginInBackground() {
+        String account = QTCache.sharedCache().getString(QTLoginAccount);
+        final String password = QTCache.sharedCache().getString(QTLoginPassword);
+        final String type = QTCache.sharedCache().getString(QTLoginType);
+        final String openId = QTCache.sharedCache().getString(QTLoginOpenId);
+        if (type == null || type.length() == 0) {
+            return;
+        }
 
+        if (type.equals(Marcos.QuickTalk_ACCOUNT_PHONE)) {
+            AccountModel.requestLogin(account, password, type, new AccountModel.CompleteHandler() {
+                @Override
+                public void completeHanlder(AccountModel accountModel, Error error) {
+                    super.completeHanlder(accountModel, error);
+                    if (error == null) {
+                        login(accountModel, password, type);
+                    }
+                }
+            });
+        } else if (type.equals(Marcos.QuickTalk_ACCOUNT_QQ) ||
+                type.equals(Marcos.QuickTalk_ACCOUNT_WECHAT) ||
+                type.equals(Marcos.QuickTalk_ACCOUNT_WEIBO)) {
+            AccountModel.requestLoginForThirdPart(openId, type, new AccountModel.CompleteHandler(){
+                @Override
+                public void completeHanlder(AccountModel accountModel, Error error) {
+                    super.completeHanlder(accountModel, error);
+                    if (error == null) {
+                        loginWithThirdPart(accountModel, openId, type);
+                    }
+                }
+            });
+        }
     }
 
     public boolean checkLoginStatus(Activity activity) {
