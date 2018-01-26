@@ -75,6 +75,12 @@ public class AccountThirdPartActivity extends BaseActivity {
         this.recyclerView.setAdapter(this.sectionTableListAdapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        QTProgressHUD.hide();
+    }
+
     private void loadData() {
         this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(0, 0)));
         this.dataList.add(new TableEntity("", new TableEntity.IndexPath(0, 0)));
