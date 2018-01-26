@@ -343,4 +343,30 @@ public class AccountModel {
                 });
     }
 
+    public static void requestForChangePassword(String userUUID, String oldpassword,
+                                                String newpassword, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        if (oldpassword.length() > 0) {
+            params.put("oldpassword", oldpassword);
+        }
+        params.put("newpassword", newpassword);
+        NetworkingAgent.requestDataForAccountService("/changePassword", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(false, error);
+                        } else {
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                completeHandler.completeHanlder(true, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(false, error);
+                            }
+                        }
+                    }
+                });
+    }
+
 }
