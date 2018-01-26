@@ -10,7 +10,10 @@ import android.widget.TextView;
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.QTProgressHUD;
+import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.services.account.adapter.AddressPickTask;
+import com.creactism.quicktalk.services.account.model.AccountModel;
 import com.creactism.quicktalk.util.DLog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -71,7 +74,9 @@ public class AccountInfoActivity extends BaseActivity {
         picker.setDividerRatio(WheelView.DividerConfig.FILL);
         picker.setDividerColor(Color.parseColor("#999999"));
         picker.setCancelTextColor(Color.RED);
-        picker.setSelectedIndex(1);
+        if (UserInfo.sharedInstance().getGender() > 0) {
+            picker.setSelectedIndex(UserInfo.sharedInstance().getGender()-1);
+        }
         picker.setLineSpaceMultiplier(3);
         picker.setTextPadding(2);
         picker.setCycleDisable(true);
@@ -80,7 +85,7 @@ public class AccountInfoActivity extends BaseActivity {
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {
-                DLog.info("index: " + index + " item:" + item);
+                changeInfoAction("gender", String.valueOf(index+1));
             }
         });
         picker.show();
@@ -97,10 +102,10 @@ public class AccountInfoActivity extends BaseActivity {
 
             @Override
             public void onAddressPicked(Province province, City city, County county) {
-                DLog.info(province.getAreaName() + " " + city.getAreaName());
+                changeInfoAction("area", city.getAreaName());
             }
         });
-        task.execute("四川", "阿坝");
+        task.execute("北京", "北京");
     }
 
     private void loadData() {
@@ -120,6 +125,34 @@ public class AccountInfoActivity extends BaseActivity {
         } else {
             this.areaField.setText("");
         }
+    }
+
+    private void changeInfoAction(final String type, final String data) {
+        String userUUID = UserInfo.sharedInstance().getUuid();
+
+        AccountModel.requestForAccountInfo(userUUID, type, data, new AccountModel
+                .CompleteHandler() {
+            @Override
+            public void completeHanlder(boolean action, Error error) {
+                super.completeHanlder(action, error);
+                if (action) {
+                    QTToast.makeText(getBaseContext(), "修改成功");
+                    if (type.equals("gender")) {
+                        if (data.equals("1")) {
+                            UserInfo.sharedInstance().setGender(1);
+                        } else {
+                            UserInfo.sharedInstance().setGender(2);
+                        }
+                    }
+                    if (type.equals("area")) {
+                        UserInfo.sharedInstance().setArea(data);
+                    }
+                    loadData();
+                } else {
+                    QTToast.makeText(getBaseContext(), error.getMessage());
+                }
+            }
+        });
     }
 }
 
