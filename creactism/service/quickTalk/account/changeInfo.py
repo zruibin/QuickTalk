@@ -29,7 +29,7 @@ def changeInfo():
 
     if userUUID == None or typeStr == None or data == None:
         return RESPONSE_JSON(CODE_ERROR_MISS_PARAM)
-    if typeStr not in ("nickname", "phone", "email", "area", "detail"):
+    if typeStr not in ("nickname", "phone", "email", "area", "detail", "gender"):
         return RESPONSE_JSON(CODE_ERROR_ILLEGAL_REQUEST)
 
     return  __changeUserInfoInStorage(userUUID, typeStr, data)
