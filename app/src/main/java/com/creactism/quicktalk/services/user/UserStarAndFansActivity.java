@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.services.user.adapter.UserStarOrFansAdapter;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DrawableUtil;
 import com.kekstudio.dachshundtablayout.DachshundTabLayout;
@@ -65,11 +67,14 @@ public class UserStarAndFansActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int i) {
-            DLog.debug("item:"+i);
-            if (i%2 == 0) {
-                return new UserStarFragment();
+            if (i == 0) {
+                UserStarFragment userStarFragment = new UserStarFragment();
+                userStarFragment.setUserUUID(UserInfo.sharedInstance().getUuid());
+                return userStarFragment;
             } else {
-                return new UserFansFragment();
+                UserFansFragment userFansFragment = new UserFansFragment();
+                userFansFragment.setUserUUID(UserInfo.sharedInstance().getUuid());
+                return userFansFragment;
             }
         }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.creactism.quicktalk.BaseActivity;
+import com.creactism.quicktalk.Marcos;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.QTProgressHUD;
@@ -113,9 +114,9 @@ public class AccountInfoActivity extends BaseActivity {
             this.avatarView.setImageURI(Uri.parse(UserInfo.sharedInstance().getAvatar()));
         }
         this.nicknameField.setText(UserInfo.sharedInstance().getNickname());
-        if (UserInfo.sharedInstance().getGender() == 1) {
+        if (UserInfo.sharedInstance().getGender() == Marcos.QuickTalk_GENDER_MALE) {
             this.genderField.setText("男");
-        } else if (UserInfo.sharedInstance().getGender() == 2) {
+        } else if (UserInfo.sharedInstance().getGender() == Marcos.QuickTalk_GENDER_FEMALE) {
             this.genderField.setText("女");
         } else {
             this.genderField.setText("");
@@ -139,9 +140,9 @@ public class AccountInfoActivity extends BaseActivity {
                     QTToast.makeText(getBaseContext(), "修改成功");
                     if (type.equals("gender")) {
                         if (data.equals("1")) {
-                            UserInfo.sharedInstance().setGender(1);
+                            UserInfo.sharedInstance().setGender(Marcos.QuickTalk_GENDER_MALE);
                         } else {
-                            UserInfo.sharedInstance().setGender(2);
+                            UserInfo.sharedInstance().setGender(Marcos.QuickTalk_GENDER_FEMALE);
                         }
                     }
                     if (type.equals("area")) {

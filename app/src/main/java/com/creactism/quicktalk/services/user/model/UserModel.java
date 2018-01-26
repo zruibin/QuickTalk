@@ -15,6 +15,10 @@ import java.util.Map;
 
 public class UserModel {
 
+    public static int UserRelationDefault = 0; //未关注
+    public static int UserRelationStar = 1; //已关注
+    public static int UserRelationStarAndBeStar = 2; //相互关注
+
     private String id;
     private String uuid;
     private String qq;
@@ -28,6 +32,7 @@ public class UserModel {
     private String avatar;
     private String time;
     private String email;
+    private int relation;
 
     public String getId() {
         return id;
@@ -136,10 +141,17 @@ public class UserModel {
         this.email = email;
     }
 
+    public int getRelation() {
+        return relation;
+    }
+
+    public void setRelation(int relation) {
+        this.relation = relation;
+    }
+
     public static class CompleteHandler extends Object {
         public void completeHanlder (List<UserModel> list, Error error){};
         public void completeHanlder (boolean action, Error error){};
-
     }
 
 
@@ -167,6 +179,63 @@ public class UserModel {
                     } else {
                         error = new Error(responseObject.getMessage());
                         completeHandler.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestForFans(String userUUID, int index, String relationUserUUID, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        params.put("index", String.valueOf(index));
+        if (relationUserUUID != null) {
+            params.put("relation_user_uuid", relationUserUUID);
+        }
+        NetworkingAgent.requestDataForStarService("/queryFans", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder(null, error);
+                } else {
+                    List<UserModel> list = new ArrayList<UserModel>();
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            list = JSONObject.parseArray(data, UserModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandler.completeHanlder(list, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestForStarOrUnStar(String userUUID, String contentUUID, String action,
+                                              final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        params.put("content_uuid", contentUUID);
+        params.put("action", action);
+        params.put("type", "0");
+        NetworkingAgent.requestDataForStarService("/userAction", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder(false, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        completeHandler.completeHanlder(true, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder(false, error);
                     }
                 }
             }

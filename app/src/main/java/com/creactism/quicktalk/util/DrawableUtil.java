@@ -139,14 +139,14 @@ public final class DrawableUtil {
        return getBorderDrawable(cornerRadius, cornerRadius, cornerRadius, cornerRadius, bgColor, storkeWidth, strokeColor);
     }
 
-    /**设置shape(圆角)*/
-    public static GradientDrawable getDrawable(int bgCircleAngle, int bgColor, int width, int strokeColor) {
-        GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setCornerRadius(bgCircleAngle);
-        gradientDrawable.setColor(bgColor);
-        gradientDrawable.setStroke(width, strokeColor);
-        return gradientDrawable;
-    }
+//    /**设置shape(圆角)*/
+//    public static GradientDrawable getDrawable(int bgCircleAngle, int bgColor, int width, int strokeColor) {
+//        GradientDrawable gradientDrawable = new GradientDrawable();
+//        gradientDrawable.setCornerRadius(bgCircleAngle);
+//        gradientDrawable.setColor(bgColor);
+//        gradientDrawable.setStroke(width, strokeColor);
+//        return gradientDrawable;
+//    }
 
     /** drawable 复制*/
     public static Drawable getNewDrawable(Drawable drawable) {

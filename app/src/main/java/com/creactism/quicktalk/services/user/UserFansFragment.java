@@ -12,10 +12,14 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
+import com.creactism.quicktalk.Marcos;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.user.adapter.UserStarOrFansAdapter;
 import com.creactism.quicktalk.services.user.model.UserModel;
+import com.creactism.quicktalk.util.DLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +30,17 @@ import java.util.List;
 
 public class UserFansFragment extends BaseFragment {
 
+    private String userUUID;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
     private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
+
+    public void setUserUUID(String userUUID) {
+        this.userUUID = userUUID;
+    }
 
     @Nullable
     @Override
@@ -64,9 +73,7 @@ public class UserFansFragment extends BaseFragment {
         });
 
         this.adapter = new UserStarOrFansAdapter();
-//        this.adapter.setActivity(this.getActivity());
-
-
+        this.adapter.setActivity(getActivity());
         this.adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -78,24 +85,81 @@ public class UserFansFragment extends BaseFragment {
         this.adapter.openLoadAnimation();
         this.recyclerView.setAdapter(this.adapter);
 
-
+        this.adapter.setItemHandler(new UserStarOrFansAdapter.OnUserItemHandler(){
+            @Override
+            public void onActionHandler(UserModel model) {
+                super.onActionHandler(model);
+                starOrUnStarAction(model);
+            }
+        });
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                DLog.info("position: " + position);
             }
         });
 
+//        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+////                DLog.debug("offsetY: " + String.valueOf(recyclerView.computeVerticalScrollOffset()));
+//            }
+//        });
 
         this.refreshLayout.setRefreshing(true);
         loadData();
     }
 
     private void loadData() {
-//        this.adapter.setNewData(this.dataList);
-        refreshLayout.setRefreshing(false);
-        adapter.loadMoreComplete();
+        String relationUserUUID = UserInfo.sharedInstance().getUuid();
+        UserModel.requestForFans(this.userUUID, this.index, relationUserUUID, new UserModel.CompleteHandler(){
+            @Override
+            public void completeHanlder(List<UserModel> list, Error error) {
+                super.completeHanlder(list, error);
+                refreshLayout.setRefreshing(false);
+                adapter.loadMoreComplete();
+                if (error != null) {
+                    QTToast.makeText(getActivity(), error.getMessage());
+                } else {
+                    if (list.size() < 10) {
+                        adapter.loadMoreEnd();
+                    }
+                    if (index == 1) {
+                        adapter.setNewData(list);
+                    } else {
+                        adapter.addData(list);
+                    }
+                    dataList.addAll(list);
+                }
+            }
+        });
     }
 
+    private void starOrUnStarAction(final UserModel model) {
+        String action = Marcos.STAR_ACTION_FOR_STAR;
+        if (model.getRelation() == UserModel.UserRelationStar) {
+            action = Marcos.STAR_ACTION_FOR_UNSTAR;
+        }
+        String userUUID = UserInfo.sharedInstance().getUuid();
+        UserModel.requestForStarOrUnStar(userUUID, model.getUuid(), action,
+                new UserModel.CompleteHandler() {
+            @Override
+            public void completeHanlder(boolean action, Error error) {
+                super.completeHanlder(action, error);
+                if (error != null) {
+                    QTToast.makeText(getActivity(), error.getMessage());
+                } else {
+                    if (model.getRelation() == UserModel.UserRelationStar) {
+                        model.setRelation(UserModel.UserRelationDefault);
+                    } else {
+                        model.setRelation(UserModel.UserRelationStar);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
 
+    
 }

@@ -32,12 +32,17 @@ import java.util.List;
 
 public class UserStarFragment extends BaseFragment {
 
+    private String userUUID;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
     private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
+
+    public void setUserUUID(String userUUID) {
+        this.userUUID = userUUID;
+    }
 
     @Nullable
     @Override
@@ -106,8 +111,7 @@ public class UserStarFragment extends BaseFragment {
     }
 
     private void loadData() {
-        String userUUID = UserInfo.sharedInstance().getUuid();
-        UserModel.requestForStarUser(userUUID, this.index, new UserModel.CompleteHandler(){
+        UserModel.requestForStarUser(this.userUUID, this.index, new UserModel.CompleteHandler(){
             @Override
             public void completeHanlder(List<UserModel> list, Error error) {
                 super.completeHanlder(list, error);

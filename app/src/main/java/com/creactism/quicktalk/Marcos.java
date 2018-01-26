@@ -24,8 +24,14 @@ public final class Marcos {
     public static final int QuickTalk_GENDER_MALE = 1;
     public static final int QuickTalk_GENDER_FEMALE = 2;
 
-    public static final int MAX_IMAGE_COUNT = 9;
     public static final float IMAGE_COMPRESSION_RATION = 0.5f;
+
+    public static final String COLLECTION_ACTION_ON = "1";
+    public static final String COLLECTION_ACTION_OFF = "2";
+    public static final String STAR_ACTION_FOR_STAR = "1";
+    public static final String STAR_ACTION_FOR_UNSTAR = "2";
+    public static final String LIKE_ACTION_AGREE = "1";
+    public static final String LIKE_ACTION_DISAGREE = "2";
 
     public static final String QTDataCache = "kQTDataCache";
     public static final String QTPasteboardURL = "kQTPasteboardURL";
