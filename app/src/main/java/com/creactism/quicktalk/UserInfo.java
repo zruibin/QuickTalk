@@ -108,6 +108,9 @@ public final class UserInfo extends Object {
     }
 
     public String getQq() {
+        if (this.qq == null) {
+            this.qq = "";
+        }
         return qq;
     }
 
@@ -116,6 +119,9 @@ public final class UserInfo extends Object {
     }
 
     public String getWechat() {
+        if (this.wechat == null) {
+            this.wechat = "";
+        }
         return wechat;
     }
 
@@ -124,6 +130,9 @@ public final class UserInfo extends Object {
     }
 
     public String getWeibo() {
+        if (this.weibo == null) {
+            this.weibo = "";
+        }
         return weibo;
     }
 
