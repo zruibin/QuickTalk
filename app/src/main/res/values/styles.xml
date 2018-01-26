@@ -11,7 +11,7 @@
     <style name="QTSwitch" parent="Theme.AppCompat.Light">
         <!-- Active thumb color & Active track color(30% transparency)
             switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
-        <item name="colorControlActivated">@color/chartreuse</item>
+        <item name="colorControlActivated">@color/QuickTalk_NAVBAR_BG_COLOR</item>
         <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
         <item name="colorSwitchThumbNormal">@color/gray</item>
         <!-- Inactive track color(30% transparency) switch关闭时的轨迹的颜色  30%这个颜色 -->

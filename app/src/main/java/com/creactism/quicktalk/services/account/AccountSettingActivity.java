@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
+import com.creactism.quicktalk.util.StringUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -56,6 +58,12 @@ public class AccountSettingActivity extends BaseActivity {
         this.recyclerView.setAdapter(this.sectionTableListAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.sectionTableListAdapter.notifyDataSetChanged();
+    }
+
     private void loadData() {
         this.dataList.add(new TableEntity(true, "", new TableEntity.IndexPath(0, 0)));
         this.dataList.add(new TableEntity("修改手机号码", new TableEntity.IndexPath(0, 0)));
@@ -80,9 +88,13 @@ public class AccountSettingActivity extends BaseActivity {
             TextView textView = helper.getView(this.table_text_id);
             textView.setText((String)item.getObj());
 
-            ImageView indicator = helper.getView(table_indicator_id);
-            if (indexPath.section == 1 && indexPath.row == 4) {
-                indicator.setVisibility(View.GONE);
+            if (indexPath.row == 0) {
+                TextView detailView = helper.getView(this.table_detail_id);
+                if (UserInfo.sharedInstance().getPhone() == null || UserInfo.sharedInstance().getPhone().length() == 0) {
+                    detailView.setText("(空)");
+                } else {
+                    detailView.setText(StringUtil.replacePhoneNumberWithAsterisk(UserInfo.sharedInstance().getPhone()));
+                }
             }
         }
 

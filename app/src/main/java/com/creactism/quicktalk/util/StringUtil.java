@@ -104,6 +104,12 @@ public class StringUtil {
         return regexMatcher(mobiles, regex);
     }
 
+    /**手机号隐藏*/
+    public static String replacePhoneNumberWithAsterisk(String string) {
+        String replaceStr = string.replaceAll("(\\d{3})\\d{6}(\\d{2})","$1******$2");;
+        return replaceStr;
+    }
+
     /**是否为email*/
     public static boolean isEmail(String email) {
         String regex = "^[A-Za-z]{1,40}@[A-Za-z0-9]{1,40}\\.[A-Za-z]{2,3}$";

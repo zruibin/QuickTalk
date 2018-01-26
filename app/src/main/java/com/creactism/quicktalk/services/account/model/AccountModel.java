@@ -320,4 +320,27 @@ public class AccountModel {
                 });
     }
 
+    public static void requestForAccountInfo(String userUUID, String type, String data, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        params.put("type", type);
+        params.put("data", data);
+        NetworkingAgent.requestDataForAccountService("/changeInfo", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(false, error);
+                        } else {
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                completeHandler.completeHanlder(true, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(false, error);
+                            }
+                        }
+                    }
+                });
+    }
+
 }
