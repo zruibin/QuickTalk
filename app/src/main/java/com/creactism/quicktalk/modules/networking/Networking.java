@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -13,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -98,6 +101,57 @@ public class Networking extends Object {
                 msg.what = 2;
                 msg.obj = responseString;
                 msg.sendToTarget(); //异步线程返回数据到主线程
+            }
+        });
+    }
+
+    public static void handlePOSTWithFormData(String url, Map<String, String>params, String filePath,
+                                              final Success success, final Failure failure) {
+        File file = new File(filePath);
+        // form 表单形式上传
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if(file != null){
+            // MediaType.parse() 里面是上传的文件类型。
+            RequestBody filebody = RequestBody.create(MediaType.parse("image/jpeg"), file);
+            String filename = file.getName();
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            builder.addFormDataPart("file", filename, filebody);
+        }
+        // map 里面是请求中所需要的 key 和 value
+        for (Map.Entry<String, String> map : params.entrySet()) {
+            String key = map.getKey().toString();
+            String value = null;
+            if (map.getValue() == null) {
+                value = "";
+            } else {
+                value = map.getValue();
+            }
+            builder.addFormDataPart(key, value);
+        }
+        RequestBody body = builder.build();
+        //结果返回
+        OkHttpClient client = Networking.httpClient();
+        final Request request = new Request.Builder().url(url).post(body).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        failure.failure(e);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        success.success(result);
+                    }
+                });
             }
         });
     }

@@ -1,12 +1,12 @@
 package com.creactism.quicktalk.services.account.model;
 
 import com.alibaba.fastjson.JSONObject;
+import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.modules.networking.Networking;
 import com.creactism.quicktalk.modules.networking.NetworkingAgent;
 import com.creactism.quicktalk.modules.networking.QTResponseObject;
-import com.creactism.quicktalk.util.StringUtil;
 
-import com.alibaba.fastjson.JSON;
-
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,6 +148,7 @@ public class AccountModel {
         public void completeHanlder (AccountModel accountModel, Error error){};
         public void completeHanlder (boolean action, Error error){};
         public void completeHanlder (Map<String, Boolean> map, Error error){};
+        public void completeHanlder (String avatar, Error error){};
     }
 
     public static void requestLogin(String account, String password, String type, final CompleteHandler completeHandler) {
@@ -394,4 +395,38 @@ public class AccountModel {
                 });
     }
 
+    public static void requestChangeAvatar(String userUUID, String filePath, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        if (UserInfo.sharedInstance().getToken() != null) {
+            params.put("token", UserInfo.sharedInstance().getToken());
+        }
+        String urlString = NetworkingAgent.appendHostURL("/account/changeAvatar");
+        Networking.handlePOSTWithFormData(urlString, params, filePath, new Networking.Success() {
+            @Override
+            public void success(String responseString) {
+                QTResponseObject responseObject = QTResponseObject.createInstance(responseString);
+                if (responseObject == null) {
+                    Error error = new Error("上传图片错误");
+                    completeHandler.completeHanlder((String)null, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        String data = String.valueOf(responseObject.getData());
+                        Map<String, String> map = JSONObject.parseObject(data, Map.class);
+                        completeHandler.completeHanlder(map.get("avatar"), null);
+                    } else {
+                        Error error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder((String)null, error);
+                    }
+                }
+            }
+        }, new Networking.Failure() {
+            @Override
+            public void failure(IOException e) {
+                Error error = new Error("网络开了点小差，请稍后再试!");
+                completeHandler.completeHanlder((String)null, error);
+            }
+        });
+
+    }
 }

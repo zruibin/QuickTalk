@@ -26,7 +26,11 @@ import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.QTProgressHUD;
 import com.creactism.quicktalk.components.QTToast;
+import com.creactism.quicktalk.services.account.model.AccountModel;
+import com.creactism.quicktalk.util.BitmapUtil;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
@@ -339,5 +343,26 @@ public class AccountChangeAvatarActivity extends BaseActivity {
 
     private void saveAction() {
         //上传服务端
+        QTProgressHUD.showHUD(this);
+        String userUUID = UserInfo.sharedInstance().getUuid();
+        String upFilePath = BitmapUtil.compressBitmap(this.bitmap, 98, Bitmap.CompressFormat.JPEG, this.imageUri.getPath());
+        if (upFilePath == null) {
+            QTProgressHUD.hide();
+            QTToast.makeText(this, "压缩图片失败");
+            return;
+        }
+        AccountModel.requestChangeAvatar(userUUID, upFilePath, new AccountModel.CompleteHandler() {
+            @Override
+            public void completeHanlder(String avatar, Error error) {
+                super.completeHanlder(avatar, error);
+                QTProgressHUD.hide();
+                if (error == null) {
+                    QTToast.makeText(AccountChangeAvatarActivity.this, "更改头像成功");
+                    finish();
+                } else {
+                    QTToast.makeText(AccountChangeAvatarActivity.this, error.getMessage());
+                }
+            }
+        });
     }
 }

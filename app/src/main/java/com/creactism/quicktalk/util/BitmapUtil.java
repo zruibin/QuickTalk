@@ -170,7 +170,7 @@ public class BitmapUtil {
      * @param size    指定最大要压缩成的大小，单位为k
      * @return
      */
-    public static Bitmap compressBitmap(Bitmap bitmap,int size){
+    public static Bitmap compressBitmap(Bitmap bitmap, int size){
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         //将压缩后的数据放入bos中
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,bos);
@@ -184,6 +184,54 @@ public class BitmapUtil {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         //通过字节输入流转为bitmap
         return BitmapFactory.decodeStream(bis,null,null);
+    }
+
+    /**
+     * 图片压缩-质量压缩
+     *
+     * @param destPath 原图片路径
+     * @param quality 压缩比例0-100
+     * @param outPath 输出路径
+     * @return 压缩后的路径
+     */
+    public static String compressBitmap(String destPath, int quality, String outPath) {
+        File outFile = new File(outPath);
+        try {
+            if (!outFile.exists()) {
+                outFile.getParentFile().mkdirs();
+                //outputFile.createNewFile();
+            } else {
+                outFile.delete();
+            }
+            Bitmap bitmap = BitmapFactory.decodeFile(destPath);
+            FileOutputStream targetStream = new FileOutputStream(outFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, targetStream);
+            targetStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return outFile.getPath();
+    }
+
+    /**
+     * 图片压缩-质量压缩
+     * @param bitmap 原图bitmap
+     * @param quality 压缩比例0-100
+     * @param outPath 压缩后的路径
+     * @return 压缩后的路径
+     */
+    public static String compressBitmap(Bitmap bitmap, int quality, Bitmap.CompressFormat format, String outPath) {
+        File outFile = new File(outPath);
+        try {
+            FileOutputStream targetStream = new FileOutputStream(outFile);
+            bitmap.compress(format, quality, targetStream);
+            targetStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return outFile.getPath();
     }
 
 }
