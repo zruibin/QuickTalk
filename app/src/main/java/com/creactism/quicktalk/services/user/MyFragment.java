@@ -93,7 +93,7 @@ public class MyFragment extends BaseFragment {
 
         List<String> unLogin = new ArrayList<String>();
         unLogin.add(String.valueOf(R.mipmap.avatar_default));
-        unLogin.add("nickname");
+        unLogin.add("尚未登录");
         unLogin.add("null");
 
         List<String> users = new ArrayList<String>();
@@ -222,6 +222,14 @@ public class MyFragment extends BaseFragment {
             DLog.debug("section: "+data.get(2));
 
             if (indexPath.section == 0 && indexPath.row ==0) {
+//                Intent intent = new Intent();
+//                try {
+//                    intent.setClass(getActivity().getApplicationContext(),
+//                            Class.forName("com.creactism.quicktalk.services.account.AccountInfoActivity"));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                startActivity(intent);
                 if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {return;}
             }
 

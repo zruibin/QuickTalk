@@ -2,6 +2,8 @@ package com.creactism.quicktalk.services.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,7 @@ public class AccountLoginActivity extends BaseActivity {
     private ImageButton qqButton;
     private ImageButton wechatButton;
     private ImageButton weiboButton;
+    private String loginType = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,18 +110,21 @@ public class AccountLoginActivity extends BaseActivity {
         this.qqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginType = Marcos.QuickTalk_ACCOUNT_QQ;
                 loginWithPlatform(QQ.NAME);
             }
         });
         this.wechatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginType = Marcos.QuickTalk_ACCOUNT_WECHAT;
                 loginWithPlatform(Wechat.NAME);
             }
         });
         this.weiboButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginType = Marcos.QuickTalk_ACCOUNT_WEIBO;
                 loginWithPlatform(SinaWeibo.NAME);
             }
         });
@@ -131,6 +137,7 @@ public class AccountLoginActivity extends BaseActivity {
     }
 
     private void loginWithPlatform(String name) {
+        QTProgressHUD.showHUD(this);
         Platform platform = ShareSDK.getPlatform(name);
         ShareSDK.removeCookieOnAuthorize(true);
         platform.SSOSetting(false);  //设置false表示使用SSO授权方式
@@ -141,18 +148,37 @@ public class AccountLoginActivity extends BaseActivity {
             @Override
             public void onError(Platform platform1, int arg1, Throwable arg2) {
                 arg2.printStackTrace();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        QTToast.makeText(AccountLoginActivity.this,"第三方登录授权失败");
+                    }
+                });
             }
 
             @Override
             public void onComplete(Platform platform1, int arg1, HashMap<String, Object> arg2) {
                 //输出所有授权信息
                 platform1.getDb().exportData();
-                String uid = platform1.getDb().getUserId();
+                final String uid = platform1.getDb().getUserId();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        QTProgressHUD.hide();
+                        QTToast.makeText(AccountLoginActivity.this,"第三方登录授权成功");
+                        thirdPartLoginAction(uid);
+                    }
+                });
             }
 
             @Override
             public void onCancel(Platform arg0, int arg1) {
-
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        QTToast.makeText(AccountLoginActivity.this,"取消第三方登录授权");
+                    }
+                });
             }
         });
         if (platform.isAuthValid()) { //如果授权就删除授权资料
@@ -162,7 +188,6 @@ public class AccountLoginActivity extends BaseActivity {
     }
 
     private void loginButtonAction() {
-
         String account = this.accountField.getText().toString();
         final String password = this.passwordField.getText().toString();
 
@@ -195,6 +220,28 @@ public class AccountLoginActivity extends BaseActivity {
                         }
                     });
         }
+    }
+
+    private void thirdPartLoginAction(final String openId) {
+        if (openId.length() == 0) {
+            QTToast.makeText(this, "登录失败");
+            return;
+        }
+        QTProgressHUD.showHUD(this);
+        AccountModel.requestLoginForThirdPart(StringUtil.md5(openId), this.loginType, new AccountModel.CompleteHandler(){
+            @Override
+            public void completeHanlder(AccountModel accountModel, Error error) {
+                super.completeHanlder(accountModel, error);
+                QTProgressHUD.hide();
+                if (error != null) {
+                    QTToast.makeText(getBaseContext(), error.getMessage());
+                } else {
+                    QTToast.makeText(getBaseContext(), "登录成功");
+                    UserInfo.sharedInstance().loginWithThirdPart(accountModel, openId, loginType);
+                    backAction();
+                }
+            }
+        });
     }
 
 }

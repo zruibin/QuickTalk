@@ -14,17 +14,19 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.creactism.quicktalk.BaseActivity;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
@@ -77,6 +79,7 @@ public class AccountChangeAvatarActivity extends BaseActivity {
         lineLayout.setGravity(Gravity.TOP);
         this.initViews(lineLayout);
         setContentView(lineLayout);
+        runtimePermissions();
     }
 
     @Override
@@ -300,6 +303,38 @@ public class AccountChangeAvatarActivity extends BaseActivity {
         //不启用人脸识别
         intent.putExtra("noFaceDetection", true);
         startActivityForResult(intent, PHOTO_REQUEST_CUT);
+    }
+
+    //运行时权限，所以就需要在用的时候去重新请求系统权限并得到用户的允许授权。
+    //来自http://blog.csdn.net/qxs965266509/article/details/50606385
+    private void runtimePermissions() {
+        int REQUEST_EXTERNAL_STORAGE = 1;
+        String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        int permission = ActivityCompat.checkSelfPermission(AccountChangeAvatarActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    AccountChangeAvatarActivity.this,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            // 没有获取 到权限，从新请求，或者关闭app
+            QTToast.makeText(this, "需要存储权限");
+        }
     }
 
     private void saveAction() {

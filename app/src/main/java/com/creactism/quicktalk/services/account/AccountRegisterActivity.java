@@ -3,6 +3,8 @@ package com.creactism.quicktalk.services.account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +15,6 @@ import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.QTProgressHUD;
 import com.creactism.quicktalk.components.QTToast;
-import com.creactism.quicktalk.modules.Dispatch;
 import com.creactism.quicktalk.services.account.model.AccountModel;
 import com.creactism.quicktalk.util.StringUtil;
 
@@ -130,9 +131,9 @@ public class AccountRegisterActivity extends BaseActivity {
         // 注册一个事件回调，用于处理发送验证码操作的结果
         SMSSDK.registerEventHandler(new EventHandler() {
             public void afterEvent(int event, final int result, Object data) {
-                Dispatch.dispatchAsync(Dispatch.DISPATCH_GET_MAIN_QUEUE, new Dispatch.DispatchBlock() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
-                    public void inMainThread() {
+                    public void run() {
                         if (result != SMSSDK.RESULT_COMPLETE) {
                             // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
                             QTToast.makeText(AccountRegisterActivity.this, "发送验证码失败");
@@ -180,9 +181,9 @@ public class AccountRegisterActivity extends BaseActivity {
         // 注册一个事件回调，用于处理提交验证码操作的结果
         SMSSDK.registerEventHandler(new EventHandler() {
             public void afterEvent(int event, final int result, Object data) {
-                Dispatch.dispatchAsync(Dispatch.DISPATCH_GET_MAIN_QUEUE, new Dispatch.DispatchBlock() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
-                    public void inMainThread() {
+                    public void run() {
                         if (result == SMSSDK.RESULT_COMPLETE) {
                             submitData();
                         } else{

@@ -179,14 +179,34 @@ public final class UserInfo extends Object {
         this.gender = accountModel.getGender();
         this.token = accountModel.getToken();
         this.isLogin = true;
-        QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
-        QTCache.sharedCache().put(QTLoginPassword, StringUtil.md5(password));
+
+        String phone = accountModel.getPhone();
+        if (phone != null && phone.length() > 0) {
+            QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
+        }
+        if (password != null) {
+            QTCache.sharedCache().put(QTLoginPassword, StringUtil.md5(password));
+        }
         QTCache.sharedCache().put(QTLoginType, type);
         this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 
-    public void logout() {
+    public void loginWithThirdPart(AccountModel accountModel, String openId, String type) {
+        QTCache.sharedCache().put(QTLoginOpenId, StringUtil.md5(openId));
+        login(accountModel, null, type);
+    }
 
+    public void logout() {
+        this.isLogin = false;
+        QTCache.sharedCache().remove(QTLoginAccount);
+        QTCache.sharedCache().remove(QTLoginPassword);
+        QTCache.sharedCache().remove(QTLoginType);
+        QTCache.sharedCache().remove(QTLoginOpenId);
+        this.id = null;
+        this.uuid = null;
+        this.nickname = null;
+        this.avatar = null;
+        this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 
     public void loginInBackground() {

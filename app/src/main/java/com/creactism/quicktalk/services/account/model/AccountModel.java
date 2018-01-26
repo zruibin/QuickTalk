@@ -180,6 +180,36 @@ public class AccountModel {
         });
     }
 
+    public static void requestLoginForThirdPart(String openId, String type, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("account", openId);
+        params.put("type", type);
+
+        NetworkingAgent.requestDataForAccountService("/login", NetworkingAgent.SERVICE_REQUEST_POST, params,
+                new NetworkingAgent.CompleteHandler() {
+                    @Override
+                    public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (error != null) {
+                            completeHandler.completeHanlder(null, error);
+                        } else {
+                            AccountModel model = null;
+                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                                try {
+                                    String data = String.valueOf(responseObject.getData());
+                                    model = JSONObject.parseObject(data, AccountModel.class);
+                                } catch (Exception e) {
+                                    ;
+                                }
+                                completeHandler.completeHanlder(model, null);
+                            } else {
+                                error = new Error(responseObject.getMessage());
+                                completeHandler.completeHanlder(null, error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public static void requestRegisterUser(String account, String password, String type, final CompleteHandler completeHandler) {
         Map params = new HashMap();
         params.put("account", account);
