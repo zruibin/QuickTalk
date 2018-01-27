@@ -189,7 +189,9 @@ public class UserActivity extends BaseActivity {
 
                              @Override
                              public void onClick(View widget) {
-                                 DLog.debug("关注。。。");
+                                 Intent intent = new Intent().setClass(UserActivity.this, UserStarActivity.class);
+                                 intent.putExtra("userUUID", userModel.getUuid());
+                                 startActivity(intent);
                              }
         }, countStr.indexOf(fowllowString), countStr.indexOf(fowllowString)+fowllowString.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -201,7 +203,9 @@ public class UserActivity extends BaseActivity {
                              }
                              @Override
                              public void onClick(View widget) {
-                                 DLog.debug("粉丝。。。");
+                                 Intent intent = new Intent().setClass(UserActivity.this, UserFansActivity.class);
+                                 intent.putExtra("userUUID", userModel.getUuid());
+                                 startActivity(intent);
                              }
         }, countStr.indexOf(fowllowingString), countStr.indexOf(fowllowingString)+fowllowString.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
