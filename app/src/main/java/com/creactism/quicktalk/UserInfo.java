@@ -3,9 +3,9 @@ package com.creactism.quicktalk;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.creactism.quicktalk.modules.cache.QTCache;
 import com.creactism.quicktalk.services.account.AccountLoginActivity;
 import com.creactism.quicktalk.services.account.model.AccountModel;
+import com.orhanobut.hawk.Hawk;
 
 import static com.creactism.quicktalk.Marcos.QTLoginStatusChangeNotification;
 
@@ -190,26 +190,23 @@ public final class UserInfo extends Object {
 
         String phone = accountModel.getPhone();
         if (phone != null && phone.length() > 0) {
-            QTCache.sharedCache().put(QTLoginAccount, accountModel.getPhone());
+            Hawk.put(QTLoginAccount, accountModel.getPhone());
         }
         if (password != null) {
-            QTCache.sharedCache().put(QTLoginPassword, password);
+            Hawk.put(QTLoginPassword, password);
         }
-        QTCache.sharedCache().put(QTLoginType, type);
+        Hawk.put(QTLoginType, type);
         this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 
     public void loginWithThirdPart(AccountModel accountModel, String openId, String type) {
-        QTCache.sharedCache().put(QTLoginOpenId, openId);
+        Hawk.put(QTLoginOpenId, openId);
         login(accountModel, null, type);
     }
 
     public void logout() {
         this.isLogin = false;
-        QTCache.sharedCache().remove(QTLoginAccount);
-        QTCache.sharedCache().remove(QTLoginPassword);
-        QTCache.sharedCache().remove(QTLoginType);
-        QTCache.sharedCache().remove(QTLoginOpenId);
+        Hawk.deleteAll();
         this.id = null;
         this.uuid = null;
         this.nickname = null;
@@ -219,10 +216,10 @@ public final class UserInfo extends Object {
     }
 
     public void loginInBackground() {
-        String account = QTCache.sharedCache().getString(QTLoginAccount);
-        final String password = QTCache.sharedCache().getString(QTLoginPassword);
-        final String type = QTCache.sharedCache().getString(QTLoginType);
-        final String openId = QTCache.sharedCache().getString(QTLoginOpenId);
+        String account = Hawk.get(QTLoginAccount);
+        final String password = Hawk.get(QTLoginPassword);
+        final String type = Hawk.get(QTLoginType);
+        final String openId = Hawk.get(QTLoginOpenId);
         if (type == null || type.length() == 0) {
             return;
         }

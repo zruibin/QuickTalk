@@ -10,6 +10,7 @@ import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
+import com.orhanobut.hawk.Hawk;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -88,6 +89,8 @@ public final class App extends Application {
         QTCache.sharedCache().initCache(this.getApplicationContext());
         /*初始化图片缓存库*/
         Fresco.initialize(this);
+        /*初始化加密库*/
+        Hawk.init(this).build();
         UserInfo.sharedInstance().initApp(this);
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
