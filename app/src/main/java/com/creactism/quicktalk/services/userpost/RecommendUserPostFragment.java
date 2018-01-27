@@ -25,6 +25,13 @@ public class RecommendUserPostFragment extends UserPostListFragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.refreshLayout.setRefreshing(true);
+        loadData();
+    }
+
+    @Override
     protected void loadData() {
         super.loadData();
         String userUUID = UserInfo.sharedInstance().getUuid();

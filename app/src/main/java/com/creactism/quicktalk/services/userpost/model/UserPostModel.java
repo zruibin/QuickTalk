@@ -384,5 +384,35 @@ public class UserPostModel extends Object {
         });
     }
 
+    public static void requestTagForUserPostData(int index, String tag, String relationUserUUID,
+                                                 final CompleteHandler completeHandlerObj) {
+        Map params = new HashMap();
+        params.put("index", String.valueOf(index));
+        params.put("tag", tag);
+        params.put("user_uuid", relationUserUUID);
+        NetworkingAgent.requestDataForSearchService("/searchUserPostByTag",
+                NetworkingAgent.SERVICE_REQUEST_POST, params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
 
 }

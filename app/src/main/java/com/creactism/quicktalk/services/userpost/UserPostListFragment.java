@@ -113,7 +113,10 @@ public class UserPostListFragment extends BaseFragment {
                 DLog.debug(model.getTitle());
             }
             public void onTagActionHandler(UserPostModel model, int tagIndex) {
-                DLog.debug(model.getTagList().get(tagIndex));
+                String tag = model.getTagList().get(tagIndex);
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserPostSearchTagActivity.class);
+                intent.putExtra("tag", tag);
+                startActivity(intent);
             }
             public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {
                 UserPostModel.UserPostLikeModel likeModel = model.getLikeList().get(likeIndex);
@@ -153,8 +156,6 @@ public class UserPostListFragment extends BaseFragment {
             }
         });
 
-        this.refreshLayout.setRefreshing(true);
-        loadData();
     }
 
     protected void loadData() {}

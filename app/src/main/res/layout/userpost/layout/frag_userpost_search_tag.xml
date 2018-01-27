@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frag_userpost_search_tag_layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="40dp"
+        android:background="@color/QuickTalk_NAVBAR_BG_COLOR"
+        android:id="@+id/frag_userpost_search_tag_header">
+
+        <EditText
+            android:id="@+id/frag_userpost_search_tag_field"
+            android:layout_width="match_parent" android:layout_height="30dp"
+            android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+            android:textSize="15sp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="4dp"
+            android:inputType="text" android:singleLine="true" android:imeOptions="actionSearch"
+            android:gravity="left|center" android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:hint="搜索标签" android:background="@drawable/shape_corner"
+            android:layout_marginLeft="10dp" android:layout_marginRight="60dp"
+            android:layout_centerVertical="true"
+            />
+        <Button
+            android:id="@+id/frag_userpost_search_tag_cancel"
+            android:layout_width="60dp" android:layout_height="match_parent"
+            android:text="取消" android:textColor="@drawable/selector_button"
+            android:textSize="15sp"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_centerVertical="true" android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

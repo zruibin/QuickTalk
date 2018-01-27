@@ -44,6 +44,9 @@ public class StarUserPostFragment extends UserPostListFragment {
                 startActivity(intent);
             }
         });
+
+        this.refreshLayout.setRefreshing(true);
+        loadData();
     }
 
     @Override

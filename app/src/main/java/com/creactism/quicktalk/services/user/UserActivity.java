@@ -72,8 +72,8 @@ public class UserActivity extends BaseActivity {
         setContentView(R.layout.activity_user);
 
         Intent intent = getIntent();
-        this.userUUID = intent.getStringExtra("userUUID");
-        this.nickname = intent.getStringExtra("nickname");
+        this.userUUID = intent.getStringExtra("userUUID").trim();
+        this.nickname = intent.getStringExtra("nickname").trim();
 
         if (this.userUUID == null) {
             QTToast.makeText(this, "用户不存在");

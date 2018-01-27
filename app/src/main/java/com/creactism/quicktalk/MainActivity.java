@@ -11,6 +11,7 @@ import com.creactism.quicktalk.services.user.MyFragment;
 import com.creactism.quicktalk.services.user.UserSearchActivity;
 import com.creactism.quicktalk.services.userpost.RecommendUserPostFragment;
 import com.creactism.quicktalk.services.userpost.StarUserPostFragment;
+import com.creactism.quicktalk.services.userpost.UserPostSearchTagActivity;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.DensityUtil;
@@ -113,6 +114,10 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(int position, Object item) {
                 DLog.debug("position: " + position);
                 customPowerMenu.dismiss();
+                if (position == 1) {
+                    Intent intent = new Intent().setClass(MainActivity.this, UserPostSearchTagActivity.class);
+                    startActivity(intent);
+                }
                 if (position == 2) { //搜索
                     Intent intent = new Intent().setClass(MainActivity.this, UserSearchActivity.class);
                     startActivity(intent);

@@ -1,5 +1,8 @@
 package com.creactism.quicktalk.services.userpost;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Toast;
 
 import com.creactism.quicktalk.UserInfo;
@@ -17,6 +20,13 @@ public class MainUserPostFragment extends UserPostListFragment {
 
     public void setUserUUID(String userUUID) {
         this.userUUID = userUUID;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.refreshLayout.setRefreshing(true);
+        loadData();
     }
 
     @Override

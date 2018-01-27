@@ -32,6 +32,7 @@
 
         <!--userPost-->
         <activity android:screenOrientation="portrait" android:name=".services.userpost.AddUserPostActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.userpost.UserPostSearchTagActivity" />
 
         <!--user-->
         <activity android:screenOrientation="portrait" android:name=".services.user.UserActivity" />
