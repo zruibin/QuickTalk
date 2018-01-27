@@ -117,7 +117,10 @@ public class UserPostListFragment extends BaseFragment {
             }
             public void onLikeIconActionHandler(UserPostModel model, int likeIndex) {
                 UserPostModel.UserPostLikeModel likeModel = model.getLikeList().get(likeIndex);
-                DLog.debug(likeModel.getNickname());
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserActivity.class);
+                intent.putExtra("userUUID", likeModel.getUserUUID());
+                intent.putExtra("nickname", likeModel.getNickname());
+                startActivity(intent);
             }
         });
 

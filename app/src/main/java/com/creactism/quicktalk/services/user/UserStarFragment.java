@@ -103,7 +103,11 @@ public class UserStarFragment extends BaseFragment {
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DLog.info("position: " + position);
+                UserModel model = dataList.get(position);
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserActivity.class);
+                intent.putExtra("userUUID", model.getUuid());
+                intent.putExtra("nickname", model.getNickname());
+                startActivity(intent);
             }
         });
 

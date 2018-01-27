@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.user;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -67,7 +68,11 @@ public class UserContactBookActivity extends BaseActivity {
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DLog.info("position: " + position);
+                UserModel model = dataList.get(position);
+                Intent intent = new Intent().setClass(UserContactBookActivity.this, UserActivity.class);
+                intent.putExtra("userUUID", model.getUuid());
+                intent.putExtra("nickname", model.getNickname());
+                startActivity(intent);
             }
         });
         this.recyclerView.setAdapter(this.adapter);

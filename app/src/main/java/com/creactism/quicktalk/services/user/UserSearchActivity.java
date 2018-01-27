@@ -1,5 +1,6 @@
 package com.creactism.quicktalk.services.user;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -117,7 +118,11 @@ public class UserSearchActivity extends BaseActivity {
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                DLog.info("position: " + position);
+                UserModel model = dataList.get(position);
+                Intent intent = new Intent().setClass(UserSearchActivity.this, UserActivity.class);
+                intent.putExtra("userUUID", model.getUuid());
+                intent.putExtra("nickname", model.getNickname());
+                startActivity(intent);
             }
         });
     }
