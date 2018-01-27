@@ -14,6 +14,7 @@ import com.creactism.quicktalk.components.QTProgressHUD;
 import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.services.account.model.AccountModel;
 import com.creactism.quicktalk.util.DLog;
+import com.creactism.quicktalk.util.StringUtil;
 
 /**
  * Created by ruibin.chow on 24/01/2018.
@@ -68,6 +69,10 @@ public class AccountInfoEditActivity extends BaseActivity {
 
     private void submitData() {
         final String nickname = this.textField.getText().toString();
+        if (StringUtil.containsEmoji(nickname)) {
+            QTToast.makeText(this, "暂不支持Emoji表情");
+            return;
+        }
         if (nickname.length() > 12) {
             QTToast.makeText(this, "昵称不能超过12个字");
             return;

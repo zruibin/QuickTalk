@@ -40,6 +40,7 @@ public class UserStarFragment extends BaseFragment {
     private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
+    private View emptyView;
 
     public void setUserUUID(String userUUID) {
         this.userUUID = userUUID;
@@ -69,6 +70,7 @@ public class UserStarFragment extends BaseFragment {
         this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
                 LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
+        this.emptyView = getLayoutInflater().inflate(R.layout.layout_empty_view, (ViewGroup)this.recyclerView.getParent(), false);
         this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
@@ -129,6 +131,9 @@ public class UserStarFragment extends BaseFragment {
                 } else {
                     if (index == 1) {
                         adapter.setNewData(list);
+                        if (list.size() == 0) {
+                            adapter.setEmptyView(emptyView);
+                        }
                     } else {
                         adapter.addData(list);
                     }

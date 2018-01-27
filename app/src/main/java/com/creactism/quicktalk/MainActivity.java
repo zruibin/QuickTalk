@@ -1,5 +1,6 @@
 package com.creactism.quicktalk;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.View;
 import com.creactism.quicktalk.components.menu.IconMenuAdapter;
 import com.creactism.quicktalk.components.menu.IconMenuItem;
 import com.creactism.quicktalk.services.user.MyFragment;
+import com.creactism.quicktalk.services.user.UserSearchActivity;
 import com.creactism.quicktalk.services.userpost.UserPostListFragment;
 import com.creactism.quicktalk.services.userpost.StarUserPostFragment;
 import com.creactism.quicktalk.util.ColorUtil;
@@ -94,7 +96,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
     private void initMenu() {
         final CustomPowerMenu customPowerMenu = new CustomPowerMenu.Builder<>(this.getBaseContext(),
                 new IconMenuAdapter())
@@ -112,6 +113,10 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(int position, Object item) {
                 DLog.debug("position: " + position);
                 customPowerMenu.dismiss();
+                if (position == 2) { //搜索
+                    Intent intent = new Intent().setClass(MainActivity.this, UserSearchActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

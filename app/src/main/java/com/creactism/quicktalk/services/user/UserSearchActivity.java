@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -43,6 +44,7 @@ public class UserSearchActivity extends BaseActivity {
     private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
+    private View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,23 +60,6 @@ public class UserSearchActivity extends BaseActivity {
         Drawable searchEditDraw = getResources().getDrawable(R.mipmap.search);
         searchEditDraw.setBounds(0, 0, 30, 30);
         this.searchField.setCompoundDrawables(searchEditDraw, null, null, null);
-//        this.searchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH &&
-//                        event.getAction() == KeyEvent.ACTION_DOWN) {
-//                    DLog.error("actionId: "+actionId);
-//                    // 先隐藏键盘
-//                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-//                            .hideSoftInputFromWindow(UserSearchActivity.this.getCurrentFocus()
-//                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
-//                    searchAction();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
         this.searchField.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -101,7 +86,7 @@ public class UserSearchActivity extends BaseActivity {
             }
         });
 
-
+        this.emptyView = getLayoutInflater().inflate(R.layout.layout_empty_view, (ViewGroup)this.recyclerView.getParent(), false);
         this.layoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(this.layoutManager);
         this.recyclerView.addItemDecoration(new RecycleViewDivider(this,
@@ -120,7 +105,7 @@ public class UserSearchActivity extends BaseActivity {
 
         this.adapter.openLoadAnimation();
         this.recyclerView.setAdapter(this.adapter);
-        adapter.disableLoadMoreIfNotFullPage();
+        this.adapter.disableLoadMoreIfNotFullPage();
 
         this.adapter.setItemHandler(new UserStarOrFansAdapter.OnUserItemHandler(){
             @Override
@@ -177,6 +162,9 @@ public class UserSearchActivity extends BaseActivity {
                     }
                     if (index == 1) {
                         adapter.setNewData(list);
+                        if (list.size() == 0) {
+                            adapter.setEmptyView(emptyView);
+                        }
                     } else {
                         adapter.addData(list);
                     }

@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseActivity;
@@ -36,6 +37,7 @@ public class UserContactBookActivity extends BaseActivity {
     private List<UserModel> dataList;
     private UserStarOrFansAdapter adapter;
     private int index = 1;
+    private View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class UserContactBookActivity extends BaseActivity {
         this.recyclerView.addItemDecoration(new RecycleViewDivider(this,
                 LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
+        this.emptyView = getLayoutInflater().inflate(R.layout.layout_empty_view, (ViewGroup)this.recyclerView.getParent(), false);
         this.adapter = new UserStarOrFansAdapter();
         this.adapter.setActivity(this);
         this.adapter.openLoadAnimation();
@@ -122,6 +125,9 @@ public class UserContactBookActivity extends BaseActivity {
                                     }
                                 }
                                 adapter.setNewData(dataList);
+                                if (list.size() == 0) {
+                                    adapter.setEmptyView(emptyView);
+                                }
                             }
                         }
                     });
