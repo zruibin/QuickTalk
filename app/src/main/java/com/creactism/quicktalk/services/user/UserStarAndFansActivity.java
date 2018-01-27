@@ -60,7 +60,7 @@ public class UserStarAndFansActivity extends BaseActivity {
     }
 
 
-    public class PagerAdapter extends FragmentStatePagerAdapter {
+    private class PagerAdapter extends FragmentStatePagerAdapter {
         public PagerAdapter(FragmentManager fm) {
             super(fm);
         }

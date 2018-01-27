@@ -1,6 +1,7 @@
 package com.creactism.quicktalk.services.userpost;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
 
@@ -36,9 +38,10 @@ public class StarUserPostFragment extends UserPostListFragment {
         userPostHeaderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DLog.info("StarUserPostFragment header click....");
-//                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserSearchActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserActivity.class);
+                intent.putExtra("userUUID", UserInfo.sharedInstance().getUuid());
+                intent.putExtra("nickname", UserInfo.sharedInstance().getNickname());
+                startActivity(intent);
             }
         });
     }
