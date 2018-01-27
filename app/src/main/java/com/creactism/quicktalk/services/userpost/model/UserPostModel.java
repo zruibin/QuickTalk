@@ -209,39 +209,110 @@ public class UserPostModel extends Object {
     }
 
 
-    public abstract static class CompleteHandler extends Object {
-        public abstract void completeHanlder (List<UserPostModel> list, Error error);
+    public static class CompleteHandler extends Object {
+        public void completeHanlder (List<UserPostModel> list, Error error) {};
     }
 
-
-    public static void requestUserPostData(String userUUID, int index, final CompleteHandler
+    public static void requestUserPostData(String userUUID, int index, String relationUserUUID, final CompleteHandler
             completeHandlerObj) {
-
         Map params = new HashMap();
         params.put("index", String.valueOf(index));
-
-        NetworkingAgent.requestDataForQuickTalkService("/userPost/recommendUserPostList",
-                "GET", params, new NetworkingAgent.CompleteHandler() {
-                    @Override
-                    public void completeHanlder(QTResponseObject responseObject, Error error) {
-                        if (error != null) {
-                            completeHandlerObj.completeHanlder(null, error);
-                        } else {
-                            List<UserPostModel> array = null;
-                            if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
-                                try {
-                                    String data = String.valueOf(responseObject.getData());
-                                    array =  JSON.parseArray(data, UserPostModel.class);
-                                } catch (Exception e) {
-                                    ;
-                                }
-                                completeHandlerObj.completeHanlder(array, null);
-                            } else {
-                                error = new Error(responseObject.getMessage());
-                                completeHandlerObj.completeHanlder(null, error);
-                            }
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (relationUserUUID != null) {
+            params.put("relation_user_uuid", relationUserUUID);
+        }
+        NetworkingAgent.requestDataForUserPostService("/userPostList",
+                NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
                         }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
                     }
+                }
+            }
+        });
+    }
+
+    public static void requestRecommendUserPostData(int index, String relationUserUUID, final CompleteHandler
+            completeHandlerObj) {
+        Map params = new HashMap();
+        params.put("index", String.valueOf(index));
+        if (relationUserUUID != null) {
+            params.put("relation_user_uuid", relationUserUUID);
+        }
+        NetworkingAgent.requestDataForUserPostService("/recommendUserPostList",
+                NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
          });
     }
+
+    public static void requestStarUserPostData(String userUUID, int index, String relationUserUUID, final CompleteHandler
+            completeHandlerObj) {
+        Map params = new HashMap();
+        params.put("index", String.valueOf(index));
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (relationUserUUID != null) {
+            params.put("relation_user_uuid", relationUserUUID);
+        }
+        NetworkingAgent.requestDataForUserPostService("/starUserPostList",
+                NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
 }

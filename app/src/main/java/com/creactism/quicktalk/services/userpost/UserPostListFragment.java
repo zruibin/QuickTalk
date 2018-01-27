@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,12 +30,16 @@ import java.util.List;
 
 public class UserPostListFragment extends BaseFragment {
 
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
-    private List<UserPostModel> dataList;
-    private UserPostAdapter userPostAdapter;
-    private int index = 1;
+    protected RecyclerView recyclerView;
+    protected SwipeRefreshLayout refreshLayout;
+    protected List<UserPostModel> dataList;
+    protected UserPostAdapter userPostAdapter;
+    protected int index = 1;
+    protected boolean showHeader = false;
+    protected boolean showFooter = false;
+    protected View headerView = null;
+    protected View footerView = null;
 
     @Override
     public void onDestroy() {
@@ -48,31 +53,23 @@ public class UserPostListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DLog.debug("UserPostListFragment on onCreateView: .....");
-        this.getActivity().setTitle("Recommend....");
 
         View view = inflater.inflate(R.layout.frag_userpost_list, null);
         this.recyclerView = (RecyclerView)view.findViewById(R.id.frag_userpost_list_recyclerview);
         this.refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.frag_userpost_list_refresh);
         this.dataList = new ArrayList<UserPostModel>();
-        index = 1;
-        this.initSubView(view);
+
+        initSubView(view);
 
         return view;
     }
 
     private void initSubView(View view) {
-
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
-//        this.recyclerView.addItemDecoration(new RecycleViewDivider(
-//                getActivity().getBaseContext(), LinearLayoutManager.VERTICAL,
-//                20, Color.parseColor("#1C1C1C")));
-        /**系统自带的*/
 //        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
         this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
                 LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
-
         this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
@@ -85,6 +82,13 @@ public class UserPostListFragment extends BaseFragment {
 
         this.userPostAdapter = new UserPostAdapter();
         this.userPostAdapter.setActivity(this.getActivity());
+        if (this.showHeader) {
+            this.headerView = getHeaderView();
+            this.userPostAdapter.addHeaderView(this.headerView);
+        }
+        if (this.showFooter) {
+
+        }
         this.userPostAdapter.setItemHandler(new UserPostAdapter.OnUserPostItemHandler() {
             public void onInfoHandler(UserPostModel model) {
                 DLog.debug(model.getNickname());
@@ -113,31 +117,6 @@ public class UserPostListFragment extends BaseFragment {
         this.userPostAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                /*
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (testNum < 3) {
-//                            mAdapter.setNewData(data);
-                            for (int i = 0; i < 6; i++) {
-                                mAdapter.addData("嘿，我是“上拉刷新”生出来的: " + String.valueOf(i));
-                            }
-                            mAdapter.loadMoreComplete();
-                            ++testNum;
-                        }
-                        DLog.debug(String.valueOf(testNum));
-                        if (testNum == 2) {
-                            //第一页如果不够一页就不显示没有更多数据布局
-                            mAdapter.loadMoreFail();
-                        }
-                        if (testNum == 3) {
-                            //第一页如果不够一页就不显示没有更多数据布局
-                            mAdapter.loadMoreEnd();
-                        }
-
-                    }
-                },1000);
-                */
                 ++index;
                 loadData();
             }
@@ -152,18 +131,7 @@ public class UserPostListFragment extends BaseFragment {
         this.userPostAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                DLog.debug(mDatas.get(position));
-//                Toast.makeText(getActivity(), mDatas.get(position), Toast.LENGTH_SHORT).show();
-//                if (position == 1) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity().getApplicationContext(), AccountChangeAvatarActivity.class);
-//                    startActivity(intent);
-//                }
-//                if (position == 2) {
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity().getApplicationContext(), AddUserPostActivity.class);
-//                    startActivity(intent);
-//                }
+
             }
         });
 
@@ -176,32 +144,17 @@ public class UserPostListFragment extends BaseFragment {
         });
 
         this.refreshLayout.setRefreshing(true);
-        this.loadData();
+        loadData();
     }
 
-    protected void loadData() {
-        UserPostModel.requestUserPostData("", index, new UserPostModel.CompleteHandler() {
-            @Override
-            public void completeHanlder(List<UserPostModel> list, Error error) {
-                refreshLayout.setRefreshing(false);
-                userPostAdapter.loadMoreComplete();
-                if (error != null) {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (index == 1) {
-                    userPostAdapter.setNewData(list);
-                } else {
-                    userPostAdapter.addData(list);
-                }
-                if (list.size() < 10) {
-                    userPostAdapter.loadMoreEnd();
-                }
-                dataList.addAll(list);
-            }
-        });
-    }
+    protected void loadData() {}
 
+    private View getHeaderView() {
+        /**haderView中子类不能是View类型*/
+        View headerView = getLayoutInflater().
+                inflate(R.layout.frag_userpost_list_header, (ViewGroup)this.recyclerView.getParent(), false);
+        return headerView;
+    }
 
 
 }

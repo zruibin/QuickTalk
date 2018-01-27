@@ -9,7 +9,7 @@ import com.creactism.quicktalk.components.menu.IconMenuAdapter;
 import com.creactism.quicktalk.components.menu.IconMenuItem;
 import com.creactism.quicktalk.services.user.MyFragment;
 import com.creactism.quicktalk.services.user.UserSearchActivity;
-import com.creactism.quicktalk.services.userpost.UserPostListFragment;
+import com.creactism.quicktalk.services.userpost.RecommendUserPostFragment;
 import com.creactism.quicktalk.services.userpost.StarUserPostFragment;
 import com.creactism.quicktalk.util.ColorUtil;
 import com.creactism.quicktalk.util.DLog;
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
 //                .setChangeColor(Color.GREEN, Color.RED)
 //                .isShowDivider(false)
                 .addTabItem("快言", R.mipmap.news_unselect, StarUserPostFragment.class)
-                .addTabItem("发现", R.mipmap.circle_unselect, UserPostListFragment.class)
+                .addTabItem("发现", R.mipmap.circle_unselect, RecommendUserPostFragment.class)
                 .addTabItem("我", R.mipmap.my_unselect, MyFragment.class);
         this.tabBar.setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
             @Override

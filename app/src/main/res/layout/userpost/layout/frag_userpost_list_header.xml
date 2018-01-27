@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="80dp"
+    android:id="@+id/frag_userpost_list_header_layout"
+    android:background="@drawable/ripple_bg">
+
+<com.facebook.drawee.view.SimpleDraweeView
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frag_userpost_list_header_image"
+    fresco:placeholderImage="@mipmap/avatar_default" fresco:placeholderImageScaleType="centerCrop"
+    fresco:failureImage="@mipmap/avatar_default" fresco:failureImageScaleType="centerCrop"
+    android:layout_width="64dp" android:layout_height="64dp"
+    android:layout_centerVertical="true" android:padding="5dp"
+    fresco:roundedCornerRadius="4dp"
+    android:layout_marginLeft="10dp" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+<TextView
+    android:id="@+id/frag_userpost_list_header_text"
+    android:layout_toRightOf="@id/frag_userpost_list_header_image" android:layout_marginLeft="5dp"
+    android:layout_centerVertical="true" android:gravity="left|center"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:textSize="14sp" android:singleLine="true" android:text="fdsfdsfsafdafsafsfsfdsds"
+    android:ellipsize="end" android:maxEms="8" android:textColor="@color/black"
+    android:textAllCaps="false" android:textStyle="normal"/>
+
+<ImageView
+    android:id="@+id/frag_userpost_list_header_indicator"
+    android:layout_width="14dp" android:layout_height="14dp"
+    android:layout_alignParentRight="true" android:layout_centerVertical="true"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp" android:src="@mipmap/indicator"/>
+<ImageView
+    android:id="@+id/frag_userpost_list_header_dot"
+    android:layout_width="8dp" android:layout_height="8dp"
+    android:layout_alignParentRight="true" android:layout_centerVertical="true"
+    android:layout_marginRight="20dp" android:background="@color/red"/>
+</RelativeLayout>

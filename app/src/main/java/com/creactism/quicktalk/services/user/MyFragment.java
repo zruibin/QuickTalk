@@ -114,7 +114,7 @@ public class MyFragment extends BaseFragment {
         List<String> collection = new ArrayList<String>();
         collection.add(String.valueOf(R.mipmap.collection));
         collection.add("收藏");
-        collection.add("com.creactism.quicktalk.services.user.UserActivity");
+        collection.add("com.creactism.quicktalk.services.user.UserCollectionActivity");
 
         List<String> share = new ArrayList<String>();
         share.add(String.valueOf(R.mipmap.share));
@@ -181,7 +181,7 @@ public class MyFragment extends BaseFragment {
             vto2.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    DLog.debug("width:"+String.valueOf(imageView.getWidth())+" height:"+String.valueOf(imageView.getHeight()));
+//                    DLog.debug("width:"+String.valueOf(imageView.getWidth())+" height:"+String.valueOf(imageView.getHeight()));
                     imageView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     RelativeLayout.LayoutParams imageLP = (RelativeLayout.LayoutParams)imageView.getLayoutParams();
                     imageLP.width = imageView.getHeight();
