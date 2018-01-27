@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
@@ -68,7 +69,9 @@ public class UserPostListFragment extends BaseFragment {
 //                getActivity().getBaseContext(), LinearLayoutManager.VERTICAL,
 //                20, Color.parseColor("#1C1C1C")));
         /**系统自带的*/
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+//        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
+                LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
 
         this.refreshLayout.setColorSchemeColors(this.getActivity().getResources().getColor(R.color.QuickTalk_NAVBAR_BG_COLOR));
         this.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

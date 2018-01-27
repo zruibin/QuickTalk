@@ -23,6 +23,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.components.tableview.TableEntity;
 import com.creactism.quicktalk.components.tableview.TableListAdapter;
 import com.creactism.quicktalk.util.DLog;
@@ -81,7 +82,9 @@ public class MyFragment extends BaseFragment {
         this.recyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerview);
         this.layoutManager = new LinearLayoutManager(getActivity());
         this.recyclerView.setLayoutManager(this.layoutManager);
-        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+//        this.recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL));
+        this.recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),
+                LinearLayoutManager.VERTICAL, 1, getResources().getColor(R.color.QuickTalk_VIEW_BG_COLOR)));
     }
 
     protected void loadData() {

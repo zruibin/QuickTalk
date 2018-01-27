@@ -8,7 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="40dp"
         android:orientation="horizontal" android:background="@drawable/ripple_bg"
@@ -34,12 +34,12 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
 
 
     <View
         android:layout_width="match_parent" android:layout_marginTop="20dp"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:onClick="onNicknameItemClick"
         android:layout_width="match_parent" android:layout_height="40dp"
@@ -64,7 +64,7 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:onClick="onGenderItemClick"
         android:layout_width="match_parent" android:layout_height="40dp"
@@ -89,7 +89,7 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
     <RelativeLayout
         android:onClick="onAreaItemClick"
         android:layout_width="match_parent" android:layout_height="40dp"
@@ -114,6 +114,6 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp" android:background="@color/darkgray" />
+        android:layout_height="0.5dp" android:background="@color/QuickTalk_VIEW_BG_COLOR" />
 
 </LinearLayout>
