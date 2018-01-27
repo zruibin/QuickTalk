@@ -161,6 +161,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((AccountModel)null, error);
                 } else {
@@ -191,6 +194,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder((AccountModel)null, error);
                         } else {
@@ -221,6 +227,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder((AccountModel)null, error);
                         } else {
@@ -251,6 +260,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder(false, error);
                         } else {
@@ -274,6 +286,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder((Map<String, Boolean>) null, error);
                         } else {
@@ -311,6 +326,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder(false, error);
                         } else {
@@ -340,6 +358,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder(false, error);
                         } else {
@@ -368,6 +389,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder(false, error);
                         } else {
@@ -401,6 +425,9 @@ public class AccountModel {
                 new NetworkingAgent.CompleteHandler() {
                     @Override
                     public void completeHanlder(QTResponseObject responseObject, Error error) {
+                        if (completeHandler == null) {
+                            return;
+                        }
                         if (error != null) {
                             completeHandler.completeHanlder(false, error);
                         } else {

@@ -19,7 +19,6 @@ import com.creactism.quicktalk.components.QTProgressHUD;
 import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.ColorUtil;
-import com.creactism.quicktalk.util.DLog;
 import com.creactism.quicktalk.util.StringUtil;
 
 import java.util.List;

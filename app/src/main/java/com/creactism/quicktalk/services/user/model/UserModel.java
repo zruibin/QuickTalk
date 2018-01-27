@@ -214,6 +214,9 @@ public class UserModel {
                 new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
@@ -248,6 +251,9 @@ public class UserModel {
                 new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
@@ -286,6 +292,9 @@ public class UserModel {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder(false, error);
                 } else {
@@ -313,6 +322,9 @@ public class UserModel {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
@@ -347,6 +359,9 @@ public class UserModel {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((Map<String, String>)null, error);
                 } else {
@@ -372,6 +387,9 @@ public class UserModel {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
@@ -400,6 +418,9 @@ public class UserModel {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder((UserModel)null, error);
                 } else {

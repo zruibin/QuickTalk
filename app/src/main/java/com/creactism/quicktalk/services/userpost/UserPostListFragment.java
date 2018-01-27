@@ -1,10 +1,12 @@
 package com.creactism.quicktalk.services.userpost;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -104,16 +106,18 @@ public class UserPostListFragment extends BaseFragment {
                 startActivity(intent);
             }
             public void onArrowHandler(UserPostModel model) {
-                DLog.debug(model.getAvatar());
+                arrowHandlerAction(model);
             }
             public void onHrefHandler(UserPostModel model) {
                 DLog.debug(model.getTitle());
+                addReadCountAction(model);
             }
             public void onLikeActionHandler(UserPostModel model) {
                 likeOrUnLikeAction(model);
             }
             public void onCommentHandler(UserPostModel model) {
                 DLog.debug(model.getTitle());
+                addReadCountAction(model);
             }
             public void onTagActionHandler(UserPostModel model, int tagIndex) {
                 String tag = model.getTagList().get(tagIndex);
@@ -209,8 +213,82 @@ public class UserPostListFragment extends BaseFragment {
                 }
             }
         });
-
     }
+
+    protected void arrowHandlerAction(final UserPostModel model) {
+        if (model.getUserUUID().equals(UserInfo.sharedInstance().getUuid())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("");
+            String[] items = {"删除","收藏"};
+            builder.setNegativeButton("取消",null);
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    switch (which){
+                        case 0:
+                            deleteData(model);
+                            break;
+                        case 1:
+                            collectionAndUnCollectionData(model);
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("");
+            String[] items = {"举报","收藏"};
+            builder.setNegativeButton("取消",null);
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    switch (which){
+                        case 0:
+                            QTToast.makeText(getActivity(), "举报成功");
+                            break;
+                        case 1:
+                            collectionAndUnCollectionData(model);
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        }
+    }
+
+    protected void deleteData(final UserPostModel model) {
+        DLog.debug("deleteData..");
+        if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {
+            return;
+        }
+    }
+
+    protected void collectionAndUnCollectionData(final UserPostModel model) {
+        if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {
+            return;
+        }
+        String userUUID = UserInfo.sharedInstance().getUuid();
+        UserPostModel.requestUserCollectionAction(model.getUuid(), userUUID,
+                Marcos.COLLECTION_ACTION_ON, new UserPostModel.CompleteHandler() {
+            @Override
+            public void completeHanlder(boolean action, Error error) {
+                super.completeHanlder(action, error);
+                if (action) {
+                    QTToast.makeText(getActivity(), "收藏成功");
+                } else {
+                    QTToast.makeText(getActivity(), error.getMessage());
+                }
+            }
+        });
+    }
+
+    private void addReadCountAction(final UserPostModel model) {
+        UserPostModel.requestAddUserPostReadCount(model.getUuid(), UserInfo.sharedInstance().getUuid(), null);
+    }
+
+
+
 
 }
 

@@ -233,6 +233,9 @@ public class UserPostModel extends Object {
                 NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -265,6 +268,9 @@ public class UserPostModel extends Object {
                 NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -300,6 +306,9 @@ public class UserPostModel extends Object {
                 NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -333,6 +342,9 @@ public class UserPostModel extends Object {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -369,6 +381,9 @@ public class UserPostModel extends Object {
                 NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -404,6 +419,9 @@ public class UserPostModel extends Object {
                 NetworkingAgent.SERVICE_REQUEST_POST, params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandlerObj == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandlerObj.completeHanlder(null, error);
                 } else {
@@ -441,6 +459,73 @@ public class UserPostModel extends Object {
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
+                if (error != null) {
+                    completeHandler.completeHanlder(false, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        completeHandler.completeHanlder(true, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder(false, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestUserCollectionAction(String userPostUUID, String userUUID, String action,
+                                                   final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (userPostUUID != null) {
+            params.put("content_uuid", userPostUUID);
+        }
+        if (action != null) {
+            params.put("action", action);
+        }
+        params.put("type", "1");
+        NetworkingAgent.requestDataForCollectionService("/action", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
+                if (error != null) {
+                    completeHandler.completeHanlder(false, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        completeHandler.completeHanlder(true, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder(false, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestAddUserPostReadCount(String userPostUUID, String userUUID,
+                                                   final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (userPostUUID != null) {
+            params.put("uuid", userPostUUID);
+        }
+        NetworkingAgent.requestDataForUserPostService("/addReadCount", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (completeHandler == null) {
+                    return;
+                }
                 if (error != null) {
                     completeHandler.completeHanlder(false, error);
                 } else {
