@@ -35,6 +35,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 import static com.creactism.quicktalk.Marcos.QTLoginStatusChangeNotification;
 
 /**
@@ -223,15 +225,19 @@ public class MyFragment extends BaseFragment {
             DLog.debug("section: "+data.get(2));
 
             if (indexPath.section == 0 && indexPath.row ==0) {
-//                Intent intent = new Intent();
-//                try {
-//                    intent.setClass(getActivity().getApplicationContext(),
-//                            Class.forName("com.creactism.quicktalk.services.account.AccountInfoActivity"));
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                startActivity(intent);
                 if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {return;}
+            }
+
+            if (UserInfo.sharedInstance().isLogin) {
+                if (indexPath.section == 1 && indexPath.row == 3) {
+                    showShare();
+                    return;
+                }
+            } else {
+                if (indexPath.section == 1 && indexPath.row == 0) {
+                    showShare();
+                    return;
+                }
             }
 
             Intent intent = new Intent();
@@ -242,6 +248,33 @@ public class MyFragment extends BaseFragment {
             }
             startActivity(intent);
         }
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle("你也来快言上读一下吧");
+        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+        oks.setTitleUrl("http://www.creactism.com");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("快言：分享和收藏你在网络上的所见所闻。");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImagePath(Uri.parse("android.resource://" + getActivity().getApplicationContext().getPackageName()
+                + "/" +R.mipmap.app_icon).getPath());
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl("http://www.creactism.com");
+        // site是分享此内容的网站名称，仅在QQ空间使用
+        oks.setSite(getString(R.string.app_name));
+        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+        oks.setSiteUrl("http://www.creactism.com");
+
+        // 启动分享GUI
+        oks.show(this.getActivity());
     }
 
 }
