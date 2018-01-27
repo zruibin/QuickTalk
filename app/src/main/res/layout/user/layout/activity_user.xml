@@ -29,7 +29,7 @@
                 <com.facebook.drawee.view.SimpleDraweeView
                     xmlns:fresco="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/activity_user_header_avatar"
-                    android:layout_width="60dp" android:layout_height="60dp" android:layout_centerVertical="true"
+                    android:layout_width="70dp" android:layout_height="70dp" android:layout_centerVertical="true"
                     fresco:placeholderImage="@mipmap/avatar_default" fresco:placeholderImageScaleType="centerCrop"
                     fresco:failureImage="@mipmap/avatar_default" fresco:failureImageScaleType="centerCrop"
                     fresco:roundedCornerRadius="4dp"
@@ -37,7 +37,7 @@
                     fresco:pressedStateOverlayImage="@drawable/ripple_avatar_bg"
                     />
                 <LinearLayout
-                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:layout_width="match_parent" android:layout_height="80dp"
                     android:layout_toRightOf="@id/activity_user_header_avatar" android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" android:layout_marginRight="100dp"
                     android:orientation="vertical">
@@ -45,7 +45,7 @@
                         android:id="@+id/activity_user_header_nickname"
                         style="?android:attr/borderlessButtonStyle" android:gravity="left|center"
                         android:background="@drawable/ripple_bg"
-                        android:layout_width="wrap_content" android:layout_height="30dp"
+                        android:layout_width="wrap_content" android:layout_height="35dp"
                         android:textColor="@color/black"
                         android:textSize="17sp" android:singleLine="true"
                         android:ellipsize="end" android:maxEms="10"
@@ -53,7 +53,7 @@
                         />
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="30dp">
+                        android:layout_height="35dp">
                         <ImageView
                             android:id="@+id/activity_user_header_gender"
                             android:layout_width="16dp" android:layout_height="16dp"
@@ -82,16 +82,16 @@
             <TextView
                 android:id="@+id/activity_user_header_count"
                 android:layout_width="match_parent" android:layout_height="30dp"
-                android:textColor="@color/black" android:textSize="16sp"
-                android:gravity="bottom" android:text="7关注 12粉丝 55赞"
-                android:layout_marginLeft="14dp" android:layout_marginRight="10dp"/>
+                android:textColor="@color/black" android:textSize="18sp"
+                android:gravity="bottom" android:text=" 7 关注   12 粉丝   55 赞"
+                android:layout_marginLeft="14dp" android:layout_marginRight="14dp"/>
         </LinearLayout>
 
         <com.kekstudio.dachshundtablayout.DachshundTabLayout
             android:id="@+id/activity_user_tab"
             android:layout_width="match_parent" android:layout_height="40dp"
             android:layout_centerHorizontal="true" android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="10dp" custom:tabPadding="4dp"
             custom:ddAnimatedIndicator="lineMove" custom:ddIndicatorHeight="2dp"
             custom:tabTextColor="@color/QuickTalk_SECOND_FONT_COLOR"
             custom:tabSelectedTextColor="@color/black"
@@ -99,7 +99,9 @@
             custom:tabMinWidth="100dp"
             android:background="@color/white"
             custom:tabGravity="center" custom:tabMode="fixed"/>
-
+        <ImageView
+            android:layout_width="match_parent" android:layout_height="0.5dp"
+            android:background="@color/QuickTalk_VIEW_BG_COLOR"/>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

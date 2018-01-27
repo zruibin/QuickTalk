@@ -85,4 +85,19 @@ public class NetworkingAgent extends Object {
         String urlString = "/userPost" + serviceURL;
         requestDataForQuickTalkService(urlString, method, params, handler);
     }
+
+    public static void requestDataForCollectionService(String serviceURL, String method,
+                                                     Map<String, String> params, final CompleteHandler
+                                                             handler) {
+        String urlString = "/collection" + serviceURL;
+        requestDataForQuickTalkService(urlString, method, params, handler);
+    }
+
+    public static void requestDataForLikeService(String serviceURL, String method,
+                                                       Map<String, String> params, final CompleteHandler
+                                                               handler) {
+        String urlString = "/like" + serviceURL;
+        requestDataForQuickTalkService(urlString, method, params, handler);
+    }
+
 }

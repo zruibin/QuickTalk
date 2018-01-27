@@ -315,4 +315,74 @@ public class UserPostModel extends Object {
         });
     }
 
+    public static void requestCollectionData(String userUUID, int index, String type, final CompleteHandler
+            completeHandlerObj) {
+        Map params = new HashMap();
+        params.put("index", String.valueOf(index));
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        params.put("type", type);
+        NetworkingAgent.requestDataForCollectionService("/list", NetworkingAgent.SERVICE_REQUEST_GET,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestUserForUserPostLikeData(String userUUID, int index, String relationUserUUID, final CompleteHandler
+            completeHandlerObj) {
+        Map params = new HashMap();
+        params.put("index", String.valueOf(index));
+        params.put("type", "2");
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (relationUserUUID != null) {
+            params.put("relation_user_uuid", relationUserUUID);
+        }
+        NetworkingAgent.requestDataForLikeService("/likeList",
+                NetworkingAgent.SERVICE_REQUEST_GET, params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandlerObj.completeHanlder(null, error);
+                } else {
+                    List<UserPostModel> array = null;
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            array =  JSON.parseArray(data, UserPostModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandlerObj.completeHanlder(array, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
+
 }

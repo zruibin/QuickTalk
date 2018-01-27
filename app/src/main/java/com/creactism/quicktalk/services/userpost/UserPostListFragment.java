@@ -1,6 +1,7 @@
 package com.creactism.quicktalk.services.userpost;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
 import com.creactism.quicktalk.R;
+import com.creactism.quicktalk.UserInfo;
 import com.creactism.quicktalk.components.RecycleViewDivider;
+import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
 import com.creactism.quicktalk.services.userpost.model.UserPostModel;
 import com.creactism.quicktalk.util.DLog;
@@ -92,6 +95,10 @@ public class UserPostListFragment extends BaseFragment {
         this.userPostAdapter.setItemHandler(new UserPostAdapter.OnUserPostItemHandler() {
             public void onInfoHandler(UserPostModel model) {
                 DLog.debug(model.getNickname());
+                Intent intent = new Intent().setClass(getActivity().getBaseContext(), UserActivity.class);
+                intent.putExtra("userUUID", model.getUserUUID());
+                intent.putExtra("nickname", model.getNickname());
+                startActivity(intent);
             }
             public void onArrowHandler(UserPostModel model) {
                 DLog.debug(model.getAvatar());

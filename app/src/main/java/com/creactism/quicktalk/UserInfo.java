@@ -214,6 +214,7 @@ public final class UserInfo extends Object {
         this.uuid = null;
         this.nickname = null;
         this.avatar = null;
+        this.token = null;
         this.app.sendBroadcast(new Intent(QTLoginStatusChangeNotification));
     }
 

@@ -242,7 +242,12 @@ public class MyFragment extends BaseFragment {
 
             Intent intent = new Intent();
             try {
-                intent.setClass(getActivity().getApplicationContext(), Class.forName(data.get(2)));
+                String clazzName = data.get(2);
+                intent.setClass(getActivity().getApplicationContext(), Class.forName(clazzName));
+                if (clazzName.equals("com.creactism.quicktalk.services.user.UserActivity")) {
+                    intent.putExtra("userUUID", UserInfo.sharedInstance().getUuid());
+                    intent.putExtra("nickname", UserInfo.sharedInstance().getNickname());
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -26,14 +26,19 @@ public class UserModel {
     private String wechat;
     private String weibo;
     private String nickname;
-    private Object area;
+    private String area;
     private int gender;
-    private Object detail;
+    private String detail;
     private String phone;
     private String avatar;
     private String time;
     private String email;
     private int relation;
+    private int followCount;
+    private int followingCount;
+    private int userPostCount;
+    private int userPostLikeCount;
+    private int likedCount;
 
     public String getId() {
         return id;
@@ -86,11 +91,11 @@ public class UserModel {
         this.nickname = nickname;
     }
 
-    public Object getArea() {
+    public String getArea() {
         return area;
     }
 
-    public void setArea(Object area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
@@ -102,11 +107,11 @@ public class UserModel {
         this.gender = gender;
     }
 
-    public Object getDetail() {
+    public String getDetail() {
         return detail;
     }
 
-    public void setDetail(Object detail) {
+    public void setDetail(String detail) {
         this.detail = detail;
     }
 
@@ -150,10 +155,51 @@ public class UserModel {
         this.relation = relation;
     }
 
+    public int getFollowCount() {
+        return followCount;
+    }
+
+    public void setFollowCount(int followCount) {
+        this.followCount = followCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public int getUserPostCount() {
+        return userPostCount;
+    }
+
+    public void setUserPostCount(int userPostCount) {
+        this.userPostCount = userPostCount;
+    }
+
+    public int getUserPostLikeCount() {
+        return userPostLikeCount;
+    }
+
+    public void setUserPostLikeCount(int userPostLikeCount) {
+        this.userPostLikeCount = userPostLikeCount;
+    }
+
+    public int getLikedCount() {
+        return likedCount;
+    }
+
+    public void setLikedCount(int likedCount) {
+        this.likedCount = likedCount;
+    }
+
     public static class CompleteHandler extends Object {
         public void completeHanlder (List<UserModel> list, Error error){};
         public void completeHanlder (boolean action, Error error){};
         public void completeHanlder (Map<String, String> map, Error error){};
+        public void completeHanlder (UserModel model, Error error){};
     }
 
 
@@ -323,6 +369,29 @@ public class UserModel {
                     } else {
                         error = new Error(responseObject.getMessage());
                         completeHandler.completeHanlder((List<UserModel>)null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestUserInfo(String userUUID, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        NetworkingAgent.requestDataForAccountService("/info", NetworkingAgent.SERVICE_REQUEST_GET,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder((UserModel)null, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        String data = String.valueOf(responseObject.getData());
+                        UserModel model = JSONObject.parseObject(data, UserModel.class);
+                        completeHandler.completeHanlder(model, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder((UserModel)null, error);
                     }
                 }
             }
