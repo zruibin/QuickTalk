@@ -167,7 +167,7 @@ public class UserModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder((List)null, error);
+                    completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
                     List<UserModel> list = new ArrayList<UserModel>();
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -180,7 +180,7 @@ public class UserModel {
                         completeHandler.completeHanlder(list, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder((List)null, error);
+                        completeHandler.completeHanlder((List<UserModel>)null, error);
                     }
                 }
             }
@@ -199,7 +199,7 @@ public class UserModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder((List)null, error);
+                    completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
                     List<UserModel> list = new ArrayList<UserModel>();
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -212,7 +212,7 @@ public class UserModel {
                         completeHandler.completeHanlder(list, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder((List)null, error);
+                        completeHandler.completeHanlder((List<UserModel>)null, error);
                     }
                 }
             }
@@ -254,7 +254,7 @@ public class UserModel {
             @Override
             public void completeHanlder(QTResponseObject responseObject, Error error) {
                 if (error != null) {
-                    completeHandler.completeHanlder((List)null, error);
+                    completeHandler.completeHanlder((List<UserModel>)null, error);
                 } else {
                     List<UserModel> list = new ArrayList<UserModel>();
                     if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
@@ -267,7 +267,7 @@ public class UserModel {
                         completeHandler.completeHanlder(list, null);
                     } else {
                         error = new Error(responseObject.getMessage());
-                        completeHandler.completeHanlder((List)null, error);
+                        completeHandler.completeHanlder((List<UserModel>)null, error);
                     }
                 }
             }
@@ -293,6 +293,36 @@ public class UserModel {
                     } else {
                         error = new Error(responseObject.getMessage());
                         completeHandler.completeHanlder((Map<String, String>)null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestForSearchUser(String searchText, int index, String userUUID, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        params.put("user_uuid", userUUID);
+        params.put("index", String.valueOf(index));
+        params.put("text", searchText);
+        NetworkingAgent.requestDataForSearchService("/searchUser", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder((List<UserModel>)null, error);
+                } else {
+                    List<UserModel> list = new ArrayList<UserModel>();
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        try {
+                            String data = String.valueOf(responseObject.getData());
+                            list = JSONObject.parseArray(data, UserModel.class);
+                        } catch (Exception e) {
+                            ;
+                        }
+                        completeHandler.completeHanlder(list, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder((List<UserModel>)null, error);
                     }
                 }
             }

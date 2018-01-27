@@ -33,6 +33,7 @@ import java.util.List;
 public class UserStarFragment extends BaseFragment {
 
     private String userUUID;
+    private boolean showHeader = false;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private LinearLayoutManager layoutManager;
@@ -42,6 +43,10 @@ public class UserStarFragment extends BaseFragment {
 
     public void setUserUUID(String userUUID) {
         this.userUUID = userUUID;
+    }
+
+    public void setShowHeader(boolean showHeader) {
+        this.showHeader = showHeader;
     }
 
     @Nullable
@@ -76,8 +81,10 @@ public class UserStarFragment extends BaseFragment {
 
         this.adapter = new UserStarOrFansAdapter();
         this.adapter.setHiddenRelation(true);
-        View headerView = getHeaderView();
-        this.adapter.setHeaderView(headerView);
+        if (this.showHeader) {
+            View headerView = getHeaderView();
+            this.adapter.setHeaderView(headerView);
+        }
 
         this.adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -89,7 +96,7 @@ public class UserStarFragment extends BaseFragment {
 
         this.adapter.openLoadAnimation();
         this.recyclerView.setAdapter(this.adapter);
-
+        adapter.disableLoadMoreIfNotFullPage();
 
         this.adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -120,13 +127,13 @@ public class UserStarFragment extends BaseFragment {
                 if (error != null) {
                     QTToast.makeText(getActivity(), error.getMessage());
                 } else {
-                    if (list.size() < 10) {
-                        adapter.loadMoreEnd();
-                    }
                     if (index == 1) {
                         adapter.setNewData(list);
                     } else {
                         adapter.addData(list);
+                    }
+                    if (list.size() < 10) {
+                        adapter.loadMoreEnd();
                     }
                     dataList.addAll(list);
                 }

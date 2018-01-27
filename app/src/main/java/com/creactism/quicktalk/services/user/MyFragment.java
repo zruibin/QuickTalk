@@ -159,8 +159,6 @@ public class MyFragment extends BaseFragment {
         @Override
         public void cellForRowAtIndexPath(final BaseViewHolder helper, final TableEntity item, final TableEntity
                 .IndexPath indexPath) {
-            DLog.debug("section:" + String.valueOf(indexPath.section) + " row:" + String.valueOf(indexPath.row));
-
             LinearLayout linearLayout = helper.getView(this.table_layout_id);
             LinearLayout.LayoutParams lp;
             if (item.getIndexPath().section == 0 && item.getIndexPath().row == 0) {

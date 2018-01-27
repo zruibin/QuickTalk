@@ -76,6 +76,7 @@ public class UserFansFragment extends BaseFragment {
         this.adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
+                DLog.error("UserFansFragment->onLoadMoreRequested...");
                 ++index;
                 loadData();
             }
@@ -83,6 +84,7 @@ public class UserFansFragment extends BaseFragment {
 
         this.adapter.openLoadAnimation();
         this.recyclerView.setAdapter(this.adapter);
+        this.adapter.disableLoadMoreIfNotFullPage();
 
         this.adapter.setItemHandler(new UserStarOrFansAdapter.OnUserItemHandler(){
             @Override
@@ -128,13 +130,13 @@ public class UserFansFragment extends BaseFragment {
                             model.setRelation(UserModel.UserRelationDefault);
                         }
                     }
-                    if (list.size() < 10) {
-                        adapter.loadMoreEnd();
-                    }
                     if (index == 1) {
                         adapter.setNewData(list);
                     } else {
                         adapter.addData(list);
+                    }
+                    if (list.size() < 10) {
+                        adapter.loadMoreEnd();
                     }
                     dataList.addAll(list);
                 }

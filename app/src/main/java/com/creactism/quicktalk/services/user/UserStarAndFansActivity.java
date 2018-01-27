@@ -70,6 +70,7 @@ public class UserStarAndFansActivity extends BaseActivity {
             if (i == 0) {
                 UserStarFragment userStarFragment = new UserStarFragment();
                 userStarFragment.setUserUUID(UserInfo.sharedInstance().getUuid());
+                userStarFragment.setShowHeader(true);
                 return userStarFragment;
             } else {
                 UserFansFragment userFansFragment = new UserFansFragment();
@@ -85,7 +86,6 @@ public class UserStarAndFansActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            DLog.debug("position:"+position);
             return TABS[position];
         }
     }

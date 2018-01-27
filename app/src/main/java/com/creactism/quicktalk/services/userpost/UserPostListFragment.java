@@ -144,7 +144,7 @@ public class UserPostListFragment extends BaseFragment {
         // 默认提供5种方法（渐显、缩放、从下到上，从左到右、从右到左）
 //        this.userPostAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         this.recyclerView.setAdapter(this.userPostAdapter);
-
+        this.userPostAdapter.disableLoadMoreIfNotFullPage();
 
         this.userPostAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -186,12 +186,15 @@ public class UserPostListFragment extends BaseFragment {
                     Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                dataList.addAll(list);
                 if (index == 1) {
                     userPostAdapter.setNewData(list);
                 } else {
                     userPostAdapter.addData(list);
                 }
+                if (list.size() < 10) {
+                    userPostAdapter.loadMoreEnd();
+                }
+                dataList.addAll(list);
             }
         });
     }

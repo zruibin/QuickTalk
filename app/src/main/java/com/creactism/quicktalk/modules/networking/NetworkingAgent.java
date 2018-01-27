@@ -72,4 +72,10 @@ public class NetworkingAgent extends Object {
         requestDataForQuickTalkService(urlString, method, params, handler);
     }
 
+    public static void requestDataForSearchService(String serviceURL, String method,
+                                                 Map<String, String> params, final CompleteHandler
+                                                         handler) {
+        String urlString = "/search" + serviceURL;
+        requestDataForQuickTalkService(urlString, method, params, handler);
+    }
 }

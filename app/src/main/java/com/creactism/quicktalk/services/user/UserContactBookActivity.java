@@ -84,7 +84,7 @@ public class UserContactBookActivity extends BaseActivity {
             int numberFieldColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             String name = cursor.getString(nameFieldColumnIndex);
             String number = cursor.getString(numberFieldColumnIndex);
-            DLog.info(name + ": " + number);
+//            DLog.info(name + ": " + number);
             phoneList.add(number);
         }
         if (phoneList.size() == 0) {

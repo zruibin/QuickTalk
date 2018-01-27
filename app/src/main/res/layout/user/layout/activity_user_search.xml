@@ -17,7 +17,7 @@
             android:textCursorDrawable="@drawable/color_cursor"
             android:drawableLeft="@mipmap/search"
             android:drawablePadding="4dp"
-            android:inputType="text" android:singleLine="true"
+            android:inputType="text" android:singleLine="true" android:imeOptions="actionSearch"
             android:gravity="left|center" android:paddingLeft="5dp" android:paddingRight="5dp"
             android:hint="手机号/昵称" android:background="@drawable/shape_corner"
             android:layout_marginLeft="10dp" android:layout_marginRight="60dp"
@@ -34,18 +34,13 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/activity_user_search_refresh"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_user_search_recyclerview"
+        android:divider="#ffff0000"
+        android:dividerHeight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/activity_user_search_recyclerview"
-            android:divider="#ffff0000"
-            android:dividerHeight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
 
 </LinearLayout>
