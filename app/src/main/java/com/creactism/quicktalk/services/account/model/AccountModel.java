@@ -267,7 +267,9 @@ public class AccountModel {
 
     public static void requestForSettingList(String userUUID, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         NetworkingAgent.requestDataForAccountService("/settingList", NetworkingAgent.SERVICE_REQUEST_POST, params,
                 new NetworkingAgent.CompleteHandler() {
                     @Override
@@ -299,7 +301,9 @@ public class AccountModel {
 
     public static void requestForSetting(String userUUID, String type, Boolean status, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         params.put("type", type);
         String statusStr = status == true ? "1" : "0";
         params.put("status", statusStr);
@@ -323,9 +327,15 @@ public class AccountModel {
 
     public static void requestForAccountInfo(String userUUID, String type, String data, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
-        params.put("type", type);
-        params.put("data", data);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (type != null) {
+            params.put("type", type);
+        }
+        if (data != null) {
+            params.put("data", data);
+        }
         NetworkingAgent.requestDataForAccountService("/changeInfo", NetworkingAgent.SERVICE_REQUEST_POST, params,
                 new NetworkingAgent.CompleteHandler() {
                     @Override
@@ -347,7 +357,9 @@ public class AccountModel {
     public static void requestForChangePassword(String userUUID, String oldpassword,
                                                 String newpassword, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         if (oldpassword.length() > 0) {
             params.put("oldpassword", oldpassword);
         }
@@ -373,10 +385,18 @@ public class AccountModel {
     public static void requestForThirdPart(String userUUID, String type, String method,
                                            String openId, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
-        params.put("type", type);
-        params.put("method", method);
-        params.put("openId", openId);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (type != null) {
+            params.put("type", type);
+        }
+        if (method != null) {
+            params.put("method", method);
+        }
+        if (openId != null) {
+            params.put("openId", openId);
+        }
         NetworkingAgent.requestDataForAccountService("/thirdParty", NetworkingAgent.SERVICE_REQUEST_POST, params,
                 new NetworkingAgent.CompleteHandler() {
                     @Override
@@ -397,7 +417,9 @@ public class AccountModel {
 
     public static void requestChangeAvatar(String userUUID, String filePath, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         if (UserInfo.sharedInstance().getToken() != null) {
             params.put("token", UserInfo.sharedInstance().getToken());
         }

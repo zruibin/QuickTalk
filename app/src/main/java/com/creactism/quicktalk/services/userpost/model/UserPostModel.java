@@ -3,6 +3,8 @@ package com.creactism.quicktalk.services.userpost.model;
 import com.creactism.quicktalk.modules.networking.NetworkingAgent;
 import com.creactism.quicktalk.modules.networking.QTResponseObject;
 import com.alibaba.fastjson.JSON;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.Map;
 
 public class UserPostModel extends Object {
 
-    public class UserPostLikeModel extends Object {
+    public static class UserPostLikeModel extends Object {
         private String userId;
         private String avatar;
         private String time;
@@ -185,6 +187,9 @@ public class UserPostModel extends Object {
     }
 
     public List<UserPostLikeModel> getLikeList() {
+        if (this.likeList == null) {
+            this.likeList = new ArrayList<UserPostLikeModel>();
+        }
         return likeList;
     }
 
@@ -211,6 +216,7 @@ public class UserPostModel extends Object {
 
     public static class CompleteHandler extends Object {
         public void completeHanlder (List<UserPostModel> list, Error error) {};
+        public void completeHanlder (boolean action, Error error) {};
     }
 
     public static void requestUserPostData(String userUUID, int index, String relationUserUUID, final CompleteHandler
@@ -388,8 +394,12 @@ public class UserPostModel extends Object {
                                                  final CompleteHandler completeHandlerObj) {
         Map params = new HashMap();
         params.put("index", String.valueOf(index));
-        params.put("tag", tag);
-        params.put("user_uuid", relationUserUUID);
+        if (tag != null) {
+            params.put("tag", tag);
+        }
+        if (relationUserUUID != null) {
+            params.put("user_uuid", relationUserUUID);
+        }
         NetworkingAgent.requestDataForSearchService("/searchUserPostByTag",
                 NetworkingAgent.SERVICE_REQUEST_POST, params, new NetworkingAgent.CompleteHandler() {
             @Override
@@ -409,6 +419,36 @@ public class UserPostModel extends Object {
                     } else {
                         error = new Error(responseObject.getMessage());
                         completeHandlerObj.completeHanlder(null, error);
+                    }
+                }
+            }
+        });
+    }
+
+    public static void requestForUserPostLikeOrUnLike(String userUUID, String contentUUID, String action, final CompleteHandler completeHandler) {
+        Map params = new HashMap();
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (contentUUID != null) {
+            params.put("content_uuid", contentUUID);
+        }
+        if (action != null) {
+            params.put("action", action);
+        }
+        params.put("type", "2");
+        NetworkingAgent.requestDataForLikeService("/like", NetworkingAgent.SERVICE_REQUEST_POST,
+                params, new NetworkingAgent.CompleteHandler() {
+            @Override
+            public void completeHanlder(QTResponseObject responseObject, Error error) {
+                if (error != null) {
+                    completeHandler.completeHanlder(false, error);
+                } else {
+                    if (responseObject.getCode() == QTResponseObject.CODE_SUCCESS) {
+                        completeHandler.completeHanlder(true, null);
+                    } else {
+                        error = new Error(responseObject.getMessage());
+                        completeHandler.completeHanlder(false, error);
                     }
                 }
             }

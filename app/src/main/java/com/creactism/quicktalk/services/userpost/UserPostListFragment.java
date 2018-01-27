@@ -11,13 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.creactism.quicktalk.BaseFragment;
+import com.creactism.quicktalk.Marcos;
 import com.creactism.quicktalk.R;
 import com.creactism.quicktalk.UserInfo;
+import com.creactism.quicktalk.components.QTToast;
 import com.creactism.quicktalk.components.RecycleViewDivider;
 import com.creactism.quicktalk.services.user.UserActivity;
 import com.creactism.quicktalk.services.userpost.adapter.UserPostAdapter;
@@ -107,7 +110,7 @@ public class UserPostListFragment extends BaseFragment {
                 DLog.debug(model.getTitle());
             }
             public void onLikeActionHandler(UserPostModel model) {
-                DLog.debug(model.getTitle());
+                likeOrUnLikeAction(model);
             }
             public void onCommentHandler(UserPostModel model) {
                 DLog.debug(model.getTitle());
@@ -167,6 +170,47 @@ public class UserPostListFragment extends BaseFragment {
         return headerView;
     }
 
+    private void likeOrUnLikeAction(final UserPostModel model) {
+        if (UserInfo.sharedInstance().checkLoginStatus(getActivity()) == false) {
+            return;
+        }
+
+        String action = Marcos.LIKE_ACTION_AGREE;
+        if (model.isLiked() == true) {
+            action = Marcos.LIKE_ACTION_DISAGREE;
+        }
+
+        String userUUID = UserInfo.sharedInstance().getUuid();
+        UserPostModel.requestForUserPostLikeOrUnLike(userUUID, model.getUuid(), action,
+                new UserPostModel.CompleteHandler() {
+            @Override
+            public void completeHanlder(boolean action, Error error) {
+                super.completeHanlder(action, error);
+                if (error != null) {
+                    QTToast.makeText(getActivity(), error.getMessage());
+                } else {
+                    List<UserPostModel.UserPostLikeModel> likeModelList = model.getLikeList();
+                    if (model.isLiked()) {
+                        for (UserPostModel.UserPostLikeModel likeModel : likeModelList) {
+                            if (likeModel.getUserUUID().equals(UserInfo.sharedInstance().getUuid())) {
+                                likeModelList.remove(likeModel);
+                            }
+                        }
+                    } else {
+                        UserPostModel.UserPostLikeModel likeModel = new UserPostModel.UserPostLikeModel();
+                        likeModel.setUserId(UserInfo.sharedInstance().getId());
+                        likeModel.setUserUUID(UserInfo.sharedInstance().getUuid());
+                        likeModel.setAvatar(UserInfo.sharedInstance().getAvatar());
+                        likeModel.setNickname(UserInfo.sharedInstance().getNickname());
+                        likeModelList.add(likeModel);
+                    }
+                    model.setLiked(!model.isLiked());
+                    userPostAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+    }
 
 }
 

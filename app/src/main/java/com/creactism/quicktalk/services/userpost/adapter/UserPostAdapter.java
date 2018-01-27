@@ -56,7 +56,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, final UserPostModel model) {
-        DLog.error("convert....");
+//        DLog.error("convert....");
         SimpleDraweeView avatarButton = helper.getView(R.id.userpost_list_item_avatar);
         Button nicknameButton = helper.getView(R.id.userpost_list_item_nickname);
         TextView timeView = helper.getView(R.id.userpost_list_item_time);
@@ -151,7 +151,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
 
         likeView.setLikeList(model.getLikeList());
         likeView.makeSubViews();
-        if (model.getLikeList() == null) {
+        if (model.getLikeList().size() == 0) {
             likeLayout.setVisibility(View.GONE);
         } else {
             likeLayout.setVisibility(View.VISIBLE);
@@ -159,7 +159,6 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
         likeView.setTouchHandler(new UserPostLikeView.OnSingLikeTouchHandler() {
             @Override
             public void onTouchHandler(int index) {
-                DLog.info("likeIndex->" + String.valueOf(index));
                 itemHandler.onLikeIconActionHandler(model, index);
             }
         });
@@ -168,7 +167,7 @@ public class UserPostAdapter extends BaseQuickAdapter<UserPostModel, BaseViewHol
     @Override
     public void onBindViewHolder(BaseViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        DLog.error("onBindViewHolder....");
+//        DLog.error("onBindViewHolder....");
 
     }
 }

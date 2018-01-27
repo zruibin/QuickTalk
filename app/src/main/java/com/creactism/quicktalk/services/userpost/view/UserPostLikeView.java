@@ -74,6 +74,10 @@ public class UserPostLikeView extends ViewGroup {
             setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
             return;
         }
+        if (this.getLikeList().size() == 0) {
+            setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
 
         //测量所有子view的宽高
         measureChildren(widthMeasureSpec, heightMeasureSpec);

@@ -205,7 +205,9 @@ public class UserModel {
 
     public static void requestForStarUser(String userUUID, int index, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         params.put("index", String.valueOf(index));
 
         NetworkingAgent.requestDataForStarService("/queryStarUser", NetworkingAgent.SERVICE_REQUEST_POST, params,
@@ -235,7 +237,9 @@ public class UserModel {
 
     public static void requestForFans(String userUUID, int index, String relationUserUUID, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         params.put("index", String.valueOf(index));
         if (relationUserUUID != null) {
             params.put("relation_user_uuid", relationUserUUID);
@@ -268,9 +272,15 @@ public class UserModel {
     public static void requestForStarOrUnStar(String userUUID, String contentUUID, String action,
                                               final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
-        params.put("content_uuid", contentUUID);
-        params.put("action", action);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
+        if (contentUUID != null) {
+            params.put("content_uuid", contentUUID);
+        }
+        if (action != null) {
+            params.put("action", action);
+        }
         params.put("type", "0");
         NetworkingAgent.requestDataForStarService("/userAction", NetworkingAgent.SERVICE_REQUEST_POST,
                 params, new NetworkingAgent.CompleteHandler() {
@@ -292,9 +302,13 @@ public class UserModel {
 
     public static void requestPhoneUserData(String userUUID, List<String> phoneList, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         String phoneListString = JSON.toJSONString(phoneList);
-        params.put("phoneList", phoneListString);
+        if (phoneListString != null) {
+            params.put("phoneList", phoneListString);
+        }
         NetworkingAgent.requestDataForUserService("/phoneListUsers", NetworkingAgent.SERVICE_REQUEST_POST,
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
@@ -322,9 +336,13 @@ public class UserModel {
 
     public static void requestStarRelation(String userUUID, List<String> uuidList, final CompleteHandler completeHandler) {
         Map params = new HashMap();
-        params.put("user_uuid", userUUID);
+        if (userUUID != null) {
+            params.put("user_uuid", userUUID);
+        }
         String uuidListString = JSON.toJSONString(uuidList);
-        params.put("uuidList", uuidListString);
+        if (uuidListString != null) {
+            params.put("uuidList", uuidListString);
+        }
         NetworkingAgent.requestDataForStarService("/queryStarUserRelation", NetworkingAgent.SERVICE_REQUEST_POST,
                 params, new NetworkingAgent.CompleteHandler() {
             @Override
