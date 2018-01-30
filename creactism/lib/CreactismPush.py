@@ -29,13 +29,13 @@ from igetui.utils.AppConditions import *
     
 HOST = ''
 #开发
-APPKEY = "jyZbxI4IwJ8Qj3DQkPIZi2"
-APPID = "kYv84fJnrV5bv5YFpU6sP"
-MASTERSECRET = "oBPnACAomY9VXtuYWJOPM2"
+# APPKEY = "jyZbxI4IwJ8Qj3DQkPIZi2"
+# APPID = "kYv84fJnrV5bv5YFpU6sP"
+# MASTERSECRET = "oBPnACAomY9VXtuYWJOPM2"
 #发布
-# APPID = "l0QOBnBOQv5XM1T2nLtNa8"
-# APPKEY = "N97fhuONXk9tCgUnuXyg52"
-# MASTERSECRET = "j8qIilGpHZ9EZrSXxDXOP9"
+APPID = "l0QOBnBOQv5XM1T2nLtNa8"
+APPKEY = "N97fhuONXk9tCgUnuXyg52"
+MASTERSECRET = "j8qIilGpHZ9EZrSXxDXOP9"
 
 
 def pushMessageToSingleForIOS(deviceId, msg):
