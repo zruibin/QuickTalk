@@ -28,6 +28,7 @@ body {
   margin:0 0; 
   height: 100%;
   /* background-color: #1A1A1A; */
+  background-color: white;
 }
 
 a { color: #666666;}
@@ -40,12 +41,14 @@ a:active{text-decoration:none;}
 
 
 #copyright {
-  color: #5D5D5D;
+  position: fixed;
+  bottom: 0;
+  color: black;
   width: 100%;
   height: 100px;
   line-height: 100px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   /* background-color: #1A1A1A; */
   bottom:0; 
   overflow:hidden;
@@ -85,58 +88,51 @@ a:active{text-decoration:none;}
   text-align: center;
 }
 
-.phone-header {width: 100%; margin-top: 80px;}
-.phone-header  p { font-size: 26px; }
-.phone-header  img { width: 60px;height: 60px;}
-
-#phone-download {
-  margin-top: 50px;
-  width: 229px;
-  height: 45px;
-}
-
-.phone-footer {
-  padding: 0 0;
-  margin-top:  80px;
-  width: 100%;
-  height: 241px;
-  text-align: center;
-  /* position: absolute; */
-  bottom: 0px;
-
-  background-image:-o-linear-gradient(to bottom, white 25%, #00A0E9);
-  background-image:-moz-linear-gradient(to bottom, white 25%, #00A0E9);
-  background-image:-webkit-linear-gradient(to bottom, white 25%, #00A0E9);
-  background-image:linear-gradient(to bottom, white 25%,#00A0E9);
-}
-
-.phone-footer img {
+.phone_main {
+  margin-bottom: 100px;
   width: 80%;
-  /* height: 241px; */
+}
+
+.phone_footer {
+  position:fixed;
+  left:0;
+  bottom:0;
+  width: 100%;
+  background-color: #343338;
+}
+
+.phone_footer_left {
+  float: left;
+  width: 80px;
+  height: 34px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+
+.phone_footer_right {
+  float: right;
+  width: 180px;
+  height: 38px;
+  margin-top: 18px;
+  margin-right: 20px;
 }
 
 
 .pc_header {
-  height: 80px;
-  /* background-color: white; */
+  height: 120px;
+  background-color: #343338;
 }
 
 .pc_header img {
   float: left;
-  width: 60px;
   height: 60px;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-left: 30px;
 }
 
 .pc_main {
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#00A0E9, endColorstr=white);
--ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#00A0E9, endColorstr=white)";
-  background-image:-o-linear-gradient(to bottom, #00A0E9 45%, white);
-  background-image:-moz-linear-gradient(to bottom, #00A0E9 45%, white);
-  background-image:-webkit-linear-gradient(to bottom, #00A0E9 45%, white);
-  background-image:linear-gradient(to bottom,#00A0E9 45%,white);
-  height: 600px;
+  text-align: center
 }
 
 .pc_text {
@@ -148,13 +144,15 @@ a:active{text-decoration:none;}
   font-weight:100;
 }
 
-.pc_button {text-align: center;}
-.pc_button img{
-  height: 80px;
+.pc_text img {
+  margin-top: 140px;
+  height: 50px;
 }
 
-.pc_content {text-align: center;}
-.pc_content img { height: 300px;}
+.pc_button img{
+  margin-top: 100px;
+  height: 76px;
+}
 
 
 </style>
@@ -164,9 +162,9 @@ a:active{text-decoration:none;}
 
 <div id="pc">
 
-  <div class="pc_header"><img src="/images/logo.png" alt=""></div>
+  <div class="pc_header"><img src="/images/pc_top.png" alt=""></div>
   <div class="pc_main">
-    <div class="pc_text"><br/><br/>与好友分享的阅读的App</div>
+    <div class="pc_text"><img src="/images/pc_main.png" alt=""></div>
     <div class="pc_button">
       <a href="#" onclick="pcIOSAction();"><img src="/images/ios_btn.png" alt=""></a>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -175,7 +173,7 @@ a:active{text-decoration:none;}
     <a href="#" onclick="pcAndroidAction();"><img src="/images/android_btn.png" alt=""></a>
     </div>
     <br/>
-    <div class="pc_content"><img src="/images/pc_main.png" alt=""></div>
+
   </div>
   
 </div>
@@ -194,16 +192,13 @@ a:active{text-decoration:none;}
 
 
 <div id="phone">
-    <div class="phone-header">
-      <!-- <p>与好友分享的阅读的App</p> -->
-      <br><br>
-      <img src="/images/logo.png" alt="">
+    <img class="phone_main" src="/images/phone_main.png" alt="">
+    <div class="phone_footer">
+        <img class="phone_footer_left"  src="/images/phone_footer.png" alt="">
+        <img class="phone_footer_right"  src="/images/phone_btn.png" alt="" onclick="phoneClickAction()">
+      </div>
     </div>
-    <img id="phone-download" src="/images/phone_btn.png" onclick="phoneClickAction();">
-    <div class="phone-footer">
-      <img src="/images/phone_footer.png" alt="">
-    </div>
-  </div>
+</div>
 
 
 </body>
@@ -270,8 +265,8 @@ function pcIOSAction() {
 }
 
 function pcAndroidAction() {
-      // toast("Android版敬请期待！"); 
-      window.location.href = "QuickTalk_1.0.apk";
+      toast("Android版敬请期待！"); 
+      // window.location.href = "QuickTalk_1.0.apk";
 }
   
 function checkIsAppleDevice() {
@@ -296,14 +291,15 @@ function checkIsAndroidDevice(){
 }
 
 
-function phoneClickAction(platform) {
+function phoneClickAction() {
     if (isMobile()) {
         if (checkIsAppleDevice()) {
           toast("敬请期待！");
           // window.location.href = "https://itunes.apple.com/us/app/wechat/id414478124?mt=8";
         }
         if (checkIsAndroidDevice()) {
-          window.location.href = "QuickTalk_1.0.apk";
+          // window.location.href = "";
+          toast("敬请期待！");
         }
     } 
 }
