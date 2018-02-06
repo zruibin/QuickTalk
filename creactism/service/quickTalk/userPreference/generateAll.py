@@ -18,7 +18,8 @@ from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey
 from module.cache.RuntimeCache import CacheManager
-import json, collections
+import json
+from collections import OrderedDict  
 
 
 @userPreference.route('/generateAll', methods=["GET", "POST"])
@@ -67,7 +68,7 @@ def __generateAllUserPostTagToCache():
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dataList = dbManager.executeTransactionQuery(querySQL)
-        userPostTagDict = collections.OrderedDict()
+        userPostTagDict = OrderedDict()
         for data in dataList:
             # data["time"] = str(data["time"])
             key = data["userPost_uuid"]
@@ -289,7 +290,23 @@ def generateUserRecommendList(userUUID):
         else:
             tagScoringDict[tag] = 1
 
-    DLog(tagScoringDict, True)
+    # DLog(tagScoringDict, True)
+    sortTagScoringList = sorted(tagScoringDict.items(), key=lambda d:d[1], reverse=True)
+    userPreferenceList = [tagScoring[0] for tagScoring in sortTagScoringList]
+    for tag in userPreferenceList:
+        print tag
+
+    userPostTagString = CacheManager.shareInstanced().getStringCache(Config.CACHE_PREFIX_userPost_tag)
+    userPostTagOrderDict = json.loads(userPostTagString, object_pairs_hook=OrderedDict)
+    for key, value in userPostTagOrderDict.items():
+        print key, value
+
+    readingCacheList = []
+    readingCacheString = CacheManager.shareInstanced().getStringCache(Config.CACHE_PREFIX_reading_cache+userUUID)
+    if readingCacheString != None:
+        readingCacheList = json.loads(readingCacheString)
+    print readingCacheList
+
     pass
 
 

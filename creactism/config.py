@@ -144,6 +144,7 @@ class Config(object):
   CACHE_PREFIX_comment = "comment_"
   CACHE_PREFIX_collection = "collection_"
   CACHE_PREFIX_reading = "reading_"
+  CACHE_PREFIX_reading_cache = "reading_cache_"
 
   pass
 

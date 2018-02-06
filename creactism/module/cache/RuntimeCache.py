@@ -79,7 +79,7 @@ class CacheManager(object):
             raise e
         
     def getListCache(self, key):
-        dataList = None
+        dataList = []
         try:
             dataList = self.__redisClient.lrange(key, 0, -1)
         except Exception, e:
