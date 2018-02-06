@@ -136,6 +136,15 @@ class Config(object):
   TYPE_USERPOST_FOR_REPOST = "0" # 转载
   TYPE_USERPOST_FOR_ORIGINAL = "1" # 原创
 
+
+  CACHE_PREFIX_userPost = "userPost"
+  CACHE_PREFIX_userPost_tag = "userPost_tag"
+  CACHE_PREFIX_userPost_add = "userPost_"
+  CACHE_PREFIX_liked = "liked_"
+  CACHE_PREFIX_comment = "comment_"
+  CACHE_PREFIX_collection = "collection_"
+  CACHE_PREFIX_reading = "reading_"
+
   pass
 
 

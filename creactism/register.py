@@ -23,6 +23,7 @@ from service.quickTalk.star import star
 from service.quickTalk.search import search
 from service.quickTalk.user import user
 from service.quickTalk.message import message
+from service.quickTalk.userPreference import userPreference
 
 
 
@@ -40,6 +41,7 @@ def registerBlueprint(app):
     app.register_blueprint(search, url_prefix="/service/quickTalk/search") # 搜索
     app.register_blueprint(user, url_prefix="/service/quickTalk/user") # 用户
     app.register_blueprint(message, url_prefix="/service/quickTalk/message") # 用户
+    app.register_blueprint(userPreference, url_prefix="/service/quickTalk/userPreference") # 用户偏好
     
 
 if __name__ == '__main__':

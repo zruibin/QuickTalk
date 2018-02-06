@@ -45,8 +45,7 @@ class CacheManager(object):
         except Exception, e:
             Loger.error(e, __file__)
             raise e
-            pass
-        
+
     def getCache(self, key):
         value = None
         try:
@@ -54,6 +53,39 @@ class CacheManager(object):
         except Exception, e:
             Loger.error(e, __file__)
         return value
+
+    def setStringCache(self, key, value):
+        try:
+            self.__redisClient.set(key, value)
+        except Exception, e:
+            Loger.error(e, __file__)
+            raise e
+
+    def getStringCache(self, key):
+        value = None
+        try:
+            value = self.__redisClient.get(key)
+        except Exception, e:
+            Loger.error(e, __file__)
+        return value
+
+    def setListCache(self, key, values):
+        try:
+            self.__redisClient.delete(key)
+            for value in values:
+                self.__redisClient.rpush(key, value)
+        except Exception, e:
+            Loger.error(e, __file__)
+            raise e
+        
+    def getListCache(self, key):
+        dataList = None
+        try:
+            dataList = self.__redisClient.lrange(key, 0, -1)
+        except Exception, e:
+            Loger.error(e, __file__)
+            raise e
+        return dataList
         
 
 
