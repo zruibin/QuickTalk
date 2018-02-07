@@ -145,6 +145,7 @@ class Config(object):
   CACHE_PREFIX_collection = "collection_"
   CACHE_PREFIX_reading = "reading_"
   CACHE_PREFIX_reading_cache = "reading_cache_"
+  CACHE_PREFIX_userPost_recommend = "recommend_userPost_"
 
   pass
 

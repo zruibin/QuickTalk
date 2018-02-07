@@ -26,13 +26,13 @@ from collections import OrderedDict
 def generateAll():
     
     try:
-        __generateAllUserPostToCache()
-        __generateAllUserPostTagToCache()
-        __generateAllUserForUserPostToCache()
-        __generateAllUserForLikeToCache()
-        __generateAllUserForCommentToCache()
-        __generateAllUserForCollectionToCache()
-        __generateAllUserForReadingToCache()
+        # __generateAllUserPostToCache()
+        # __generateAllUserPostTagToCache()
+        # __generateAllUserForUserPostToCache()
+        # __generateAllUserForLikeToCache()
+        # __generateAllUserForCommentToCache()
+        # __generateAllUserForCollectionToCache()
+        # __generateAllUserForReadingToCache()
         generateUserRecommendList("fbd1d63882ff73751accacd39621fa9c")
         return RESPONSE_JSON(CODE_SUCCESS)
     except Exception as e:
@@ -235,10 +235,10 @@ def __generateAllUserForReadingToCache():
 def generateUserRecommendList(userUUID):
     """"发表10、点赞2、评论4、收藏5、阅读1"""
     tagScoringDict = {}
+
     userPostListKey = Config.CACHE_PREFIX_userPost_add + userUUID
     userPostList = CacheManager.shareInstanced().getListCache(userPostListKey)
-    # DLog(userPostList, True)
-    for tag in userPostList:
+    for tag in userPostList: #计算发表的分值
         if tagScoringDict.has_key(tag):
             score = tagScoringDict[tag]
             score += 10
@@ -248,8 +248,7 @@ def generateUserRecommendList(userUUID):
 
     likedListKey = Config.CACHE_PREFIX_liked + userUUID
     likedList = CacheManager.shareInstanced().getListCache(likedListKey)
-    # DLog(likedList, True)
-    for tag in likedList:
+    for tag in likedList: #计算点赞的分值
         if tagScoringDict.has_key(tag):
             score = tagScoringDict[tag]
             score += 2
@@ -259,8 +258,7 @@ def generateUserRecommendList(userUUID):
 
     commentListKey = Config.CACHE_PREFIX_comment + userUUID
     commentList = CacheManager.shareInstanced().getListCache(commentListKey)
-    # DLog(commentList, True)
-    for tag in commentList:
+    for tag in commentList: #计算评论的分值
         if tagScoringDict.has_key(tag):
             score = tagScoringDict[tag]
             score += 4
@@ -270,8 +268,7 @@ def generateUserRecommendList(userUUID):
 
     collectionListKey = Config.CACHE_PREFIX_collection + userUUID
     collectionList = CacheManager.shareInstanced().getListCache(collectionListKey)
-    # DLog(collectionList, True)
-    for tag in collectionList:
+    for tag in collectionList: #计算收藏的分值
         if tagScoringDict.has_key(tag):
             score = tagScoringDict[tag]
             score += 5
@@ -281,8 +278,7 @@ def generateUserRecommendList(userUUID):
 
     readingListKey = Config.CACHE_PREFIX_reading + userUUID
     readingList = CacheManager.shareInstanced().getListCache(readingListKey)
-    # DLog(readingList, True)
-    for tag in readingList:
+    for tag in readingList: #计算阅读的分值
         if tagScoringDict.has_key(tag):
             score = tagScoringDict[tag]
             score += 1
@@ -293,20 +289,35 @@ def generateUserRecommendList(userUUID):
     # DLog(tagScoringDict, True)
     sortTagScoringList = sorted(tagScoringDict.items(), key=lambda d:d[1], reverse=True)
     userPreferenceList = [tagScoring[0] for tagScoring in sortTagScoringList]
-    for tag in userPreferenceList:
-        print tag
 
+    #所有userPost字典json，按时间倒序
     userPostTagString = CacheManager.shareInstanced().getStringCache(Config.CACHE_PREFIX_userPost_tag)
     userPostTagOrderDict = json.loads(userPostTagString, object_pairs_hook=OrderedDict)
-    for key, value in userPostTagOrderDict.items():
-        print key, value
 
-    readingCacheList = []
+    readingCacheList = [] #个人阅读记录缓存
     readingCacheString = CacheManager.shareInstanced().getStringCache(Config.CACHE_PREFIX_reading_cache+userUUID)
     if readingCacheString != None:
         readingCacheList = json.loads(readingCacheString)
-    print readingCacheList
 
+    userRecommendUserPostList = [] #个人的推荐列表
+    for tag in userPreferenceList:
+        for key, value in userPostTagOrderDict.items():
+            #用户计算的标签权值搜索并且未阅读过的，不重复
+            if tag in value and key not in readingCacheList and key not in userRecommendUserPostList:
+                userRecommendUserPostList.append(key)
+    
+    for key in userPostTagOrderDict.keys():
+        #去除用户相关的标签的剩下的userPost并且未阅读过的，不重复
+        if key not in readingCacheList and key not in userRecommendUserPostList:
+            userRecommendUserPostList.append(key)
+    
+    #已阅读的放于最后
+    userRecommendUserPostList.extend(readingCacheList)
+
+    key = Config.CACHE_PREFIX_userPost_recommend + userUUID
+    CacheManager.shareInstanced().setListCache(key, userRecommendUserPostList)
+    # DLog(userRecommendUserPostList, True)
+    # print len(userRecommendUserPostList)
     pass
 
 
