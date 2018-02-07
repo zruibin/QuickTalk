@@ -13,7 +13,7 @@ from module.database import DB
 from module.cache.RuntimeCache import CacheManager
 from module.log.Log import Loger
 from dispatch.BackupTask import backup
-# from dispatch.tasks import dispatchNotificationUserForContent
+from dispatch.userPreferenceWork import generateAllUserPreference
 
 
 @api.route('/')
@@ -41,3 +41,11 @@ def test_backup_data():
     backup.delay()
     # Log.test()
     return '<h1>test_backup_data success</h1>'
+
+
+@api.route('/test_userPreference_task')
+def test_userPreference_task():                         
+    # 用户偏好
+    generateAllUserPreference.delay() 
+    # Log.test()
+    return '<h1>test_userPreference_task success</h1>'

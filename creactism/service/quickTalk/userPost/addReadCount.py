@@ -17,6 +17,7 @@ from module.log.Log import Loger
 from config import *
 from common.code import *
 from common.tools import getValueFromRequestByKey
+from ..userPreference.generate import updateUserReadingCache
 
 
 @userPost.route('/addReadCount', methods=["GET", "POST"])
@@ -45,6 +46,7 @@ def __updateActionInStorage(uuid, userUUID):
     dbManager = DB.DBManager.shareInstanced()
     try: 
         dbManager.executeTransactionMutltiDml(sqlList)
+        updateUserReadingCache(userUUID, uuid)
         return RESPONSE_JSON(CODE_SUCCESS)
     except Exception as e:
         Loger.error(e, __file__)
