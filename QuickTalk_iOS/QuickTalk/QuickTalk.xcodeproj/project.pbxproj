@@ -1,0 +1,2015 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0077F6E3851B0E180BB65818 /* libPods-QuickTalkUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */; };
+		31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */; };
+		DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */; };
+		E0233C5D1FC2C2290010D9DC /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */; };
+		E0233C5F1FC2C24E0010D9DC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */; };
+		E0233C611FC2C2570010D9DC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C601FC2C2570010D9DC /* CoreTelephony.framework */; };
+		E0233C631FC2C2600010D9DC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C621FC2C2600010D9DC /* AVFoundation.framework */; };
+		E0233C651FC2C26C0010D9DC /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C641FC2C26C0010D9DC /* AddressBook.framework */; };
+		E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C661FC2C2750010D9DC /* Contacts.framework */; };
+		E0233C691FC2C2860010D9DC /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C681FC2C2860010D9DC /* AudioToolbox.framework */; };
+		E0233C6B1FC2C2910010D9DC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */; };
+		E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */; };
+		E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */; };
+		E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E0233C721FC2E2770010D9DC /* QTSpeaker.m */; };
+		E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */; };
+		E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */; };
+		E0256D901FEA6C5200217D9F /* QTUserFansController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */; };
+		E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D921FEA7DC800217D9F /* QTUserStarButton.m */; };
+		E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */; };
+		E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0256D981FEA889100217D9F /* QTUserSearchController.m */; };
+		E02A3CFF2003223100ADF11A /* QTUserPostRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */; };
+		E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */; };
+		E03BBDF11FF1F3B8000F93E8 /* QTUserPostStarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */; };
+		E03BBDF51FF20633000F93E8 /* QTNoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = E03BBDF31FF20633000F93E8 /* QTNoneView.m */; };
+		E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = E045AD921FC417D800A16A40 /* QTCleaner.m */; };
+		E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = E0463BB31FAABB9B00849101 /* userAgreement.txt */; };
+		E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */; };
+		E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F42D71FEA37AD00F99A66 /* QTMyCell.m */; };
+		E06F42DB1FEA459900F99A66 /* QTUserCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */; };
+		E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */; };
+		E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */; };
+		E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */; };
+		E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */; };
+		E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */; };
+		E081316A1FE21701001A6E3D /* CRALocation.json in Resources */ = {isa = PBXBuildFile; fileRef = E08131601FE21701001A6E3D /* CRALocation.json */; };
+		E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131611FE21701001A6E3D /* CRALocationPickerView.m */; };
+		E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131631FE21701001A6E3D /* CRADatePickerView.m */; };
+		E081316D1FE21701001A6E3D /* CRABasePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131641FE21701001A6E3D /* CRABasePickerView.m */; };
+		E081316E1FE21701001A6E3D /* CRAStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131651FE21701001A6E3D /* CRAStringPickerView.m */; };
+		E08131711FE23117001A6E3D /* QTUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131701FE23117001A6E3D /* QTUserController.m */; };
+		E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08131771FE248AB001A6E3D /* QTUserModel.m */; };
+		E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E08181291F9995AD0035DEF4 /* Assets.xcassets */; };
+		E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */; };
+		E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08181321F99A01E0035DEF4 /* QTUserInfo.m */; };
+		E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */; };
+		E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */ = {isa = PBXBuildFile; fileRef = E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */; };
+		E084A9211FB5AA8500AE4AD2 /* image.js in Resources */ = {isa = PBXBuildFile; fileRef = E084A9201FB5AA8500AE4AD2 /* image.js */; };
+		E085609F1FECB69200B4779E /* QTUserPostLikeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E085609E1FECB69200B4779E /* QTUserPostLikeView.m */; };
+		E08560A21FECFC6600B4779E /* QTUserLikeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08560A11FECFC6600B4779E /* QTUserLikeListController.m */; };
+		E085919C1FF3560D00C847F4 /* GTSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E085919B1FF3560D00C847F4 /* GTSDK.framework */; };
+		E08693061FF0AB22001DC7FE /* QTMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693051FF0AB22001DC7FE /* QTMessageModel.m */; };
+		E08693091FF0B7CB001DC7FE /* QTMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08693081FF0B7CB001DC7FE /* QTMessageController.m */; };
+		E086930C1FF0DE06001DC7FE /* QTMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E086930B1FF0DE06001DC7FE /* QTMessageCell.m */; };
+		E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */; };
+		E088D6691FD64E0600038736 /* QTTopicController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6571FD64E0600038736 /* QTTopicController.m */; };
+		E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6591FD64E0600038736 /* QTTopicContentController.m */; };
+		E088D66B1FD64E0600038736 /* QTTopicSpeaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */; };
+		E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D65B1FD64E0600038736 /* QTNewsController.m */; };
+		E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D65E1FD64E0600038736 /* QTCommentModel.m */; };
+		E088D66E1FD64E0600038736 /* QTTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6611FD64E0600038736 /* QTTopicModel.m */; };
+		E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6631FD64E0600038736 /* QTNewsCell.m */; };
+		E088D6701FD64E0600038736 /* QTTopicLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6671FD64E0600038736 /* QTTopicLeftCell.m */; };
+		E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6681FD64E0600038736 /* QTTopicRightCell.m */; };
+		E088D6771FD6650000038736 /* QTUserPostMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6751FD6650000038736 /* QTUserPostMainController.m */; };
+		E088D67A1FD6651B00038736 /* QTUserPostAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6791FD6651B00038736 /* QTUserPostAddController.m */; };
+		E088D6821FD6875B00038736 /* RBLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6811FD6875A00038736 /* RBLabel.m */; };
+		E088D6851FD68DAC00038736 /* QTUserPostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6841FD68DAC00038736 /* QTUserPostModel.m */; };
+		E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E088D6871FD6979400038736 /* QTUserPostMainCell.m */; };
+		E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64571FA97C5800317CE2 /* QTTabBarController.m */; };
+		E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */; };
+		E08AABC21FE0C458005B6DBB /* QTAccountRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */; };
+		E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */; };
+		E08AABC91FE0CDBB005B6DBB /* RBButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABC71FE0CDBB005B6DBB /* RBButton.m */; };
+		E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */; };
+		E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */; };
+		E08AABD21FE106C9005B6DBB /* QTAccountSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABD11FE106C9005B6DBB /* QTAccountSettingController.m */; };
+		E08AABD51FE10A42005B6DBB /* QTAccountChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABD41FE10A42005B6DBB /* QTAccountChangePasswordController.m */; };
+		E08AABD81FE10A55005B6DBB /* QTAccountThirdPartController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABD71FE10A55005B6DBB /* QTAccountThirdPartController.m */; };
+		E08AABDB1FE113F2005B6DBB /* QTAccountPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABDA1FE113F2005B6DBB /* QTAccountPhoneController.m */; };
+		E08AABF61FE14129005B6DBB /* QTInfoEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABDE1FE14129005B6DBB /* QTInfoEditController.m */; };
+		E08AABF71FE14129005B6DBB /* QTAvatarEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABE11FE14129005B6DBB /* QTAvatarEditController.m */; };
+		E08AABF81FE14129005B6DBB /* QTUserAgreementController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABE31FE14129005B6DBB /* QTUserAgreementController.m */; };
+		E08AABF91FE14129005B6DBB /* QTIntroController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABE41FE14129005B6DBB /* QTIntroController.m */; };
+		E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABE71FE14129005B6DBB /* QTFeedbackController.m */; };
+		E08AABFB1FE14129005B6DBB /* QTSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABE81FE14129005B6DBB /* QTSettingController.m */; };
+		E08AABFC1FE14129005B6DBB /* QTMyNewsCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */; };
+		E08AABFD1FE14129005B6DBB /* QTMyController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABF11FE14129005B6DBB /* QTMyController.m */; };
+		E08AABFE1FE14129005B6DBB /* QTMyNewsCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */; };
+		E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */; };
+		E08E525E1FF5039700972A61 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08E52431FF5039600972A61 /* WeiboSDK.bundle */; };
+		E08E525F1FF5039700972A61 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52441FF5039600972A61 /* libWeiboSDK.a */; };
+		E08E52601FF5039700972A61 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E08E524A1FF5039600972A61 /* README.txt */; };
+		E08E52611FF5039700972A61 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E524C1FF5039600972A61 /* libWeChatSDK.a */; };
+		E08E52621FF5039700972A61 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E524E1FF5039600972A61 /* TencentOpenAPI.framework */; };
+		E08E52631FF5039700972A61 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52501FF5039600972A61 /* ShareSDKConnector.framework */; };
+		E08E52641FF5039700972A61 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08E52511FF5039600972A61 /* ShareSDK.bundle */; };
+		E08E52651FF5039700972A61 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08E52531FF5039600972A61 /* ShareSDKUI.bundle */; };
+		E08E52661FF5039700972A61 /* ShareSDKConfigFile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52541FF5039600972A61 /* ShareSDKConfigFile.framework */; };
+		E08E52671FF5039700972A61 /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52551FF5039600972A61 /* ShareSDKExtension.framework */; };
+		E08E52681FF5039700972A61 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52561FF5039600972A61 /* ShareSDKUI.framework */; };
+		E08E52691FF5039700972A61 /* ShareSDKConfigFile.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E08E52571FF5039600972A61 /* ShareSDKConfigFile.bundle */; };
+		E08E526A1FF5039700972A61 /* QQConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E52591FF5039600972A61 /* QQConnector.framework */; };
+		E08E526B1FF5039700972A61 /* WechatConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E525A1FF5039600972A61 /* WechatConnector.framework */; };
+		E08E526C1FF5039700972A61 /* SinaWeiboConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E525B1FF5039600972A61 /* SinaWeiboConnector.framework */; };
+		E08E526D1FF5039700972A61 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E525C1FF5039600972A61 /* MOBFoundation.framework */; };
+		E08E526E1FF5039700972A61 /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08E525D1FF5039600972A61 /* ShareSDK.framework */; };
+		E093518A1FA30F2F000687BC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351891FA30F2F000687BC /* libicucore.tbd */; };
+		E093518C1FA30F3C000687BC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E093518B1FA30F3C000687BC /* libz.tbd */; };
+		E093518E1FA30F45000687BC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E093518D1FA30F45000687BC /* libstdc++.tbd */; };
+		E09351901FA30F4D000687BC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E093518F1FA30F4D000687BC /* JavaScriptCore.framework */; };
+		E09351921FA30F55000687BC /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351911FA30F55000687BC /* ImageIO.framework */; };
+		E09351941FA30F5D000687BC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E09351931FA30F5D000687BC /* libsqlite3.tbd */; };
+		E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */ = {isa = PBXBuildFile; fileRef = E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */; };
+		E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */; };
+		E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */ = {isa = PBXBuildFile; fileRef = E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */; };
+		E0A834471FF6433600E03EDE /* NBLMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A834421FF6433600E03EDE /* NBLMessage.m */; };
+		E0A834481FF6433600E03EDE /* NBLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0A834461FF6433600E03EDE /* NBLWebViewController.m */; };
+		E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147521FEB574D0069AC6D /* QTUserCell.m */; };
+		E0C1475A1FEBCDC20069AC6D /* QTAccountNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */; };
+		E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */; };
+		E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */; };
+		E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */; };
+		E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B01F95A7CE00F1B8C8 /* Tools.m */; };
+		E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */; };
+		E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */; };
+		E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */; };
+		E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */; };
+		E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */; };
+		E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */; };
+		E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */; };
+		E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */; };
+		E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */; };
+		E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */; };
+		E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */; };
+		E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */; };
+		E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */; };
+		E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */; };
+		E0DF28FB1F95A81000F1B8C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */; };
+		E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DF28CD1F95A7CE00F1B8C8 /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E0DF28911F95A57E00F1B8C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0DF28701F95A57E00F1B8C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0DF28771F95A57E00F1B8C8;
+			remoteInfo = QuickTalk;
+		};
+		E0DF289C1F95A57E00F1B8C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0DF28701F95A57E00F1B8C8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0DF28771F95A57E00F1B8C8;
+			remoteInfo = QuickTalk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk.release.xcconfig"; sourceTree = "<group>"; };
+		504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalkUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests.release.xcconfig"; sourceTree = "<group>"; };
+		91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests.release.xcconfig"; sourceTree = "<group>"; };
+		9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk.debug.xcconfig"; sourceTree = "<group>"; };
+		AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QuickTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
+		E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E0233C601FC2C2570010D9DC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		E0233C621FC2C2600010D9DC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E0233C641FC2C26C0010D9DC /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		E0233C661FC2C2750010D9DC /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		E0233C681FC2C2860010D9DC /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E0233C711FC2E2770010D9DC /* QTSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTSpeaker.h; sourceTree = "<group>"; };
+		E0233C721FC2E2770010D9DC /* QTSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTSpeaker.m; sourceTree = "<group>"; };
+		E0256D851FEA4B3200217D9F /* QTUserStarAndFansController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarAndFansController.h; sourceTree = "<group>"; };
+		E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarAndFansController.m; sourceTree = "<group>"; };
+		E0256D8B1FEA6C3800217D9F /* QTUserStarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarController.h; sourceTree = "<group>"; };
+		E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarController.m; sourceTree = "<group>"; };
+		E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserFansController.h; sourceTree = "<group>"; };
+		E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserFansController.m; sourceTree = "<group>"; };
+		E0256D911FEA7DC800217D9F /* QTUserStarButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserStarButton.h; sourceTree = "<group>"; };
+		E0256D921FEA7DC800217D9F /* QTUserStarButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserStarButton.m; sourceTree = "<group>"; };
+		E0256D941FEA87FB00217D9F /* QTUserContactBookController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserContactBookController.h; sourceTree = "<group>"; };
+		E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserContactBookController.m; sourceTree = "<group>"; };
+		E0256D971FEA889100217D9F /* QTUserSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserSearchController.h; sourceTree = "<group>"; };
+		E0256D981FEA889100217D9F /* QTUserSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserSearchController.m; sourceTree = "<group>"; };
+		E02A3CFD2003223100ADF11A /* QTUserPostRecommendController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostRecommendController.h; sourceTree = "<group>"; };
+		E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostRecommendController.m; sourceTree = "<group>"; };
+		E03BBDEC1FF1F2B0000F93E8 /* QQPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQPopMenuView.h; sourceTree = "<group>"; };
+		E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQPopMenuView.m; sourceTree = "<group>"; };
+		E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostStarController.h; sourceTree = "<group>"; };
+		E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostStarController.m; sourceTree = "<group>"; };
+		E03BBDF31FF20633000F93E8 /* QTNoneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTNoneView.m; sourceTree = "<group>"; };
+		E03BBDF41FF20633000F93E8 /* QTNoneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTNoneView.h; sourceTree = "<group>"; };
+		E045AD911FC417D800A16A40 /* QTCleaner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTCleaner.h; sourceTree = "<group>"; };
+		E045AD921FC417D800A16A40 /* QTCleaner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTCleaner.m; sourceTree = "<group>"; };
+		E0463BB31FAABB9B00849101 /* userAgreement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userAgreement.txt; sourceTree = "<group>"; };
+		E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EwenTextView.h; sourceTree = "<group>"; };
+		E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EwenTextView.m; sourceTree = "<group>"; };
+		E06F42D61FEA37AD00F99A66 /* QTMyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMyCell.h; sourceTree = "<group>"; };
+		E06F42D71FEA37AD00F99A66 /* QTMyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMyCell.m; sourceTree = "<group>"; };
+		E06F42D91FEA459900F99A66 /* QTUserCollectionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCollectionController.h; sourceTree = "<group>"; };
+		E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCollectionController.m; sourceTree = "<group>"; };
+		E079B8F21FD78CA800A76FCD /* QTUserPostCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentController.h; sourceTree = "<group>"; };
+		E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentController.m; sourceTree = "<group>"; };
+		E079B8F51FD78E6700A76FCD /* QTUserPostCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentCell.h; sourceTree = "<group>"; };
+		E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentCell.m; sourceTree = "<group>"; };
+		E079B8F81FD79CC200A76FCD /* QTUserPostCommentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostCommentModel.h; sourceTree = "<group>"; };
+		E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostCommentModel.m; sourceTree = "<group>"; };
+		E07BA9931FD7F6EE00DE8C02 /* QTTopicCommentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicCommentController.h; sourceTree = "<group>"; };
+		E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicCommentController.m; sourceTree = "<group>"; };
+		E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTipView.h; sourceTree = "<group>"; };
+		E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTipView.m; sourceTree = "<group>"; };
+		E08131601FE21701001A6E3D /* CRALocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CRALocation.json; sourceTree = "<group>"; };
+		E08131611FE21701001A6E3D /* CRALocationPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRALocationPickerView.m; sourceTree = "<group>"; };
+		E08131621FE21701001A6E3D /* CRAPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAPickerView.h; sourceTree = "<group>"; };
+		E08131631FE21701001A6E3D /* CRADatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRADatePickerView.m; sourceTree = "<group>"; };
+		E08131641FE21701001A6E3D /* CRABasePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRABasePickerView.m; sourceTree = "<group>"; };
+		E08131651FE21701001A6E3D /* CRAStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRAStringPickerView.m; sourceTree = "<group>"; };
+		E08131661FE21701001A6E3D /* CRALocationPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRALocationPickerView.h; sourceTree = "<group>"; };
+		E08131671FE21701001A6E3D /* CRADatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRADatePickerView.h; sourceTree = "<group>"; };
+		E08131681FE21701001A6E3D /* CRAStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRAStringPickerView.h; sourceTree = "<group>"; };
+		E08131691FE21701001A6E3D /* CRABasePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRABasePickerView.h; sourceTree = "<group>"; };
+		E081316F1FE23117001A6E3D /* QTUserController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserController.h; sourceTree = "<group>"; };
+		E08131701FE23117001A6E3D /* QTUserController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserController.m; sourceTree = "<group>"; };
+		E08131761FE248AB001A6E3D /* QTUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserModel.h; sourceTree = "<group>"; };
+		E08131771FE248AB001A6E3D /* QTUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserModel.m; sourceTree = "<group>"; };
+		E08181291F9995AD0035DEF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E08181311F99A01E0035DEF4 /* QTUserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserInfo.h; sourceTree = "<group>"; };
+		E08181321F99A01E0035DEF4 /* QTUserInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserInfo.m; sourceTree = "<group>"; };
+		E084A9191FB53FA400AE4AD2 /* QTErrorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTErrorView.h; sourceTree = "<group>"; };
+		E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTErrorView.m; sourceTree = "<group>"; };
+		E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBImagebrowse.h; sourceTree = "<group>"; };
+		E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBImagebrowse.m; sourceTree = "<group>"; };
+		E084A9201FB5AA8500AE4AD2 /* image.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = image.js; sourceTree = "<group>"; };
+		E085609C1FECB4E300B4779E /* QuickTalk.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = QuickTalk.entitlements; sourceTree = "<group>"; };
+		E085609D1FECB69200B4779E /* QTUserPostLikeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostLikeView.h; sourceTree = "<group>"; };
+		E085609E1FECB69200B4779E /* QTUserPostLikeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostLikeView.m; sourceTree = "<group>"; };
+		E08560A01FECFC6600B4779E /* QTUserLikeListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserLikeListController.h; sourceTree = "<group>"; };
+		E08560A11FECFC6600B4779E /* QTUserLikeListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserLikeListController.m; sourceTree = "<group>"; };
+		E085919B1FF3560D00C847F4 /* GTSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GTSDK.framework; sourceTree = "<group>"; };
+		E08693041FF0AB22001DC7FE /* QTMessageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageModel.h; sourceTree = "<group>"; };
+		E08693051FF0AB22001DC7FE /* QTMessageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageModel.m; sourceTree = "<group>"; };
+		E08693071FF0B7CB001DC7FE /* QTMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageController.h; sourceTree = "<group>"; };
+		E08693081FF0B7CB001DC7FE /* QTMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageController.m; sourceTree = "<group>"; };
+		E086930A1FF0DE06001DC7FE /* QTMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessageCell.h; sourceTree = "<group>"; };
+		E086930B1FF0DE06001DC7FE /* QTMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessageCell.m; sourceTree = "<group>"; };
+		E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTopicGlobalSpeaker.h; sourceTree = "<group>"; };
+		E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTopicGlobalSpeaker.m; sourceTree = "<group>"; };
+		E088D6551FD64E0600038736 /* QTTopicContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicContentController.h; sourceTree = "<group>"; };
+		E088D6561FD64E0600038736 /* QTTopicSpeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicSpeaker.h; sourceTree = "<group>"; };
+		E088D6571FD64E0600038736 /* QTTopicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicController.m; sourceTree = "<group>"; };
+		E088D6581FD64E0600038736 /* QTNewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTNewsController.h; sourceTree = "<group>"; };
+		E088D6591FD64E0600038736 /* QTTopicContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicContentController.m; sourceTree = "<group>"; };
+		E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicSpeaker.m; sourceTree = "<group>"; };
+		E088D65B1FD64E0600038736 /* QTNewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTNewsController.m; sourceTree = "<group>"; };
+		E088D65C1FD64E0600038736 /* QTTopicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicController.h; sourceTree = "<group>"; };
+		E088D65E1FD64E0600038736 /* QTCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTCommentModel.m; sourceTree = "<group>"; };
+		E088D65F1FD64E0600038736 /* QTTopicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicModel.h; sourceTree = "<group>"; };
+		E088D6601FD64E0600038736 /* QTCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTCommentModel.h; sourceTree = "<group>"; };
+		E088D6611FD64E0600038736 /* QTTopicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicModel.m; sourceTree = "<group>"; };
+		E088D6631FD64E0600038736 /* QTNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTNewsCell.m; sourceTree = "<group>"; };
+		E088D6641FD64E0600038736 /* QTTopicRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicRightCell.h; sourceTree = "<group>"; };
+		E088D6651FD64E0600038736 /* QTTopicLeftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTTopicLeftCell.h; sourceTree = "<group>"; };
+		E088D6661FD64E0600038736 /* QTNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTNewsCell.h; sourceTree = "<group>"; };
+		E088D6671FD64E0600038736 /* QTTopicLeftCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicLeftCell.m; sourceTree = "<group>"; };
+		E088D6681FD64E0600038736 /* QTTopicRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTTopicRightCell.m; sourceTree = "<group>"; };
+		E088D6751FD6650000038736 /* QTUserPostMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTUserPostMainController.m; sourceTree = "<group>"; };
+		E088D6761FD6650000038736 /* QTUserPostMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTUserPostMainController.h; sourceTree = "<group>"; };
+		E088D6781FD6651B00038736 /* QTUserPostAddController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostAddController.h; sourceTree = "<group>"; };
+		E088D6791FD6651B00038736 /* QTUserPostAddController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostAddController.m; sourceTree = "<group>"; };
+		E088D6801FD6875A00038736 /* RBLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBLabel.h; sourceTree = "<group>"; };
+		E088D6811FD6875A00038736 /* RBLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBLabel.m; sourceTree = "<group>"; };
+		E088D6831FD68DAC00038736 /* QTUserPostModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostModel.h; sourceTree = "<group>"; };
+		E088D6841FD68DAC00038736 /* QTUserPostModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostModel.m; sourceTree = "<group>"; };
+		E088D6861FD6979400038736 /* QTUserPostMainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserPostMainCell.h; sourceTree = "<group>"; };
+		E088D6871FD6979400038736 /* QTUserPostMainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserPostMainCell.m; sourceTree = "<group>"; };
+		E08A64561FA97C5800317CE2 /* QTTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTTabBarController.h; sourceTree = "<group>"; };
+		E08A64571FA97C5800317CE2 /* QTTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTTabBarController.m; sourceTree = "<group>"; };
+		E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
+		E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
+		E08AABC01FE0C458005B6DBB /* QTAccountRegisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountRegisterController.h; sourceTree = "<group>"; };
+		E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountRegisterController.m; sourceTree = "<group>"; };
+		E08AABC31FE0C46C005B6DBB /* QTAccountLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountLoginController.h; sourceTree = "<group>"; };
+		E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountLoginController.m; sourceTree = "<group>"; };
+		E08AABC71FE0CDBB005B6DBB /* RBButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBButton.m; sourceTree = "<group>"; };
+		E08AABC81FE0CDBB005B6DBB /* RBButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBButton.h; sourceTree = "<group>"; };
+		E08AABCA1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountForgetPasswordController.h; sourceTree = "<group>"; };
+		E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountForgetPasswordController.m; sourceTree = "<group>"; };
+		E08AABCD1FE0E1E5005B6DBB /* QTAccountInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountInfo.h; sourceTree = "<group>"; };
+		E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountInfo.m; sourceTree = "<group>"; };
+		E08AABD01FE106C9005B6DBB /* QTAccountSettingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountSettingController.h; sourceTree = "<group>"; };
+		E08AABD11FE106C9005B6DBB /* QTAccountSettingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountSettingController.m; sourceTree = "<group>"; };
+		E08AABD31FE10A42005B6DBB /* QTAccountChangePasswordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountChangePasswordController.h; sourceTree = "<group>"; };
+		E08AABD41FE10A42005B6DBB /* QTAccountChangePasswordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountChangePasswordController.m; sourceTree = "<group>"; };
+		E08AABD61FE10A55005B6DBB /* QTAccountThirdPartController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountThirdPartController.h; sourceTree = "<group>"; };
+		E08AABD71FE10A55005B6DBB /* QTAccountThirdPartController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountThirdPartController.m; sourceTree = "<group>"; };
+		E08AABD91FE113F2005B6DBB /* QTAccountPhoneController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountPhoneController.h; sourceTree = "<group>"; };
+		E08AABDA1FE113F2005B6DBB /* QTAccountPhoneController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountPhoneController.m; sourceTree = "<group>"; };
+		E08AABDE1FE14129005B6DBB /* QTInfoEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTInfoEditController.m; sourceTree = "<group>"; };
+		E08AABDF1FE14129005B6DBB /* QTIntroController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTIntroController.h; sourceTree = "<group>"; };
+		E08AABE01FE14129005B6DBB /* QTFeedbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTFeedbackController.h; sourceTree = "<group>"; };
+		E08AABE11FE14129005B6DBB /* QTAvatarEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTAvatarEditController.m; sourceTree = "<group>"; };
+		E08AABE21FE14129005B6DBB /* QTSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTSettingController.h; sourceTree = "<group>"; };
+		E08AABE31FE14129005B6DBB /* QTUserAgreementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTUserAgreementController.m; sourceTree = "<group>"; };
+		E08AABE41FE14129005B6DBB /* QTIntroController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTIntroController.m; sourceTree = "<group>"; };
+		E08AABE51FE14129005B6DBB /* QTInfoEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTInfoEditController.h; sourceTree = "<group>"; };
+		E08AABE61FE14129005B6DBB /* QTAvatarEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTAvatarEditController.h; sourceTree = "<group>"; };
+		E08AABE71FE14129005B6DBB /* QTFeedbackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTFeedbackController.m; sourceTree = "<group>"; };
+		E08AABE81FE14129005B6DBB /* QTSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTSettingController.m; sourceTree = "<group>"; };
+		E08AABE91FE14129005B6DBB /* QTUserAgreementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTUserAgreementController.h; sourceTree = "<group>"; };
+		E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTMyNewsCommentController.m; sourceTree = "<group>"; };
+		E08AABEF1FE14129005B6DBB /* QTMyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTMyController.h; sourceTree = "<group>"; };
+		E08AABF01FE14129005B6DBB /* QTMyNewsCommentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTMyNewsCommentController.h; sourceTree = "<group>"; };
+		E08AABF11FE14129005B6DBB /* QTMyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTMyController.m; sourceTree = "<group>"; };
+		E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTMyNewsCommentCell.m; sourceTree = "<group>"; };
+		E08AABF51FE14129005B6DBB /* QTMyNewsCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTMyNewsCommentCell.h; sourceTree = "<group>"; };
+		E08AABFF1FE144F0005B6DBB /* QTAccountInfoEditController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountInfoEditController.h; sourceTree = "<group>"; };
+		E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountInfoEditController.m; sourceTree = "<group>"; };
+		E08E52431FF5039600972A61 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		E08E52441FF5039600972A61 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		E08E52451FF5039600972A61 /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
+		E08E52461FF5039600972A61 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		E08E52481FF5039600972A61 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		E08E52491FF5039600972A61 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		E08E524A1FF5039600972A61 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E08E524B1FF5039600972A61 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		E08E524C1FF5039600972A61 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		E08E524E1FF5039600972A61 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		E08E52501FF5039600972A61 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		E08E52511FF5039600972A61 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		E08E52531FF5039600972A61 /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		E08E52541FF5039600972A61 /* ShareSDKConfigFile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConfigFile.framework; sourceTree = "<group>"; };
+		E08E52551FF5039600972A61 /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		E08E52561FF5039600972A61 /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		E08E52571FF5039600972A61 /* ShareSDKConfigFile.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKConfigFile.bundle; sourceTree = "<group>"; };
+		E08E52591FF5039600972A61 /* QQConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QQConnector.framework; sourceTree = "<group>"; };
+		E08E525A1FF5039600972A61 /* WechatConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WechatConnector.framework; sourceTree = "<group>"; };
+		E08E525B1FF5039600972A61 /* SinaWeiboConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnector.framework; sourceTree = "<group>"; };
+		E08E525C1FF5039600972A61 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		E08E525D1FF5039600972A61 /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		E09351891FA30F2F000687BC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		E093518B1FA30F3C000687BC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		E093518D1FA30F45000687BC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		E093518F1FA30F4D000687BC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		E09351911FA30F55000687BC /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E09351931FA30F5D000687BC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		E093519B1FA32DDC000687BC /* NSString+QuickTalk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+QuickTalk.h"; sourceTree = "<group>"; };
+		E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+QuickTalk.m"; sourceTree = "<group>"; };
+		E094BB5A1F95F76B00375AD8 /* QTPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTPopoverView.h; sourceTree = "<group>"; };
+		E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTPopoverView.m; sourceTree = "<group>"; };
+		E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Obj.h"; sourceTree = "<group>"; };
+		E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Obj.m"; sourceTree = "<group>"; };
+		E0A834421FF6433600E03EDE /* NBLMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLMessage.m; sourceTree = "<group>"; };
+		E0A834431FF6433600E03EDE /* NBLWebViewHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLWebViewHeader.h; sourceTree = "<group>"; };
+		E0A834441FF6433600E03EDE /* NBLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLWebViewController.h; sourceTree = "<group>"; };
+		E0A834451FF6433600E03EDE /* NBLMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLMessage.h; sourceTree = "<group>"; };
+		E0A834461FF6433600E03EDE /* NBLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLWebViewController.m; sourceTree = "<group>"; };
+		E0C147511FEB574D0069AC6D /* QTUserCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTUserCell.h; sourceTree = "<group>"; };
+		E0C147521FEB574D0069AC6D /* QTUserCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTUserCell.m; sourceTree = "<group>"; };
+		E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTAccountNotificationController.h; sourceTree = "<group>"; };
+		E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTAccountNotificationController.m; sourceTree = "<group>"; };
+		E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickTalkTests.m; sourceTree = "<group>"; };
+		E0DF28961F95A57E00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickTalkUITests.m; sourceTree = "<group>"; };
+		E0DF28A11F95A57E00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E0DF28AF1F95A7CE00F1B8C8 /* Tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
+		E0DF28B01F95A7CE00F1B8C8 /* Tools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
+		E0DF28B11F95A7CE00F1B8C8 /* UIButton+NetworkImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+NetworkImage.h"; sourceTree = "<group>"; };
+		E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+NetworkImage.m"; sourceTree = "<group>"; };
+		E0DF28B31F95A7CE00F1B8C8 /* UIColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		E0DF28B51F95A7CE00F1B8C8 /* UIImage+RBImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+RBImage.h"; sourceTree = "<group>"; };
+		E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RBImage.m"; sourceTree = "<group>"; };
+		E0DF28B71F95A7CE00F1B8C8 /* UIImageView+NetworkImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+NetworkImage.h"; sourceTree = "<group>"; };
+		E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+NetworkImage.m"; sourceTree = "<group>"; };
+		E0DF28C41F95A7CE00F1B8C8 /* QTNetworkAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNetworkAgent.h; sourceTree = "<group>"; };
+		E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNetworkAgent.m; sourceTree = "<group>"; };
+		E0DF28C61F95A7CE00F1B8C8 /* QTNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNetworking.h; sourceTree = "<group>"; };
+		E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNetworking.m; sourceTree = "<group>"; };
+		E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTServiceCode.h; sourceTree = "<group>"; };
+		E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTServiceCode.m; sourceTree = "<group>"; };
+		E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E0DF28CC1F95A7CE00F1B8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E0DF28CD1F95A7CE00F1B8C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E0DF28CE1F95A7CE00F1B8C8 /* QTMarcos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMarcos.h; sourceTree = "<group>"; };
+		E0DF28CF1F95A7CE00F1B8C8 /* QuickTalk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuickTalk-Prefix.pch"; sourceTree = "<group>"; };
+		E0DF28D61F95A7CE00F1B8C8 /* QTMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTMessage.h; sourceTree = "<group>"; };
+		E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTMessage.m; sourceTree = "<group>"; };
+		E0DF28D91F95A7CE00F1B8C8 /* QTNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTNavigationController.h; sourceTree = "<group>"; };
+		E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTNavigationController.m; sourceTree = "<group>"; };
+		E0DF28DC1F95A7CE00F1B8C8 /* QTProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTProgressHUD.h; sourceTree = "<group>"; };
+		E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTProgressHUD.m; sourceTree = "<group>"; };
+		E0DF28DF1F95A7CE00F1B8C8 /* QTRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefresh.h; sourceTree = "<group>"; };
+		E0DF28E01F95A7CE00F1B8C8 /* QTRefreshFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefreshFooter.h; sourceTree = "<group>"; };
+		E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTRefreshFooter.m; sourceTree = "<group>"; };
+		E0DF28E21F95A7CE00F1B8C8 /* QTRefreshHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTRefreshHeader.h; sourceTree = "<group>"; };
+		E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTRefreshHeader.m; sourceTree = "<group>"; };
+		E0DF28E41F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+QTRefresh.h"; sourceTree = "<group>"; };
+		E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+QTRefresh.m"; sourceTree = "<group>"; };
+		E0DF28E71F95A7CE00F1B8C8 /* QTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QTViewController.h; sourceTree = "<group>"; };
+		E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QTViewController.m; sourceTree = "<group>"; };
+		E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickTalkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0DF28751F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E093518A1FA30F2F000687BC /* libicucore.tbd in Frameworks */,
+				E0233C671FC2C2750010D9DC /* Contacts.framework in Frameworks */,
+				E0233C6F1FC2C2A20010D9DC /* CoreGraphics.framework in Frameworks */,
+				E08E526A1FF5039700972A61 /* QQConnector.framework in Frameworks */,
+				E0233C6D1FC2C2990010D9DC /* QuartzCore.framework in Frameworks */,
+				E08E52631FF5039700972A61 /* ShareSDKConnector.framework in Frameworks */,
+				E0233C6B1FC2C2910010D9DC /* SystemConfiguration.framework in Frameworks */,
+				E08E52661FF5039700972A61 /* ShareSDKConfigFile.framework in Frameworks */,
+				E0233C691FC2C2860010D9DC /* AudioToolbox.framework in Frameworks */,
+				E0233C651FC2C26C0010D9DC /* AddressBook.framework in Frameworks */,
+				E08E526E1FF5039700972A61 /* ShareSDK.framework in Frameworks */,
+				E0233C631FC2C2600010D9DC /* AVFoundation.framework in Frameworks */,
+				E0233C611FC2C2570010D9DC /* CoreTelephony.framework in Frameworks */,
+				E08E52681FF5039700972A61 /* ShareSDKUI.framework in Frameworks */,
+				E08E526D1FF5039700972A61 /* MOBFoundation.framework in Frameworks */,
+				E08E526C1FF5039700972A61 /* SinaWeiboConnector.framework in Frameworks */,
+				E0233C5F1FC2C24E0010D9DC /* CoreLocation.framework in Frameworks */,
+				E08E526B1FF5039700972A61 /* WechatConnector.framework in Frameworks */,
+				E09351941FA30F5D000687BC /* libsqlite3.tbd in Frameworks */,
+				E08E525F1FF5039700972A61 /* libWeiboSDK.a in Frameworks */,
+				E09351921FA30F55000687BC /* ImageIO.framework in Frameworks */,
+				E09351901FA30F4D000687BC /* JavaScriptCore.framework in Frameworks */,
+				E093518E1FA30F45000687BC /* libstdc++.tbd in Frameworks */,
+				E08E52611FF5039700972A61 /* libWeChatSDK.a in Frameworks */,
+				E08E52671FF5039700972A61 /* ShareSDKExtension.framework in Frameworks */,
+				E093518C1FA30F3C000687BC /* libz.tbd in Frameworks */,
+				E0233C5D1FC2C2290010D9DC /* iflyMSC.framework in Frameworks */,
+				E085919C1FF3560D00C847F4 /* GTSDK.framework in Frameworks */,
+				E08E52621FF5039700972A61 /* TencentOpenAPI.framework in Frameworks */,
+				DF754F8F0360DE897706D94A /* libPods-QuickTalk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288D1F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31180B312A8C5D32D7766EB4 /* libPods-QuickTalkTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28981F95A57E00F1B8C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0077F6E3851B0E180BB65818 /* libPods-QuickTalkUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DE7D1760355DF4F24DAED83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E0233C6E1FC2C2A20010D9DC /* CoreGraphics.framework */,
+				E0233C6C1FC2C2980010D9DC /* QuartzCore.framework */,
+				E0233C6A1FC2C2910010D9DC /* SystemConfiguration.framework */,
+				E0233C681FC2C2860010D9DC /* AudioToolbox.framework */,
+				E0233C661FC2C2750010D9DC /* Contacts.framework */,
+				E0233C641FC2C26C0010D9DC /* AddressBook.framework */,
+				E0233C621FC2C2600010D9DC /* AVFoundation.framework */,
+				E0233C601FC2C2570010D9DC /* CoreTelephony.framework */,
+				E0233C5E1FC2C24E0010D9DC /* CoreLocation.framework */,
+				E09351931FA30F5D000687BC /* libsqlite3.tbd */,
+				E09351911FA30F55000687BC /* ImageIO.framework */,
+				E093518F1FA30F4D000687BC /* JavaScriptCore.framework */,
+				E093518D1FA30F45000687BC /* libstdc++.tbd */,
+				E093518B1FA30F3C000687BC /* libz.tbd */,
+				E09351891FA30F2F000687BC /* libicucore.tbd */,
+				AF90E4BD216CF709CCA8E21A /* libPods-QuickTalk.a */,
+				AB233057C817F3134CB114FA /* libPods-QuickTalkTests.a */,
+				504086E5F9003828E86F3DD3 /* libPods-QuickTalkUITests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54FC022EB6F35A908F5175AF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */,
+				0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */,
+				E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */,
+				91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */,
+				60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */,
+				6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E0233C701FC2E1D80010D9DC /* Speaker */ = {
+			isa = PBXGroup;
+			children = (
+				E0233C711FC2E2770010D9DC /* QTSpeaker.h */,
+				E0233C721FC2E2770010D9DC /* QTSpeaker.m */,
+			);
+			path = Speaker;
+			sourceTree = "<group>";
+		};
+		E03BBDEB1FF1F2B0000F93E8 /* QQPopMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				E03BBDEC1FF1F2B0000F93E8 /* QQPopMenuView.h */,
+				E03BBDED1FF1F2B0000F93E8 /* QQPopMenuView.m */,
+			);
+			path = QQPopMenuView;
+			sourceTree = "<group>";
+		};
+		E03BBDF21FF20633000F93E8 /* QTNoneView */ = {
+			isa = PBXGroup;
+			children = (
+				E03BBDF41FF20633000F93E8 /* QTNoneView.h */,
+				E03BBDF31FF20633000F93E8 /* QTNoneView.m */,
+			);
+			path = QTNoneView;
+			sourceTree = "<group>";
+		};
+		E045AD901FC417C500A16A40 /* Cleaner */ = {
+			isa = PBXGroup;
+			children = (
+				E045AD911FC417D800A16A40 /* QTCleaner.h */,
+				E045AD921FC417D800A16A40 /* QTCleaner.m */,
+			);
+			path = Cleaner;
+			sourceTree = "<group>";
+		};
+		E04DF4181F9EEEA000EFD1C6 /* EwenTextView */ = {
+			isa = PBXGroup;
+			children = (
+				E04DF4191F9EEEA000EFD1C6 /* EwenTextView.h */,
+				E04DF41A1F9EEEA000EFD1C6 /* EwenTextView.m */,
+			);
+			path = EwenTextView;
+			sourceTree = "<group>";
+		};
+		E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */ = {
+			isa = PBXGroup;
+			children = (
+				E07FF8C01FA1DD6300D7CE25 /* QTTipView.h */,
+				E07FF8C11FA1DD6300D7CE25 /* QTTipView.m */,
+			);
+			path = QTTipView;
+			sourceTree = "<group>";
+		};
+		E081315F1FE21701001A6E3D /* CRAPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				E08131601FE21701001A6E3D /* CRALocation.json */,
+				E08131611FE21701001A6E3D /* CRALocationPickerView.m */,
+				E08131621FE21701001A6E3D /* CRAPickerView.h */,
+				E08131631FE21701001A6E3D /* CRADatePickerView.m */,
+				E08131641FE21701001A6E3D /* CRABasePickerView.m */,
+				E08131651FE21701001A6E3D /* CRAStringPickerView.m */,
+				E08131661FE21701001A6E3D /* CRALocationPickerView.h */,
+				E08131671FE21701001A6E3D /* CRADatePickerView.h */,
+				E08131681FE21701001A6E3D /* CRAStringPickerView.h */,
+				E08131691FE21701001A6E3D /* CRABasePickerView.h */,
+			);
+			path = CRAPickerView;
+			sourceTree = "<group>";
+		};
+		E08181281F9995AD0035DEF4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E0463BB31FAABB9B00849101 /* userAgreement.txt */,
+				E081812F1F9996320035DEF4 /* LaunchScreen.storyboard */,
+				E08181291F9995AD0035DEF4 /* Assets.xcassets */,
+				E084A9201FB5AA8500AE4AD2 /* image.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E084A9181FB53F9300AE4AD2 /* QTErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				E084A9191FB53FA400AE4AD2 /* QTErrorView.h */,
+				E084A91A1FB53FA400AE4AD2 /* QTErrorView.m */,
+			);
+			path = QTErrorView;
+			sourceTree = "<group>";
+		};
+		E084A91C1FB598A100AE4AD2 /* RBImagebrowse */ = {
+			isa = PBXGroup;
+			children = (
+				E084A91D1FB598A100AE4AD2 /* RBImagebrowse.h */,
+				E084A91E1FB598A100AE4AD2 /* RBImagebrowse.m */,
+			);
+			path = RBImagebrowse;
+			sourceTree = "<group>";
+		};
+		E08693001FF0AB0F001DC7FE /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				E08693011FF0AB0F001DC7FE /* Controller */,
+				E08693021FF0AB0F001DC7FE /* Model */,
+				E08693031FF0AB0F001DC7FE /* View */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		E08693011FF0AB0F001DC7FE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08693071FF0B7CB001DC7FE /* QTMessageController.h */,
+				E08693081FF0B7CB001DC7FE /* QTMessageController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08693021FF0AB0F001DC7FE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E08693041FF0AB22001DC7FE /* QTMessageModel.h */,
+				E08693051FF0AB22001DC7FE /* QTMessageModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08693031FF0AB0F001DC7FE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E086930A1FF0DE06001DC7FE /* QTMessageCell.h */,
+				E086930B1FF0DE06001DC7FE /* QTMessageCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E088D64F1FD64C9800038736 /* UserPost */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6741FD6650000038736 /* Controller */,
+				E088D6721FD6650000038736 /* Model */,
+				E088D6731FD6650000038736 /* View */,
+			);
+			path = UserPost;
+			sourceTree = "<group>";
+		};
+		E088D6531FD64E0600038736 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6541FD64E0600038736 /* Controller */,
+				E088D65D1FD64E0600038736 /* Model */,
+				E088D6621FD64E0600038736 /* View */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		E088D6541FD64E0600038736 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08803541FD91B660099E93D /* QTTopicGlobalSpeaker.h */,
+				E08803551FD91B660099E93D /* QTTopicGlobalSpeaker.m */,
+				E088D6561FD64E0600038736 /* QTTopicSpeaker.h */,
+				E088D65A1FD64E0600038736 /* QTTopicSpeaker.m */,
+				E088D6581FD64E0600038736 /* QTNewsController.h */,
+				E088D65B1FD64E0600038736 /* QTNewsController.m */,
+				E088D65C1FD64E0600038736 /* QTTopicController.h */,
+				E088D6571FD64E0600038736 /* QTTopicController.m */,
+				E088D6551FD64E0600038736 /* QTTopicContentController.h */,
+				E088D6591FD64E0600038736 /* QTTopicContentController.m */,
+				E07BA9931FD7F6EE00DE8C02 /* QTTopicCommentController.h */,
+				E07BA9941FD7F6EE00DE8C02 /* QTTopicCommentController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E088D65D1FD64E0600038736 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6601FD64E0600038736 /* QTCommentModel.h */,
+				E088D65E1FD64E0600038736 /* QTCommentModel.m */,
+				E088D65F1FD64E0600038736 /* QTTopicModel.h */,
+				E088D6611FD64E0600038736 /* QTTopicModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E088D6621FD64E0600038736 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6661FD64E0600038736 /* QTNewsCell.h */,
+				E088D6631FD64E0600038736 /* QTNewsCell.m */,
+				E088D6641FD64E0600038736 /* QTTopicRightCell.h */,
+				E088D6681FD64E0600038736 /* QTTopicRightCell.m */,
+				E088D6651FD64E0600038736 /* QTTopicLeftCell.h */,
+				E088D6671FD64E0600038736 /* QTTopicLeftCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E088D6721FD6650000038736 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6831FD68DAC00038736 /* QTUserPostModel.h */,
+				E088D6841FD68DAC00038736 /* QTUserPostModel.m */,
+				E079B8F81FD79CC200A76FCD /* QTUserPostCommentModel.h */,
+				E079B8F91FD79CC200A76FCD /* QTUserPostCommentModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E088D6731FD6650000038736 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6861FD6979400038736 /* QTUserPostMainCell.h */,
+				E088D6871FD6979400038736 /* QTUserPostMainCell.m */,
+				E079B8F51FD78E6700A76FCD /* QTUserPostCommentCell.h */,
+				E079B8F61FD78E6700A76FCD /* QTUserPostCommentCell.m */,
+				E085609D1FECB69200B4779E /* QTUserPostLikeView.h */,
+				E085609E1FECB69200B4779E /* QTUserPostLikeView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E088D6741FD6650000038736 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E02A3CFD2003223100ADF11A /* QTUserPostRecommendController.h */,
+				E02A3CFE2003223100ADF11A /* QTUserPostRecommendController.m */,
+				E03BBDEF1FF1F3B8000F93E8 /* QTUserPostStarController.h */,
+				E03BBDF01FF1F3B8000F93E8 /* QTUserPostStarController.m */,
+				E088D6761FD6650000038736 /* QTUserPostMainController.h */,
+				E088D6751FD6650000038736 /* QTUserPostMainController.m */,
+				E088D6781FD6651B00038736 /* QTUserPostAddController.h */,
+				E088D6791FD6651B00038736 /* QTUserPostAddController.m */,
+				E079B8F21FD78CA800A76FCD /* QTUserPostCommentController.h */,
+				E079B8F31FD78CA800A76FCD /* QTUserPostCommentController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E088D67F1FD6875A00038736 /* RBLabel */ = {
+			isa = PBXGroup;
+			children = (
+				E088D6801FD6875A00038736 /* RBLabel.h */,
+				E088D6811FD6875A00038736 /* RBLabel.m */,
+			);
+			path = RBLabel;
+			sourceTree = "<group>";
+		};
+		E08AABBC1FE0BF9D005B6DBB /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABBD1FE0BF9D005B6DBB /* Controller */,
+				E08AABBE1FE0BF9D005B6DBB /* Model */,
+				E08AABBF1FE0BF9D005B6DBB /* View */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		E08AABBD1FE0BF9D005B6DBB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABC31FE0C46C005B6DBB /* QTAccountLoginController.h */,
+				E08AABC41FE0C46C005B6DBB /* QTAccountLoginController.m */,
+				E08AABC01FE0C458005B6DBB /* QTAccountRegisterController.h */,
+				E08AABC11FE0C458005B6DBB /* QTAccountRegisterController.m */,
+				E08AABCA1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.h */,
+				E08AABCB1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m */,
+				E08AABD01FE106C9005B6DBB /* QTAccountSettingController.h */,
+				E08AABD11FE106C9005B6DBB /* QTAccountSettingController.m */,
+				E08AABD31FE10A42005B6DBB /* QTAccountChangePasswordController.h */,
+				E08AABD41FE10A42005B6DBB /* QTAccountChangePasswordController.m */,
+				E08AABD61FE10A55005B6DBB /* QTAccountThirdPartController.h */,
+				E08AABD71FE10A55005B6DBB /* QTAccountThirdPartController.m */,
+				E08AABD91FE113F2005B6DBB /* QTAccountPhoneController.h */,
+				E08AABDA1FE113F2005B6DBB /* QTAccountPhoneController.m */,
+				E08AABFF1FE144F0005B6DBB /* QTAccountInfoEditController.h */,
+				E08AAC001FE144F0005B6DBB /* QTAccountInfoEditController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08AABBE1FE0BF9D005B6DBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABCD1FE0E1E5005B6DBB /* QTAccountInfo.h */,
+				E08AABCE1FE0E1E5005B6DBB /* QTAccountInfo.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08AABBF1FE0BF9D005B6DBB /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E08AABC61FE0CDBB005B6DBB /* RBButton */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABC81FE0CDBB005B6DBB /* RBButton.h */,
+				E08AABC71FE0CDBB005B6DBB /* RBButton.m */,
+			);
+			path = RBButton;
+			sourceTree = "<group>";
+		};
+		E08AABDC1FE14129005B6DBB /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABDD1FE14129005B6DBB /* Controller */,
+				E08AABEA1FE14129005B6DBB /* Model */,
+				E08AABEB1FE14129005B6DBB /* View */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		E08AABDD1FE14129005B6DBB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABE21FE14129005B6DBB /* QTSettingController.h */,
+				E08AABE81FE14129005B6DBB /* QTSettingController.m */,
+				E08AABDF1FE14129005B6DBB /* QTIntroController.h */,
+				E08AABE41FE14129005B6DBB /* QTIntroController.m */,
+				E08AABE61FE14129005B6DBB /* QTAvatarEditController.h */,
+				E08AABE11FE14129005B6DBB /* QTAvatarEditController.m */,
+				E08AABE91FE14129005B6DBB /* QTUserAgreementController.h */,
+				E08AABE31FE14129005B6DBB /* QTUserAgreementController.m */,
+				E08AABE51FE14129005B6DBB /* QTInfoEditController.h */,
+				E08AABDE1FE14129005B6DBB /* QTInfoEditController.m */,
+				E08AABE01FE14129005B6DBB /* QTFeedbackController.h */,
+				E08AABE71FE14129005B6DBB /* QTFeedbackController.m */,
+				E0C147581FEBCDC20069AC6D /* QTAccountNotificationController.h */,
+				E0C147591FEBCDC20069AC6D /* QTAccountNotificationController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08AABEA1FE14129005B6DBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08AABEB1FE14129005B6DBB /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E08AABEC1FE14129005B6DBB /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABED1FE14129005B6DBB /* Controller */,
+				E08AABF21FE14129005B6DBB /* Model */,
+				E08AABF31FE14129005B6DBB /* View */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		E08AABED1FE14129005B6DBB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABEF1FE14129005B6DBB /* QTMyController.h */,
+				E08AABF11FE14129005B6DBB /* QTMyController.m */,
+				E081316F1FE23117001A6E3D /* QTUserController.h */,
+				E08131701FE23117001A6E3D /* QTUserController.m */,
+				E08AABF01FE14129005B6DBB /* QTMyNewsCommentController.h */,
+				E08AABEE1FE14129005B6DBB /* QTMyNewsCommentController.m */,
+				E08560A01FECFC6600B4779E /* QTUserLikeListController.h */,
+				E08560A11FECFC6600B4779E /* QTUserLikeListController.m */,
+				E06F42D91FEA459900F99A66 /* QTUserCollectionController.h */,
+				E06F42DA1FEA459900F99A66 /* QTUserCollectionController.m */,
+				E0256D851FEA4B3200217D9F /* QTUserStarAndFansController.h */,
+				E0256D861FEA4B3200217D9F /* QTUserStarAndFansController.m */,
+				E0256D8B1FEA6C3800217D9F /* QTUserStarController.h */,
+				E0256D8C1FEA6C3800217D9F /* QTUserStarController.m */,
+				E0256D8E1FEA6C5200217D9F /* QTUserFansController.h */,
+				E0256D8F1FEA6C5200217D9F /* QTUserFansController.m */,
+				E0256D971FEA889100217D9F /* QTUserSearchController.h */,
+				E0256D981FEA889100217D9F /* QTUserSearchController.m */,
+				E0256D941FEA87FB00217D9F /* QTUserContactBookController.h */,
+				E0256D951FEA87FB00217D9F /* QTUserContactBookController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E08AABF21FE14129005B6DBB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E08131761FE248AB001A6E3D /* QTUserModel.h */,
+				E08131771FE248AB001A6E3D /* QTUserModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E08AABF31FE14129005B6DBB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E08AABF51FE14129005B6DBB /* QTMyNewsCommentCell.h */,
+				E08AABF41FE14129005B6DBB /* QTMyNewsCommentCell.m */,
+				E06F42D61FEA37AD00F99A66 /* QTMyCell.h */,
+				E06F42D71FEA37AD00F99A66 /* QTMyCell.m */,
+				E0256D911FEA7DC800217D9F /* QTUserStarButton.h */,
+				E0256D921FEA7DC800217D9F /* QTUserStarButton.m */,
+				E0C147511FEB574D0069AC6D /* QTUserCell.h */,
+				E0C147521FEB574D0069AC6D /* QTUserCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E08E523F1FF5039600972A61 /* ShareSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52401FF5039600972A61 /* Support */,
+				E08E525C1FF5039600972A61 /* MOBFoundation.framework */,
+				E08E525D1FF5039600972A61 /* ShareSDK.framework */,
+			);
+			path = ShareSDK;
+			sourceTree = "<group>";
+		};
+		E08E52401FF5039600972A61 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52411FF5039600972A61 /* PlatformSDK */,
+				E08E524F1FF5039600972A61 /* Required */,
+				E08E52521FF5039600972A61 /* Optional */,
+				E08E52581FF5039600972A61 /* PlatformConnector */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		E08E52411FF5039600972A61 /* PlatformSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52421FF5039600972A61 /* SinaWeiboSDK */,
+				E08E52471FF5039600972A61 /* WeChatSDK */,
+				E08E524D1FF5039600972A61 /* QQSDK */,
+			);
+			path = PlatformSDK;
+			sourceTree = "<group>";
+		};
+		E08E52421FF5039600972A61 /* SinaWeiboSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52431FF5039600972A61 /* WeiboSDK.bundle */,
+				E08E52441FF5039600972A61 /* libWeiboSDK.a */,
+				E08E52451FF5039600972A61 /* WBHttpRequest.h */,
+				E08E52461FF5039600972A61 /* WeiboSDK.h */,
+			);
+			path = SinaWeiboSDK;
+			sourceTree = "<group>";
+		};
+		E08E52471FF5039600972A61 /* WeChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52481FF5039600972A61 /* WXApi.h */,
+				E08E52491FF5039600972A61 /* WXApiObject.h */,
+				E08E524A1FF5039600972A61 /* README.txt */,
+				E08E524B1FF5039600972A61 /* WechatAuthSDK.h */,
+				E08E524C1FF5039600972A61 /* libWeChatSDK.a */,
+			);
+			path = WeChatSDK;
+			sourceTree = "<group>";
+		};
+		E08E524D1FF5039600972A61 /* QQSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E08E524E1FF5039600972A61 /* TencentOpenAPI.framework */,
+			);
+			path = QQSDK;
+			sourceTree = "<group>";
+		};
+		E08E524F1FF5039600972A61 /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52501FF5039600972A61 /* ShareSDKConnector.framework */,
+				E08E52511FF5039600972A61 /* ShareSDK.bundle */,
+			);
+			path = Required;
+			sourceTree = "<group>";
+		};
+		E08E52521FF5039600972A61 /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52531FF5039600972A61 /* ShareSDKUI.bundle */,
+				E08E52541FF5039600972A61 /* ShareSDKConfigFile.framework */,
+				E08E52551FF5039600972A61 /* ShareSDKExtension.framework */,
+				E08E52561FF5039600972A61 /* ShareSDKUI.framework */,
+				E08E52571FF5039600972A61 /* ShareSDKConfigFile.bundle */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		E08E52581FF5039600972A61 /* PlatformConnector */ = {
+			isa = PBXGroup;
+			children = (
+				E08E52591FF5039600972A61 /* QQConnector.framework */,
+				E08E525A1FF5039600972A61 /* WechatConnector.framework */,
+				E08E525B1FF5039600972A61 /* SinaWeiboConnector.framework */,
+			);
+			path = PlatformConnector;
+			sourceTree = "<group>";
+		};
+		E094BB591F95F76B00375AD8 /* QTPopoverView */ = {
+			isa = PBXGroup;
+			children = (
+				E094BB5A1F95F76B00375AD8 /* QTPopoverView.h */,
+				E094BB5B1F95F76B00375AD8 /* QTPopoverView.m */,
+			);
+			path = QTPopoverView;
+			sourceTree = "<group>";
+		};
+		E0A834411FF6433600E03EDE /* NBLWebView */ = {
+			isa = PBXGroup;
+			children = (
+				E0A834451FF6433600E03EDE /* NBLMessage.h */,
+				E0A834421FF6433600E03EDE /* NBLMessage.m */,
+				E0A834431FF6433600E03EDE /* NBLWebViewHeader.h */,
+				E0A834441FF6433600E03EDE /* NBLWebViewController.h */,
+				E0A834461FF6433600E03EDE /* NBLWebViewController.m */,
+			);
+			path = NBLWebView;
+			sourceTree = "<group>";
+		};
+		E0DBAD1C1FAC13F2005B22A9 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				E0DBAD1D1FAC13F2005B22A9 /* Reachability.h */,
+				E0DBAD1E1FAC13F2005B22A9 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		E0DF286F1F95A57E00F1B8C8 = {
+			isa = PBXGroup;
+			children = (
+				E0DF287A1F95A57E00F1B8C8 /* QuickTalk */,
+				E0DF28931F95A57E00F1B8C8 /* QuickTalkTests */,
+				E0DF289E1F95A57E00F1B8C8 /* QuickTalkUITests */,
+				E0DF28791F95A57E00F1B8C8 /* Products */,
+				54FC022EB6F35A908F5175AF /* Pods */,
+				1DE7D1760355DF4F24DAED83 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		E0DF28791F95A57E00F1B8C8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */,
+				E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */,
+				E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0DF287A1F95A57E00F1B8C8 /* QuickTalk */ = {
+			isa = PBXGroup;
+			children = (
+				E08181281F9995AD0035DEF4 /* Resources */,
+				E0DF28C11F95A7CE00F1B8C8 /* 3rd */,
+				E0DF28AE1F95A7CE00F1B8C8 /* Util */,
+				E0DF28D41F95A7CE00F1B8C8 /* Components */,
+				E0DF28C21F95A7CE00F1B8C8 /* Modules */,
+				E0DF28B91F95A7CE00F1B8C8 /* Services */,
+				E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */,
+				E0DF28AD1F95A7CE00F1B8C8 /* AppDelegate.h */,
+				E0DF28CA1F95A7CE00F1B8C8 /* AppDelegate.m */,
+				E08A64561FA97C5800317CE2 /* QTTabBarController.h */,
+				E08A64571FA97C5800317CE2 /* QTTabBarController.m */,
+			);
+			path = QuickTalk;
+			sourceTree = "<group>";
+		};
+		E0DF28931F95A57E00F1B8C8 /* QuickTalkTests */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28941F95A57E00F1B8C8 /* QuickTalkTests.m */,
+				E0DF28961F95A57E00F1B8C8 /* Info.plist */,
+			);
+			path = QuickTalkTests;
+			sourceTree = "<group>";
+		};
+		E0DF289E1F95A57E00F1B8C8 /* QuickTalkUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF289F1F95A57E00F1B8C8 /* QuickTalkUITests.m */,
+				E0DF28A11F95A57E00F1B8C8 /* Info.plist */,
+			);
+			path = QuickTalkUITests;
+			sourceTree = "<group>";
+		};
+		E0DF28AE1F95A7CE00F1B8C8 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28AF1F95A7CE00F1B8C8 /* Tools.h */,
+				E0DF28B01F95A7CE00F1B8C8 /* Tools.m */,
+				E0DF28B11F95A7CE00F1B8C8 /* UIButton+NetworkImage.h */,
+				E0DF28B21F95A7CE00F1B8C8 /* UIButton+NetworkImage.m */,
+				E0DF28B31F95A7CE00F1B8C8 /* UIColor+Additions.h */,
+				E0DF28B41F95A7CE00F1B8C8 /* UIColor+Additions.m */,
+				E0DF28B51F95A7CE00F1B8C8 /* UIImage+RBImage.h */,
+				E0DF28B61F95A7CE00F1B8C8 /* UIImage+RBImage.m */,
+				E0DF28B71F95A7CE00F1B8C8 /* UIImageView+NetworkImage.h */,
+				E0DF28B81F95A7CE00F1B8C8 /* UIImageView+NetworkImage.m */,
+				E0972E8D1F9DA2F200033893 /* NSObject+Obj.h */,
+				E0972E8E1F9DA2F200033893 /* NSObject+Obj.m */,
+				E08A64631FA9CABC00317CE2 /* NSString+Emoji.h */,
+				E08A64621FA9CABC00317CE2 /* NSString+Emoji.m */,
+				E093519B1FA32DDC000687BC /* NSString+QuickTalk.h */,
+				E093519C1FA32DDC000687BC /* NSString+QuickTalk.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		E0DF28B91F95A7CE00F1B8C8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E08693001FF0AB0F001DC7FE /* Message */,
+				E088D64F1FD64C9800038736 /* UserPost */,
+				E088D6531FD64E0600038736 /* News */,
+				E08AABEC1FE14129005B6DBB /* User */,
+				E08AABBC1FE0BF9D005B6DBB /* Account */,
+				E08AABDC1FE14129005B6DBB /* Setting */,
+				E08181311F99A01E0035DEF4 /* QTUserInfo.h */,
+				E08181321F99A01E0035DEF4 /* QTUserInfo.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E0DF28C11F95A7CE00F1B8C8 /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+				E08E523F1FF5039600972A61 /* ShareSDK */,
+				E085919B1FF3560D00C847F4 /* GTSDK.framework */,
+				E0233C5C1FC2C2290010D9DC /* iflyMSC.framework */,
+			);
+			path = 3rd;
+			sourceTree = "<group>";
+		};
+		E0DF28C21F95A7CE00F1B8C8 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E045AD901FC417C500A16A40 /* Cleaner */,
+				E0233C701FC2E1D80010D9DC /* Speaker */,
+				E0DBAD1C1FAC13F2005B22A9 /* Reachability */,
+				E0DF28C31F95A7CE00F1B8C8 /* Networking */,
+				E0DF28C81F95A7CE00F1B8C8 /* QTServiceCode.h */,
+				E0DF28C91F95A7CE00F1B8C8 /* QTServiceCode.m */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		E0DF28C31F95A7CE00F1B8C8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28C41F95A7CE00F1B8C8 /* QTNetworkAgent.h */,
+				E0DF28C51F95A7CE00F1B8C8 /* QTNetworkAgent.m */,
+				E0DF28C61F95A7CE00F1B8C8 /* QTNetworking.h */,
+				E0DF28C71F95A7CE00F1B8C8 /* QTNetworking.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E0DF28CB1F95A7CE00F1B8C8 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E085609C1FECB4E300B4779E /* QuickTalk.entitlements */,
+				E0DF28CC1F95A7CE00F1B8C8 /* Info.plist */,
+				E0DF28CD1F95A7CE00F1B8C8 /* main.m */,
+				E0DF28CE1F95A7CE00F1B8C8 /* QTMarcos.h */,
+				E0DF28CF1F95A7CE00F1B8C8 /* QuickTalk-Prefix.pch */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		E0DF28D41F95A7CE00F1B8C8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E0A834411FF6433600E03EDE /* NBLWebView */,
+				E03BBDF21FF20633000F93E8 /* QTNoneView */,
+				E03BBDEB1FF1F2B0000F93E8 /* QQPopMenuView */,
+				E081315F1FE21701001A6E3D /* CRAPickerView */,
+				E08AABC61FE0CDBB005B6DBB /* RBButton */,
+				E088D67F1FD6875A00038736 /* RBLabel */,
+				E084A91C1FB598A100AE4AD2 /* RBImagebrowse */,
+				E084A9181FB53F9300AE4AD2 /* QTErrorView */,
+				E07FF8BF1FA1DD4D00D7CE25 /* QTTipView */,
+				E04DF4181F9EEEA000EFD1C6 /* EwenTextView */,
+				E094BB591F95F76B00375AD8 /* QTPopoverView */,
+				E0DF28D51F95A7CE00F1B8C8 /* QTMessage */,
+				E0DF28D81F95A7CE00F1B8C8 /* QTNavigationController */,
+				E0DF28DB1F95A7CE00F1B8C8 /* QTProgressHUD */,
+				E0DF28DE1F95A7CE00F1B8C8 /* QTRefresh */,
+				E0DF28E61F95A7CE00F1B8C8 /* QTViewController */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		E0DF28D51F95A7CE00F1B8C8 /* QTMessage */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D61F95A7CE00F1B8C8 /* QTMessage.h */,
+				E0DF28D71F95A7CE00F1B8C8 /* QTMessage.m */,
+			);
+			path = QTMessage;
+			sourceTree = "<group>";
+		};
+		E0DF28D81F95A7CE00F1B8C8 /* QTNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28D91F95A7CE00F1B8C8 /* QTNavigationController.h */,
+				E0DF28DA1F95A7CE00F1B8C8 /* QTNavigationController.m */,
+			);
+			path = QTNavigationController;
+			sourceTree = "<group>";
+		};
+		E0DF28DB1F95A7CE00F1B8C8 /* QTProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28DC1F95A7CE00F1B8C8 /* QTProgressHUD.h */,
+				E0DF28DD1F95A7CE00F1B8C8 /* QTProgressHUD.m */,
+			);
+			path = QTProgressHUD;
+			sourceTree = "<group>";
+		};
+		E0DF28DE1F95A7CE00F1B8C8 /* QTRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28DF1F95A7CE00F1B8C8 /* QTRefresh.h */,
+				E0DF28E01F95A7CE00F1B8C8 /* QTRefreshFooter.h */,
+				E0DF28E11F95A7CE00F1B8C8 /* QTRefreshFooter.m */,
+				E0DF28E21F95A7CE00F1B8C8 /* QTRefreshHeader.h */,
+				E0DF28E31F95A7CE00F1B8C8 /* QTRefreshHeader.m */,
+				E0DF28E41F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.h */,
+				E0DF28E51F95A7CE00F1B8C8 /* UIScrollView+QTRefresh.m */,
+			);
+			path = QTRefresh;
+			sourceTree = "<group>";
+		};
+		E0DF28E61F95A7CE00F1B8C8 /* QTViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0DF28E71F95A7CE00F1B8C8 /* QTViewController.h */,
+				E0DF28E81F95A7CE00F1B8C8 /* QTViewController.m */,
+			);
+			path = QTViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0DF28771F95A57E00F1B8C8 /* QuickTalk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28A41F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalk" */;
+			buildPhases = (
+				0753BB94833051CF00FD90B6 /* [CP] Check Pods Manifest.lock */,
+				E0DF28741F95A57E00F1B8C8 /* Sources */,
+				E0DF28751F95A57E00F1B8C8 /* Frameworks */,
+				E0DF28761F95A57E00F1B8C8 /* Resources */,
+				1956FFA4858F18887182680D /* [CP] Embed Pods Frameworks */,
+				5893D1BB51CB940A19BFBBB1 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuickTalk;
+			productName = QuickTalk;
+			productReference = E0DF28781F95A57E00F1B8C8 /* QuickTalk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E0DF288F1F95A57E00F1B8C8 /* QuickTalkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28A71F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkTests" */;
+			buildPhases = (
+				A4D5608BCA47BFB93792F00D /* [CP] Check Pods Manifest.lock */,
+				E0DF288C1F95A57E00F1B8C8 /* Sources */,
+				E0DF288D1F95A57E00F1B8C8 /* Frameworks */,
+				E0DF288E1F95A57E00F1B8C8 /* Resources */,
+				7A7C01223ABD3F2EC0143786 /* [CP] Embed Pods Frameworks */,
+				28582B0CA28F5783D2C6DC76 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0DF28921F95A57E00F1B8C8 /* PBXTargetDependency */,
+			);
+			name = QuickTalkTests;
+			productName = QuickTalkTests;
+			productReference = E0DF28901F95A57E00F1B8C8 /* QuickTalkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E0DF289A1F95A57E00F1B8C8 /* QuickTalkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0DF28AA1F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkUITests" */;
+			buildPhases = (
+				68A88FA2C52B75772F63AB58 /* [CP] Check Pods Manifest.lock */,
+				E0DF28971F95A57E00F1B8C8 /* Sources */,
+				E0DF28981F95A57E00F1B8C8 /* Frameworks */,
+				E0DF28991F95A57E00F1B8C8 /* Resources */,
+				888E4949E0DCB3DD03E7AC28 /* [CP] Embed Pods Frameworks */,
+				DD36522A41DC14EDE2BB8811 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0DF289D1F95A57E00F1B8C8 /* PBXTargetDependency */,
+			);
+			name = QuickTalkUITests;
+			productName = QuickTalkUITests;
+			productReference = E0DF289B1F95A57E00F1B8C8 /* QuickTalkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0DF28701F95A57E00F1B8C8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = www.creactism.com;
+				TargetAttributes = {
+					E0DF28771F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+					E0DF288F1F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = E0DF28771F95A57E00F1B8C8;
+					};
+					E0DF289A1F95A57E00F1B8C8 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = E0DF28771F95A57E00F1B8C8;
+					};
+				};
+			};
+			buildConfigurationList = E0DF28731F95A57E00F1B8C8 /* Build configuration list for PBXProject "QuickTalk" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E0DF286F1F95A57E00F1B8C8;
+			productRefGroup = E0DF28791F95A57E00F1B8C8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0DF28771F95A57E00F1B8C8 /* QuickTalk */,
+				E0DF288F1F95A57E00F1B8C8 /* QuickTalkTests */,
+				E0DF289A1F95A57E00F1B8C8 /* QuickTalkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E0DF28761F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E08181301F9996320035DEF4 /* LaunchScreen.storyboard in Resources */,
+				E0463BB41FAABB9B00849101 /* userAgreement.txt in Resources */,
+				E08E52651FF5039700972A61 /* ShareSDKUI.bundle in Resources */,
+				E081316A1FE21701001A6E3D /* CRALocation.json in Resources */,
+				E08E52691FF5039700972A61 /* ShareSDKConfigFile.bundle in Resources */,
+				E081812C1F9995AD0035DEF4 /* Assets.xcassets in Resources */,
+				E08E525E1FF5039700972A61 /* WeiboSDK.bundle in Resources */,
+				E08E52601FF5039700972A61 /* README.txt in Resources */,
+				E08E52641FF5039700972A61 /* ShareSDK.bundle in Resources */,
+				E084A9211FB5AA8500AE4AD2 /* image.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288E1F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28991F95A57E00F1B8C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0753BB94833051CF00FD90B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1956FFA4858F18887182680D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28582B0CA28F5783D2C6DC76 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5893D1BB51CB940A19BFBBB1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundError.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundError@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundErrorIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundErrorIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundMessage.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundMessage@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccess.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccess@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccessIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundSuccessIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarning.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarning@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarningIcon.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationBackgroundWarningIcon@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationButtonBackground.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/NotificationButtonBackground@2x.png",
+				"${PODS_ROOT}/TSMessages/Pod/Assets/TSMessagesDefaultDesign.json",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalk/Pods-QuickTalk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68A88FA2C52B75772F63AB58 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalkUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A7C01223ABD3F2EC0143786 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkTests/Pods-QuickTalkTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		888E4949E0DCB3DD03E7AC28 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4D5608BCA47BFB93792F00D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QuickTalkTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD36522A41DC14EDE2BB8811 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QuickTalkUITests/Pods-QuickTalkUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E0DF28741F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28FC1F95AA8A00F1B8C8 /* main.m in Sources */,
+				E079B8FA1FD79CC200A76FCD /* QTUserPostCommentModel.m in Sources */,
+				E0972E8F1F9DA2F200033893 /* NSObject+Obj.m in Sources */,
+				E0C1475A1FEBCDC20069AC6D /* QTAccountNotificationController.m in Sources */,
+				E08AABFE1FE14129005B6DBB /* QTMyNewsCommentCell.m in Sources */,
+				E08AABD51FE10A42005B6DBB /* QTAccountChangePasswordController.m in Sources */,
+				E088D67A1FD6651B00038736 /* QTUserPostAddController.m in Sources */,
+				E0DF28E91F95A81000F1B8C8 /* Tools.m in Sources */,
+				E08A64581FA97C5800317CE2 /* QTTabBarController.m in Sources */,
+				E079B8F41FD78CA800A76FCD /* QTUserPostCommentController.m in Sources */,
+				E088D6851FD68DAC00038736 /* QTUserPostModel.m in Sources */,
+				E088D6701FD64E0600038736 /* QTTopicLeftCell.m in Sources */,
+				E0DF28EA1F95A81000F1B8C8 /* UIButton+NetworkImage.m in Sources */,
+				E0DF28EB1F95A81000F1B8C8 /* UIColor+Additions.m in Sources */,
+				E08AABC91FE0CDBB005B6DBB /* RBButton.m in Sources */,
+				E0DF28EC1F95A81000F1B8C8 /* UIImage+RBImage.m in Sources */,
+				E0DF28ED1F95A81000F1B8C8 /* UIImageView+NetworkImage.m in Sources */,
+				E08AABD21FE106C9005B6DBB /* QTAccountSettingController.m in Sources */,
+				E08AABD81FE10A55005B6DBB /* QTAccountThirdPartController.m in Sources */,
+				E0DBAD1F1FAC13F2005B22A9 /* Reachability.m in Sources */,
+				E045AD931FC417D800A16A40 /* QTCleaner.m in Sources */,
+				E0A834471FF6433600E03EDE /* NBLMessage.m in Sources */,
+				E088D66E1FD64E0600038736 /* QTTopicModel.m in Sources */,
+				E08AABF81FE14129005B6DBB /* QTUserAgreementController.m in Sources */,
+				E08AABF91FE14129005B6DBB /* QTIntroController.m in Sources */,
+				E08AABC21FE0C458005B6DBB /* QTAccountRegisterController.m in Sources */,
+				E08AABFB1FE14129005B6DBB /* QTSettingController.m in Sources */,
+				E08AABF61FE14129005B6DBB /* QTInfoEditController.m in Sources */,
+				E088D66A1FD64E0600038736 /* QTTopicContentController.m in Sources */,
+				E0256D991FEA889100217D9F /* QTUserSearchController.m in Sources */,
+				E03BBDF11FF1F3B8000F93E8 /* QTUserPostStarController.m in Sources */,
+				E08AABDB1FE113F2005B6DBB /* QTAccountPhoneController.m in Sources */,
+				E07FF8C21FA1DD6300D7CE25 /* QTTipView.m in Sources */,
+				E08AABC51FE0C46C005B6DBB /* QTAccountLoginController.m in Sources */,
+				E088D66B1FD64E0600038736 /* QTTopicSpeaker.m in Sources */,
+				E0256D871FEA4B3200217D9F /* QTUserStarAndFansController.m in Sources */,
+				E08560A21FECFC6600B4779E /* QTUserLikeListController.m in Sources */,
+				E08181331F99A01E0035DEF4 /* QTUserInfo.m in Sources */,
+				E02A3CFF2003223100ADF11A /* QTUserPostRecommendController.m in Sources */,
+				E088D66D1FD64E0600038736 /* QTCommentModel.m in Sources */,
+				E06F42D81FEA37AD00F99A66 /* QTMyCell.m in Sources */,
+				E093519D1FA32DDC000687BC /* NSString+QuickTalk.m in Sources */,
+				E084A91B1FB53FA400AE4AD2 /* QTErrorView.m in Sources */,
+				E086930C1FF0DE06001DC7FE /* QTMessageCell.m in Sources */,
+				E07BA9951FD7F6EE00DE8C02 /* QTTopicCommentController.m in Sources */,
+				E081316B1FE21701001A6E3D /* CRALocationPickerView.m in Sources */,
+				E0256D931FEA7DC800217D9F /* QTUserStarButton.m in Sources */,
+				E0DF28EE1F95A81000F1B8C8 /* QTMessage.m in Sources */,
+				E08AABFA1FE14129005B6DBB /* QTFeedbackController.m in Sources */,
+				E088D6691FD64E0600038736 /* QTTopicController.m in Sources */,
+				E0233C731FC2E2770010D9DC /* QTSpeaker.m in Sources */,
+				E0256D961FEA87FB00217D9F /* QTUserContactBookController.m in Sources */,
+				E0256D8D1FEA6C3800217D9F /* QTUserStarController.m in Sources */,
+				E081316C1FE21701001A6E3D /* CRADatePickerView.m in Sources */,
+				E08AAC011FE144F0005B6DBB /* QTAccountInfoEditController.m in Sources */,
+				E079B8F71FD78E6700A76FCD /* QTUserPostCommentCell.m in Sources */,
+				E0DF28EF1F95A81000F1B8C8 /* QTNavigationController.m in Sources */,
+				E085609F1FECB69200B4779E /* QTUserPostLikeView.m in Sources */,
+				E08AABF71FE14129005B6DBB /* QTAvatarEditController.m in Sources */,
+				E08AABFC1FE14129005B6DBB /* QTMyNewsCommentController.m in Sources */,
+				E08A64641FA9CABC00317CE2 /* NSString+Emoji.m in Sources */,
+				E0DF28F01F95A81000F1B8C8 /* QTProgressHUD.m in Sources */,
+				E094BB5C1F95F76B00375AD8 /* QTPopoverView.m in Sources */,
+				E08AABCF1FE0E1E5005B6DBB /* QTAccountInfo.m in Sources */,
+				E081316D1FE21701001A6E3D /* CRABasePickerView.m in Sources */,
+				E03BBDF51FF20633000F93E8 /* QTNoneView.m in Sources */,
+				E0DF28F11F95A81000F1B8C8 /* QTRefreshFooter.m in Sources */,
+				E08AABCC1FE0D7E1005B6DBB /* QTAccountForgetPasswordController.m in Sources */,
+				E08131781FE248AB001A6E3D /* QTUserModel.m in Sources */,
+				E088D6881FD6979400038736 /* QTUserPostMainCell.m in Sources */,
+				E0256D901FEA6C5200217D9F /* QTUserFansController.m in Sources */,
+				E088D6771FD6650000038736 /* QTUserPostMainController.m in Sources */,
+				E088D6711FD64E0600038736 /* QTTopicRightCell.m in Sources */,
+				E08AABFD1FE14129005B6DBB /* QTMyController.m in Sources */,
+				E0DF28F21F95A81000F1B8C8 /* QTRefreshHeader.m in Sources */,
+				E08693091FF0B7CB001DC7FE /* QTMessageController.m in Sources */,
+				E08803561FD91B660099E93D /* QTTopicGlobalSpeaker.m in Sources */,
+				E0DF28F31F95A81000F1B8C8 /* UIScrollView+QTRefresh.m in Sources */,
+				E06F42DB1FEA459900F99A66 /* QTUserCollectionController.m in Sources */,
+				E08693061FF0AB22001DC7FE /* QTMessageModel.m in Sources */,
+				E088D66F1FD64E0600038736 /* QTNewsCell.m in Sources */,
+				E04DF41B1F9EEEA000EFD1C6 /* EwenTextView.m in Sources */,
+				E084A91F1FB598A100AE4AD2 /* RBImagebrowse.m in Sources */,
+				E088D6821FD6875B00038736 /* RBLabel.m in Sources */,
+				E0DF28F41F95A81000F1B8C8 /* QTViewController.m in Sources */,
+				E03BBDEE1FF1F2B0000F93E8 /* QQPopMenuView.m in Sources */,
+				E0DF28F51F95A81000F1B8C8 /* QTNetworkAgent.m in Sources */,
+				E0A834481FF6433600E03EDE /* NBLWebViewController.m in Sources */,
+				E088D66C1FD64E0600038736 /* QTNewsController.m in Sources */,
+				E0DF28F61F95A81000F1B8C8 /* QTNetworking.m in Sources */,
+				E0C147531FEB574D0069AC6D /* QTUserCell.m in Sources */,
+				E0DF28F71F95A81000F1B8C8 /* QTServiceCode.m in Sources */,
+				E081316E1FE21701001A6E3D /* CRAStringPickerView.m in Sources */,
+				E08131711FE23117001A6E3D /* QTUserController.m in Sources */,
+				E0DF28FB1F95A81000F1B8C8 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF288C1F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28951F95A57E00F1B8C8 /* QuickTalkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0DF28971F95A57E00F1B8C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0DF28A01F95A57E00F1B8C8 /* QuickTalkUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E0DF28921F95A57E00F1B8C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0DF28771F95A57E00F1B8C8 /* QuickTalk */;
+			targetProxy = E0DF28911F95A57E00F1B8C8 /* PBXContainerItemProxy */;
+		};
+		E0DF289D1F95A57E00F1B8C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0DF28771F95A57E00F1B8C8 /* QuickTalk */;
+			targetProxy = E0DF289C1F95A57E00F1B8C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E0DF28A21F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E0DF28A31F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E0DF28A51F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F7B92A8A525DBFE3C95710E /* Pods-QuickTalk.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickTalk/SupportingFiles/QuickTalk.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = S8VUN65RG9;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Optional",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformConnector",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/QQSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/QuickTalk/3rd",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/QuickTalk/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/WeChatSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/BPush",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "快言_Development";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E0DF28A61F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0727663B0DB0D51C30CEC529 /* Pods-QuickTalk.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickTalk/SupportingFiles/QuickTalk.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ThoughtMarket Technology Shenzhen Co. Ltd (S8VUN65RG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ThoughtMarket Technology Shenzhen Co. Ltd (S8VUN65RG9)";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = S8VUN65RG9;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Optional",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformConnector",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/QQSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/Required",
+					"$(PROJECT_DIR)/QuickTalk/3rd",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuickTalk/SupportingFiles/QuickTalk-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/QuickTalk/SupportingFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/ShareSDK/Support/PlatformSDK/WeChatSDK",
+					"$(PROJECT_DIR)/QuickTalk/3rd/BPush",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "快言_Distribution";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E0DF28A81F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E9E5648FB0E0649D84270A0D /* Pods-QuickTalkTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTalk.app/QuickTalk";
+			};
+			name = Debug;
+		};
+		E0DF28A91F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91BA3A4F44478666E8D04BBA /* Pods-QuickTalkTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTalk.app/QuickTalk";
+			};
+			name = Release;
+		};
+		E0DF28AB1F95A57E00F1B8C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60C98B0683BCFE30FE1A6618 /* Pods-QuickTalkUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuickTalk;
+			};
+			name = Debug;
+		};
+		E0DF28AC1F95A57E00F1B8C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CA9A69E981986721FEB1DB3 /* Pods-QuickTalkUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QK47X3HA68;
+				INFOPLIST_FILE = QuickTalkUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.creactism.QuickTalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QuickTalk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E0DF28731F95A57E00F1B8C8 /* Build configuration list for PBXProject "QuickTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A21F95A57E00F1B8C8 /* Debug */,
+				E0DF28A31F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28A41F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A51F95A57E00F1B8C8 /* Debug */,
+				E0DF28A61F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28A71F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28A81F95A57E00F1B8C8 /* Debug */,
+				E0DF28A91F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0DF28AA1F95A57E00F1B8C8 /* Build configuration list for PBXNativeTarget "QuickTalkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0DF28AB1F95A57E00F1B8C8 /* Debug */,
+				E0DF28AC1F95A57E00F1B8C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0DF28701F95A57E00F1B8C8 /* Project object */;
+}
