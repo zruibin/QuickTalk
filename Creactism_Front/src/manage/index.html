@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<title>Creactism后台管理</title>
+<meta charset="UTF-8">  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<meta name="COPYRIGHT" content="版权所有2017,http://www.creactism.cc">
+
+<link href="./vender/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="./vender/css/flat-ui.min.css" rel="stylesheet">
+
+<link type="text/css" href="./vender/css/default.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="./vender/js/sha1.js"></script>
+<script type="text/javascript" src="./vender/js/default.js"></script>
+<script type="text/javascript" src="./vender/js/toast.js"></script>
+<script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+    
+    if (checkingBackup()) {
+        loadData();
+    } 
+
+    $("#submit").click(function() {
+        submit();
+    });
+    $('#pwd').bind('keypress',function(event){  
+        if(event.keyCode == "13") {  
+            submit();
+        }  
+    });//
+});
+
+
+
+function loadData() 
+{
+    $("#login").css({"display": "none"});
+    headerAction();
+}
+
+function submit() {
+    var pwd = hex_sha1($("#pwd").val());
+    // console.log(pwd);
+    if (pwd === pwdEncode) {
+        setCookie('the_cookie', pwd); // 存储一个带7天期限的 cookie 
+        loadData();
+    } else {
+        toast("Error!");
+    }
+}
+
+</script>
+
+
+<style type="text/css">
+
+body{text-align: center;}
+
+#login {
+  margin-top: 140px;
+  width: 300px;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+</style>
+
+
+</head>
+
+<body>
+
+<h2>Creactism 后台管理</h2>
+
+<div id="login">
+    <input type="password" placeholder="进入密码" class="form-control" id="pwd"/>
+    <br/>
+    <button id="submit" class="btn btn-success">确定</button>
+</div>
+
+
+
+</body>
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+

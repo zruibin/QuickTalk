@@ -1,0 +1,8 @@
+
+###Creactism 前端
+
+
+
+scp -r src/ root@39.108.174.16:/home/
+ssh root@39.108.174.16
+

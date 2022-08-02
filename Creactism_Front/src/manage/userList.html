@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>所有用户</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+
+<link href="./vender/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="./vender/css/flat-ui.min.css" rel="stylesheet">
+
+<link type="text/css" href="./vender/css/default.css" rel="stylesheet" media="all" />
+<script type="text/javascript" src="./vender/js/sha1.js"></script>
+<script type="text/javascript" src="./vender/js/default.js"></script>
+<script type="text/javascript" src="./vender/js/toast.js"></script>
+<script type="text/javascript" src="./vender/js/jquery-1.10.2.min.js"></script>
+<script src="./vender/js/reqwest.min.js"></script>
+
+<script type="text/javascript" src="./vender/js/jqueryConfirm/jquery-confirm.min.js"></script>
+<link href="./vender/js/jqueryConfirm/jquery-confirm.min.css" rel="stylesheet">
+
+<style>
+
+
+</style>
+
+</head>
+
+<body>
+
+<h4>所有用户</h4>
+<nav aria-label="Page navigation">
+	<ul class="pagination">
+		<li>
+		<a href="#" aria-label="Previous" onclick="prePage()">
+			<span aria-hidden="true">上一页</span>
+		</a>
+		</li>
+		<li>
+		<a href="#" aria-label="Next" onclick="nextPage()">
+			<span aria-hidden="true">下一页</span>
+		</a>
+		</li>
+	</ul>
+</nav>
+<br>
+
+<div id="container" class="list-group">
+		
+</div>
+
+
+</body>
+
+<script>
+
+$(document).ready(function() {
+	checkingAuth();
+	headerAction();
+	if (checkingBackup()) {
+		loadData();	
+	}
+});
+
+function loadData() {
+	var index = getIndex();
+	getUserList(index);
+}
+
+function getIndex() {
+	var index = getQueryString("index");
+	if (index == null || index < 1) {
+		index = 1;
+	}
+	return index;
+}
+
+function nextPage() {
+	var index = getIndex();
+	index++;
+	window.location.href = "userPostList.html?index=" + index;
+}
+
+function prePage() {
+	var index = getIndex();
+	index--;
+	if (index >= 1) {
+		window.location.href = "userPostList.html?index=" + index;
+	}
+}
+
+
+function getUserList(index) {
+	var url = host + "service/quickTalk/account/userList";
+	reqwest({
+		url: url, 
+		type: 'json', 
+		method: 'post',
+		data: {manage:"manage", size:50, index:index}
+	}).then(function (response) {
+		// console.log(response);
+		showUserList(response.data);
+	}).fail(function (err, msg) {
+		console.log(err);     
+		alert("请求失败，请重新刷新！");
+	});
+}
+
+function showUserList(dataList) {
+    var html = "";
+	if (dataList) { //有数据时
+		html += '<table cellspacing="0" cellpadding="0" id="table">';
+		html += '<tr>';
+		html += '<th>id</th>';
+		html += '<th>昵称</th>';
+		html += '<th>头像</th>';
+		html += '<th>性别</th>';			
+		html += '<th>注册时间</th>';
+		html += '<th>手机号码</th>';
+		html += '<th>邮箱</th>';
+		html += '<th>qq</th>';
+		html += '<th>微信</th>';
+		html += '<th>微博</th>';
+		html += '<th>地区</th>';
+		html += '<th>个人简介</th>';
+		html += '</tr>';
+        for (var i = 0; i < dataList.length; i++) {
+            var data = dataList[i];
+
+            html += '<tr>';
+			html += '<td style="width:60px; font-size:12px;">'+ data.id +'</td>';
+			html += '<td style="width:100px; font-size:14px;">'+ data.nickname +'</td>';
+			html += '<td><img style="width:60px;height:60px;" src="'+ data.avatar +'"></td>';
+			html += '<td>'+ genderStr(data.gender) +'</td>';
+			html += '<td style="width:100px; font-size:12px;">'+ data.time +'</td>';
+			html += '<td style="width:100px; font-size:14px;">'+ data.phone +'</td>';
+			html += '<td style="width:100px; font-size:14px;">'+ data.email +'</td>';
+			html += '<td style="font-size:14px;">'+ data.qq +'</td>';
+			html += '<td style="font-size:14px;">'+ data.wechat +'</td>';
+			html += '<td style="font-size:14px;">'+ data.weibo +'</td>';
+			html += '<td style="font-size:14px;">'+ data.area +'</td>';
+			html += '<td style="font-size:14px;">'+ data.detail +'</td>';
+            html += '</tr>';
+        }
+        html += '</table>';
+    } else {
+        html = '<h3>无内容！</h3>';
+    }
+    var container = document.getElementById("container");
+    container.innerHTML = html;
+}
+
+function genderStr(gender) {
+	var str = "";
+	if (gender == 1) {
+		str = "男";
+	}
+	if (gender == 2) {
+		str = "女";
+	}
+	return str;
+}
+
+
+</script>
+
+</html>
