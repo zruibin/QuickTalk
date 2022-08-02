@@ -1,0 +1,11 @@
+
+###可行Server端
+
+####架构方案
+
+**Python 2.7 + flask + gunicorn + gevent + Celery +  supervisor + nginx + MySQL 5.6**
+
+note: 项目部署于/home/creaction下
+
+用户上传资源放于medias下
+front为前端静态资源，nginx直接访问
