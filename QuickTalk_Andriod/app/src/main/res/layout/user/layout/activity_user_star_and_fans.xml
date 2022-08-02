@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@color/QuickTalk_NAVBAR_BG_COLOR">
+
+        <ImageButton
+            android:id="@+id/activity_user_star_and_fans_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp" android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" android:layout_marginLeft="3dp"
+            android:paddingTop="10dp" android:paddingBottom="10dp"
+            android:paddingLeft="8dp" android:paddingRight="12dp"
+            android:src="@mipmap/back"
+            android:scaleType="fitXY"
+            />
+
+        <com.kekstudio.dachshundtablayout.DachshundTabLayout
+            android:id="@+id/activity_user_star_and_fans_tab"
+            android:layout_width="wrap_content" android:layout_height="40dp"
+            android:layout_centerHorizontal="true" android:layout_centerVertical="true"
+            custom:ddAnimatedIndicator="lineMove" custom:ddIndicatorHeight="2dp"
+            custom:tabTextColor="@color/QuickTalk_SECOND_FONT_COLOR"
+            custom:tabSelectedTextColor="@color/QuickTalk_NAVBAR_TINT_COLOR"
+            custom:ddIndicatorColor="@color/QuickTalk_NAVBAR_TINT_COLOR"
+            custom:tabMinWidth="80dp"
+            custom:tabGravity="center" custom:tabMode="fixed"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_user_star_and_fans_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</LinearLayout>

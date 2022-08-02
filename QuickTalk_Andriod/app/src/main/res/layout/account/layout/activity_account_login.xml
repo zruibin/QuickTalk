@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp" android:layout_marginRight="15dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/activity_account_login_account"
+            android:layout_width="match_parent" android:layout_height="40dp"
+            android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+            android:textSize="15sp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:inputType="text" android:singleLine="true"
+            android:gravity="left|center" android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:hint="手机号" android:background="@color/white"
+            android:layout_marginBottom="2dp" android:layout_marginTop="20dp"
+            />
+        <EditText
+            android:id="@+id/activity_account_login_password"
+            android:layout_width="match_parent" android:layout_height="40dp"
+            android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+            android:textSize="15sp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:inputType="textPassword" android:singleLine="true"
+            android:gravity="left|center" android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:hint="密码" android:background="@color/white"
+            android:layout_marginBottom="2dp" android:layout_marginTop="2dp"
+            />
+
+        <Button
+            android:id="@+id/activity_account_login_submit"
+            android:layout_width="match_parent" android:layout_height="40dp"
+            android:text="登录" android:textColor="@drawable/selector_button"
+            android:textSize="14sp"
+            android:background="@drawable/ripple_button_bg"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginTop="20dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent" android:layout_marginTop="5dp"
+            android:layout_height="40dp">
+            <Button
+                android:id="@+id/activity_account_login_register"
+                android:layout_width="80dp" android:layout_height="match_parent"
+                android:text="注册" android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+                android:textSize="13sp" android:gravity="left|center" android:padding="0dp"
+                android:layout_centerVertical="true" android:layout_alignParentLeft="true"
+                style="?android:attr/borderlessButtonStyle" android:background="?android:attr/selectableItemBackground"
+                />
+            <Button
+                android:id="@+id/activity_account_login_forget"
+                android:layout_width="80dp" android:layout_height="match_parent"
+                android:text="忘记密码" android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+                android:textSize="13sp" android:gravity="right|center" android:padding="0dp"
+                android:layout_centerVertical="true" android:layout_alignParentRight="true"
+                style="?android:attr/borderlessButtonStyle" android:background="?android:attr/selectableItemBackground"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" android:layout_marginBottom="40dp"
+        android:layout_marginLeft="25dp" android:layout_marginRight="25dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent" android:layout_height="20dp"
+            android:text="第三方登录" android:textSize="12sp" android:textAlignment="center"
+            android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <ImageButton
+                android:id="@+id/activity_account_login_qq"
+                android:layout_width="40dp" android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:scaleType="fitXY" android:background="?android:attr/selectableItemBackground"
+                android:src="@mipmap/qq_login"/>
+            <ImageButton
+                android:id="@+id/activity_account_login_wechat"
+                android:layout_width="40dp" android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY" android:background="?android:attr/selectableItemBackground"
+                android:src="@mipmap/wechat_login"/>
+            <ImageButton
+                android:id="@+id/activity_account_login_weibo"
+                android:layout_width="40dp" android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:scaleType="fitXY" android:background="?android:attr/selectableItemBackground"
+                android:src="@mipmap/weibo_login"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

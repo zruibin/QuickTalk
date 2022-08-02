@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/white">
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="40dp" android:layout_margin="10dp">
+        <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userpost_list_item_avatar"
+            android:layout_width="40dp" android:layout_height="40dp" android:layout_centerVertical="true"
+            fresco:placeholderImage="@mipmap/avatar_default" fresco:placeholderImageScaleType="centerCrop"
+            fresco:failureImage="@mipmap/avatar_default" fresco:failureImageScaleType="centerCrop"
+            fresco:pressedStateOverlayImage="@drawable/ripple_avatar_bg"
+            />
+        <Button
+            android:id="@+id/userpost_list_item_nickname"
+            style="?android:attr/borderlessButtonStyle" android:gravity="left"
+            android:background="@drawable/ripple_bg"
+            android:layout_width="wrap_content" android:layout_height="20dp"
+            android:layout_toRightOf="@id/userpost_list_item_avatar"
+            android:layout_marginTop="0dp" android:layout_marginLeft="10dp"
+            android:textColor="@color/QuickTalk_NAME_FONT_COLOR"
+            android:textSize="16sp" android:singleLine="true"
+            android:ellipsize="end" android:maxEms="10"
+            android:text="ff" android:textAllCaps="false" android:textStyle="normal"
+            />
+        <LinearLayout
+            android:layout_below="@id/userpost_list_item_nickname"
+            android:layout_toRightOf="@id/userpost_list_item_avatar"
+            android:layout_marginLeft="10dp" android:layout_marginTop="4dp"
+            android:layout_width="wrap_content" android:layout_height="20dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/userpost_list_item_time"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+                android:textSize="12sp" android:singleLine="true" android:layout_weight="2.0"
+                android:ellipsize="end" android:maxEms="10"/>
+            <TextView
+                android:id="@+id/userpost_list_item_read"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/QuickTalk_SECOND_FONT_COLOR"
+                android:textSize="12sp" android:singleLine="true" android:layout_weight="1.0"
+                android:ellipsize="end" android:maxEms="6"/>
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/userpost_list_item_arrow"
+            android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+            android:layout_width="30dp" android:layout_height="30dp"
+            android:scaleType="fitXY" android:padding="8dp" android:textAllCaps="false"
+            style="?android:attr/borderlessButtonStyle" android:background="@drawable/ripple_bg"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/userpost_list_item_detail"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp" android:layout_marginRight="10dp" android:layout_marginTop="-6dp"
+        android:textSize="15sp" android:lineSpacingExtra="4dp" android:textStyle="normal"
+        android:text="是否曾抱怨过产品经理，为什么一个app里面按钮正常/按下状态颜色不统一起来？ 你是否曾埋怨过UI，为什么不同地方输入框的颜色、圆角和聚焦字体颜色不一样？"
+        android:textColor="@color/black"  android:textAllCaps="false"/>
+    <Button
+        android:id="@+id/userpost_list_item_href"
+        android:layout_width="match_parent" android:layout_height="46dp"
+        android:lineSpacingExtra="4dp" android:textSize="14sp" android:ellipsize="end"
+        android:layout_marginTop="2dp" android:layout_marginBottom="6dp"
+        android:layout_marginRight="10dp" android:layout_marginLeft="60dp"
+        android:padding="4dp" android:gravity="left|center" android:textStyle="normal"
+        style="?android:attr/borderlessButtonStyle" android:textAllCaps="false"
+        android:background="@drawable/userpost_list_item_href_label"
+        android:text="是否曾抱怨过产品经理，为什么一个app里面按钮正常/按下状态颜色不统一起来？ 你是否曾埋怨过UI，为什么不同地方输入框的颜色、圆角和聚焦字体颜色不一样？"
+        />
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="25dp"
+        android:layout_marginLeft="60dp" android:layout_marginRight="10dp"
+        android:layout_marginBottom="6dp" android:orientation="horizontal">
+        <com.donkingliang.labels.LabelsView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/userpost_list_item_tag"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_weight="1" app:labelTextColor="@color/QuickTalk_MAIN_COLOR"
+            app:labelTextSize="13sp" app:labelBackground="@drawable/userpost_list_item_tag"
+            app:labelTextPaddingBottom="3dp" app:labelTextPaddingTop="3dp"
+            app:labelTextPaddingLeft="6dp" app:labelTextPaddingRight="6dp"
+            app:wordMargin="4dp"
+            />
+
+        <ImageButton
+            android:id="@+id/userpost_list_item_like"
+            android:layout_width="30dp" android:layout_height="match_parent"
+            style="?android:attr/borderlessButtonStyle" android:background="@drawable/ripple_bg"
+            android:layout_marginLeft="10dp" android:src="@mipmap/unlike"
+            android:scaleType="fitCenter" android:padding="3dp"
+            />
+        <ImageButton
+            android:id="@+id/userpost_list_item_comment"
+            android:layout_width="30dp" android:layout_height="match_parent"
+            style="?android:attr/borderlessButtonStyle" android:background="@drawable/ripple_bg"
+            android:layout_marginLeft="10dp" android:layout_marginRight="5dp"
+            android:src="@mipmap/comment" android:scaleType="fitCenter"
+            android:padding="3dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/userpost_list_item_like_layout"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp" android:layout_marginRight="10dp"
+        android:layout_marginBottom="6dp" android:orientation="horizontal">
+        <ImageView
+            android:layout_width="28dp" android:layout_height="28dp" android:padding="8dp"
+            android:background="@color/white" android:src="@mipmap/unlike"
+            />
+        <com.creactism.quicktalk.services.userpost.view.UserPostLikeView
+            android:id="@+id/userpost_list_item_likeView" android:scaleType="fitCenter"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

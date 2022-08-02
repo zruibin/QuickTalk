@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginBottom="1dp"
+    android:orientation="vertical"
+    android:background="@color/QuickTalk_VIEW_BG_COLOR">
+
+    <Button
+        android:id="@+id/activity_setting_footer_button"
+        android:layout_width="match_parent" android:layout_height="40dp"
+        android:layout_marginTop="20dp" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="退出登录" android:textColor="@drawable/selector_button"
+        android:textSize="14sp"
+        android:background="@drawable/ripple_button_bg"
+        style="?android:attr/borderlessButtonStyle"/>
+
+</RelativeLayout>

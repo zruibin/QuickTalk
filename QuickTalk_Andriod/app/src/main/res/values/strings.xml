@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">快言</string>
+    <drawable name="bgColor">#EFEFEF</drawable>
+</resources>

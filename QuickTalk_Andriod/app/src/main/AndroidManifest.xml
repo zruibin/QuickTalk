@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.creactism.quicktalk">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 写sd卡的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 读sd卡权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:name=".App"
+        tools:replace="android:name"
+        >
+        <activity android:screenOrientation="portrait" android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--userPost-->
+        <activity android:screenOrientation="portrait" android:name=".services.userpost.AddUserPostActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.userpost.UserPostSearchTagActivity" />
+
+        <!--user-->
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserStarAndFansActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserSearchActivity"
+            android:windowSoftInputMode="adjustPan"  />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserContactBookActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserCollectionActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserStarActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.user.UserFansActivity" />
+
+        <!--setting-->
+        <activity android:screenOrientation="portrait" android:name=".services.setting.SettingActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.setting.UserAgreementActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.setting.WelcomeActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.setting.NotificationSettingActivity" />
+
+        <!--account-->
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountSettingActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountThirdPartActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountPhoneActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountChangePasswordActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountLoginActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountRegisterActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountForgetPasswordActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountInfoActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountChangeAvatarActivity" />
+        <activity android:screenOrientation="portrait" android:name=".services.account.AccountInfoEditActivity" />
+
+
+    </application>
+
+</manifest>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.creactism.quicktalk.MainActivity">
+
+    <com.hjm.bottomtabbar.BottomTabBar
+        xmlns:hjm="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        hjm:tab_divider_background="#EAEAEA"
+        hjm:tab_divider_height="0.5dp"
+        hjm:tab_font_size="4.5sp"
+        hjm:tab_img_font_padding="0dp"
+        hjm:tab_img_height="20dp"
+        hjm:tab_img_width="20dp"
+        hjm:tab_isshow_divider="true"
+        hjm:tab_padding_bottom="4dp"
+        hjm:tab_padding_top="8dp"
+        hjm:tab_selected_color="@color/QuickTalk_NAVBAR_BG_COLOR"
+        hjm:tab_unselected_color="@color/QuickTalk_SECOND_FONT_COLOR" />
+
+
+
+</android.support.constraint.ConstraintLayout>
